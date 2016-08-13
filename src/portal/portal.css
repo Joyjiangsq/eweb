@@ -1,0 +1,45 @@
+/**header**/
+
+.headerView {
+    background-color: white;
+}
+.headerView .logoBox {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: -1px;
+    box-shadow: 0 20px 10px -24px rgba(0, 0, 0, .5);
+    z-index: 1111;
+}
+.headerView .logoBox img {
+    margin: 6px 25px;
+}
+.headerView .headerBars {
+    position: absolute;
+    top: 30%;
+    right: 10px;
+}
+.headerView .headerBars .who {}
+.headerView .headerBars .operator {}
+
+/**silderBox**/
+
+.silderBox {}
+.silderBox .menuItem {}
+.silderBox .menuItem .menuTitle {
+    color: #a9a8a8;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 15%;
+}
+.silderBox .menuItem .subMenus {}
+.subMenus a {
+    display: block;
+    padding: 10px 0;
+    padding-left: 15%;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+}
+.silderBox .menuItem .subMenus a:hover {
+    background: #d60c18;
+    color: white;
+}

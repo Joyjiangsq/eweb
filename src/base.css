@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    position: relative;
+    font-size: 14px;
+}
+span, a {
+    display: inline-block;
+}
+body {
+    background: #f3f3f3;
+}
+html, body {
+    height: 100%;
+}
+input {
+    border: 1px solid #ddd;
+    padding: 8px;
+    color: #888;
+    border-radius: 2px;
+}
+table {
+    background: white;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+table thead {
+    background: #efefef;
+    border-bottom: 1px solid #ddd;
+}
+table thead th {
+    text-align: center;
+    font-size: 13px;
+    font-weight: normal;
+    color: #333;
+    height: 35px;
+    padding-left: 10px;
+}
+table tbody td {
+  color: #333;
+  height: 35px;
+  text-align: center;
+  vertical-align: top;
+  padding: 10px 0;
+  padding-left: 10px;
+  line-height: 22px;
+}
+table tbody td span {
+    font-size: 13px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+/**全局样式**/
+
+/**渐隐**/
+:global(.fadeModal-enter) {
+  opacity: 0;
+}
+
+:global(.fadeModal-leave) {
+  opacity: 0;
+}
+
+:global(.fadeModal-enter .bounce) {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+:global(.fadeModal-leave .bounce) {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+:global(.app_container) {
+    overflow: hidden;
+}
+:global(.app_left_menus_box) {
+    background: white;
+    width: 20%;
+    padding-top: 15px;
+    float: left;
+    border-top: 1px solid #ddd;
+}
+:global(.app_main_container) {
+    width: 80%;
+    float: left;
+}
+:global(.app_container_in) {
+    padding: 10px;
+}
+:global(.app_footer) {
+    background: #b9b9b9;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+}
+@media screen and (min-width: 1400px) {
+    :global(.app_left_menus_box) {
+        width: 10%;
+    }
+    :global(.app_main_container) {
+        width: 90%;
+    }
+}
+:global(.app_left_menus_box .v-link-active) {
+    background: #d60c18;
+    color: white;
+}
