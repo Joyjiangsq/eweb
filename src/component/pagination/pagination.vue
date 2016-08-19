@@ -38,7 +38,7 @@ export default {
 
     pix:{
       type: Number,
-      default: 3
+      default: 5
     }
   },
   data: function () {

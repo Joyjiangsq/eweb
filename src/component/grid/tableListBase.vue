@@ -1,6 +1,6 @@
 <template>
   <div :class="tableCss.tableBox" :style="stylein">
-    <table :class="classname" v-show="tableShow">
+    <table :class="classname">
         <thead>
               <tr>
                 <th v-for="tone in headercaption" style="tone.style">
@@ -11,7 +11,7 @@
                 </th>
               </tr>
         </thead>
-        <tbody  v-show="!noresult">
+        <tbody  v-show="loading? false:noresult? false: true">
               <tr v-for="done in dataList">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
@@ -27,7 +27,7 @@
     <div v-show="noresult" :class='tableCss.noresult'>
           没有数据
     </div>
-    <div v-show="!tableShow">
+    <div v-show="loading"  :class='tableCss.loading'>
           加载中...
     </div>
   </div>
@@ -41,6 +41,10 @@ export default {
     classname:{
       type:String,
       default: tableCss.tablelist
+    },
+    loadtag:{
+      type: Boolean,
+      default: true
     },
     stylein:{
       type:Object,
@@ -70,7 +74,7 @@ export default {
         tableCss,
         dataList:[],
         noresult: false,
-        tableShow:false
+        loading:true
     }
   },
 
@@ -81,14 +85,13 @@ export default {
   },
 
   created: function(){
-      this.loadData();
   },
 
   ready: function () {},
   attached: function () {},
   methods: {
     adapertData(d){
-        if(!d.data || d.data.length == 0) {this.noresult = true; return false;}
+        if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
 
         this.dataList = [];
         for (var i = 0; i < d.data.length; i++) {
@@ -101,7 +104,7 @@ export default {
             }
             this.dataList.push(rowData);
         }
-        this.tableShow = true;
+        this.loading = false;
     },
 
     loadData: function() {
@@ -119,10 +122,16 @@ export default {
     }
   },
   components: {},
+
+
   watch:{
-    "params": function(){
-        this.tableShow = false;
-        this.loadData();
+    // "params": function(){
+    //     this.tableShow = false;
+    //     this.loadData();
+    // },
+    "loadtag": function(){
+      this.loading = true;
+      this.loadData();
     }
   }
 }

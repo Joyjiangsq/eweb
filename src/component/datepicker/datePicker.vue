@@ -1,13 +1,13 @@
 <template>
     <div :class="datepCss.pickerBox">
-        <input type="text"  :class="[classname,datepCss.datePickerInput]"  :value="value | dateformate formate">
+        <input type="text"  :class="[classname,datepCss.datePickerInput]"  :value="value">
         <span @click="changePickerMain" :class="datepCss.showBtn">点我</span>
         <div :class="datepCss.coverPicker"  v-show="showDatePicker" @click="changePickerMain" ></div>
         <div :class="datepCss.pickerMain" v-show="showDatePicker">
                 <div :class="datepCss.datePickerTitleRow">
                       <span :class='datepCss.pickerIn'>
                         <span  @click='changeAttachOperator'>{{tplDate | dateformate formate}}</span>
-                        <datemonth v-show="showYmBoxer" :datedepend="true" :show-date-month.sync="showYmBoxer" :value.sync="tplDate" :stopdate="stopdate"  :startdate="startdate"></datemonth>
+                        <datemonth v-show="showYmBoxer" :datedepend="true" :show-date-month.sync="showYmBoxer" :value.sync="monthData" :stopdate="stopdate"  :startdate="startdate"></datemonth>
                       </span>
                       <div :class='datepCss.operMonth' @click='operMonthHandler'>
                             <span  :class='datepCss.monthprev'>前一个月</span>
@@ -41,23 +41,25 @@
 <script>
 import datepCss from "./datePicker.css";
 import datemonth from "component/datemonth/dateMonth";
+import Utils from "common/Utils";
 export default {
   props:{
-      classname:{
+      classname:{               // 定义控件的样式名称
         type: String
       },
-      value:{
-        type: Date
+      value:{                   // 定义默认日期 同时也是 数据交互的入口.sync
+        // type: Date
       },
-      formate:{
-        type: String
+      formate:{                // 定义日期格式化
+        type: String,
+        default:"yyyy-mm-dd"
       },
-      stopdate:{
-        type: Date,
+      stopdate:{              // 定义截止日期限制
+        // type: Date,
         default: () => new Date()
       },
-      startdate:{
-        type: Date,
+      startdate:{              // 定义开始日期限制
+        // type: Date,
         default: () => new Date(2010,0,0)
       }
   },
@@ -70,14 +72,15 @@ export default {
       showDatePicker: false,    //是否日历视图控制
       showYmBoxer:false,        // 年月视图控制
       dayCaption:["周日","周一","周二","周三","周四","周五","周六"],
-      tplDate: this.value,      // 日历视图的临时存储值， 在点击m单个天的时候 与 value 同步
+      tplDate: this.value? new Date(this.value) : new Date(),      // 日历视图的临时存储值， 在点击m单个天的时候 与 value 同步
+      monthData: this.value?this.value : Utils.formate(new Date(), this.formate),
       month: 1,                 // 全局 初始月
       year: 1970                // 全局初始年
     }
   },
   computed: {
       mainDateArry(){
-          let year = this.year = this.tplDate.getFullYear();          let month = this.month = this.tplDate.getMonth(); let curDay = this.curDay =  this.tplDate.getDate();
+          let year = this.year = this.tplDate.getFullYear();          let month = this.month = this.tplDate.getMonth(); let curDay = this.curDay =  new Date(this.value).getDate();
 
           // 此两处都是零点  起始日期
           let startDateObj = new Date(year, month, 1);  let endDateObj = new Date(year, month+1, 0);
@@ -92,7 +95,10 @@ export default {
           for(var i=startDate; i <= endDate; i++) {
             var times = new Date(year, month, i).getTime();
             if(times > stopTimes || times < beiginTimes) dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.closeDay});
-            else if(i == curDay) dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay, active: this.datepCss.active});
+            else if(i == curDay) {
+              if(year == new Date(this.value).getFullYear() && month == new Date(this.value).getMonth())   dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay, active: this.datepCss.active});
+
+            }
             else dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay});
           }  // 整月
 
@@ -122,7 +128,7 @@ export default {
   methods: {
     // 改变主日历视图的显示隐藏
     changePickerMain() {
-        this.tplDate = this.value;
+        this.tplDate = this.value? new Date(this.value) : new Date();
         this.showYmBoxer = false;
         this.showDatePicker = !this.showDatePicker;
     },
@@ -136,8 +142,8 @@ export default {
         scope.find("span").removeClass(this.datepCss.active);
         target.addClass(this.datepCss.active);
         var dateNow = new Date(target.attr("year"),target.attr("month")*1-1, target.attr("day"));
-        this.$dispatch("dayClick", {times: dateNow.getTime(), who: this.classname}); // 发射事件
-        this.value = dateNow;
+        // this.$dispatch("dayClick", {times: dateNow.getTime(), who: this.classname}); // 发射事件
+        this.value = Utils.formate(dateNow, this.formate);
         this.changePickerMain();
     },
 
@@ -147,7 +153,6 @@ export default {
           var tpDate = new Date(this.year, this.month, 0);
           var tpDay = tpDate.getDate();
           if(tpDay < this.curDay) this.curDay = tpDay;
-          // this.value = new Date(this.year, this.month-1, this.curDay);
           this.checkDateRange(new Date(this.year, this.month-1, this.curDay));
         }
         else if(target.is("."+this.datepCss.monthnext)) {
@@ -181,7 +186,13 @@ export default {
     // 校验 日期区间
     checkDateRange(tplDate) {
           this.tplDate = tplDate;
-          // if(this.tplDate < this.stopdate) this.value = tplDate
+          // this.monthData = Utils.formate(tplDate, this.formate);
+    }
+  },
+
+  watch:{
+    "monthData": function(){
+        this.tplDate = new Date(this.monthData);
     }
   }
 }

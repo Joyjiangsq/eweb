@@ -26,15 +26,15 @@
 import dCss from "./dialog.css"
 export default {
   props:{
-    flag: {
+    flag: {                           // 控制对话框显示和隐藏外部开关
       type: Boolean,
       default: false
     },
-    modalshow: {
+    modalshow: {                     // 控制对话框显示和隐藏内部开关
       type: Boolean,
       default: false
     },
-    title:{
+    title:{                          // 标题
       type: String,
       default:"标题"
     }

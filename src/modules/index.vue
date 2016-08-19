@@ -8,7 +8,9 @@
     <span class="">
       <datemonth classname="startMonth" :value="today"  :stopdate="today" :startdate="startDate"></datemonth>
     </span>
-
+    <div class="">
+      <combobox url="/test"  labelname="providerName" keyid="_id"  :params="params" :value.sync="dv"></combobox>
+    </div>
     <div @click="showModal">
       点击显示弹框
     </div>
@@ -19,7 +21,7 @@
   <div style="margin-bottom:30px;"></div>
   <button type="button" name="button" @click="shua">加载</button>
     <div>
-      <tablelist :headercaption="headercaption" codevalue="_id" :params="paramsObj" ></tablelist>
+      <tablelist :headercaption="headercaption" codevalue="_id" :params="params" :loadtag="loadtag"></tablelist>
       <pagination :totals="500" :curPage="params.page"></pagination>
     </div>
   </div>
@@ -27,7 +29,7 @@
 
   <dialog :flag="flagdep">
         <div class="" slot="containerDialog">
-          <tablelist :headercaption="headercaption" codevalue="_id" :params="paramsObj" :stylein="style"></tablelist>  <pagination :totals="500" :curPage="params.page"></pagination>
+          <!-- <tablelist :headercaption="headercaption" codevalue="_id" :params="params" :stylein="style"></tablelist>  <pagination :totals="500" :curPage="params.page"></pagination> -->
         </div>
         <div class="" slot="footerDialog">
           --------------------
@@ -46,12 +48,15 @@ import datemonth from "component/datemonth/dateMonth";
 import tablelist from "component/grid/tableListBase";
 import pagination from "component/pagination/pagination";
 import dialog from "component/dialog/dialog";
+import combobox from "component/combobox/combobox";
 export default {
     created() {
     },
 
     data() {
       return {
+        loadtag: false,
+        cdata:[{name:"jiangsu", key:"1"},{name:"浙江省", key:"2"},{name:"安徽省", key:"3"},{name:"贵州省", key:"4"},{name:"吉林省", key:"5"}],
         today: new Date(),
         style:{
           width: "810px",
@@ -59,6 +64,7 @@ export default {
         },
         startDate: new Date(1990, 10, 1),
         flagdep: false,
+        dv:0,
         // curPage: 1,
         params :{
             page: 1,
@@ -72,7 +78,7 @@ export default {
       }
     },
     components: {
-      datepicker,datemonth,tablelist,pagination,dialog
+      datepicker,datemonth,tablelist,pagination,dialog,combobox
     },
 
     methods:{
@@ -81,21 +87,26 @@ export default {
       },
       testtowchange(){
         this.testtwo = !this.testtwo
+      },
+      shua() {
+        this.params.test = Math.random();
+        this.$router.go({ name: 'index', query: this.params});
       }
     },
     computed:{
 
-      paramsObj() {
-          // console.log(this.$route.query);
-          return this.params;
-      },
+      // paramsObj() {
+      //     // console.log(this.$route.query);
+      //     return this.params;
+      // },
     },
     ready() {
+      // console.log(this.params);
       // console.log(this);
       // console.log(this.$route.query);
       // this.curPage = isNaN(, this.$route.query.page*1) ? 1 : this.$route.query.page*1;
       // if(this.$route.query.test || this.$route.query.test=='') this.test = this.$route.query.test;
-      this.params = $.extend(false,this.params, this.$route.query);
+      // this.params = $.extend(false,this.params, this.$route.query);
     },
     events: {
         'dayClick': function (p) {
@@ -109,13 +120,20 @@ export default {
 
         "pageChange": function(p) {
           this.params.page = p.page;
-          this.params = $.extend(false,{}, this.params);
-          this.$router.go({ name: 'index', query: this.paramsObj});
+          this.$router.go({ name: 'index', query: this.params});
         }
       },
 
+      route: {
+        data: function (transition) {
+            Object.assign(this.params, this.$route.query);
+            this.loadtag = !this.loadtag;
+        }
+      },
       watch:{
-
+            "dv" : function(){
+              console.log(this.dv);
+            }
       }
     // vuex: {
     //      actions:{

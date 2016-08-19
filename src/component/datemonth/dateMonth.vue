@@ -1,6 +1,6 @@
 <template>
   <div :class="datepCss.dateMonthBox">
-    <input  v-show="!datedepend" type="text"  :class="[classname,datepCss.dateMonthInput]"  :value="value | dateformate formate">
+    <input  v-show="!datedepend" type="text"  :class="[classname,datepCss.dateMonthInput]"  :value="value">
     <span   v-show="!datedepend" @click="changePickerMain" :class="datepCss.showBtn">点我</span>
     <div :class="datepCss.attachoper" v-show="showDateMonth">
         <div :class="datepCss.coverPicker"   @click="changePickerMain" ></div>
@@ -33,34 +33,35 @@
 </template>
 
 <script>
-import datepCss from "./dateMonth.css"
+import datepCss from "./dateMonth.css";
+import Utils from "common/Utils";
 export default {
   props:{
-      datedepend:{
+      datedepend:{                // 是否是独立的还是依赖于datepicker的
           type: Boolean,
           default: false
       },
-      showDateMonth:{
+      showDateMonth:{           // 控制选择视图的显示和隐藏
         type: Boolean,
         default: false
       },
-      classname:{
+      classname:{               // 样式名称
         type: String
       },
-      value:{
-        type: Date,
-        default: () => new Date()
+      value:{                   // 关键值
+        // type: Date,
+        // default: () => new Date()
       },
-      formate:{
+      formate:{                 // 格式化
         type:String,
         default: () => 'yyyy-mm'
       },
-      startdate:{
-          type:Date,
+      startdate:{                // 开始时间限制
+          // type:Date,
           default:() => new Date(1970,1,1)
       },
-      stopdate:{
-          type:Date,
+      stopdate:{                // 结束时间限制
+          // type:Date,
           default: () => new Date(2100,1,1)
       }
   },
@@ -69,13 +70,13 @@ export default {
       datepCss,
       // showDateMonth: false,
       dayCaption:["周日","周一","周二","周三","周四","周五","周六"],
-      tplDate: this.value,
-      year: this.value.getFullYear()
+      tplDate: this.value? new Date(this.value) : new Date(), //this.value || new Date(),
+      year: this.value? this.value.substring(0,4):new Date().getFullYear()
     }
   },
   computed: {
     monthsArayy() {
-      let month =  this.value.getMonth();
+      let month =  this.tplDate.getMonth();
       let monthArry = [{name:"一月", value:0}, {name:"二月", value:1},{name:"三月", value:2},{name:"四月", value:3},{name:"五月", value:4},{name:"六月", value:5},
                        {name:"七月", value:6},{name:"八月", value:7},{name:"九月", value:8},{name:"十月", value:9},{name:"十一月", value:10},{name:"十二月", value:11}];
       let Year = this.tplDate.getFullYear();
@@ -120,7 +121,7 @@ export default {
   attached: function () {},
   methods: {
     changePickerMain() {
-        this.tplDate = this.value;
+        this.tplDate = this.value? new Date(this.value) : new Date();//this.value;
         this.year  = this.tplDate.getFullYear();
         this.showDateMonth = !this.showDateMonth;
     },
@@ -152,12 +153,12 @@ export default {
       }
       let month = monObj.attr("month");
       let year = yearObj.attr("year");
-      this.value = new Date(year, month, 1);
+      this.value = Utils.formate(new Date(year, month, 1), this.formate);
       this.changePickerMain();
     },
 
     cancelAction(){
-      this.tplDate = this.value;
+      this.tplDate = this.value || new Date();
         this.showDateMonth = false;
     },
 
@@ -174,6 +175,11 @@ export default {
         this.tplDate = new Date(newYear, tpMonth, 1);
     }
   },
-  components: {}
+  components: {},
+  watch:{
+    "value": function(){
+      this.tplDate = new Date(this.value);
+    }
+  }
 }
 </script>
