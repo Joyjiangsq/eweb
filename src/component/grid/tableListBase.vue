@@ -108,7 +108,7 @@ export default {
     },
 
     loadData: function() {
-      return this.$http.get("/test",{params:this.params}).then((res) => {
+      return this.$http.get(this.$Api+ (this.url || ""),{params:this.params}).then((res) => {
           // 如果有数据 就渲染
          //  如果没有数据就显示没有数据
           this.adapertData(res.data);

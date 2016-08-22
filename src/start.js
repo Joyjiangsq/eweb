@@ -34,7 +34,10 @@ new directive().init(Vue)
 // 定义fetch
 Vue.use(VueResource);
 Vue.http.options.emulateJSON = true;
-Vue.http.options.root = location.host;
+
+//
+// document.cookie = 'token='+Math.random().toString(32);
+
 // ajax 拦截
 Vue.http.interceptors.push((request, next)  => {
     next((response) => {

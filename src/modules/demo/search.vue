@@ -4,8 +4,8 @@
                 查询
           </div>
           <div slot="panelContent">
-                <search  pathname="sdemo" :datas="sa"></search>
-                <tablelist :headercaption="headercaption" codevalue="_id" :params="params" :loadtag="loadtag"></tablelist>
+                <search  pathname="/demo/search" :datas="sa"></search>
+                <tablelist :headercaption="headercaption" codevalue="_id" :params="params" :loadtag="loadtag" url=""></tablelist>
           </div>
           <div slot="panelFooter">
               {{searchParams | json}}

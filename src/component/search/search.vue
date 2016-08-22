@@ -119,7 +119,7 @@ export default {
      actions: {
        searchHandler:function(scope){
          triggerChange(scope, JSON.stringify(this.params));
-         this.$router.go({ name: this.pathname, query: this.params});
+         this.$router.go({ path: this.pathname, query: this.params});
        }
      }
   },
