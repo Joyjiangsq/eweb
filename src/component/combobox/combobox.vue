@@ -2,7 +2,7 @@
     <div :class="combCss.combobox" v-show="havedatas">
           <div :class="combCss.comboLabel"  @click="changeDropAction">
                   {{defaultInfo.label}}
-                  <span>click</span>
+                  <span :class='combCss.bticon'><icon iconname="icon-right2"></icon></span>
           </div>
           <div :class="combCss.dropBox" v-show="dropshow">
               <div :class="combCss.dropOne" v-for="item in datas" @click="dropClick(item)">
@@ -15,6 +15,7 @@
 
 <script>
 import combCss from "./combobox.css";
+import icon from "component/sprite/icon.vue";
 export default {
   props:{
       labelname:{                  // 渲染dom 显示的可见名称
@@ -97,7 +98,7 @@ export default {
       })
     }
   },
-  components: {},
+  components: {icon},
   watch:{
     "params": {
       handler: function (val, oldVal) {

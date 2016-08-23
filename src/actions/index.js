@@ -4,6 +4,6 @@ export const textChange = ({ dispatch, state }, text) => {
     if(text) dispatch(types.TEST, text)
 }
 
-export const triggerChange = ({ dispatch, state }, params) => {
-  dispatch(types.SEARCHINFO, params)
+export const setTitle = ({ dispatch, state }, str) => {
+    if(str) dispatch(types.TITLE, str)
 }

@@ -29,6 +29,7 @@
     "json-loader": "^0.5.4",
     "storejs": "^1.0.10",
     "vue": "^1.0.26",
+    "vue-file-upload": "0.0.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^8.5.3",

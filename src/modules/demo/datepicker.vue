@@ -46,6 +46,7 @@
 import datepicker from "component/datepicker/datePicker";
 import daterange from "component/datepicker/dateRange";
 import datemonth from "component/datemonth/dateMonth";
+import {setTitle} from "actions/index.js";
 import panel from "component/panel/panel";
 export default {
   data: function () {
@@ -53,9 +54,14 @@ export default {
       today: "",
       start:"",
       end:"",
-      curDay: "2016-08-18",
+      curDay: "2016-08",
       stopdate: new Date(2020,1,1),
       startdate: new Date(2010,1,1)
+    }
+  },
+  route:{
+    data: function(){
+      setTitle(this.$store, "日历");
     }
   },
   computed: {},

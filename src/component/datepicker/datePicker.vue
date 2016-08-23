@@ -1,7 +1,7 @@
 <template>
     <div :class="datepCss.pickerBox">
-        <input type="text"  :class="[classname,datepCss.datePickerInput]"  :value="value">
-        <span @click="changePickerMain" :class="datepCss.showBtn">点我</span>
+        <input type="text"  :class="[classname,datepCss.datePickerInput]"  :value="value" readonly="true">
+        <span @click="changePickerMain" :class="datepCss.showBtn"><icon iconname="icon-date"></icon></span>
         <div :class="datepCss.coverPicker"  v-show="showDatePicker" @click="changePickerMain" ></div>
         <div :class="datepCss.pickerMain" v-show="showDatePicker">
                 <div :class="datepCss.datePickerTitleRow">
@@ -9,13 +9,13 @@
                         <span  @click='changeAttachOperator'>{{tplDate | dateformate formate}}</span>
                         <datemonth v-show="showYmBoxer" :datedepend="true" :show-date-month.sync="showYmBoxer" :value.sync="monthData" :stopdate="stopdate"  :startdate="startdate"></datemonth>
                       </span>
-                      <div :class='datepCss.operMonth' @click='operMonthHandler'>
-                            <span  :class='datepCss.monthprev'>前一个月</span>
-                            <span  :class='datepCss.monthnext'>后一个月</span>
+                      <div :class='datepCss.operMonth' >
+                            <span  :class='datepCss.monthprev' @click='operMonthHandler("prev")'><icon :class='datepCss.iconm' iconname="icon-left2"></icon></span>
+                            <span  :class='datepCss.monthnext' @click='operMonthHandler("next")'><icon :class='datepCss.iconm' iconname="icon-right2"></icon></span>
                       </div>
-                      <div :class='datepCss.operYear' @click='operYearHandler'>
-                            <span  :class='datepCss.yearprev'>前一年</span>
-                            <span  :class='datepCss.yearnext'>后一年</span>
+                      <div :class='datepCss.operYear'>
+                            <span  :class='datepCss.yearprev'  @click='operYearHandler("prev")'><icon iconname="icon-left1"></icon></span>
+                            <span  :class='datepCss.yearnext'  @click='operYearHandler("next")'><icon iconname="icon-right1"></icon></span>
                       </div>
                 </div>
                 <table>
@@ -42,6 +42,7 @@
 import datepCss from "./datePicker.css";
 import datemonth from "component/datemonth/dateMonth";
 import Utils from "common/Utils";
+import icon from "component/sprite/icon.vue";
 export default {
   props:{
       classname:{               // 定义控件的样式名称
@@ -64,7 +65,7 @@ export default {
       }
   },
   components: {
-    datemonth
+    datemonth,icon
   },
   data: function () {
     return {
@@ -80,7 +81,8 @@ export default {
   },
   computed: {
       mainDateArry(){
-          let year = this.year = this.tplDate.getFullYear();          let month = this.month = this.tplDate.getMonth(); let curDay = this.curDay =  new Date(this.value).getDate();
+          let year = this.year = this.tplDate.getFullYear();          let month = this.month = this.tplDate.getMonth();
+          let curDay = this.curDay = new Date(this.value).getDate();
 
           // 此两处都是零点  起始日期
           let startDateObj = new Date(year, month, 1);  let endDateObj = new Date(year, month+1, 0);
@@ -147,36 +149,22 @@ export default {
         this.changePickerMain();
     },
 
-    operMonthHandler(e) {
-        var target = $(e.target);
-        if(target.is("."+this.datepCss.monthprev)) {
-          var tpDate = new Date(this.year, this.month, 0);
-          var tpDay = tpDate.getDate();
-          if(tpDay < this.curDay) this.curDay = tpDay;
-          this.checkDateRange(new Date(this.year, this.month-1, this.curDay));
-        }
-        else if(target.is("."+this.datepCss.monthnext)) {
-          var tpDate = new Date(this.year, this.month+2, 0);
-          var tpDay = tpDate.getDate();
-          if(tpDay < this.curDay) this.curDay = tpDay;
-          this.checkDateRange(new Date(this.year, this.month+1, this.curDay));
-        }
+    operMonthHandler(type) {
+        let tpd = new Date(this.year, this.month, 0);
+        let tpDay = tpd.getDate();
+        if(!this.curDay) this.curDay = this.tplDate.getDate();
+        if(this.curDay > tpDay)  this.curDay = tpDay;
+        if(type == "prev") this.tplDate = new Date(this.year, this.month-1, this.curDay);
+        else if(type == "next") this.tplDate =  new Date(this.year, this.month+1, this.curDay);
     },
 
-    operYearHandler(e) {
-        var target = $(e.target);
-        if(target.is("."+this.datepCss.yearprev)) {
-          var tpDate = new Date(this.year-1, this.month+1, 0);
-          var tpDay = tpDate.getDate();
-          if(tpDay < this.curDay) this.curDay = tpDay;
-          this.checkDateRange(new Date(this.year-1, this.month, this.curDay));
-        }
-        else if(target.is("."+this.datepCss.yearnext)) {
-          var tpDate = new Date(this.year+1, this.month+1, 0);
-          var tpDay = tpDate.getDate();
-          if(tpDay < this.curDay) this.curDay = tpDay;
-          this.checkDateRange(new Date(this.year+1, this.month, this.curDay));
-        }
+    operYearHandler(type) {
+        let tpd = new Date(this.year, this.month, 0);
+        let tpDay = tpd.getDate();
+        if(!this.curDay) this.curDay = this.tplDate.getDate();
+        if(this.curDay > tpDay)  this.curDay = tpDay;
+        if(type == "prev") this.tplDate = new Date(this.year-1, this.month, this.curDay);
+        else if(type == "next") this.tplDate = new Date(this.year+1, this.month, this.curDay);
     },
 
     changeAttachOperator(e) {

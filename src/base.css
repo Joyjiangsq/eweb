@@ -10,7 +10,8 @@ span, a {
     display: inline-block;
 }
 body {
-    background: #f3f3f3;
+    background: #e6e6e6;
+    font-family: "Microsoft YaHei";
 }
 html, body {
     height: 100%;
@@ -19,7 +20,7 @@ input {
     border: 1px solid #ddd;
     padding: 8px;
     color: #888;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 table {
     background: white;
@@ -76,20 +77,35 @@ table tbody td span {
   transform: scale(1.1);
 }
 :global(.app_container) {
-    overflow: hidden;
+    overflow: hidden;    margin-top: 73px;
+}
+:global(.app_header) {
+  position: fixed;
+z-index: 10;
+width: 100%;
+top:0;
 }
 :global(.app_left_menus_box) {
-    background: white;
     width: 20%;
     padding-top: 15px;
-    float: left;
+    position: fixed;
+    height: 100%;
     border-top: 1px solid #ddd;
+    background: #4a5b6d;
+    color: #a0b0c1;
 }
 :global(.app_main_container) {
     width: 80%;
-    float: left;
+    left: 20%;
 }
-:global(.app_container_in) {
+
+:global(.app_main_container .subTitle) {
+  background-color: #f2f2f2;
+padding: 10px;
+box-shadow: 0 20px 10px -24px rgba(0, 0, 0, .5);
+border-bottom: 1px solid #ddd;
+}
+:global(.needpadding) {
     padding: 10px;
 }
 :global(.app_footer) {
@@ -104,9 +120,10 @@ table tbody td span {
     }
     :global(.app_main_container) {
         width: 90%;
+        left: 10%;
     }
 }
 :global(.app_left_menus_box .v-link-active) {
-    background: #d60c18;
+    background: #405060;
     color: white;
 }

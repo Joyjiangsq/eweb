@@ -53,7 +53,7 @@
     width: 40%;
     display: inline-block;
 }
-.attachoper .attachIn .attachMonth span, .attachoper .attachIn .attachYear span {
+.attachoper .attachIn .attachMonth .oneItem, .attachoper .attachIn .attachYear .oneItem {
     width: 45px;
     padding: 5px 0;
     margin-bottom: 20px;
@@ -62,7 +62,7 @@
 .attachoper .attachIn .closeDay:hover {
   color: #898989;background-color: white;
 }
-.attachoper .attachIn span:hover,  .attachoper .attachIn .oneActive {
+.attachoper .attachIn .oneItem:hover,  .attachoper .attachIn .oneActive {
     background-color: #d60c18;
     color: white;
     border-radius: 2px;
@@ -78,20 +78,18 @@
 .attachoper .attachIn .attachYear .yearOper{
     width: 100%;
 }
-.attachoper .attachIn .attachYear .yearOper:hover {
-  background-color: white;
-  color: #333;
-  border-radius: 2px;
+.attachoper .attachIn .attachYear .yearOper .yop{
+  cursor: pointer;
+      color: #9c9c9c;
+      width: 31px;
 }
+
+
 .showBtn {
   cursor: pointer;
-  background: red;
-  height: 30px;
   vertical-align: top;
-  margin-left: -10px;
-  border: 1px solid #ddd;
-  border-left: 0;
-  line-height: 30px;
-  font-size: 12px;
-  padding: 0 2px;
+  margin-left: -37px;
+  line-height: 32px;
+  color: #888787;
+  padding: 0 8px 0 11px;
 }

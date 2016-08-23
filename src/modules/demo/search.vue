@@ -4,11 +4,11 @@
                 查询
           </div>
           <div slot="panelContent">
-                <search  pathname="/demo/search" :datas="sa"></search>
-                <tablelist :headercaption="headercaption" codevalue="_id" :params="params" :loadtag="loadtag" url=""></tablelist>
+                <search  pathname="/demo/search" :datas="sa" :events = 'searchEvents'></search>
+                <tablelist :headercaption="headercaption" codevalue="_id" :params="params" :loadtag="loadtag" url="" :events="tableClick"></tablelist>
           </div>
           <div slot="panelFooter">
-              {{searchParams | json}}
+              {{params | json}}
           </div>
 
 
@@ -20,7 +20,7 @@
 import search from "component/search/search";
 import tablelist from "component/grid/tableListBase";
 import panel from "component/panel/panel";
-import {searchParams} from "stores/getters";
+import {setTitle} from "actions/index.js";
 export default {
   data: function () {
     return {
@@ -28,19 +28,32 @@ export default {
                     {name:"地址", labelValue:"detailAddresses",type:"data"},{name:"电话", labelValue:"phone",type:"data"}, {name:"区域id", labelValue:"areaId", type:"data"},
                     {name:"供应商", labelValue:"providerName",type:"data"},{type:"operator", name:"操作", labelCaption:[{name:"删除", action:"delete"},{name:"编辑",action:"edit"}]}],
       loadtag: false,
+      searchEvents:{
+        onSearch: function(params) {
+            this.$set("params", params);
+            this.loadtag = !this.loadtag;
+        }
+      },
 
+      tableClick: {
+        operatorHandler: function(type, id) {
+          console.log(this);
+          console.log(type);
+          console.log(id);
+        }
+      },
+
+      params:{}
 
 
     }
   },
+  route:{
+    data: function(){
+      setTitle(this.$store, "查询");
+    }
+  },
   computed: {
-    params: function() {
-      setTimeout(()=>{
-          this.loadtag = !this.loadtag;
-      });
-      return this.searchParams
-    },
-
     sa: function(){
       let q = this.$route.query;
       return [
@@ -53,6 +66,7 @@ export default {
     }
   },
   ready: function () {
+    this.loadtag = !this.loadtag;
   },
   attached: function () {},
   methods: {
@@ -60,12 +74,6 @@ export default {
   components: {
     panel, search, tablelist
   },
-  vuex: {
-     getters: {
-       searchParams
-     }
-  },
-
   watch:{
   }
 }

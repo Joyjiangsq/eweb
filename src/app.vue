@@ -9,13 +9,16 @@
                 </div>
                 <div class="app_main_container">
                       <div class="app_container_in">
+                          <div class="subTitle">
+                              {{title}}
+                          </div>
                           <router-view></router-view>
                       </div>
                 </div>
           </div>
-          <div class="app_footer">
+          <!-- <div class="app_footer">
                 <foot></foot>
-          </div>
+          </div> -->
     </div>
 </template>
 <script>
@@ -24,7 +27,7 @@ import store from 'stores/store';
 import headerbox from 'portal/header';
 import menus from 'portal/menus';
 import foot from 'portal/footer';
-// import {getTest} from 'stores/getters'
+import {getTitle} from 'stores/getters'
 export default {
     store,
     data(){
@@ -38,14 +41,15 @@ export default {
     },
 
     ready(){
+      console.log(this.title);
       this.$nextTick(function () {
         this.$el.querySelector(".app_container").style.minHeight = window.innerHeight - 120 + "px";
       })
-    }
-    // vuex: {
-    //     getters: {
-    //        barsdata: getTest//({commonStore}) => commonStore.text
-    //      }
-    //  }
+    },
+    vuex: {
+        getters: {
+           title: getTitle
+         }
+     }
 }
 </script>

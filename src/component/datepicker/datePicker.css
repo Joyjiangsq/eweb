@@ -3,20 +3,24 @@
     min-width: 100px;
     color: #555;
 }
-.pickerBox table{border: 0; border-top: 1px solid #ddd;}
-.pickerBox table td {vertical-align: middle;}
+.pickerBox table {
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+.pickerBox table td {
+    vertical-align: middle;
+}
 .datePickerInput {}
 .showBtn {
-    cursor: pointer;
-    background: red;
-    height: 32px;
-    vertical-align: top;
-    margin-left: -10px;
-    border: 1px solid #ddd;
-    border-left: 0;
-    line-height: 32px;
-    font-size: 12px;
-    padding: 0 2px;
+  cursor: pointer;
+  height: 32px;
+  vertical-align: top;
+  margin-left: -43px;
+  border-left: 0;
+  line-height: 32px;
+  font-size: 12px;
+  color: #888787;
+  padding: 0 8px 0 11px;
 }
 .pickerMain * {
     font-size: 12px;
@@ -41,7 +45,8 @@
     padding: 10px 0;
 }
 .pickerMain table td span {
-    padding: 5px;    line-height: 15px;
+    padding: 5px;
+    line-height: 15px;
     border-radius: 42px;
     width: 15px;
     height: 15px;
@@ -66,12 +71,38 @@
     padding: 15px 10px;
     text-align: center;
 }
-.operMonth {}
-.operMonth .monthprev {}
-.operMonth .monthnext {}
-.operYear {}
-.operYear .yearprev {}
-.operYear .yearnext {}
+.operMonth {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    margin-top: -13px;
+}
+.operMonth .iconm {
+    cursor: pointer;
+}
+.operMonth .monthprev {
+    position: absolute;
+    left: 50px;
+}
+.operMonth .monthnext {
+    position: absolute;
+    right: 50px;
+}
+.operYear {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    margin-top: -13px;
+    cursor: pointer;
+}
+.operYear .yearprev {
+    position: absolute;
+    left: 20px;
+}
+.operYear .yearnext {
+    position: absolute;
+    right: 20px;
+}
 .coverPicker {
     background: rgba(249, 249, 249, 0);
     position: fixed;

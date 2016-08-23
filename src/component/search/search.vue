@@ -65,6 +65,11 @@ export default {
     },
     pathname:{
         type: String
+    },
+
+    events:{
+        type:Object,
+        default: function() {return {onSearch: function(){}}}
     }
   },
   data: function () {
@@ -94,7 +99,7 @@ export default {
            this.$set("params."+one.keynameend, one.end);
         }
         else if(one.type == "cascade") {
-          console.log(one);
+          // console.log(one);
           // pp["pid"] = one.pid;
           // pp["cid"] = one.cid;
           // pp["aid"] = one.aid;
@@ -106,23 +111,26 @@ export default {
     // console.log(pp);
     // this.p = pp;
     // this.$set("p", pp);
-    console.log(this.params);
+    // console.log(this.params);
     this.searchHandler();
   },
   attached: function () {},
   methods: {
       searchHandler: function(){
-        console.log(this.params);
+        // console.log(this.params);
+        // console.log(this);
+        this.events.onSearch.call(this._context, this.params);
+        this.$router.go({ path: this.pathname, query: this.params});
       }
   },
-  vuex: {
-     actions: {
-       searchHandler:function(scope){
-         triggerChange(scope, JSON.stringify(this.params));
-         this.$router.go({ path: this.pathname, query: this.params});
-       }
-     }
-  },
+  // vuex: {
+  //    actions: {
+  //      searchHandler:function(scope){
+  //        triggerChange(scope, JSON.stringify(this.params));
+  //        this.$router.go({ path: this.pathname, query: this.params});
+  //      }
+  //    }
+  // },
 
   components: {combobox,datemonth,datepicker,daterange,cascade},
   watch:{

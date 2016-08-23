@@ -18,7 +18,7 @@
 
 .combobox .comboLabel {
   min-width: 60px;
-  padding: 0 30px 0 10px;z-index: 2;
+  padding: 0 12px 0 10px;z-index: 2;
 }
 .combobox .comboLabel:hover {
   background-color: #eee;
@@ -43,4 +43,7 @@ text-overflow: ellipsis;
 .combobox .dropBox .dropOne:hover {
   background-color: #eee;
   cursor: pointer;
+}
+.combobox .bticon {
+    color: gray;
 }

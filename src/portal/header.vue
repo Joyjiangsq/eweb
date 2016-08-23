@@ -1,25 +1,30 @@
 <template>
-  <div :class="protalCss.headerView">
-        <div :class="protalCss.logoBox"><img :src="logo" alt="" /></div>
-        <div :class="protalCss.headerBars">
-              <span :class="protalCss.who">欢迎您！分站管理员！</span>
-              <span :class="protalCss.operator">
-                <span>修改密码</span>
-                <span>退出</span>
+  <div :class="portalCss.headerView">
+        <div :class="portalCss.logoBox"><img :src="logo" alt="" /></div>
+        <div :class="portalCss.headerBars">
+              <span :class="portalCss.who">用户名</span>
+              <span :class="portalCss.operator">
+                <span><icon iconname="icon-key" iconlabel="修改密码"></icon></span>
+                <span><icon iconname="icon-downaction" iconlabel="退出"></icon></span>
               </span>
         </div>
   </div>
 </template>
 
 <script>
-import protalCss from './portal.css';
+import portalCss from './portal.css';
 import logo from 'asset/img/logo.png';
+import icon from "component/sprite/icon.vue";
 export default {
     data(){
       return {
-        protalCss,
+        portalCss,
         logo: logo
       }
+    },
+
+    components:{
+      icon
     }
 
 }

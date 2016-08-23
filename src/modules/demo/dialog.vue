@@ -17,15 +17,13 @@
             <div class="" slot="containerDialog">
                 这是内容区域
             </div>
-            <!-- <div class="" slot="footerDialog">
-                  这是尾巴
-            </div> -->
       </dialog>
 </template>
 
 <script>
 import dialog from "component/dialog/dialog";
 import panel from "component/panel/panel";
+import {setTitle} from "actions/index.js";
 export default {
   data: function () {
     return {
@@ -35,6 +33,11 @@ export default {
   computed: {},
   ready: function () {},
   attached: function () {},
+  route:{
+    data: function(){
+      setTitle(this.$store, "对话框");
+    }
+  },
   methods: {
     changeDialog() {
           this.flagdep = !this.flagdep;

@@ -16,9 +16,9 @@
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag'>
-                          <span v-if="sone.type == 'data'" >{{done[sone.labelValue].name}} </span>
+                          <span v-if="sone.type == 'data'" >{{done[sone.labelValue]}} </span>
                           <span v-if="sone.type == 'operator'" >
-                                <span v-for="vone in done['operator'].name"  @click="operatorHandler(done['operator'].id, vone.action)" >{{vone.name}}</span>
+                                <span v-for="vone in sone['labelCaption']"  @click="operatorHandler(done[codevalue], vone.action)" >{{vone.name}}</span>
                           </span>
                     </td>
               </tr>
@@ -67,6 +67,13 @@ export default {
     params:{
       type:Object,
       default:() => {}
+    },
+
+    events: {
+      type: Object,
+      default:function(){
+        return {operatorHandler: function(type, id){}}
+      }
     }
   },
   data: function () {
@@ -92,7 +99,7 @@ export default {
   methods: {
     adapertData(d){
         if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
-
+        console.log(d);
         this.dataList = [];
         for (var i = 0; i < d.data.length; i++) {
             let one = d.data[i];
@@ -104,6 +111,7 @@ export default {
             }
             this.dataList.push(rowData);
         }
+        // this.dataList.push({"_id":"5795a1bb5dc803c328a75ca2","providerName":"杭州谷鼎暖通设备有限公司","detailAddresses":"江干区三新北路中豪湘座A座403室","areaCaption":"杭州","contact":"朱寿","phone":"13989803757","areaId":"57958812515c79f1296c2556","catery":"采暖系列"});
         this.loading = false;
     },
 
@@ -111,14 +119,15 @@ export default {
       return this.$http.get(this.$Api+ (this.url || ""),{params:this.params}).then((res) => {
           // 如果有数据 就渲染
          //  如果没有数据就显示没有数据
-          this.adapertData(res.data);
+          this.adapertData({data: []});
       },(error) =>{
         console.log(error);
       })
     },
 
     operatorHandler(id, action){
-        this.$dispatch("table_action", {id: id, action:action}); // 发射事件
+        // this.$dispatch("table_action", {id: id, action:action}); // 发射事件
+        this.events.operatorHandler.call(this._context, action, id);
     }
   },
   components: {},
