@@ -12,7 +12,8 @@
                           <div class="subTitle">
                               {{title}}
                           </div>
-                          <router-view></router-view>
+                          <router-view ></router-view>
+                          <div class="clear"></div>
                       </div>
                 </div>
           </div>
@@ -43,7 +44,9 @@ export default {
     ready(){
       console.log(this.title);
       this.$nextTick(function () {
-        this.$el.querySelector(".app_container").style.minHeight = window.innerHeight - 120 + "px";
+        // this.$el.querySelector(".app_container").style.minHeight = window.innerHeight - 120 + "px";
+
+        //  this.$el.querySelector(".app_main_container").style.width = window.innerWidth - 200+ "px";
       })
     },
     vuex: {

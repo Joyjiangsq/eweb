@@ -30,7 +30,15 @@ table {
     border-spacing: 0;
 }
 table thead {
-    background: #efefef;
+    background: -webkit-linear-gradient(white, #f2f2f2);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(white, #f2f2f2);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(white, #f2f2f2);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(white, #f2f2f2);
+    FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=white,endColorStr=#f2f2f2); /*IE 6 7 8*/
+    /* 标准的语法（必须放在最后） */
     border-bottom: 1px solid #ddd;
 }
 table thead th {
@@ -42,13 +50,13 @@ table thead th {
     padding-left: 10px;
 }
 table tbody td {
-  color: #333;
-  height: 35px;
-  text-align: center;
-  vertical-align: top;
-  padding: 10px 0;
-  padding-left: 10px;
-  line-height: 22px;
+    color: #333;
+    height: 35px;
+    text-align: center;
+    vertical-align: top;
+    padding: 10px 0;
+    padding-left: 10px;
+    line-height: 22px;
 }
 table tbody td span {
     font-size: 13px;
@@ -58,55 +66,77 @@ table tbody td span {
 
 /**全局样式**/
 
+
 /**渐隐**/
+
 :global(.fadeModal-enter) {
-  opacity: 0;
+    opacity: 0;
 }
-
 :global(.fadeModal-leave) {
-  opacity: 0;
+    opacity: 0;
 }
-
 :global(.fadeModal-enter .bounce) {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
-
 :global(.fadeModal-leave .bounce) {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 :global(.app_container) {
-    overflow: hidden;    margin-top: 73px;
+      padding-top: 80px;
 }
 :global(.app_header) {
-  position: fixed;
-z-index: 10;
-width: 100%;
-top:0;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    top: 0;
 }
+:global(.needtop) {
+    margin-top: 20px;
+}
+:global(.needleft) {
+    padding-left: 20px;
+}
+:global(.needright) {
+    padding-right: 20px;
+}
+
+:global(.needpadding) {
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
 :global(.app_left_menus_box) {
-    width: 20%;
-    padding-top: 15px;
+    width: 200px;
     position: fixed;
     height: 100%;
     border-top: 1px solid #ddd;
     background: #4a5b6d;
+    z-index: 1;
     color: #a0b0c1;
 }
 :global(.app_main_container) {
-    width: 80%;
-    left: 20%;
+    padding-left: 200px;
 }
-
+:global(.app_main_container .app_container_in) {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+:global(.app_main_container .app_container_in .clear) {
+    clear:both;
+}
 :global(.app_main_container .subTitle) {
-  background-color: #f2f2f2;
-padding: 10px;
-box-shadow: 0 20px 10px -24px rgba(0, 0, 0, .5);
-border-bottom: 1px solid #ddd;
-}
-:global(.needpadding) {
-    padding: 10px;
+    background-color: #f2f2f2;
+    padding: 0 10px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 80px;
 }
 :global(.app_footer) {
     background: #b9b9b9;
@@ -114,16 +144,41 @@ border-bottom: 1px solid #ddd;
     text-align: center;
     line-height: 50px;
 }
-@media screen and (min-width: 1400px) {
-    :global(.app_left_menus_box) {
-        width: 10%;
-    }
-    :global(.app_main_container) {
-        width: 90%;
-        left: 10%;
-    }
-}
+
 :global(.app_left_menus_box .v-link-active) {
     background: #405060;
     color: white;
+}
+
+/*---滚动条默认显示样式--*/
+
+::-webkit-scrollbar-thumb {
+    background-color: #cacaca;
+    height: 50px;
+    outline-offset: -2px;
+    outline: 2px solid #fff;
+    -webkit-border-radius: 4px;
+    border: 2px solid #fff;
+}
+
+/*---鼠标点击滚动条显示样式--*/
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #4a5b6d;
+    height: 50px;
+    -webkit-border-radius: 4px;
+}
+
+/*---滚动条大小--*/
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+/*---滚动框背景样式--*/
+
+::-webkit-scrollbar-track-piece {
+    background-color: #fff;
+    -webkit-border-radius: 0;
 }

@@ -20,7 +20,7 @@ export default {
 
     formate:{
       type: String,
-      default:"yyyy-mm-dd"
+      default:"yyyy/mm/dd"
     },
 
     startstopdate: {

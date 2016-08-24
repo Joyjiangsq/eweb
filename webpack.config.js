@@ -57,7 +57,7 @@ var webconfig = {
             loader: 'file',
             query: {
               limit: 10000,
-              name: 'img/[path][name].[hash].[ext]'
+              name: '/img/[name].[hash].[ext]'
             }
           },
 
@@ -66,7 +66,7 @@ var webconfig = {
             loader: 'file',
             query: {
               limit: 10000,
-              name: 'fonts/[name].[hash].[ext]'
+              name: '/fonts/[name].[hash].[ext]'
             }
           },
 

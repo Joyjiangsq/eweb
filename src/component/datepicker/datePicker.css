@@ -15,7 +15,9 @@
   cursor: pointer;
   height: 32px;
   vertical-align: top;
-  margin-left: -43px;
+  position: absolute;
+  right: 0;
+  top: 0;
   border-left: 0;
   line-height: 32px;
   font-size: 12px;

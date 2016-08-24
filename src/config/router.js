@@ -2,19 +2,11 @@ export function routerStart(router) {
       router.map({
           "/index": {
               name:"index",
-              component: function(resovle) {require(['modules/index.vue'], resovle)},
+              component: function(resovle) {require(['modules/index/index.vue'], resovle)},
           },
 
-          "/": {
-              component: function(resovle) {require(['modules/index.vue'], resovle)},
-          },
-
-          "/userMgr": {
-              component: function(resovle) {require(['modules/userMgr.vue'], resovle)},
-          },
-
-          "/customMgr": {
-              component: function(resovle) {require(['modules/customMgr.vue'], resovle)},
+          "/accountmgr": {
+              component: function(resovle) {require(['modules/account/accountmgr.vue'], resovle)},
           },
 
           // 开发文档
@@ -33,7 +25,7 @@ export function routerStart(router) {
 
       // redirect
       router.redirect({
-
+          "/": "/index"
       })
 
       // global before

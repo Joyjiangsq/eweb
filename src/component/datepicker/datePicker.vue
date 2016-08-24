@@ -53,7 +53,7 @@ export default {
       },
       formate:{                // 定义日期格式化
         type: String,
-        default:"yyyy-mm-dd"
+        default:"yyyy/mm/dd"
       },
       stopdate:{              // 定义截止日期限制
         // type: Date,

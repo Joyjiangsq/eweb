@@ -17,7 +17,7 @@
 
             <!--范围选择-->
             <span v-if="one.type == 'daterange'" ><label for="">{{one.labelcaption}}</label>
-                <daterange :start.sync="params[one.keynamestart]" :end.sync="params[one.keynameend]"></daterange>
+                <daterange :start.sync="params[one.keynamestart]" :end.sync="params[one.keynameend]" :formate="one.formate"></daterange>
             </span>
             <!--月选择-->
             <span v-if="one.type == 'datemonth'" ><label for="">{{one.labelcaption}}</label>
@@ -29,7 +29,7 @@
                 <combobox :labelname="one.labelname" :keyid="one.rid"  :datas="one.datas" :value.sync="params[one.keyname]"></combobox>
             </span>
         </span>
-        <span @click="searchHandler">查询 {{params | json}}</span>
+        <span @click="searchHandler">查询</span>
     </div>
 </template>
 
@@ -90,47 +90,27 @@ export default {
         let one = this.datas[i];
         if(one.type == "datepicker" || one.type == "datemonth" || one.type == "combobox" || one.type == "text") {
             this.$set("params."+one.keyname, one.value);
-            // pp[one.keyname] = one.value;
         }
         else if(one.type == "daterange") {
            this.$set("params."+one.keynamestart, one.start);
-            //  pp[one.keynamestart] = one.start;
-              //  pp[one.keynameend] = one.end;
            this.$set("params."+one.keynameend, one.end);
         }
         else if(one.type == "cascade") {
-          // console.log(one);
-          // pp["pid"] = one.pid;
-          // pp["cid"] = one.cid;
-          // pp["aid"] = one.aid;
           this.$set("params.pid", one.pid);
           this.$set("params.cid", one.cid);
           this.$set("params.aid", one.aid);
         }
     }
-    // console.log(pp);
-    // this.p = pp;
-    // this.$set("p", pp);
-    // console.log(this.params);
+
     this.searchHandler();
   },
   attached: function () {},
   methods: {
-      searchHandler: function(){
-        // console.log(this.params);
-        // console.log(this);
+      searchHandler: function(e){
         this.events.onSearch.call(this._context, this.params);
-        this.$router.go({ path: this.pathname, query: this.params});
+        if(e) this.$router.go({ path: this.pathname, query: this.params});
       }
   },
-  // vuex: {
-  //    actions: {
-  //      searchHandler:function(scope){
-  //        triggerChange(scope, JSON.stringify(this.params));
-  //        this.$router.go({ path: this.pathname, query: this.params});
-  //      }
-  //    }
-  // },
 
   components: {combobox,datemonth,datepicker,daterange,cascade},
   watch:{

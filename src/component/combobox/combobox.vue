@@ -2,7 +2,7 @@
     <div :class="combCss.combobox" v-show="havedatas">
           <div :class="combCss.comboLabel"  @click="changeDropAction">
                   {{defaultInfo.label}}
-                  <span :class='combCss.bticon'><icon iconname="icon-right2"></icon></span>
+                  <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
           </div>
           <div :class="combCss.dropBox" v-show="dropshow">
               <div :class="combCss.dropOne" v-for="item in datas" @click="dropClick(item)">

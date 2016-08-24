@@ -1,5 +1,5 @@
 <template>
-    <div :class="panelCss.panelBox">
+    <div :class="[classname,panelCss.panelBox]">
       <div :class="panelCss.panelTitle">
         <slot name="panelTitle">这是标题</slot>
       </div>
@@ -16,6 +16,11 @@
 <script>
 import panelCss from "./panel.css";
 export default {
+  props:{
+    classname: {
+      default:""
+    }
+  },
   data: function () {
     return {
       panelCss
@@ -23,7 +28,8 @@ export default {
   },
   computed: {},
   ready: function () {},
-  attached: function () {},
+  attached: function () {
+  },
   methods: {},
   components: {}
 }
