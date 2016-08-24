@@ -37,7 +37,8 @@ table thead {
     background: -moz-linear-gradient(white, #f2f2f2);
     /* Firefox 3.6 - 15 */
     background: linear-gradient(white, #f2f2f2);
-    FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=white,endColorStr=#f2f2f2); /*IE 6 7 8*/
+    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
+    /*IE 6 7 8*/
     /* 标准的语法（必须放在最后） */
     border-bottom: 1px solid #ddd;
 }
@@ -84,7 +85,7 @@ table tbody td span {
     transform: scale(1.1);
 }
 :global(.app_container) {
-      padding-top: 80px;
+    padding-top: 80px;
 }
 :global(.app_header) {
     position: fixed;
@@ -101,13 +102,11 @@ table tbody td span {
 :global(.needright) {
     padding-right: 20px;
 }
-
 :global(.needpadding) {
     padding-right: 20px;
     padding-left: 20px;
     margin-top: 20px;
 }
-
 :global(.app_left_menus_box) {
     width: 200px;
     position: fixed;
@@ -125,7 +124,7 @@ table tbody td span {
     padding-bottom: 20px;
 }
 :global(.app_main_container .app_container_in .clear) {
-    clear:both;
+    clear: both;
 }
 :global(.app_main_container .subTitle) {
     background-color: #f2f2f2;
@@ -144,7 +143,6 @@ table tbody td span {
     text-align: center;
     line-height: 50px;
 }
-
 :global(.app_left_menus_box .v-link-active) {
     background: #405060;
     color: white;
