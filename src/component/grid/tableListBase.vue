@@ -3,7 +3,7 @@
     <table :class="classname">
         <thead>
               <tr>
-                <th v-for="tone in headercaption" style="tone.style">
+                <th v-for="tone in headercaption" :style="tone.style">
                       <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag'>
                       {{tone.name}}
                       <span  v-if="tone.sort">升序</span>
@@ -98,7 +98,7 @@ export default {
   attached: function () {},
   methods: {
     adapertData(d){
-        if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
+        // if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
         console.log(d);
         this.dataList = [];
         for (var i = 0; i < d.data.length; i++) {
@@ -111,7 +111,7 @@ export default {
             }
             this.dataList.push(rowData);
         }
-        // this.dataList.push({"_id":"5795a1bb5dc803c328a75ca2","providerName":"杭州谷鼎暖通设备有限公司","detailAddresses":"江干区三新北路中豪湘座A座403室","areaCaption":"杭州","contact":"朱寿","phone":"13989803757","areaId":"57958812515c79f1296c2556","catery":"采暖系列"});
+        this.dataList.push({"orderid":"5795a1bb5dc803c328a75ca2","name":"杭州谷鼎暖通设备有限公司","date":"江干区三新北路中豪湘座A座403室","type":"杭州","contact":"朱寿","phone":"13989803757","areaId":"57958812515c79f1296c2556","cash":"12"});
         this.loading = false;
     },
 

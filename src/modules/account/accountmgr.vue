@@ -71,7 +71,7 @@ export default {
 
     }
   },
-  ready: function () {},
+  ready: function () {this.loadtag = !this.loadtag;},
   attached: function () {},
   methods: {},
   components: {search,tb,pagepanel},

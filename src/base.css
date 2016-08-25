@@ -3,11 +3,14 @@
     padding: 0;
     border: 0;
     outline: none;
-    position: relative;
     font-size: 14px;
 }
 span, a {
     display: inline-block;
+    position: relative;
+}
+div, p, ul, li {
+    position: relative;
 }
 body {
     background: #e6e6e6;
@@ -21,6 +24,7 @@ input {
     padding: 8px;
     color: #888;
     border-radius: 4px;
+    position: relative;
 }
 table {
     background: white;
@@ -29,7 +33,8 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-table thead {
+table thead {}
+table thead tr {
     background: -webkit-linear-gradient(white, #f2f2f2);
     /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(white, #f2f2f2);
@@ -40,7 +45,6 @@ table thead {
     FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
     /*IE 6 7 8*/
     /* 标准的语法（必须放在最后） */
-    border-bottom: 1px solid #ddd;
 }
 table thead th {
     text-align: center;
@@ -49,6 +53,7 @@ table thead th {
     color: #333;
     height: 35px;
     padding-left: 10px;
+    border-bottom: 1px solid #ddd;
 }
 table tbody td {
     color: #333;
