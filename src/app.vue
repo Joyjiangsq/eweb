@@ -42,7 +42,6 @@ export default {
     },
 
     ready(){
-      console.log(this.title);
       this.$nextTick(function () {
         // this.$el.querySelector(".app_container").style.minHeight = window.innerHeight - 120 + "px";
 

@@ -1,10 +1,11 @@
-.indexBox *{
-
+.indexBox {
+  width: 100%;
+  background: #e6e6e6;
 }
 .indexBox .levelBox {
-  float: left;
-  margin-left: 1.5%;
-  width: 48%;
+  /*float: left;
+  margin-left: 20px;
+  width: 47%;*/
 }
 
 .indexBox .panelhalf {
@@ -28,4 +29,20 @@
 }
 .indexBox .operator span:hover {
   color: #333;
+}
+
+.indexRight {
+  float: left;
+  width: 50%;
+}
+.indexLeft .levelBox {
+  width: 97%;
+}
+.indexLeft {
+  float: left;
+  width: 50%;
+}
+
+.indexIn {
+    padding: 0 20px;
 }

@@ -1,0 +1,20 @@
+.searchinfo {
+  padding: 15px 0 0 18px;
+}
+.searchinfo input {
+    width: 200px;
+}
+
+.searchinfo label {
+      margin-right: 15px;
+}
+
+.searchItem {
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
+
+.searchbtn {
+  margin-bottom: 15px;
+  padding-right: 10px;
+}

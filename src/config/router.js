@@ -5,8 +5,14 @@ export function routerStart(router) {
               component: function(resovle) {require(['modules/index/index.vue'], resovle)},
           },
 
+          // 账户管理
           "/accountmgr": {
               component: function(resovle) {require(['modules/account/accountmgr.vue'], resovle)},
+          },
+
+          // 员工管理
+          "/employee":{
+              component: function(resovle) {require(['modules/employee/employeemgr.vue'], resovle)},
           },
 
           // 开发文档

@@ -31,13 +31,19 @@
 .pickerMain table {
     width: 100%;
 }
-.pickerMain table .prevDay {
+.pickerMain table thead{
+    border-left:0;
+}
+.pickerMain table tbody tr td{
+    border: 0;
+}
+.pickerMain table .prevDay span {
     color: #dedada;
 }
-.pickerMain table .nextDay {
+.pickerMain table .nextDay span {
     color: #dedada;
 }
-.pickerMain table .closeDay {
+.pickerMain table .closeDay span {
     color: #dedada;
 }
 .pickerMain table .curDay {

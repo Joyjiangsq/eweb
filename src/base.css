@@ -4,6 +4,7 @@
     border: 0;
     outline: none;
     font-size: 14px;
+    color: #232323;
 }
 span, a {
     display: inline-block;
@@ -13,7 +14,7 @@ div, p, ul, li {
     position: relative;
 }
 body {
-    background: #e6e6e6;
+    background: white;
     font-family: "Microsoft YaHei";
 }
 html, body {
@@ -26,6 +27,9 @@ input {
     border-radius: 4px;
     position: relative;
 }
+input:hover, input:focus {
+    border: 1px solid #4a5b6d;
+}
 table {
     background: white;
     width: 100%;
@@ -33,7 +37,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-table thead {}
+table thead {    border-left: 1px solid #ddd;}
 table thead tr {
     background: -webkit-linear-gradient(white, #f2f2f2);
     /* Safari 5.1 - 6.0 */
@@ -51,18 +55,18 @@ table thead th {
     font-size: 13px;
     font-weight: normal;
     color: #333;
-    height: 35px;
+    height: 40px;
     padding-left: 10px;
     border-bottom: 1px solid #ddd;
 }
 table tbody td {
-    color: #333;
-    height: 35px;
-    text-align: center;
-    vertical-align: top;
-    padding: 10px 0;
-    padding-left: 10px;
-    line-height: 22px;
+  color: #232323;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0 10px;
+  line-height: 22px;
+  border: 1px solid #ddd;
 }
 table tbody td span {
     font-size: 13px;
@@ -98,19 +102,13 @@ table tbody td span {
     width: 100%;
     top: 0;
 }
-:global(.needtop) {
-    margin-top: 20px;
-}
-:global(.needleft) {
-    padding-left: 20px;
-}
-:global(.needright) {
-    padding-right: 20px;
+
+:global(.needpaddingnull) {
+  padding: 20px;
 }
 :global(.needpadding) {
-    padding-right: 20px;
-    padding-left: 20px;
-    margin-top: 20px;
+  padding: 20px;
+  background-color: #e6e6e6;
 }
 :global(.app_left_menus_box) {
     width: 200px;
@@ -126,14 +124,14 @@ table tbody td span {
 }
 :global(.app_main_container .app_container_in) {
     padding-top: 40px;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
 }
 :global(.app_main_container .app_container_in .clear) {
     clear: both;
 }
 :global(.app_main_container .subTitle) {
     background-color: #f2f2f2;
-    padding: 0 10px;
+    padding: 0 20px;
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #ddd;
@@ -152,7 +150,10 @@ table tbody td span {
     background: #405060;
     color: white;
 }
-
+:global(.app_left_menus_box .v-link-active span) {
+    background: #405060;
+    color: white;
+}
 /*---滚动条默认显示样式--*/
 
 ::-webkit-scrollbar-thumb {

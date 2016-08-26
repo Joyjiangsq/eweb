@@ -1,7 +1,7 @@
 <template>
     <button :class="[buttonCss.btn, buttonCss[btnname]]">
-          <icontext v-show='iconinfo' :attach="iconinfo.attach"  :iconname="iconinfo.iconname"  :iconlabel="iconinfo.iconlabel"></icontext>
-          {{btnlabel}}
+          <icontext :classname='buttonCss.iconscope' v-show='iconname' :iconname="iconname"  :iconlabel="falsel"></icontext>
+          <span :class='buttonCss.labelName'><slot></slot></span>
     </button>
 </template>
 
@@ -13,26 +13,21 @@ export default {
       btnname:{
         type:String,
         default:"btn-default"
-      }
-
-      btnlabel:{
-        type:String,
-        default:"按钮"
       },
 
-      iconinfo:{
-        type:Object,
-        default:() => {attach:"small", iconname: "icon-home", iconlabel: false}
+      iconname:{
+        default: false
       }
   },
   data: function () {
     return {
+      buttonCss
     }
   },
   computed: {},
   ready: function () {},
   attached: function () {},
   methods: {},
-  components: {}
+  components: {icontext}
 }
 </script>

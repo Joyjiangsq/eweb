@@ -1,6 +1,6 @@
 <template>
-    <div class="searchinfo">
-          <span v-for="one in datas">
+    <div :class="sCss.searchinfo">
+          <span v-for="one in datas" :class="sCss.searchItem">
             <!--城市级联-->
             <span v-if="one.type == 'cascade'" ><label for="">{{one.labelcaption}}</label>
               <cascade :pid.sync="params.pid" :cid.sync="params.cid" :aid.sync="params.aid"></cascade>
@@ -29,17 +29,19 @@
                 <combobox :labelname="one.labelname" :keyid="one.rid"  :datas="one.datas" :value.sync="params[one.keyname]"></combobox>
             </span>
         </span>
-        <span @click="searchHandler">查询</span>
+        <span :class='sCss.searchbtn'><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
     </div>
 </template>
 
 <script>
+import sCss from "./search.css";
 import combobox from "component/combobox/combobox";
 import datemonth from "component/datemonth/dateMonth";
 import datepicker from "component/datepicker/datePicker";
 import daterange from "component/datepicker/dateRange";
 import cascade from "component/combobox/combocascade";
 import {triggerChange} from "actions/index";
+import btn from "component/sprite/button.vue";
 export default {
   props:{
     /**
@@ -74,6 +76,7 @@ export default {
   },
   data: function () {
     return {
+      sCss,
       params:{}
     }
   },
@@ -112,7 +115,7 @@ export default {
       }
   },
 
-  components: {combobox,datemonth,datepicker,daterange,cascade},
+  components: {combobox,datemonth,datepicker,daterange,cascade, btn},
   watch:{
     "p": {
       handler: function(v,o){

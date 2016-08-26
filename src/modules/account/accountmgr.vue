@@ -29,14 +29,14 @@
               </div>
 
               <div :class="acCss.searchBox">
-                      <search  pathname="/demo/search" :datas="sdata" :events = 'searchEvents'></search>
+                      <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
           </div>
         </pagepanel>
-        <pagepanel classname="needtop">
-              <div class="">导出</div>
+        <pagepanel classname="needpaddingnull">
+              <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="acCss.tableIn">
-                    <tb :headercaption="headercaption" :loadtag="loadtag" ></tb>
+                    <tb :headercaption="headercaption" :loadtag="loadtag"  :datas="testData" :events="tableEvents"></tb>
               </div>
         </pagepanel>
     </div>
@@ -48,20 +48,38 @@ import acCss from "./account.css";
 import search from "component/search/search";
 import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
+import btnbar from "component/sprite/buttonbar";
 export default {
   data: function () {
     return {
       acCss,
       headercaption:[{name:"交易类型", labelValue:"type", type:"data"},{name:"订单号", labelValue:"orderid",type:"data"}, {name:"交易金额", labelValue:"cash",type:"data", attr:"price"},
                     {name:"交易日期", labelValue:"date",type:"data"},{name:"收款账号", labelValue:"account",type:"data"}, {name:"收款账号名称", labelValue:"name", type:"data"},
-                    {type:"operator", name:"操作", labelCaption:[{name:"删除", action:"delete"},{name:"编辑",action:"edit"}]}],
+                    {type:"operator", name:"操作", labelCaption:[{name:"编辑",action:"edit",icon:"icon-edit"},{name:"删除", action:"delete",icon:"icon-delete"}]}],
       loadtag: false,
+      testData: [{"orderid":"xxx","name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
+                  {"orderid":"xxx","name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
+                  {"orderid":"xxx","name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
+                  {"orderid":"xxx","name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"}],
       searchEvents:{
         onSearch: function(params) {
             // this.$set("params", params);
             // this.loadtag = !this.loadtag;
         }
       },
+
+      tableEvents:{
+        operatorHandler: function(d){
+          console.log(d);
+        }
+      },
+
+      btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
+      btnEvents:{
+        btnClick: function(d){
+            console.log(d);
+        }
+      }
     }
   },
   computed: {
@@ -71,10 +89,10 @@ export default {
 
     }
   },
-  ready: function () {this.loadtag = !this.loadtag;},
+  ready: function () {},
   attached: function () {},
   methods: {},
-  components: {search,tb,pagepanel},
+  components: {search,tb,pagepanel,btnbar},
   route:{
     data: function(){
       setTitle(this.$store, "分站账户管理");

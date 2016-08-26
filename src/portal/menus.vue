@@ -22,13 +22,16 @@ export default {
     data(){
       return {
         protalCss,
-        datamenu:[]
+        datamenu:[
+          {name:"首页", url:"/index", icon:"icon-home"},
+          {name:"账户管理", url:"/accountmgr", icon:"icon-tip"},
+          {name:"员工管理", url:"/employee", icon:"icon-tip"} 
+        ]
       }
     },
 
     created: function(){
-      this.datamenu.push({name:"首页", url:"/index", icon:"icon-home"});
-      this.datamenu.push({name:"账户管理", url:"/accountmgr", icon:"icon-tip"});
+
       // var demoinfo = {name:"开发文档", icon:"icon-tip", subMenus:[{url:"/demo/datepicker",name:"日历"}, {url:"/demo/dialog",name:"对话框"},{url:"/demo/paginate",name:"分页"},
       //                                         {url:"/demo/datatable",name:"表格"}, {url:"/demo/combobox",name:"下拉"},{url:"/demo/search",name:"查询"}]}
       // this.datamenu.push(demoinfo);

@@ -22,10 +22,10 @@
               </div>
         </div>
         <div :class="datepCss.attachFooter">
-             <button type="button" name="button" @click="curMonthAction">当月</button>
+             <btn @click="curMonthAction" btnname="btn-default">当月</btn>
              <span :class='datepCss.btnBoxer'>
-                    <button type="button" name="button"  @click="confirmAction">确定</button>
-                    <button type="button" name="button"  @click="cancelAction">取消</button>
+                    <btn @click="confirmAction" btnname="btn-default">确定</btn>
+                    <btn @click="cancelAction" btnname="btn-default">取消</btn>
              </span>
         </div>
     </div>
@@ -36,6 +36,7 @@
 import datepCss from "./dateMonth.css";
 import Utils from "common/Utils";
 import icon from "component/sprite/icon.vue";
+import btn from "component/sprite/button.vue";
 export default {
   props:{
       datedepend:{                // 是否是独立的还是依赖于datepicker的
@@ -176,7 +177,7 @@ export default {
         this.tplDate = new Date(newYear, tpMonth, 1);
     }
   },
-  components: {icon},
+  components: {icon, btn},
   watch:{
     "value": function(){
       this.tplDate = new Date(this.value);

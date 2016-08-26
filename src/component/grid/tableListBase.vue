@@ -12,13 +12,15 @@
               </tr>
         </thead>
         <tbody  v-show="loading? false:noresult? false: true">
-              <tr v-for="done in dataList">
+              <tr v-for="(order, done)  in dataList" :class="order%2 == 1? tableCss.active:''">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag'>
-                          <span v-if="sone.type == 'data'" >{{done[sone.labelValue]}} </span>
+                          <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
+                          <span v-if="sone.type == 'index'" >{{order + 1}}</span>
                           <span v-if="sone.type == 'operator'" >
-                                <span v-for="vone in sone['labelCaption']"  @click="operatorHandler(done[codevalue], vone.action)" >{{vone.name}}</span>
+                                <!-- <span v-for="vone in sone['labelCaption']"  @click="operatorHandler(done[codevalue], vone.action)" >{{vone.name}}</span> -->
+                                <btnbar :buttons="sone['labelCaption']" :events="btnEvents"></btnbar>
                           </span>
                     </td>
               </tr>
@@ -36,6 +38,7 @@
 <script>
 import Utils from "common/Utils";
 import tableCss from "./tableCss.css";
+import btnbar from "component/sprite/buttonbar";
 export default {
   props:{
     classname:{
@@ -72,16 +75,26 @@ export default {
     events: {
       type: Object,
       default:function(){
-        return {operatorHandler: function(type, id){}}
+        return {operatorHandler: function(data){}}
       }
+    },
+
+    datas:{
+      type:Array,
+      default:() => []
     }
   },
   data: function () {
     return {
         tableCss,
-        dataList:[],
+        dataList: this.datas || [],
         noresult: false,
-        loading:true
+        loading:true,
+        btnEvents:{
+          btnClick: function(d){
+              this.events.operatorHandler.call(this._context, d)
+          }
+        }
     }
   },
 
@@ -92,14 +105,16 @@ export default {
   },
 
   created: function(){
+    this.headercaption.unshift({type:"index"});
+    if(this.dataList.length != 0) this.loading = !this.loading;
   },
 
   ready: function () {},
   attached: function () {},
   methods: {
     adapertData(d){
-        // if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
-        console.log(d);
+        if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
+        // console.log(d);
         this.dataList = [];
         for (var i = 0; i < d.data.length; i++) {
             let one = d.data[i];
@@ -111,7 +126,7 @@ export default {
             }
             this.dataList.push(rowData);
         }
-        this.dataList.push({"orderid":"5795a1bb5dc803c328a75ca2","name":"杭州谷鼎暖通设备有限公司","date":"江干区三新北路中豪湘座A座403室","type":"杭州","contact":"朱寿","phone":"13989803757","areaId":"57958812515c79f1296c2556","cash":"12"});
+        // this.dataList.push();
         this.loading = false;
     },
 
@@ -130,7 +145,7 @@ export default {
         this.events.operatorHandler.call(this._context, action, id);
     }
   },
-  components: {},
+  components: {btnbar},
 
 
   watch:{

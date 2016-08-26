@@ -10,7 +10,7 @@
 import pCss from "./panel.css";
 export default {
   props:{
-    classname:{     // needpadding 左右20px   needtop 上20px  needleft 左20px  needright 右20px
+    classname:{     // needpadding 左右20px 背景    needpaddingnull左右20px
       type:String,
        default:""
     }

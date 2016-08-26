@@ -1,45 +1,51 @@
 <template>
   <div :class="inCss.indexBox">
-      <div :class="inCss.levelBox">
-            <panel :classname='inCss.panelhalf'>
-                <div slot="panelTitle">
-                       代办事项
-                       <div :class='inCss.operator'>
-                            <icon iconname="icon-left3"></icon>
-                            <icon iconname="icon-right3"></icon>
-                       </div>
-                </div>
-                <div slot="panelContent">
-                  xxxx
-                </div>
-            </panel>
+      <div :class="inCss.indexIn">
+        <div :class="inCss.indexLeft">
+                <div :class="inCss.levelBox">
+                      <panel :classname='inCss.panelhalf'>
+                          <div slot="panelTitle">
+                                 代办事项
+                                 <div :class='inCss.operator'>
+                                      <icon iconname="icon-left3"></icon>
+                                      <icon iconname="icon-right3"></icon>
+                                 </div>
+                          </div>
+                          <div slot="panelContent">
+                            xxxx
+                          </div>
+                      </panel>
 
-            <panel  :classname='inCss.panelhalf'>
-                <div slot="panelTitle">
-                       培训附件
-                       <div :class='inCss.operator'>
-                            <icon iconname="icon-left3"></icon>
-                            <icon iconname="icon-right3"></icon>
-                       </div>
+                      <panel  :classname='inCss.panelhalf'>
+                          <div slot="panelTitle">
+                                 培训附件
+                                 <div :class='inCss.operator'>
+                                      <icon iconname="icon-left3"></icon>
+                                      <icon iconname="icon-right3"></icon>
+                                 </div>
+                          </div>
+                          <div slot="panelContent">
+                            xxxx
+                          </div>
+                      </panel>
                 </div>
-                <div slot="panelContent">
-                  xxxx
+        </div>
+        <div :class="inCss.indexRight">
+                <div :class="inCss.levelBox">
+                  <panel :classname='inCss.panelall'>
+                      <div slot="panelTitle">
+                             公告栏
+                             <div :class='inCss.operator'>
+                                  <icon iconname="icon-left3"></icon>
+                                  <icon iconname="icon-right3"></icon>
+                             </div>
+                      </div>
+                      <div slot="panelContent">
+                        xxxx
+                      </div>
+                  </panel>
                 </div>
-            </panel>
-      </div>
-      <div :class="inCss.levelBox">
-        <panel :classname='inCss.panelall'>
-            <div slot="panelTitle">
-                   公告栏
-                   <div :class='inCss.operator'>
-                        <icon iconname="icon-left3"></icon>
-                        <icon iconname="icon-right3"></icon>
-                   </div>
-            </div>
-            <div slot="panelContent">
-              xxxx
-            </div>
-        </panel>
+        </div>
       </div>
   </div>
 </template>
@@ -56,7 +62,12 @@ export default {
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    this.$nextTick(function () {
+      // console.log(this.$el);
+      this.$el.style.minHeight = window.innerHeight + "px";
+    })
+  },
   created: function () {
   },
 

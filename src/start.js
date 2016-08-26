@@ -47,10 +47,9 @@ Vue.http.interceptors.push((request, next)  => {
 
 const App = Vue.extend(require("app.vue"));
 router.start(App, '#app');
-
-Vue.config.debug = process.env.NODE_ENV === 'dev';
-Vue.config.devtools = process.env.NODE_ENV === 'dev';
+Vue.config.debug = process.env.NODE_ENV === 'dev ';
+Vue.config.devtools = process.env.NODE_ENV === 'dev ';
 
 
 // just for debugging
-window.router = router;
+// window.router = router;

@@ -1,5 +1,5 @@
 <template>
-    <span :class='iconCss.iconBox'>
+    <span :class='[iconCss.iconBox, classname]'>
         <span :class='[iconCss.iconfont, iconCss[iconname], iconCss[attach]]'></span>
         <span :class='iconCss.iconlabel' v-show="iconlabel">{{iconlabel}}</span>
     </span>
@@ -9,9 +9,10 @@
 import iconCss from "./icon.css";
 export default {
   props:{
+    classname:{
+
+    },
     iconname:{                        // 图标样式
-      type:String,
-      default: "icon-home"
     },
 
     attach:{                          // 附属样式
