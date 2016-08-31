@@ -65,10 +65,15 @@ export default {
   ready: function () {
     this.$nextTick(function () {
       // console.log(this.$el);
-      this.$el.style.minHeight = window.innerHeight + "px";
+      $("body").css("background-color", "#e6e6e6");
     })
   },
+
+  detached(){
+      $("body").css("background-color", "white");
+  },
   created: function () {
+
   },
 
   route:{

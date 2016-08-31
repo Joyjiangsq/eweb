@@ -1,32 +1,44 @@
 export function routerStart(router) {
       router.map({
-          "/index": {
-              name:"index",
-              component: function(resovle) {require(['modules/index/index.vue'], resovle)},
+          "/":{
+              component: function(resovle) {require(['portalview/index.vue'], resovle)},
+              subRoutes:{
+                "index": {
+                    component: function(resovle) {require(['modules/index/index.vue'], resovle)},
+                },
+                // 账户管理
+                "accountmgr": {
+                    component: function(resovle) {require(['modules/account/accountmgr.vue'], resovle)},
+                },
+
+                // 员工管理
+                "employee":{
+                    component: function(resovle) {require(['modules/employee/employeemgr.vue'], resovle)},
+                },
+
+                //开发文档
+                "demo":{
+                  component: function(resovle) {require(['modules/demo/demo.vue'], resovle)},
+                  subRoutes:{
+                    "/datepicker": {  component: function(resovle) {require(['modules/demo/datepicker.vue'], resovle)}},
+                    "/dialog": {  component: function(resovle) {require(['modules/demo/dialog.vue'], resovle)}},
+                    "/paginate": {  component: function(resovle) {require(['modules/demo/paginate.vue'], resovle)}},
+                    "/datatable": {  component: function(resovle) {require(['modules/demo/datatable.vue'], resovle)}},
+                    "/combobox": {  component: function(resovle) {require(['modules/demo/combobox.vue'], resovle)}},
+                    "/search": { name:"sdemo", component: function(resovle) {require(['modules/demo/search.vue'], resovle)}}
+                  }
+                }
+              }
           },
 
-          // 账户管理
-          "/accountmgr": {
-              component: function(resovle) {require(['modules/account/accountmgr.vue'], resovle)},
+          "/login": {
+              component: function(resovle) {require(['modules/login/login.vue'], resovle)},
           },
 
-          // 员工管理
-          "/employee":{
-              component: function(resovle) {require(['modules/employee/employeemgr.vue'], resovle)},
-          },
 
-          // 开发文档
-          "/demo":{
-            component: function(resovle) {require(['modules/demo/demo.vue'], resovle)},
-            subRoutes:{
-              "/datepicker": {  component: function(resovle) {require(['modules/demo/datepicker.vue'], resovle)}},
-              "/dialog": {  component: function(resovle) {require(['modules/demo/dialog.vue'], resovle)}},
-              "/paginate": {  component: function(resovle) {require(['modules/demo/paginate.vue'], resovle)}},
-              "/datatable": {  component: function(resovle) {require(['modules/demo/datatable.vue'], resovle)}},
-              "/combobox": {  component: function(resovle) {require(['modules/demo/combobox.vue'], resovle)}},
-              "/search": { name:"sdemo", component: function(resovle) {require(['modules/demo/search.vue'], resovle)}}
-            }
-          }
+
+
+
       })
 
       // redirect

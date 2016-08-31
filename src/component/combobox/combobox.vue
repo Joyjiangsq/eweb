@@ -1,7 +1,7 @@
 <template>
     <div :class="combCss.combobox" v-show="havedatas">
           <div :class="combCss.comboLabel"  @click="changeDropAction">
-                  {{defaultInfo.label}}
+                  <span :class="combCss.comboLabelspan">{{defaultInfo.label}}</span>
                   <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
           </div>
           <div :class="combCss.dropBox" v-show="dropshow">

@@ -9,8 +9,30 @@
           <div slot="panelFooter">
 
           </div>
+      </panel>
 
+      <panel>
+          <div slot="panelTitle">
+               复选框
+          </div>
+          <div slot="panelContent">
+                <checkbx :datas="checkDatas" checkname="fruits"></checkbx>
+          </div>
+          <div slot="panelFooter">
 
+          </div>
+      </panel>
+
+      <panel>
+          <div slot="panelTitle">
+               单选框
+          </div>
+          <div slot="panelContent">
+                <radiobx :datas="rDatas" checkname="fruits"></radiobx>
+          </div>
+          <div slot="panelFooter">
+
+          </div>
       </panel>
 
       <dialog :flag="flagdep">
@@ -21,13 +43,17 @@
 </template>
 
 <script>
+import checkbx from "component/checkbox/checkBox.vue";
+import radiobx from "component/radiobox/radioBox.vue";
 import dialog from "component/dialog/dialog";
 import panel from "component/panel/panel";
 import {setTitle} from "actions/index.js";
 export default {
   data: function () {
     return {
-      flagdep: false
+      flagdep: false,
+      checkDatas: [{label:"苹果", id:1, checked: true}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: true}],
+      rDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: true}]
     }
   },
   computed: {},
@@ -44,7 +70,7 @@ export default {
     }
   },
   components: {
-    panel, dialog
+    panel, dialog,checkbx,radiobx
   }
 }
 </script>

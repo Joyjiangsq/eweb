@@ -1,6 +1,7 @@
 .indexBox {
   width: 100%;
-  background: #e6e6e6;
+  overflow: hidden;
+  padding-bottom: 20px;
 }
 .indexBox .levelBox {
   /*float: left;

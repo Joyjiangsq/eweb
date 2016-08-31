@@ -55,6 +55,16 @@ export default {
         type: String,
         default:"yyyy/mm/dd"
       },
+      events:{
+        type:Object,
+        default: function(){
+          return {
+            dayClick: function(d) {
+
+            }
+          }
+        }
+      },
       stopdate:{              // 定义截止日期限制
         // type: Date,
         default: () => new Date()
@@ -146,6 +156,7 @@ export default {
         var dateNow = new Date(target.attr("year"),target.attr("month")*1-1, target.attr("day"));
         // this.$dispatch("dayClick", {times: dateNow.getTime(), who: this.classname}); // 发射事件
         this.value = Utils.formate(dateNow, this.formate);
+        this.events.dayClick.call(this._context, {times: this.value, who: this.classname});
         this.changePickerMain();
     },
 

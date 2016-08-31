@@ -49,3 +49,8 @@
 .icon-edit:before { content: "\e61b"; }
 .icon-delete:before { content: "\e61c"; }
 .icon-add:before { content: "\e61d"; }
+.icon-forbidden:before { content: "\e605"; }
+.icon-user:before { content: "\e609"; }
+.icon-uncheck:before { content: "\e615"; }
+.icon-radio1:before { content: "\e617"; }
+.icon-radio:before { content: "\e61e"; }

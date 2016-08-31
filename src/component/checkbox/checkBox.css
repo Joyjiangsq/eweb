@@ -1,0 +1,13 @@
+@charset "UTF-8";
+.checkBox {
+
+}
+
+.checkBox .checkone{
+  cursor: pointer;margin-right: 15px;
+
+}
+
+.checkBox .checkone span {
+  color: #ea5404;
+}

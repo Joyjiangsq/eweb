@@ -32,7 +32,7 @@
     padding: 50px 0;
     font-size: 12px;
     border-bottom: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid #ddd;    border-right: 1px solid #ddd;
 }
 .loading {
     background-color: white;
@@ -40,7 +40,7 @@
     text-align: center;
     color: #ccc;
     padding: 50px 0;
-    font-size: 12px;
+    font-size: 12px;    border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }

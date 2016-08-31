@@ -38,6 +38,7 @@
               <div :class="acCss.tableIn">
                     <tb :headercaption="headercaption" :loadtag="loadtag"  :datas="testData" :events="tableEvents"></tb>
               </div>
+              <pg :totals="100" :size="10"></pg>
         </pagepanel>
     </div>
 </template>
@@ -49,6 +50,7 @@ import search from "component/search/search";
 import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import btnbar from "component/sprite/buttonbar";
+import pg from "component/pagination/pagination";
 export default {
   data: function () {
     return {
@@ -92,7 +94,7 @@ export default {
   ready: function () {},
   attached: function () {},
   methods: {},
-  components: {search,tb,pagepanel,btnbar},
+  components: {search,tb,pagepanel,btnbar,pg},
   route:{
     data: function(){
       setTitle(this.$store, "分站账户管理");

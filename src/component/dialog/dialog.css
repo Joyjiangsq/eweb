@@ -20,7 +20,7 @@
 .dialog {
   background-color: white;
   display: inline-block;
-  border: 2px solid #36424d;
+  /*border: 2px solid #36424d;*/
 
   border-radius: 2px;
  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
@@ -30,10 +30,17 @@
 }
 
 .dialog .dialogTitle {
-  background-color: #36424d;
-  color: white;
+  background: -webkit-linear-gradient(white, #f2f2f2);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(white, #f2f2f2);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(white, #f2f2f2);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(white, #f2f2f2);
+  FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
   text-align: left;
   padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 .dialog .dialogTitle  .close{

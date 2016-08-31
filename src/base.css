@@ -21,11 +21,12 @@ html, body {
     height: 100%;
 }
 input {
-    border: 1px solid #ddd;
-    padding: 8px;
-    color: #888;
-    border-radius: 4px;
-    position: relative;
+  border: 1px solid #ddd;
+padding: 8px 0;
+color: #888;
+border-radius: 4px;
+position: relative;
+text-indent: 12px;
 }
 input:hover, input:focus {
     border: 1px solid #4a5b6d;
@@ -116,11 +117,13 @@ table tbody td span {
     height: 100%;
     border-top: 1px solid #ddd;
     background: #4a5b6d;
-    z-index: 1;
+    z-index: 111;
     color: #a0b0c1;
 }
 :global(.app_main_container) {
-    padding-left: 200px;
+    /*padding-left: 200px;*/
+    width: calc(100% - 200px);
+        float: right;
 }
 :global(.app_main_container .app_container_in) {
     padding-top: 40px;

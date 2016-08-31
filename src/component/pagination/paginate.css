@@ -8,24 +8,28 @@
     color: #666;
     font-size: 13px;
     position: absolute;
-    top: 0;
+    top: -2px;
     right: 0px;
 }
 .paginationBox .gotoBox input {
-    width: 17px;
-    height: 9px;
+  height: 10px;
+  vertical-align: -1px;
+  width: 30px;
+  text-indent: 5px;
 }
 .paginationBox .closeBtn {
-    color: #999;
-    border: 1px solid #999;
-    padding: 5px;
-    background-color: white;
-    border-radius: 3px;
-    font-size: 13px;
+  color: #999;
+  border: 1px solid #999;
+  padding: 0 5px;
+  background-color: white;
+  border-radius: 3px;
+  font-size: 13px;
+  height: 25px;
+  line-height: 25px;
 }
 .paginationBox .pageIndex .active {
-    color: #a70000;
-    border: 1px solid #a70000;
+    color: #e7551e;
+    border: 1px solid #e7551e;
 }
 .paginationBox .defTheme {
     border: 1px solid #ddd;
@@ -37,24 +41,38 @@
     font-size: 13px;
 }
 .paginationBox .defTheme:active {
-    box-shadow: 0px 0px 1px 0px #a70000;
+    box-shadow: 0px 0px 1px 0px #e7551e;
     background-color: #f3f3f3;
 }
 .paginationBox .defTheme:hover, .paginationBox .pageIndex span:hover {
-    color: #a70000;
-    border: 1px solid #a70000;
+    color: #e7551e;
+    border: 1px solid #e7551e;
 }
 .paginationBox .pageIndex span {
-    border: 1px solid #ddd;
-    background-color: white;
-    border-radius: 3px;
-    margin-right: 7px;
-    color: #666;
-    font-size: 13px;
-    width: 20px;
-    padding: 3px;
-    height: 20px;
-    line-height: 20px;
-    text-align: center;
-    cursor: pointer;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 3px;
+  margin-right: 7px;
+  color: #666;
+  font-size: 13px;
+  width: 20px;
+  padding: 0 3px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  cursor: pointer;
+}
+.paginationBox .defTheme:hover {
+  background-color: #f4ad6e;
+  border: 1px solid #f4ad6e;
+  color: white;
+}
+.paginationBox .pageIndex span:hover {
+  background-color: #f4ad6e;
+  border: 1px solid #f4ad6e;
+  color: white;
+}.paginationBox .pageIndex span:hover {
+  background-color: #f4ad6e;
+  border: 1px solid #f4ad6e;
+  color: white;
 }

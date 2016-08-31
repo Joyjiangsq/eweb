@@ -10,6 +10,7 @@
               <div class="">
                 <tb :headercaption="headercaption" :loadtag="loadtag" :datas="testData" :events="tableEvents"></tb>
               </div>
+              <pg :totals="100" :size="10"></pg>
         </pagepanel>
 
 
@@ -29,6 +30,7 @@ import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import btnbar from "component/sprite/buttonbar";
 import dialog from "component/dialog/dialog";
+import pg from "component/pagination/pagination";
 export default {
   data: function () {
     return {
@@ -52,6 +54,11 @@ export default {
         }
       },
 
+      dialogEvents:{
+        footerClick: function(d){
+          console.log(d);
+        }
+      },
       btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
@@ -72,7 +79,7 @@ export default {
   ready: function () {},
   attached: function () {},
   methods: {},
-  components: {search,tb,pagepanel,btnbar,dialog},
+  components: {search,tb,pagepanel,btnbar,dialog, pg},
   route:{
     data: function(){
       setTitle(this.$store, "员工管理");
