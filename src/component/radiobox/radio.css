@@ -8,6 +8,12 @@
 
 }
 
-.radio .radione span {
+
+
+.radio .checked span {
   color: #ea5404;
+}
+
+.radio .unchecked span {
+  color: #c8c8c8;
 }

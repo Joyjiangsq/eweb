@@ -1,6 +1,6 @@
 <template>
     <div :class="css.checkBox">
-        <span v-for="(index, one) in datas" :class='css.checkone' @click="checkClick(index)">
+        <span v-for="(index, one) in datas" :class='[css.checkone, one.checked?css.checked : css.unchecked]' @click="checkClick(index)">
               <icon  iconname="icon-checked" :iconlabel="one.label" v-if="!!one.checked"></icon>
               <icon  iconname="icon-uncheck" :iconlabel="one.label" v-else></icon>
         </span>
@@ -20,6 +20,11 @@ export default {
       value:{
 
       },
+
+      defaultkey: {
+          default: -1
+      },
+
       labelkey:{
         type:String,
         default:"id"
@@ -45,10 +50,12 @@ export default {
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    this.initCheck();
+  },
   attached: function () {},
   created: function(){
-    this.resetValues();
+    // this.resetValues();
   },
   methods: {
     checkClick: function(index) {
@@ -56,7 +63,6 @@ export default {
       if(this.datas[index][this.labelkey] || this.datas[index][this.labelkey] == 0) this.resetValues();
       else  this.$set("value", this.datas[index].checked);
       this.events.checkClick.call(this._context, this.value);
-      console.log(this.value);
     },
 
     resetValues: function(){
@@ -65,8 +71,23 @@ export default {
             if(this.datas[i]["checked"]) vs.push(this.datas[i][this.labelkey]);
       }
       this.$set("value", vs.join(","));
+    },
+
+    initCheck: function(v){
+        if(!v) v =  this.defaultkey+"";
+        if(v == -1) return false;
+        for(var i = 0; i < this.datas.length; i++) {
+          if(v.indexOf(this.datas[i][this.labelkey]) != -1) this.datas[i]["checked"] = true
+          else this.datas[i]["checked"] = false
+        }
+        this.$set("value", v);
     }
   },
-  components: {icon}
+  components: {icon},
+  watch:{
+    "defaultkey": function(v) {
+        this.initCheck(v+"");
+    }
+  }
 }
 </script>

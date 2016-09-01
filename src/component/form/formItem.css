@@ -1,0 +1,15 @@
+@charset "UTF-8";
+.formOne {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.formtarget {
+    display: inline-block;
+}
+
+.errorMsg {
+    position: absolute;
+    left: 0;
+    color: red;
+}

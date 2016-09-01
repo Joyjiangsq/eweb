@@ -156,6 +156,7 @@ export default {
       let month = monObj.attr("month");
       let year = yearObj.attr("year");
       this.value = Utils.formate(new Date(year, month, 1), this.formate);
+      this.$dispatch("monthclick", this.value);
       this.changePickerMain();
     },
 

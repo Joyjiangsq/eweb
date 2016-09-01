@@ -8,6 +8,10 @@
 
 }
 
-.checkBox .checkone span {
+.checkBox .checked span {
   color: #ea5404;
+}
+
+.checkBox .unchecked span {
+  color: #c8c8c8;
 }

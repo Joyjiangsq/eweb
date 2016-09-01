@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname]">
         <label for="">{{labelname}}</label>
         <div :class="css.formtarget">
-            <datemonth  :value="value"  :stopdate="stopdate" :startdate="startdate" @monthclick="monthclick"></datemonth>
+            <checkbx :datas="datas" checkname="name" :events="checkEvents" :defaultkey="value"></checkbx>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -13,32 +13,33 @@
 <script>
 import css from "./formItem.css";
 import mixin from "common/mixin.js";
-import datemonth from "component/datemonth/dateMonth";
+import checkbx from "component/checkbox/checkBox";
 export default {
   mixins: [mixin.formBase],
   props:{
-    startdate:{     // 月份选择的区间限制的 起始日期
-
-    },
-    startdate:{    // 月份选择的区间限制的 结束日期
-
-    }
+      datas:{
+        type:Array,
+        default: () => []
+      }
   },
   data: function () {
     return {
-      css
+      css,
+      checkEvents: {
+        checkClick: function(c) {
+          this.$set("value", c);
+          this.$set("error", false);
+        }
+      }
     }
   },
   computed: {},
   ready: function () {},
   attached: function () {},
   methods: {
-      monthclick: function(value) {
-         this.$set("error", false);
-         this.$set("value", value);
-      }
+
   },
-  components: {datemonth},
+  components: {checkbx},
   watch:{
     "validatestart":function() {
        if(this.watchIgnore) return false;

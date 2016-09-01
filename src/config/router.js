@@ -25,7 +25,8 @@ export function routerStart(router) {
                     "/paginate": {  component: function(resovle) {require(['modules/demo/paginate.vue'], resovle)}},
                     "/datatable": {  component: function(resovle) {require(['modules/demo/datatable.vue'], resovle)}},
                     "/combobox": {  component: function(resovle) {require(['modules/demo/combobox.vue'], resovle)}},
-                    "/search": { name:"sdemo", component: function(resovle) {require(['modules/demo/search.vue'], resovle)}}
+                    "/search": { component: function(resovle) {require(['modules/demo/search.vue'], resovle)}},
+                    "/form": {component: function(resovle) {require(['modules/demo/form.vue'], resovle)}}
                   }
                 }
               }

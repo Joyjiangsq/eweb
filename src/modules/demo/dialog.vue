@@ -16,7 +16,7 @@
                复选框
           </div>
           <div slot="panelContent">
-                <checkbx :datas="checkDatas" checkname="fruits"></checkbx>
+                <checkbx :datas="checkDatas" defaultkey="1,2" checkname="fruits" ></checkbx>
           </div>
           <div slot="panelFooter">
 
@@ -28,10 +28,9 @@
                单选框
           </div>
           <div slot="panelContent">
-                <radiobx :datas="rDatas" checkname="fruits"></radiobx>
+                <radiobx :datas="rDatas" checkname="fruits" defaultkey="2"></radiobx>
           </div>
           <div slot="panelFooter">
-
           </div>
       </panel>
 
@@ -52,8 +51,8 @@ export default {
   data: function () {
     return {
       flagdep: false,
-      checkDatas: [{label:"苹果", id:1, checked: true}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: true}],
-      rDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: true}]
+      checkDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: false}],
+      rDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: false}]
     }
   },
   computed: {},

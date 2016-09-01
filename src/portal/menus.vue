@@ -33,7 +33,7 @@ export default {
     created: function(){
 
       var demoinfo = {name:"开发文档", icon:"icon-tip", subMenus:[{url:"/demo/datepicker",name:"日历"}, {url:"/demo/dialog",name:"对话框"},{url:"/demo/paginate",name:"分页"},
-                                              {url:"/demo/datatable",name:"表格"}, {url:"/demo/combobox",name:"下拉"},{url:"/demo/search",name:"查询"}]}
+                                              {url:"/demo/datatable",name:"表格"}, {url:"/demo/combobox",name:"下拉"},{url:"/demo/search",name:"查询"},{url:"/demo/form",name:"表单"}]}
       this.datamenu.push(demoinfo);
     },
     components:{

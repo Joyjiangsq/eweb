@@ -1,6 +1,6 @@
 <template>
     <div :class="css.radio">
-        <span v-for="(index, one) in datas" :class='css.radione' @click="radioClick(index)">
+        <span v-for="(index, one) in datas"  :class='[css.radione, one.checked?css.checked : css.unchecked]' @click="radioClick(index)">
               <icon  iconname="icon-radio" :iconlabel="one.label" v-if="!one.checked"></icon>
               <icon  iconname="icon-radio1" :iconlabel="one.label" v-else></icon>
         </span>
@@ -16,7 +16,9 @@ export default {
         type: Array,
         default:[]  // [{label:"足球", id: 1, checked: true}]
       },
-
+      defaultkey: {
+        default: -1
+      },
       value:{
 
       },
@@ -47,10 +49,10 @@ export default {
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () { this.initCheck(); },
   attached: function () {},
   created: function(){
-    this.resetValues();
+    // this.resetValues();
   },
   methods: {
     radioClick: function(index) {
@@ -64,15 +66,29 @@ export default {
     },
 
     resetValues: function(){
-      // console.log(d);
-
       for(var i = 0; i < this.datas.length; i++) {
           if(this.datas[i]["checked"]) this.$set("value", this.datas[i][this.labelkey]);
       }
       this.events.radioClick.call(this._context, this.value);
-      console.log(this.value);
+    },
+
+    initCheck: function(v){
+        if(!v) v = this.defaultkey+"";
+        if(v == -1) return false;
+        for(var i = 0; i < this.datas.length; i++) {
+          if(v.indexOf(this.datas[i][this.labelkey]) != -1) this.datas[i]["checked"] = true
+          else this.datas[i]["checked"] = false
+        }
+        this.$set("value", v);
+        // this.events.radioClick.call(this._context, this.value);
     }
+
   },
-  components: {icon}
+  components: {icon},
+  watch:{
+    "defaultkey": function(v) {
+        this.initCheck(v+"");
+    }
+  }
 }
 </script>
