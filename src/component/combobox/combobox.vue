@@ -86,13 +86,13 @@ export default {
       }
       this.value = item[this.keyid];
       this.changeDropAction();
+      this.$dispatch("dropclick", this.value);
     },
 
     loadData(p) {
       p = p? p: this.params;
       return this.$http.get(this.url,{params:p}).then((res) => {
         this.datas = res.data.data;
-        console.log(this.datas);
       },(error) =>{
         console.log(error);
       })

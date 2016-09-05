@@ -35,6 +35,7 @@ export default {
   methods: {
     btnClickHandler: function(one){
         this.events.btnClick.call(this._context, one);
+        this.$dispatch("btnclick", one);
     }
   },
   components: {btn}

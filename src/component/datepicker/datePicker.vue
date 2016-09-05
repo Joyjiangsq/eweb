@@ -154,9 +154,9 @@ export default {
         scope.find("span").removeClass(this.datepCss.active);
         target.addClass(this.datepCss.active);
         var dateNow = new Date(target.attr("year"),target.attr("month")*1-1, target.attr("day"));
-        // this.$dispatch("dayClick", {times: dateNow.getTime(), who: this.classname}); // 发射事件
         this.value = Utils.formate(dateNow, this.formate);
-        this.events.dayClick.call(this._context, {times: this.value, who: this.classname});
+        this.events.dayClick.call(this._context, this.value);
+        this.$dispatch("dayclick", this.value); // 发射事件
         this.changePickerMain();
     },
 

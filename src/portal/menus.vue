@@ -25,7 +25,8 @@ export default {
         datamenu:[
           {name:"首页", url:"/index", icon:"icon-home"},
           {name:"账户管理", url:"/accountmgr", icon:"icon-tip"},
-          {name:"员工管理", url:"/employee", icon:"icon-tip"}
+          {name:"员工管理", url:"/employee", icon:"icon-tip"},
+          {name:"用户管理", url:"/user", icon:"icon-tip"}
         ]
       }
     },

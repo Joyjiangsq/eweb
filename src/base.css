@@ -57,7 +57,6 @@ table thead th {
     font-weight: normal;
     color: #333;
     height: 40px;
-    padding-left: 10px;
     border-bottom: 1px solid #ddd;
 }
 table tbody td {
@@ -105,11 +104,14 @@ table tbody td span {
 }
 
 :global(.needpaddingnull) {
-  padding: 20px;
+    padding: 20px 0;
 }
 :global(.needpadding) {
   padding: 20px;
   background-color: #e6e6e6;
+}
+:global(.needtop) {
+  margin-top: 20px;
 }
 :global(.app_left_menus_box) {
     width: 200px;

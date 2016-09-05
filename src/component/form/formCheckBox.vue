@@ -1,6 +1,6 @@
 <template>
-    <div :class="[css.formOne, classname]">
-        <label for="">{{labelname}}</label>
+    <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
+        <label for="" :class='css.labelDesc'>{{labelname}}</label>
         <div :class="css.formtarget">
             <checkbx :datas="datas" checkname="name" :events="checkEvents" :defaultkey="value"></checkbx>
             <div :class="css.errorMsg" v-show="error">

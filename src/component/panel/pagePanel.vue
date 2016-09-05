@@ -1,6 +1,6 @@
 <template>
     <div :class="classname">
-        <div :class="[pCss.pagePanel]">
+        <div :class="[pCss.pagePanel, pCss[direct]]">
           <slot></slot>
         </div>
     </div>
@@ -11,6 +11,10 @@ import pCss from "./panel.css";
 export default {
   props:{
     classname:{     // needpadding 左右20px 背景    needpaddingnull左右20px
+      type:String,
+       default:""
+    },
+    direct:{
       type:String,
        default:""
     }

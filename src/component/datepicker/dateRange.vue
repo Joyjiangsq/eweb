@@ -13,7 +13,9 @@ export default {
     start:{
       default:""
     },
+    value:{  // 表单需要
 
+    },
     end:{
       default:""
     },
@@ -54,11 +56,13 @@ export default {
   methods: {},
   components: {datepicker},
   watch:{
-    "start": function(){
+    "start": function(v){
         this.endstartdate = new Date(this.start);
+        this.$dispatch("rangechange", {name:"start", value:v});
     },
-    "end": function() {
+    "end": function(v) {
         this.startstopdate = new Date(this.end);
+        this.$dispatch("rangechange", {name:"end", value:v});
     }
   }
 }

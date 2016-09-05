@@ -16,6 +16,11 @@ export function routerStart(router) {
                     component: function(resovle) {require(['modules/employee/employeemgr.vue'], resovle)},
                 },
 
+                // 用户管理
+                "user":{
+                    component: function(resovle) {require(['modules/user/userMgr.vue'], resovle)},
+                },
+
                 //开发文档
                 "demo":{
                   component: function(resovle) {require(['modules/demo/demo.vue'], resovle)},

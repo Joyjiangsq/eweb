@@ -1,7 +1,7 @@
 <template>
-    <div :class="epCss.empBox">
+    <div :class="epCss.userBox">
         <pagepanel classname="needpadding" direct="bottom">
-              <div :class="epCss.empSearch">
+              <div :class="epCss.userSearch">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
         </pagepanel>
@@ -24,7 +24,7 @@
 
 <script>
 import {setTitle} from "actions";
-import epCss from "./employee.css";
+import epCss from "./user.css";
 import search from "component/search/search";
 import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
@@ -36,11 +36,11 @@ export default {
     return {
       epCss,
       flagdep: false,
-      headercaption:[{name:"员工编号", labelValue:"type", type:"data"},{name:"员工姓名", labelValue:"orderid",type:"data"}, {name:"职位", labelValue:"cash",type:"data", attr:"price"},
-                    {name:"联系方式", labelValue:"date",type:"data"},{name:"创建人", labelValue:"account",type:"data"}, {name:"创建时间", labelValue:"name", type:"data"},
+      headercaption:[{name:"用户名", labelValue:"type", type:"data"},{name:"角色", labelValue:"orderid",type:"data"}, {name:"状态", labelValue:"cash",type:"data", attr:"price"},
+                    {name:"创建人", labelValue:"account",type:"data"}, {name:"创建时间", labelValue:"name", type:"data"},
                     {type:"operator", name:"操作"}],
       loadtag: false,
-      testData:[{type:"1102019201", orderid:"卡拉"},{type:"1102019201", orderid:"卡拉"}],
+      testData:[{type:"110202222219201", orderid:"卡拉", status: 1},{type:"1102019201", orderid:"卡拉", status:2}],
       searchEvents:{
         onSearch: function(params) {
             // this.$set("params", params);
@@ -50,10 +50,20 @@ export default {
 
       tableEvents:{
         operatorRender: function(d){
-          return [{name:"编辑",action:"edit",icon:"icon-edit"},{name:"删除", action:"delete",icon:"icon-delete"}]
+          let bdatas = [{name:"密码重置", action:"rebuild",icon:"icon-key", id:d.type},{name:"编辑", action:"edit",icon:"icon-edit", id:d.type}];
+          if(d.status == 1) bdatas.unshift({name:"启用", action:"open", icon:"icon-check", id:d.type})
+          else bdatas.unshift({name:"禁用", action:"forbidden", icon:"icon-forbidden", id:d.type});
+          return bdatas;
+
         },
         operatorHandler: function(d){
           console.log(d);
+          if(d.action == "open") {
+            d.action = "forbidden";d.name = "禁用";d.icon = "icon-forbidden";
+          }
+          else if(d.action == "forbidden") {
+            d.action = "open";d.name = "启用";d.icon = "icon-check";
+          }
         }
       },
 
@@ -73,10 +83,9 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.jobname || "",  keyname:"jobname", labelcaption:"职位:"},
-              {type:"text",  value:q.empcode || "",  keyname:"empcode", labelcaption:"员工编号:"},
-              {type:"text",  value:q.empname || "",  keyname:"empname", labelcaption:"员工姓名:"}];
-
+      return [{type:"text",  value:q.username || "",  keyname:"username", labelcaption:"用户名:"},
+              {type:"text",  value:q.status || "",  keyname:"status", labelcaption:"用户状态:"},
+              {type:"daterange",  keynamestart:"start", keynameend:"start", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"员工姓名:"}];
     }
   },
   ready: function () {},
@@ -85,7 +94,7 @@ export default {
   components: {search,tb,pagepanel,btnbar,dialog, pg},
   route:{
     data: function(){
-      setTitle(this.$store, "员工管理");
+      setTitle(this.$store, "用户管理");
     }
   }
 }

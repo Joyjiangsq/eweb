@@ -5,14 +5,14 @@
 .accountBox .accountTitleBox {
   background-color: white;
 
-  padding: 15px 0;
+  /*padding: 15px 0;*/
 }
 
 .accountBox .accountTitleBox .itemone{
   width: 28%;
+  padding-right: 10px;
   border-right: 1px solid #ddd;
-  padding: 0 2%;
-  line-height: 30px;
+  margin-right: 10px;
 }
 .accountBox .accountTitleBox .itemone:last-child {border: 0;}
 .accountBox .accountTitleBox .itemone .itemTitle{
@@ -37,8 +37,8 @@
     max-width: 1024px;
 }
 .accountBox .accountTitleBox .searchBox {
-    padding-left: 1%;
-  padding-top: 30px;
+    /*padding-left: 1%;
+  padding-top: 30px;*/
 }
 
 .accountBox .tableBox {

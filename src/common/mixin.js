@@ -32,6 +32,10 @@ let mixin = {
                 validatestart:{   // 验证动作开关
                   type:Boolean,
                   default: false
+                },
+                vertical:{
+                   type:Boolean,
+                   default: true
                 }
           },
           data: function () {
@@ -43,7 +47,6 @@ let mixin = {
           },
           watch: {
             "validatestart": function(){
-              console.log(1);
               if(this.must) {
                 if(!this.value || this.value == "") {
                   this.$dispatch("onvalidate", {res:"fail", msg: "该项必须填写"});

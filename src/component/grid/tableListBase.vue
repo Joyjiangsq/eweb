@@ -20,7 +20,7 @@
                           <span v-if="sone.type == 'index'" >{{order + 1}}</span>
                           <span v-if="sone.type == 'operator'" >
                                 <!-- <span v-for="vone in sone['labelCaption']"  @click="operatorHandler(done[codevalue], vone.action)" >{{vone.name}}</span> -->
-                                <btnbar :buttons="sone['labelCaption']" :events="btnEvents"></btnbar>
+                                <btnbar :buttons="btnData(done)"  @btnclick="btnEventHandler"></btnbar>
                           </span>
                     </td>
               </tr>
@@ -58,7 +58,7 @@ export default {
       default:"id"
     },
     // 头信息
-    headercaption:{             // [{name:"姓名", labelValue:"name", checkBox: true, type:"data", sort: true, attr:""}, {type:"operator", name:"操作", labelCaption:["删除"]}]
+    headercaption:{             // [{name:"姓名", labelValue:"name", checkBox: true, type:"data", sort: true, attr:""}, {type:"operator", name:"操作"}]
       type:Array,
       default:() => []
     },
@@ -75,7 +75,7 @@ export default {
     events: {
       type: Object,
       default:function(){
-        return {operatorHandler: function(data){}}
+        return {operatorHandler: function(data){}, operatorRender: function(){return []}}
       }
     },
 
@@ -90,11 +90,11 @@ export default {
         dataList: this.datas || [],
         noresult: false,
         loading:true,
-        btnEvents:{
-          btnClick: function(d){
-              this.events.operatorHandler.call(this._context, d)
-          }
-        }
+        // btnEvents:{
+        //   btnClick: function(d){
+        //       this.events.operatorHandler.call(this._context, d)
+        //   }
+        // }
     }
   },
 
@@ -112,6 +112,12 @@ export default {
   ready: function () {},
   attached: function () {},
   methods: {
+    btnEventHandler: function(d){
+      this.events.operatorHandler.call(this._context, d)
+    },
+    btnData: function(one){
+        return   this.events.operatorRender.call(this._context, one);
+    },
     adapertData(d){
         if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
         // console.log(d);

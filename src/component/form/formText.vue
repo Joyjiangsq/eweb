@@ -1,6 +1,6 @@
 <template>
-    <div :class="[css.formOne, classname]">
-        <label for="">{{labelname}}</label>
+    <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
+        <label for="" :class='css.labelDesc'>{{labelname}}</label>
         <div :class="css.formtarget">
             <input type="text" name="name" :value="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
             <div :class="css.errorMsg" v-show="error">

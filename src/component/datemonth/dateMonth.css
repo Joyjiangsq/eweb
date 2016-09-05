@@ -88,7 +88,7 @@
 .showBtn {
   cursor: pointer;
   vertical-align: top;
-  margin-left: -37px;
+  right: 34px;
   line-height: 32px;
   color: #888787;
   padding: 0 8px 0 11px;

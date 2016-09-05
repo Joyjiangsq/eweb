@@ -1,6 +1,6 @@
 <template>
-    <div :class="[css.formOne, classname]">
-        <label for="">{{labelname}}</label>
+    <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
+        <label for="" :class='css.labelDesc'>{{labelname}}</label>
         <div :class="css.formtarget">
             <radiobx :datas="datas" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>
             <div :class="css.errorMsg" v-show="error">
@@ -42,7 +42,6 @@ export default {
   components: {radiobx},
   watch:{
     "validatestart":function() {
-      console.log(this.value);
        if(this.watchIgnore) return false;
        this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
     }
