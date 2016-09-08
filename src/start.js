@@ -41,8 +41,7 @@ Vue.http.options.emulateJSON = true;
 // ajax 拦截
 Vue.http.interceptors.push((request, next)  => {
     next((response) => {
-      return response.data
-    }, (error) => {
+
     });
 });
 

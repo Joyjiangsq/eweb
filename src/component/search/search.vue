@@ -86,9 +86,6 @@ export default {
   ready: function () {
   },
   created(){
-
-
-    let pp = {};
     for(var i=0; i < this.datas.length; i++) {
         let one = this.datas[i];
         if(one.type == "datepicker" || one.type == "datemonth" || one.type == "combobox" || one.type == "text") {
