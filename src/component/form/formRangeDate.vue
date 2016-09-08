@@ -12,10 +12,10 @@
 
 <script>
 import css from "./formItem.css";
-import mixin from "common/mixin.js";
+import mixin from "common/mixinForm.js";
 import daterange from "component/datepicker/dateRange";
 export default {
-  mixins: [mixin.formBase],
+  mixins: [mixin],
   props:{
     start:{     // 起始日期
         default:""

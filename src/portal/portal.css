@@ -32,10 +32,9 @@
 .silderBox .menuItem {}
 .silderBox .menuItem .menuTitle {
     color: #a0b0c1;
-    height: 30px;
-    line-height: 30px;
     padding: 13px 0;
     padding-left: 45px;
+    cursor: pointer;
 }
 .silderBox .menuItem .menuTitle * {
     color: #a0b0c1;

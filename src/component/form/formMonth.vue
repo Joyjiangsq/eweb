@@ -12,10 +12,10 @@
 
 <script>
 import css from "./formItem.css";
-import mixin from "common/mixin.js";
+import mixin from "common/mixinForm.js";
 import datemonth from "component/datemonth/dateMonth";
 export default {
-  mixins: [mixin.formBase],
+  mixins: [mixin],
   props:{
     startdate:{     // 月份选择的区间限制的 起始日期
 

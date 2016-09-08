@@ -51,7 +51,9 @@ import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import btnbar from "component/sprite/buttonbar";
 import pg from "component/pagination/pagination";
+import pageBase from "common/mixinPage.js";
 export default {
+  mixins: [pageBase],
   data: function () {
     return {
       acCss,
@@ -94,7 +96,9 @@ export default {
 
     }
   },
-  ready: function () {},
+  ready: function () {
+    console.log(this);
+  },
   attached: function () {},
   methods: {},
   components: {search,tb,pagepanel,btnbar,pg},

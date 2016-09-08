@@ -4,7 +4,7 @@
         <thead>
               <tr>
                 <th v-for="tone in headercaption" :style="tone.style">
-                      <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag'>
+                      <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkAll">
                       {{tone.name}}
                       <span  v-if="tone.sort">升序</span>
                       <span  v-if="tone.sort">降序</span>
@@ -15,11 +15,10 @@
               <tr v-for="(order, done)  in dataList" :class="order%2 == 1? tableCss.active:''">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag'>
+                          <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' v-model="checked">
                           <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
                           <span v-if="sone.type == 'index'" >{{order + 1}}</span>
                           <span v-if="sone.type == 'operator'" >
-                                <!-- <span v-for="vone in sone['labelCaption']"  @click="operatorHandler(done[codevalue], vone.action)" >{{vone.name}}</span> -->
                                 <btnbar :buttons="btnData(done)"  @btnclick="btnEventHandler"></btnbar>
                           </span>
                     </td>
@@ -90,6 +89,7 @@ export default {
         dataList: this.datas || [],
         noresult: false,
         loading:true,
+        checked: false
         // btnEvents:{
         //   btnClick: function(d){
         //       this.events.operatorHandler.call(this._context, d)
@@ -106,7 +106,7 @@ export default {
 
   created: function(){
     this.headercaption.unshift({type:"index"});
-    if(this.dataList.length != 0) this.loading = !this.loading;
+    if(this.dataList.length != 0) this.$set("loading", !this.loading);
   },
 
   ready: function () {},
@@ -133,11 +133,16 @@ export default {
             this.dataList.push(rowData);
         }
         // this.dataList.push();
-        this.loading = false;
+          this.$set("loading", false);
+    },
+
+    checkAll: function(){
+        this.$set("checked", !this.checked);
     },
 
     loadData: function() {
       return this.$http.get(this.$Api+ (this.url || ""),{params:this.params}).then((res) => {
+        console.log(res);
           // 如果有数据 就渲染
          //  如果没有数据就显示没有数据
           this.adapertData({data: []});
@@ -160,7 +165,8 @@ export default {
     //     this.loadData();
     // },
     "loadtag": function(){
-      this.loading = true;
+      this.$set("loading", true);
+      this.$set("noresult", false);
       this.loadData();
     }
   }

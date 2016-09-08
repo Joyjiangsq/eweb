@@ -47,17 +47,23 @@ import radiobx from "component/radiobox/radioBox.vue";
 import dialog from "component/dialog/dialog";
 import panel from "component/panel/panel";
 import {setTitle} from "actions/index.js";
+import pageBase from "common/mixinPage.js";
 export default {
+  mixins:[pageBase],
   data: function () {
     return {
       flagdep: false,
       checkDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: false}],
-      rDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: false}]
+      rDatas: []
     }
   },
   computed: {},
-  ready: function () {},
-  attached: function () {},
+  ready: function () {
+
+  },
+  attached: function () {
+
+  },
   route:{
     data: function(){
       setTitle(this.$store, "对话框");
@@ -66,6 +72,12 @@ export default {
   methods: {
     changeDialog() {
           this.flagdep = !this.flagdep;
+    },
+
+    dealFun(){
+      for (var i = 0; i < 10; i++) {
+        this.rDatas.push({label:"苹果", id:i, checked: false})
+      }
     }
   },
   components: {

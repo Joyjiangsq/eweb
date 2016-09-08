@@ -12,10 +12,10 @@
 
 <script>
 import css from "./formItem.css";
-import mixin from "common/mixin.js";
+import mixin from "common/mixinForm.js";
 import combobox from "component/combobox/combobox";
 export default {
-  mixins: [mixin.formBase],
+  mixins: [mixin],
   props:{
     keyid:{     // 月份选择的区间限制的 起始日期
         default:"id"

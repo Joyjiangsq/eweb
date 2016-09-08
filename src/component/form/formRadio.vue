@@ -12,10 +12,10 @@
 
 <script>
 import css from "./formItem.css";
-import mixin from "common/mixin.js";
+import mixin from "common/mixinForm.js";
 import radiobx from "component/radiobox/radioBox";
 export default {
-  mixins: [mixin.formBase],
+  mixins: [mixin],
   props:{
       datas:{
         type:Array,

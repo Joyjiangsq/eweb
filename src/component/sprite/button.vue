@@ -1,5 +1,5 @@
 <template>
-    <button :class="[buttonCss.btn, buttonCss[btnname]]">
+    <button :class="[buttonCss.btn, buttonCss[btnname]]" @click="btnClickHandler">
           <icontext :classname='buttonCss.iconscope' v-show='iconname' :iconname="iconname"  :iconlabel="falsel"></icontext>
           <span :class='buttonCss.labelName'><slot></slot></span>
     </button>
@@ -27,7 +27,11 @@ export default {
   computed: {},
   ready: function () {},
   attached: function () {},
-  methods: {},
+  methods: {
+    btnClickHandler: function(){
+      this.$dispatch("clickaction", '');
+    }
+  },
   components: {icontext}
 }
 </script>

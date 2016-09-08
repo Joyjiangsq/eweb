@@ -57,7 +57,6 @@ export default {
 
         },
         operatorHandler: function(d){
-          console.log(d);
           if(d.action == "open") {
             d.action = "forbidden";d.name = "禁用";d.icon = "icon-forbidden";
           }
@@ -85,7 +84,7 @@ export default {
       let q = this.$route.query;
       return [{type:"text",  value:q.username || "",  keyname:"username", labelcaption:"用户名:"},
               {type:"text",  value:q.status || "",  keyname:"status", labelcaption:"用户状态:"},
-              {type:"daterange",  keynamestart:"start", keynameend:"start", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"员工姓名:"}];
+              {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"员工姓名:"}];
     }
   },
   ready: function () {},

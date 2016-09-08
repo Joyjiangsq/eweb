@@ -1,5 +1,5 @@
-let mixin = {
-   formBase: {
+
+let  formBase = {
           props:{
                 classname: {        // 传递的自定义的class
                   type:String,
@@ -59,6 +59,5 @@ let mixin = {
             }
           }
    }
-}
 
-export default mixin
+export default formBase

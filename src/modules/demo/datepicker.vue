@@ -41,33 +41,7 @@
           </div>
       </panel>
 
-      <panel>
-          <div slot="panelTitle">
-                 日历范围
-          </div>
-          <div slot="panelContent">
-            <daterange :start.sync="start" :end.sync="end"></daterange>
-          </div>
-          <div slot="panelFooter">
-              <div class="">
-                    <!-- 选择结果：{{start | dateformate 'yyyy-mm-dd'}} -- {{end| dateformate 'yyyy-mm-dd'}} -->
-              </div>
-          </div>
-      </panel>
 
-      <panel>
-          <div slot="panelTitle">
-                 日历范围
-          </div>
-          <div slot="panelContent">
-            <daterange :start.sync="start" :end.sync="end"></daterange>
-          </div>
-          <div slot="panelFooter">
-              <div class="">
-                    <!-- 选择结果：{{start | dateformate 'yyyy-mm-dd'}} -- {{end| dateformate 'yyyy-mm-dd'}} -->
-              </div>
-          </div>
-      </panel>
 </template>
 
 <script>

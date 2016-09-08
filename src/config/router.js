@@ -31,7 +31,8 @@ export function routerStart(router) {
                     "/datatable": {  component: function(resovle) {require(['modules/demo/datatable.vue'], resovle)}},
                     "/combobox": {  component: function(resovle) {require(['modules/demo/combobox.vue'], resovle)}},
                     "/search": { component: function(resovle) {require(['modules/demo/search.vue'], resovle)}},
-                    "/form": {component: function(resovle) {require(['modules/demo/form.vue'], resovle)}}
+                    "/form": {component: function(resovle) {require(['modules/demo/form.vue'], resovle)}},
+                    "/tablesp": {component: function(resovle) {require(['modules/demo/tableSpec.vue'], resovle)}}
                   }
                 }
               }
@@ -42,7 +43,9 @@ export function routerStart(router) {
           },
 
 
-
+          "*":{
+            component: function(resovle) {require(['portalview/404.vue'], resovle)},
+          }
 
 
       })
