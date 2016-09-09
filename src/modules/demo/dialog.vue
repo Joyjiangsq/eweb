@@ -13,6 +13,19 @@
 
       <panel>
           <div slot="panelTitle">
+                小提示
+          </div>
+          <div slot="panelContent">
+                <button type="button" name="button" @click="smallHandler">点击</button>
+                <smalltip :flag="stag"  :msg="msg"></smalltip>
+          </div>
+          <div slot="panelFooter">
+
+          </div>
+      </panel>
+
+      <panel>
+          <div slot="panelTitle">
                复选框
           </div>
           <div slot="panelContent">
@@ -48,13 +61,16 @@ import dialog from "component/dialog/dialog";
 import panel from "component/panel/panel";
 import {setTitle} from "actions/index.js";
 import pageBase from "common/mixinPage.js";
+import smalltip from "component/dialog/smallTip";
 export default {
   mixins:[pageBase],
   data: function () {
     return {
       flagdep: false,
       checkDatas: [{label:"苹果", id:1, checked: false}, {label:"香蕉", id:2, checked: false}, {label:"菠萝", id:3, checked: false}],
-      rDatas: []
+      rDatas: [],
+      stag:false,
+      msg:"删除成功!"
     }
   },
   computed: {},
@@ -78,10 +94,14 @@ export default {
       for (var i = 0; i < 10; i++) {
         this.rDatas.push({label:"苹果", id:i, checked: false})
       }
+    },
+
+    smallHandler(){
+      this.$set("stag", !this.stag);
     }
   },
   components: {
-    panel, dialog,checkbx,radiobx
+    panel, dialog,checkbx,radiobx, smalltip
   }
 }
 </script>

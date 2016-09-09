@@ -2,13 +2,10 @@
     <div :class="dCss.dialogBox"  v-show="modalshow" transition="fadeModal">
         <div :class="dCss.dialogIn">
           <div :class="[dCss.dialog, 'bounce']">
-                <div :class="dCss.dialogTitle">
-                    {{title}}
-                    <span :class="dCss.close" @click="hide"><icon iconname="icon-close" ></icon></span>
-                </div>
-
                 <div :class="dCss.dialogContent">
-                    <slot name='containerDialog'>这是内容</slot>
+                    <div :class="dCss.tipsIn">
+                          《  {{type}} 》{{msg}}
+                    </div>
                 </div>
 
                 <div :class="dCss.dialogFooter">
@@ -28,6 +25,16 @@ import btnbar from "component/sprite/buttonbar";
 import dialogBase from "common/mixinDialog.js";
 export default {
   mixins:[dialogBase],
+  props:{
+    type:{
+      type: String,
+      default: "warn"  // error
+    },
+    msg:{
+      type: String,
+      default:""
+    }
+  },
   data: function () {
     return {
       dCss
