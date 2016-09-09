@@ -36,12 +36,12 @@ Vue.use(VueResource);
 Vue.http.options.emulateJSON = true;
 
 //
-// document.cookie = 'token='+Math.random().toString(32);
-
 // ajax 拦截
 Vue.http.interceptors.push((request, next)  => {
-    next((response) => {
-
+    next((res) => {
+          let d = res.json();
+          if(!d.code) d = JSON.parse(d);
+          if(d.code != 200) return d;
     });
 });
 

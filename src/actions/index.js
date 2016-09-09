@@ -7,3 +7,7 @@ export const textChange = ({ dispatch, state }, text) => {
 export const setTitle = ({ dispatch, state }, str) => {
     if(str) dispatch(types.TITLE, str)
 }
+
+export const setUser = ({ dispatch, state }, data) => {
+    if(data) dispatch(types.USERINFO, JSON.stringify(data))
+}

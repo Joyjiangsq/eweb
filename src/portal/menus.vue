@@ -31,6 +31,20 @@ export default {
       }
     },
 
+    ready: function(){
+        let path = this.$route.path;
+        for (let i = 0; i < this.datamenu.length; i++) {
+              let one = this.datamenu[i];
+              if(!one.subMenus || one.subMenus.length == 0) continue;
+              let subStr = JSON.stringify(one.subMenus);
+              if(subStr.indexOf(path) != -1) {
+                console.log(one.subMenus);
+                one.show = true;
+                break;
+              }
+        }
+    },
+
     created: function(){
 
       var demoinfo = {name:"开发文档", icon:"icon-tip", subMenus:[{url:"/demo/datepicker",name:"日历"},

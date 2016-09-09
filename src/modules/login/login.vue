@@ -40,6 +40,7 @@ import logo1 from "asset/img/logo1.png";
 import icon from "component/sprite/icon";
 import btn from "component/sprite/button";
 import checkbx from "component/checkbox/checkBox";
+import {setUser} from "actions/index.js";
 import storejs from "storejs";
 export default {
   data: function () {
@@ -52,14 +53,16 @@ export default {
             this.$set("remember", checked);
         }
       },
-      userName:storejs("userName") || "",
-      passwd:storejs("passwd") || "",
+      userName:storejs("userName") || "fn_456",
+      passwd:storejs("passwd") || "123456",
       remember:false,
       error:""
     }
   },
   computed: {},
   ready: function () {
+    console.log(storejs("userInfo"));
+    if(storejs("userInfo"))  this.$router.go({path:"/index"});
     this.$nextTick(function () {
        this.$el.style.height = window.innerHeight + "px";
     });
@@ -89,13 +92,15 @@ export default {
     },
 
     loginAction: function(){
-        this.$http.get(this.$Api,{params:this.params}).then((res) => {
-              console.log(res);
-              // 如果登陆成功就设置缓存  然后跳转到首页
-              
-              // 否则提示登陆信息
+        this.$http.post(this.$Api + "login",{"user_code": this.userName,"passwd": this.passwd}).then((res) => {
+              let d = res.json();
+              if(d.code == 200) {
+                storejs({"userInfo": d.data});
+                setUser(this.$store, d.data);
+                this.$router.go({path:"/index"});
+              }
         },(error) => {
-              console.log(error);
+             this.showTips(error.msg);
         })
     },
 

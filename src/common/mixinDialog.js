@@ -33,8 +33,8 @@ let dialogBase = {
         btnEvent: {
           btnClick: function(d) {
             if(d.action == "close") this.hide()
-            this.events.footerClick.call(this._context, d);
-            this.$dispatch("btnclick", d);
+            this.events.footerClick.call(this._context, d, this.hide);
+            this.$dispatch("dialogclick", d, this.hide);
           }
         }
       }
