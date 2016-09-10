@@ -69,9 +69,7 @@ export default {
   },
   methods:{
     onEnterLook: function(e) {
-        console.log(e.target.value);
         this.$http.get(this.$Api+ (this.enterUrl || ""),{params:{id: e.target.value}}).then((res) => {
-            console.log(res);
             this.dataList.push({"orderid":Math.random(),"name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"});
         },(error) =>{
           console.log(error);

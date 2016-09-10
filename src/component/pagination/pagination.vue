@@ -12,7 +12,7 @@
               <div :class="pageCss.gotoBox">
                     跳转至
                     <input type="text" name="name"  v-model="targetpage  | intonly"/>
-                    <button type="button" name="button" :class='gotoBtn'  @click="clickPage(targetpage)">确定</button>
+                    <span  :class='gotoBtn'  @click="clickPage(targetpage)">确定</span>
               </div>
       </div>
 </template>

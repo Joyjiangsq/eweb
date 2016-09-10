@@ -20,6 +20,7 @@
               <daterg  labelname="范围：" :must="false" :validatestart="validate" @onvalidate="validateHandler"></daterg>
 
               <formcb keyid="rid" labelname="电影：" keyname="name" formname="cinimal" :datas="datas" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+              <cascadeform  labelname="地址：" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
         </div>
         <div slot="panelFooter">
             <span @click="chan">xxxx</span>
@@ -41,6 +42,7 @@ import formdt from "component/form/formDate";
 import datem from "component/form/formMonth";
 import daterg from "component/form/formRangeDate";
 import formcb from "component/form/formComboBox";
+import cascadeform from "component/form/formCascade";
 import {setTitle} from "actions/index.js";
 import panel from "component/panel/panel";
 export default {
@@ -65,6 +67,7 @@ export default {
   attached: function () {},
   methods: {
     validateHandler: function(d) {
+      console.log(d);
       if(d.res == "success") {
         this.formData[d.name] = d.value
       }
@@ -81,6 +84,6 @@ export default {
     }
 
   },
-  components: {formtext,panel, formck, formrd, datem,formdt,daterg,formcb}
+  components: {formtext,panel, formck, formrd, datem,formdt,daterg,formcb, cascadeform}
 }
 </script>

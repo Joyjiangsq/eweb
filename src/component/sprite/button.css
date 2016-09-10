@@ -1,17 +1,16 @@
 .btn {
-  height: 33px;
-  line-height: 31px;
   border-radius: 4px;
   padding: 0 10px;
-  cursor: pointer;    vertical-align: 2px;
+  cursor: pointer;height: 30px;
+  line-height: 28px;font-size: 0;
 }
 .btn .iconscope{
-vertical-align: -1px;
-margin-right: 3px;
+  margin-right: 3px;
+  font-size: 16px;
+  padding: 0;    vertical-align: middle;
 }
-.btn .iconscope span {font-size:16px;}
-.btn  .labelName{
-      /*vertical-align: top;*/
+.btn  .labelName{   vertical-align: middle;
+  padding: 0;
 }
 .btn-default {
   background: -webkit-linear-gradient(white, #f2f2f2);

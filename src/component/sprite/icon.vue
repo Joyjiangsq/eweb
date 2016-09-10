@@ -1,7 +1,7 @@
 <template>
-    <span :class='[iconCss.iconBox, classname]'>
-        <span :class='[iconCss.iconfont, iconCss[iconname], iconCss[attach]]'></span>
-        <span :class='iconCss.iconlabel' v-show="iconlabel">{{iconlabel}}</span>
+    <span :class='[classname, iconlabel?"":iconCss.iconfont, iconlabel?"":iconCss[iconname],iconlabel?"": iconCss[attach]]'>
+        <span :class='[iconCss.iconfont, iconCss[iconname], iconCss[attach]]'  v-if="iconlabel"></span>
+        <span :class='iconCss.iconlabel' v-if="iconlabel">{{iconlabel}}</span>
     </span>
 </template>
 
@@ -10,7 +10,7 @@ import iconCss from "./icon.css";
 export default {
   props:{
     classname:{
-
+        default:""
     },
     iconname:{                        // 图标样式
     },

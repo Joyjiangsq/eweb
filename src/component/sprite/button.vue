@@ -1,6 +1,6 @@
 <template>
     <button :class="[buttonCss.btn, buttonCss[btnname]]" @click="btnClickHandler">
-          <icontext :classname='buttonCss.iconscope' v-show='iconname' :iconname="iconname"  :iconlabel="falsel"></icontext>
+          <icontext :classname='buttonCss.iconscope' v-if='iconname' :iconname="iconname"  :iconlabel="falsel"></icontext>
           <span :class='buttonCss.labelName'><slot></slot></span>
     </button>
 </template>

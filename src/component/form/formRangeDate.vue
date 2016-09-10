@@ -27,6 +27,9 @@ export default {
     formate:{
       type:String,
       default:"yyyy-mm-dd"
+    },
+    value:{
+      default:"rd"
     }
   },
   data: function () {

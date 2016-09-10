@@ -1,8 +1,8 @@
 <template>
     <div :class="cascadeCss.cascadeBox">
-                  <combobox labelname="name" keyid="id"   :datas="parry" :value.sync="pid"></combobox>
-                  <combobox labelname="name" keyid="id"   :datas="carry" :value.sync="cid" ></combobox>
-                  <combobox labelname="name" keyid="id"   :datas="aarry" :value.sync="aid"></combobox>
+                  <combobox labelname="name" keyid="id"   :datas="parry" :value.sync="pid" @dropclick="dropclickHandler"></combobox>
+                  <combobox labelname="name" keyid="id"   :datas="carry" :value.sync="cid" @dropclick="dropclickHandler" ></combobox>
+                  <combobox labelname="name" keyid="id"   :datas="aarry" :value.sync="aid" @dropclick="dropclickHandler"></combobox>
     </div>
 </template>
 
@@ -58,7 +58,10 @@ export default {
   ready: function () {},
   attached: function () {},
   methods: {
-
+      dropclickHandler: function() {
+          if(!this.aarry || this.aarry.length == 0) this.$dispatch("combocase", {pid: this.pid, aid: this.aid, cid: this.cid}, 2);
+          else this.$dispatch("combocase", {pid: this.pid, aid: this.aid, cid: this.cid}, 3);
+      }
   },
   components: {combobox},
   watch:{
