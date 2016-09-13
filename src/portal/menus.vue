@@ -25,31 +25,38 @@ export default {
           {name:"首页", url:"/index", icon:"icon-home"},
           {name:"账户管理", url:"/accountmgr", icon:"icon-tip"},
           {name:"员工管理", url:"/employee", icon:"icon-tip"},
-          {name:"用户管理", url:"/user", icon:"icon-tip"}
+          {name:"用户管理", url:"/user", icon:"icon-tip"},
+          {name:"下单管理", url:"/sale", icon:"icon-tip"}
         ],
         showTag: new Array(51)
       }
     },
 
     ready: function(){
-        let path = this.$route.path;
-        for (let i = 0; i < this.datamenu.length; i++) {
-              let one = this.datamenu[i];
-              if(!one.subMenus || one.subMenus.length == 0) continue;
-              let subStr = JSON.stringify(one.subMenus);
-              if(subStr.indexOf(path) != -1) {
-                console.log(one.subMenus);
-                one.show = true;
-                break;
-              }
-        }
+      let path = this.$route.path;
+      for (let i = 0; i < this.datamenu.length; i++) {
+            let one = this.datamenu[i];
+            if(!one.subMenus || one.subMenus.length == 0) continue;
+            let subStr = JSON.stringify(one.subMenus);
+            if(subStr.indexOf(path) != -1) {
+              console.log(one);
+              one.show = true;
+              break;
+            }
+      }
     },
 
+
+    route:{
+      data: function(){
+        alert(1)
+      }
+    },
     created: function(){
 
       var demoinfo = {name:"开发文档", icon:"icon-tip", subMenus:[{url:"/demo/datepicker",name:"日历"},
-                                                {url:"/demo/dialog",name:"对话框"},{url:"/demo/paginate",name:"分页"},
-                                                {url:"/demo/datatable",name:"表格"}, {url:"/demo/combobox",name:"下拉"},
+                                                {url:"/demo/dialog",name:"对话框"},{url:"/demo/paginate",name:"分页"},{url:"/demo/tab",name:"tab"},
+                                                {url:"/demo/datatable",name:"表格"}, {url:"/demo/combobox",name:"下拉"},  {url:"/demo/filetest",name:"文件上传"},
                                                 {url:"/demo/search",name:"查询"},{url:"/demo/form",name:"表单"},{url:"/demo/tablesp", name:"手风琴表格"}], show: false}
       this.datamenu.push(demoinfo);
     },

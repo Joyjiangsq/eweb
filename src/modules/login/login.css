@@ -50,6 +50,8 @@
     z-index: 111;
     top: 12px;
     left: 11px;
+    font-size: 16px;
+color: gray;
 }
 .loginFormRow .iconinfo span {
     color: #d3d3d3;

@@ -1,8 +1,8 @@
 <template>
     <div :class="cascadeCss.cascadeBox">
-                  <combobox labelname="name" keyid="id"   :datas="parry" :value.sync="pid" @dropclick="dropclickHandler"></combobox>
-                  <combobox labelname="name" keyid="id"   :datas="carry" :value.sync="cid" @dropclick="dropclickHandler" ></combobox>
-                  <combobox labelname="name" keyid="id"   :datas="aarry" :value.sync="aid" @dropclick="dropclickHandler"></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit" keyid="id"   :datas="parry" :value.sync="pid" @dropclick="dropclickHandler"></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="id"   :datas="carry" :value.sync="cid" @dropclick="dropclickHandler" ></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="id"   :datas="aarry" :value.sync="aid" @dropclick="dropclickHandler"></combobox>
     </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
               if(this.carry[i].id == this.cid) adatas = this.carry[i].areas;
           }
           if(!adatas || adatas.length == 0) this.$set("aid", 0);
-          return adatas
+          return adatas;
       }
   },
   created(){

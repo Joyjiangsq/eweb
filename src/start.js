@@ -1,5 +1,5 @@
 // warning: vue-router requires Vue 0.12.10+
-
+require('es6-promise');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import {routerStart} from 'config/router';

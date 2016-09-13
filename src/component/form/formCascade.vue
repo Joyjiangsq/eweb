@@ -1,9 +1,9 @@
 <template>
-    <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
-        <label for=""  :class='css.labelDesc'>{{labelname}}</label>
+    <div :class="[css.formOne,css.formOneTwo, classname, vertical?css.verticalitem:'']">
+        <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
             <combocascade :pid.sync="pid" :cid.sync="cid" :aid.sync="aid" @combocase="combocaseClick"></combocascade>
-            <input type="text" name="name" :value="detail" v-model="detail" />
+            <input type="text" name="name" :value="detail" v-model="detail" :class="css.casinput"/>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>

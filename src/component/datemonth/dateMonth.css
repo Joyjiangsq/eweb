@@ -13,7 +13,6 @@
   display: inline-block;
 }
 .dateMonthBox *{
-  font-size: 12px;
 }
 .dateMonthInput {
       width: 90px;
@@ -25,6 +24,7 @@
     z-index: 111;
     width: 250px;
     box-shadow: 3px 5px 15px -9px rgba(0, 0, 0, .5);
+    margin-top: -1px;
 }
 .attachoper .attachIn:before {
     content: "";
@@ -37,8 +37,14 @@
 }
 .attachoper .attachFooter {
     margin-bottom: 15px;
-    text-align: center;
+    text-align: right;
     z-index: 1;
+}
+.attachoper .attachFooter button {
+  margin-right: 10px;
+}
+.attachoper .attachFooter button:first-child {
+  margin-right: 30px;
 }
 .attachoper .attachFooter .btnBoxer {
     margin-left: 21%;
@@ -88,8 +94,10 @@
 .showBtn {
   cursor: pointer;
   vertical-align: top;
-  right: 34px;
+  right: 0;
   line-height: 30px;
   color: #888787;
   padding: 0 8px 0 11px;
+  position: absolute;
+  top: 0;
 }

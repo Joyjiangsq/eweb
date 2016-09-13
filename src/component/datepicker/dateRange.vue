@@ -1,7 +1,7 @@
 <template>
 
     <datepicker :class="rangeCss.startTime" :value.sync="start" :formate="formate" :stopdate.sync="startstopdate" :startdate="startstartdate" ></datepicker>
-    -
+    <span :class="rangeCss.nul">-</span>
     <datepicker :class="rangeCss.endTime" :value.sync="end" :formate="formate" :stopdate="endstopdate" :startdate.sync="endstartdate" ></datepicker>
 </template>
 

@@ -5,9 +5,13 @@
     width: 200px;
 }
 
+.dself{
+    width: 200px;
+}
+
 .searchinfo label {
   margin-right: 15px;
-  min-width: 75px;
+      min-width: 93px;
   display: inline-block;
   text-align: right;
 }
@@ -15,9 +19,21 @@
 .searchItem {
   margin-bottom: 20px;
   margin-right: 10px;
+
+}
+
+.searchItem .sone {
+  width: 330px;
 }
 
 .searchbtn {
-  margin-bottom: 20px;
   vertical-align: top;
+}
+
+.searchItem .itemtwo {
+  width: 670px;
+}
+
+.typeTwo {
+    margin-left: 20px;
 }

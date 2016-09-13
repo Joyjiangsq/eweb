@@ -1,8 +1,8 @@
 <template>
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
-        <label for=""  :class='css.labelDesc'>{{labelname}}</label>
+        <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <combobox :keyid="keyid" :labelname="keyname"  :datas="datas" :value="value" @dropclick="dropclick"></combobox>
+            <comb :keyid="keyid" :labelname="keyname" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import css from "./formItem.css";
+import css from "./formItem.css"; 
 import mixin from "common/mixinForm.js";
-import combobox from "component/combobox/combobox";
+import comb from "component/combobox/combobox";
 export default {
   mixins: [mixin],
   props:{
@@ -41,7 +41,7 @@ export default {
          this.$set("value", value);
       }
   },
-  components: {combobox},
+  components: {comb},
   watch:{
     "validatestart":function() {
        if(this.watchIgnore) return false;

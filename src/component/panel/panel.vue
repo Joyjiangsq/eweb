@@ -1,16 +1,18 @@
 <template>
-    <div :class="[classname,panelCss.panelBox]">
-      <div :class="panelCss.panelTitle">
-        <slot name="panelTitle">这是标题</slot>
-      </div>
-      <div :class="panelCss.panelContainer">
-        <slot  name="panelContent">这是panel</slot>
-      </div>
-
-      <div :class="panelCss.panelFooter">
-        <slot  name="panelFooter"></slot>
-      </div>
+<div :class="panelCss.panelIn">
+  <div :class="[classname, panelCss.panelBox]">
+    <div :class="[panelCss.panelTitle,'gradent']">
+      <slot name="panelTitle">这是标题</slot>
     </div>
+    <div :class="panelCss.panelContainer">
+      <slot  name="panelContent">这是panel</slot>
+    </div>
+
+    <div :class="panelCss.panelFooter">
+      <slot  name="panelFooter"></slot>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>

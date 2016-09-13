@@ -32,6 +32,9 @@ text-indent: 12px;
 input:hover, input:focus {
     border: 1px solid #4a5b6d;
 }
+input:disabled, textarea:disabled {
+    background-color: #f2f2f2;
+}
 table {
     background: white;
     width: 100%;
@@ -77,7 +80,19 @@ table tbody td span {
 
 /**全局样式**/
 
+/**渐变**/
 
+:global(.gradent) {
+  background: -webkit-linear-gradient(white, #f2f2f2);
+  /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(white, #f2f2f2);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(white, #f2f2f2);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(white, #f2f2f2);
+  FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
+  /*IE 6 7 8*/
+}
 /**渐隐**/
 
 :global(.fadeModal-enter) {
@@ -120,7 +135,7 @@ table tbody td span {
     height: 100%;
     border-top: 1px solid #ddd;
     background: #4a5b6d;
-    z-index: 111;
+    z-index: 1;
     color: #a0b0c1;
 }
 :global(.app_main_container) {
@@ -145,6 +160,20 @@ table tbody td span {
     width: 100%;
     z-index: 1;
     top: 80px;
+}
+:global(.app_main_container .subTitle a) {
+    text-decoration: none;
+}
+:global(.app_main_container .subTitle a span) {
+  width: 20px;
+  text-align: center;
+  margin-right: -4px;
+  color: gray;
+}
+:global(.app_main_container .subTitle .rightClose) {
+  position: absolute;
+  right: 254px;
+  cursor: pointer;
 }
 :global(.app_footer) {
     background: #b9b9b9;

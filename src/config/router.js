@@ -3,6 +3,7 @@ export function routerStart(router) {
           "/":{
               component: function(resovle) {require(['portalview/index.vue'], resovle)},
               subRoutes:{
+                // 首页
                 "index": {
                     component: function(resovle) {require(['modules/index/index.vue'], resovle)},
                 },
@@ -21,6 +22,11 @@ export function routerStart(router) {
                     component: function(resovle) {require(['modules/user/userMgr.vue'], resovle)},
                 },
 
+                // 下单管理
+                "sale":{
+                    component: function(resovle) {require(['modules/sale/saleMgr.vue'], resovle)},
+                },
+
                 //开发文档
                 "demo":{
                   component: function(resovle) {require(['modules/demo/demo.vue'], resovle)},
@@ -32,7 +38,9 @@ export function routerStart(router) {
                     "/combobox": {  component: function(resovle) {require(['modules/demo/combobox.vue'], resovle)}},
                     "/search": { component: function(resovle) {require(['modules/demo/search.vue'], resovle)}},
                     "/form": {component: function(resovle) {require(['modules/demo/form.vue'], resovle)}},
-                    "/tablesp": {component: function(resovle) {require(['modules/demo/tableSpec.vue'], resovle)}}
+                    "/tablesp": {component: function(resovle) {require(['modules/demo/tableSpec.vue'], resovle)}},
+                    "/filetest": {component: function(resovle) {require(['modules/demo/filetest.vue'], resovle)}},
+                    "/tab": {component: function(resovle) {require(['modules/demo/tabBar.vue'], resovle)}}
                   }
                 }
               }
@@ -42,12 +50,9 @@ export function routerStart(router) {
               component: function(resovle) {require(['modules/login/login.vue'], resovle)},
           },
 
-
           "*":{
             component: function(resovle) {require(['portalview/404.vue'], resovle)},
           }
-
-
       })
 
       // redirect

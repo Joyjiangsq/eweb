@@ -30,7 +30,6 @@
               </tr>
         </tbody>
     </table>
-    {{dataList | json}}
     <div v-show="noresult" :class='tableCss.noresult'>
           没有数据
     </div>

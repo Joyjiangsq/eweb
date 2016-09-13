@@ -1,8 +1,8 @@
 <template>
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
-        <label for="" :class='css.labelDesc'>{{labelname}}</label>
+        <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <input type="text" name="name" :value="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
+            <input :type="inputtype" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -20,7 +20,10 @@ export default {
         type:String,
         default:"请填写"
       },
-
+      inputtype:{
+        type:String,
+        default: "text"
+      },
       read:{
         type:Boolean,
         default: false
@@ -86,6 +89,10 @@ export default {
   watch:{
     "validatestart":function() {
        if(this.watchIgnore) return false;
+       if(this.ingnore){
+         this.$dispatch("onvalidate", {res:"success", msg: "被忽略的项目"});
+         return false;
+       }
         // 判断验证邮件格式
         if(this.email) {
             if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.value)) {

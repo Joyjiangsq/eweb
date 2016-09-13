@@ -1,7 +1,10 @@
 .panelBox {
   border: 1px solid #ddd;
-  background-color: white;    margin-top:20px;
+  background-color: white;
       /*box-shadow: 0 20px 10px -24px rgba(0, 0, 0, .5);*/
+}
+.panelIn {
+  padding-top: 20px;
 }
 
 .panelContainer {

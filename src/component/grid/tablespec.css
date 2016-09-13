@@ -1,1 +1,15 @@
 @charset "UTF-8";
+.tableBox table thead th, table tbody td {
+    white-space: nowrap;
+}
+
+.tableBox {
+  width: 90%;
+margin: 0 auto;
+overflow-x: scroll;
+}
+
+.tableBox table {
+    min-width: 100%;
+    width: auto;
+}

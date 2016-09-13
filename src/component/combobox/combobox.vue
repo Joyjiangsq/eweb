@@ -1,5 +1,5 @@
 <template>
-    <div :class="combCss.combobox" v-show="havedatas">
+    <div :class="[combCss.combobox, classname]" v-show="true">
           <div :class="combCss.comboLabel"  @click="changeDropAction">
                   <span :class="combCss.comboLabelspan">{{defaultInfo.label}}</span>
                   <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
@@ -18,6 +18,9 @@ import combCss from "./combobox.css";
 import icon from "component/sprite/icon.vue";
 export default {
   props:{
+      classname:{
+
+      },
       labelname:{                  // 渲染dom 显示的可见名称
         type:String,
         default:"labelname"

@@ -5,7 +5,7 @@
       width: 100%;
       text-align: center;
       left: 0;
-      z-index: 1111;
+      z-index: 111111111;
 }
 
 .warn  .tipsIn {
@@ -13,8 +13,9 @@
   color: white;
 }
 
-.error {
-
+.error .tipsIn {
+  background: red;
+  color: white;
 }
 
 .success {

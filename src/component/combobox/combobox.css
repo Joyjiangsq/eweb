@@ -14,9 +14,10 @@
     border: 1px solid #ddd;
     background-color: white;
     line-height: 30px;
+    vertical-align: middle;
+    border-radius: 4px;
 }
 .combobox .comboLabel {
-    min-width: 60px;
     padding: 0 25px 0 10px;
     z-index: 2;
     height: 28px;
@@ -24,7 +25,10 @@
 }
 
 .combobox  .comboLabelspan {
-
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 .combobox .comboLabel:hover {
     background-color: #eee;

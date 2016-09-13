@@ -23,10 +23,8 @@
         </div>
         <div :class="datepCss.attachFooter">
              <btn @click="curMonthAction" btnname="btn-default">当月</btn>
-             <span :class='datepCss.btnBoxer'>
                     <btn @click="confirmAction" btnname="btn-default">确定</btn>
                     <btn @click="cancelAction" btnname="btn-default">取消</btn>
-             </span>
         </div>
     </div>
   </div>

@@ -49,7 +49,7 @@ var webconfig = {
 
           {
             test: /\.html$/,
-            loader: 'vue-html'
+            loader: 'html!html-minifier'
           },
 
           {
@@ -80,7 +80,16 @@ var webconfig = {
           }
     ]
   },
-
+  vue: {
+    loaders: {
+      html: 'html!html-minifier'
+    }
+  },
+  'html-minifier-loader': {
+      collapseWhitespace: true,
+      collapseInlineTagWhitespace: true,
+      removeComments: true
+  },
   plugins: [
 
 

@@ -1,6 +1,6 @@
 <template>
-    <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
-        <label for=""  :class='css.labelDesc'>{{labelname}}</label>
+    <div :class="[css.formOne, css.formOneTwo,  classname, vertical?css.verticalitem:'']">
+        <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
             <daterange :start.sync="start"  :end.sync="end" :formate="formate" @rangechange="rangechange"></daterange>
             <div :class="css.errorMsg" v-show="error">

@@ -35,7 +35,11 @@ let  formBase = {
                 },
                 vertical:{
                    type:Boolean,
-                   default: true
+                   default: false
+                },
+                ingnore: {
+                  type: Boolean,
+                  default: false
                 }
           },
           data: function () {

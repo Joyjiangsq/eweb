@@ -2,7 +2,7 @@ var path = require('path')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var webpack  = require("webpack")
-
+// var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var webconfig = {
   devtool: '#eval-source-map',
   entry: {
@@ -49,7 +49,7 @@ var webconfig = {
 
           {
             test: /\.html$/,
-            loader: 'vue-html'
+            loader: 'html!html-minifier'
           },
 
           {
@@ -76,7 +76,16 @@ var webconfig = {
           }
     ]
   },
-
+   vue: {
+     loaders: {
+       html: 'html!html-minifier'
+     }
+   },
+   'html-minifier-loader': {
+       collapseWhitespace: true,
+       collapseInlineTagWhitespace: true,
+       removeComments: true
+   },
   plugins: [
     new webpack.ProvidePlugin({
         $ : "jquery",

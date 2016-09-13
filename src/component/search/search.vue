@@ -1,35 +1,39 @@
 <template>
     <div :class="sCss.searchinfo">
-          <span v-for="one in datas" :class="sCss.searchItem">
+          <span v-for="(index, one) in datas" :class="sCss.searchItem">
             <!--城市级联-->
-            <span v-if="one.type == 'cascade'" ><label for="">{{one.labelcaption}}</label>
+            <span v-if="one.type == 'cascade'" :class="[sCss.sone, sCss.itemtwo]"><label for="">{{one.labelcaption}}</label>
               <cascade :pid.sync="params.pid" :cid.sync="params.cid" :aid.sync="params.aid"></cascade>
+              <span :class='[sCss.searchbtn, sCss.typeTwo]' v-if="lastType == one.type"><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
             </span>
             <!--文本输入-->
-            <span v-if="one.type == 'text'" ><label for="">{{one.labelcaption}}</label>
+            <span v-if="one.type == 'text'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
               <input type="text" name="name" :value="params[one.keyname]" v-model="params[one.keyname]">
             </span>
             <!--日选择-->
-            <span v-if="one.type == 'datepicker'" ><label for="">{{one.labelcaption}}</label>
+            <span v-if="one.type == 'datepicker'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
                <datepicker  :value.sync="params[one.keyname]" :formate="one.formate" ></datepicker>
              </span>
 
 
             <!--范围选择-->
-            <span v-if="one.type == 'daterange'" ><label for="">{{one.labelcaption}}</label>
+            <span v-if="one.type == 'daterange'" :class="[sCss.sone, sCss.itemtwo]"><label for="">{{one.labelcaption}}</label>
                 <daterange :start.sync="params[one.keynamestart]" :end.sync="params[one.keynameend]" :formate="one.formate"></daterange>
+                <span :class='[sCss.searchbtn, sCss.typeTwo]' v-if="lastType == one.type"><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
             </span>
             <!--月选择-->
-            <span v-if="one.type == 'datemonth'" ><label for="">{{one.labelcaption}}</label>
+            <span v-if="one.type == 'datemonth'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
                 <datemonth classname="startMonth" :value.sync="params[one.keyname]" ></datemonth>
             </span>
 
             <!--下拉选择-->
-            <span v-if="one.type == 'combobox'" ><label for="">{{one.labelcaption}}</label>
-                <combobox :labelname="one.labelname" :keyid="one.rid"  :datas="one.datas" :value.sync="params[one.keyname]"></combobox>
+            <span v-if="one.type == 'combobox'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
+                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.rid"  :datas="one.datas" :value.sync="params[one.keyname]"></combobox>
             </span>
+
+            <span :class='sCss.searchbtn' v-if="needShow(index)"><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
+
         </span>
-        <span :class='sCss.searchbtn'><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
     </div>
 </template>
 
@@ -77,13 +81,16 @@ export default {
   data: function () {
     return {
       sCss,
-      params:{}
+      params:{},
+      length: this.datas.length-1,
+      lastType: this.datas[this.datas.length-1]["type"]
     }
   },
   computed: {
 
   },
   ready: function () {
+    console.log(this.lastType);
   },
   created(){
     for(var i=0; i < this.datas.length; i++) {
@@ -109,6 +116,12 @@ export default {
       searchHandler: function(e){
         this.events.onSearch.call(this._context, this.params);
         if(e) this.$router.go({ path: this.pathname, query: this.params});
+      },
+
+      needShow: function(index){
+        if(this.datas.length-1 != index) return false
+        if(this.lastType == "cascade" || this.lastType == "daterange") return false
+        return true
       }
   },
 
