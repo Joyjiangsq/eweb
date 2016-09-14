@@ -32,7 +32,6 @@
                 <checkbx :datas="checkDatas" defaultkey="1,2" checkname="fruits" ></checkbx>
           </div>
           <div slot="panelFooter">
-
           </div>
       </panel>
 

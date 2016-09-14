@@ -36,6 +36,7 @@
 </template>
 
 <script>
+
 import Utils from "common/Utils";
 import tableCss from "./tableCss.css";
 import btnbar from "component/sprite/buttonbar";

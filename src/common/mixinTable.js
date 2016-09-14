@@ -5,7 +5,7 @@ let tableBase = {
             type:String,
             default: ""
           },
-          loadtag:{
+          load:{
             type: Boolean,
             default: true
           },
@@ -31,7 +31,9 @@ let tableBase = {
             type:Object,
             default:() => {}
           },
-
+          totals:{
+              twoway: true
+          },
           events: {
             type: Object,
             default:function(){
@@ -53,7 +55,9 @@ let tableBase = {
               loading:true,
               checked: false,
               checkeds:[],
-              tpIds:[]
+              tpIds:[],
+              stag: false,
+              smsg:""
           }
         },
 
@@ -66,7 +70,9 @@ let tableBase = {
         created: function(){
           if(this.dataList.length != 0) this.$set("loading", !this.loading);
         },
-
+        ready: function(){
+          if(this.load) this.loadData();
+        },
         methods: {
           clickOne: function(one){
               let index = this.checkeds.indexOf(one);
@@ -95,20 +101,23 @@ let tableBase = {
           },
           adapertData(d){
               if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
-              // console.log(d);
+
               this.dataList = [];
               for (var i = 0; i < d.data.length; i++) {
                   let one = d.data[i];
                   let rowData = {};
                   for (var j = 0; j < this.headercaption.length; j++) {
                     var hone = this.headercaption[j];
-                    if(hone.type == "data") rowData[hone.labelValue] = {name: one[hone.labelValue], checkbok: hone.checkbox}
-                    else if(hone.type == "operator") rowData["operator"] = {name: hone.labelCaption, id:one[this.codevalue]}
+                    if(hone.type == "data") rowData[hone.labelValue] = one[hone.labelValue];
+                    if(hone.adapterFun) {
+                       rowData[hone.labelValue] = hone.adapterFun.call(this._context, one);
+                    }
+                    rowData["_id"] = one["_id"];
+
                   }
                   this.dataList.push(rowData);
                   this.tpIds.push(one[this.codevalue]);
               }
-              // this.dataList.push();
                 this.$set("loading", false);
           },
 
@@ -116,9 +125,9 @@ let tableBase = {
             return this.$http.get(this.$Api+ (this.url || ""),{params:this.params}).then((res) => {
                 // 如果有数据 就渲染
                //  如果没有数据就显示没有数据
-                this.adapertData({data: []});
-            },(error) =>{
-              console.log(error);
+                let datas = res.json();
+                this.adapertData({data: datas.data.docs});
+                this.$set("totals", datas.data.count);
             })
           },
 
@@ -128,7 +137,7 @@ let tableBase = {
           }
         },
         watch:{
-          "loadtag": function(){
+          "load": function(){
             this.$set("loading", true);
             this.$set("noresult", false);
             this.loadData();

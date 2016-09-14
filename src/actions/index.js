@@ -11,3 +11,8 @@ export const setTitle = ({ dispatch, state }, str) => {
 export const setUser = ({ dispatch, state }, data) => {
     if(data) dispatch(types.USERINFO, JSON.stringify(data))
 }
+
+export const showTips = ({ dispatch, state }, data) => {
+  console.log(data);
+    if(data) dispatch(types.TIPDATA, data)
+}

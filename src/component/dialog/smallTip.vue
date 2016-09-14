@@ -19,9 +19,8 @@ export default {
       type:String,
       default:""
     },
-    flag:{
-      type: Boolean,
-      default: false
+    datepicker:{
+
     }
   },
   data: function () {
@@ -43,7 +42,7 @@ export default {
   },
   components: {},
   watch:{
-    "flag": function(){
+    "datepicker": function(){
         this.showDialog();
     }
   }

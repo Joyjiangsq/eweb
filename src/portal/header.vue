@@ -39,6 +39,7 @@ import formtext from "component/form/formText";
 import stip from "component/dialog/smallTip";
 import storejs from "storejs";
 import {getUser} from "stores/getters.js";
+import Utils from "common/Utils.js";
 export default {
     data(){
       return {
@@ -57,7 +58,7 @@ export default {
       }
     },
     ready: function(){
-        let userInfo = storejs("userInfo");
+        let userInfo = Utils.getUserInfo();
         if(userInfo) this.$set("userName", userInfo.user_code);
     },
     methods:{
@@ -72,13 +73,8 @@ export default {
       confirmLogout: function(d) {
           if(d.action == "confirm") {
               this.$set("exitTag", !this.exitTag);
-              this.logoutAction();
+              Utils.clearUserInfo();
           }
-      },
-
-      logoutAction: function() {
-        storejs("userInfo", "");
-        this.$router.go("/login");
       },
 
       validatePasswd2: function() {
@@ -109,7 +105,7 @@ export default {
               this.$set("msg", "密码修改成功，即将跳转到登录页面...");
               this.$set("shouTips", !this.shouTips);
               this.$set("flagdep", !this.flagdep);
-              this.logoutAction();
+              Utils.clearUserInfo();
         }, (error) => {
               this.$set("msg", error.msg);
               this.$set("shouTips", !this.shouTips);

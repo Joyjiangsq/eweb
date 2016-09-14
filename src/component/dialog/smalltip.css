@@ -18,8 +18,9 @@
   color: white;
 }
 
-.success {
-
+.success .tipsIn {
+  color: white;
+  background: green;
 }
 
 .tipBox .tipsIn {

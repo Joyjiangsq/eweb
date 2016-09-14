@@ -9,6 +9,8 @@ import VueResource from 'vue-resource';
 import store from 'stores/store';
 import filter from 'frame/filter';
 import directive from 'frame/directive';
+import Utils from "common/Utils.js";
+import {showTips} from "actions/index";
 // install router
 Vue.use(VueRouter);
 
@@ -37,11 +39,13 @@ Vue.http.options.emulateJSON = true;
 
 //
 // ajax 拦截
-Vue.http.interceptors.push((request, next)  => {
+Vue.http.interceptors.push(function (request, next) {
+    let _self = this;
     next((res) => {
           let d = res.json();
           if(!d.code) d = JSON.parse(d);
-          if(d.code != 200) return d;
+          if(d.code == 302) {Utils.clearUserInfo(); showTips(_self.$store, {type:"error", msg: d.msg}); return d}
+          else if(d.code != 200) {showTips(_self.$store, {type:"error", msg: d.msg}); return d};
     });
 });
 

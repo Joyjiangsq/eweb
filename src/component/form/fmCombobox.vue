@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import css from "./formItem.css"; 
+import css from "./formItem.css";
 import mixin from "common/mixinForm.js";
 import comb from "component/combobox/combobox";
 export default {

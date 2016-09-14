@@ -52,7 +52,6 @@
     min-width: 335px;
     max-width: 900px;
     max-height: 700px;
-    overflow: hidden;
 }
 .dialog .dialogFooter {
     text-align: right;

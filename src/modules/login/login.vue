@@ -61,7 +61,6 @@ export default {
   },
   computed: {},
   ready: function () {
-    console.log(storejs("userInfo"));
     if(storejs("userInfo"))  this.$router.go({path:"/index"});
     this.$nextTick(function () {
        this.$el.style.height = window.innerHeight + "px";
