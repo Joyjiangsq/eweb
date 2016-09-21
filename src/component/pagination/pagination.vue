@@ -104,7 +104,7 @@ export default {
   watch:{
     "curpage": function(){
         // 发射页面变更事件
-        // this.$dispatch("pageChange", {page: this.curpage});
+        this.$dispatch("pagechange", {page: this.curpage});
         this.events.pageChange.call(this._context, this.curpage);
         // 验证操作按钮的点击
         this.validateBtn();

@@ -18,9 +18,6 @@
                                   <icon iconname="icon-key"  :classname="lCss.iconinfo"></icon>
                                   <input type="password" placeholder="请输入密码" name="name" :value="passwd" v-model="passwd">
                             </div>
-                            <div :class="lCss.errorTip" v-show="error">
-                                {{error}}
-                            </div>
                             <div :class="lCss.loginFormRow">
                                   <checkbx :datas="ckData" :events="checkedEevents"></checkbx>
                             </div>
@@ -55,8 +52,7 @@ export default {
       },
       userName:storejs("userName") || "fn_456",
       passwd:storejs("passwd") || "123456",
-      remember:false,
-      error:""
+      remember:false
     }
   },
   computed: {},
@@ -98,16 +94,7 @@ export default {
                 setUser(this.$store, d.data);
                 this.$router.go({path:"/index"});
               }
-        },(error) => {
-             this.showTips(error.msg);
         })
-    },
-
-    showTips: function(msg){
-          this.$set("error", msg);
-          setTimeout(()=>{
-                this.$set("error", "");
-          }, 2000);
     }
   },
   components: {icon, btn, checkbx}

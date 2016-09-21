@@ -104,7 +104,7 @@ var webconfig = {
     new webpack.DefinePlugin({
       'process.env': {
           NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      },
+      }
     }),
 
     new ExtractTextPlugin("css/[name].css"),	//单独使用style标签加载css并设置其路径

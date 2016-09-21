@@ -13,7 +13,6 @@ import Utils from "common/Utils.js";
 import {showTips} from "actions/index";
 // install router
 Vue.use(VueRouter);
-
 // create router
 const router = new VueRouter({
   // history: true,

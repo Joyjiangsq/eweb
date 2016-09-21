@@ -10,13 +10,13 @@
               <div class="">
                 <tb :headercaption="headercaption" :totals.sync="totals" :load="load" :params="searchParams" url="employees" :events="tableEvents"></tb>
               </div>
-              <pg :totals="totals" :size="searchParams.size"></pg>
+              <pg :totals="totals" :size="searchParams.size" @pagechange="pagechange"></pg>
         </pagepanel>
         <dialog :flag="flagdep" @dialogclick="diaologClick" :title="optitle">
               <div class="" slot="containerDialog">
                   <formtext labelname="姓名：" :value.sync="addParams.name"  placeholder="请输入姓名" :vertical="true" formname='name' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="电话：" :value.sync="addParams.phone"  placeholder="请输入电话" :vertical="true" :phone="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                  <formcb keyid="name" labelname="职位：" keyname="name" formname="roles" :value.sync="addParams.roles" :datas="roleData" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+                  <formcb keyid="name" labelname="职位：" keyname="name" formname="roles" :vertical="true" :value.sync="addParams.roles" :datas="roleData" :validatestart="validate" @onvalidate="validateHandler"></formcb>
               </div>
         </dialog>
         <!--删除提示-->
@@ -60,7 +60,7 @@ export default {
       roleData: roleData,       // 角色配置项目
       flagdep: false,           // 控制表格显示隐藏
       validate: false,          // 表单验证动作的开关
-      searchParams: {size: 10, page:1}, // 初始查询依据
+      searchParams: {size: 2, page:1}, // 初始查询依据
       addParams:{name:"", roles:"", phone:""}, // 新增、编辑的参数值
       headercaption:tableHeaderDatas, // 表格头部信息设置
       load: true,                 // 表格是否加载开关
@@ -112,6 +112,10 @@ export default {
   },
   attached: function () {},
   methods: {
+    pagechange: function(d){
+        this.searchParams.page = d.page;
+        this.loadlist();
+    },
     validateHandler: function(d){
       if(d.res == "fail") this.$set("validateSuccess", false);
     },

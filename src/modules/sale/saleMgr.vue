@@ -83,10 +83,10 @@ export default {
                     {name:"交易日期", labelValue:"date",type:"data"},{name:"收款账号", labelValue:"account",type:"edit"}, {name:"收款账号名称", labelValue:"name", type:"data"},
                     {type:"operator", name:""}],
       loadtag: false,
-      testData: [{"orderid":"xxx1","name":"杭州谷鼎暖通设备有限公司杭州谷鼎暖通设备有限公司杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
-                  {"orderid":"xxx2","name":"杭州谷鼎暖通设备有限公司杭州谷鼎暖通设备有限公司杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
-                  {"orderid":"xxx3","name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
-                  {"orderid":"xxx4","name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"}],
+      testData: [{"orderid":"xxx1","name":"家装e站啦啦啦家装e站啦啦啦家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
+                  {"orderid":"xxx2","name":"家装e站啦啦啦家装e站啦啦啦家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
+                  {"orderid":"xxx3","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
+                  {"orderid":"xxx4","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"}],
       tableEvents:{
         operatorRender: function(d){
           return [{action:"delete",icon:"icon-delete"}]

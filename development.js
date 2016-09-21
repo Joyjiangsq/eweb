@@ -24,8 +24,8 @@ app.use('/', proxy('172.20.8.109', {
 
   forwardPath: function(req, res) {
       var pathname = url.parse(req.url);
-      console.log(pathname.pathname);
-      return pathname.pathname
+      console.log(pathname.path);
+      return pathname.path
   }
 }));
 
