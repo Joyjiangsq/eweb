@@ -42,13 +42,11 @@ export default {
     }
   },
   computed: {
-
     titleIsArray: function(){
       return this.getTitle instanceof Array
     }
-
   },
-  
+
   ready: function () {
     this.$nextTick(function () {
       //  this.$el.querySelector(".app_main_container").style.width = (1-200/window.innerWidth)*100 + "%";

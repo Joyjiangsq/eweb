@@ -1,6 +1,14 @@
 @charset "UTF-8";
 .tableBox table thead th, table tbody td {
     white-space: nowrap;
+    padding: 0 15px;
+}
+
+.tableBox table .potert {
+  position: ABSOLUTE;
+margin-left: -23px;
+margin-top: 4px;
+cursor: pointer;
 }
 
 .tableBox {

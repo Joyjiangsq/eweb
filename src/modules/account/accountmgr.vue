@@ -4,28 +4,28 @@
           <div :class="acCss.accountTitleBox">
               <div :class="acCss.accountTitleIn">
                 <span :class='acCss.itemone'>
-                      <div :class="acCss.itemTitle">账户余额:</div>
+                      <div :class="acCss.itemTitle">
+                         <span :class='acCss.mintitle'>账户余额 : </span>
+                        <span> 冻结金额 : <span :class='acCss.cashText'>2000000</span>元 </span>
+                      </div>
+                      <div :class="acCss.itemBox">
+                            <span :class='acCss.cash'>15000000</span>
+                            <span :class='acCss.unit'>元</span>
+                      </div>
+                      <span :class="acCss.backCash"><btn  @clickaction="backCashHandler">回款</btn></span>
+                </span>
+
+                <span :class='acCss.itemone'>
+                      <div :class="acCss.itemTitle">
+                        <span :class='acCss.mintitle'>授信余额 : </span>
+                        <span> 授信额度 : <span :class='acCss.cashText'>2000000</span>元 </span>
+                      </div>
                       <div :class="acCss.itemBox">
                             <span :class='acCss.cash'>15000000</span>
                             <span :class='acCss.unit'>元</span>
                       </div>
                 </span>
 
-                <span :class='acCss.itemone'>
-                      <div :class="acCss.itemTitle">账户余额:</div>
-                      <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>15000000</span>
-                            <span :class='acCss.unit'>元</span>
-                      </div>
-                </span>
-
-                <span :class='acCss.itemone'>
-                      <div :class="acCss.itemTitle">账户余额:</div>
-                      <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>15000000</span>
-                            <span :class='acCss.unit'>元</span>
-                      </div>
-                </span>
               </div>
 
               <div :class="[acCss.searchBox,'needtop']">
@@ -50,6 +50,7 @@ import search from "component/search/search";
 import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import btnbar from "component/sprite/buttonbar";
+import btn from "component/sprite/button";
 import pg from "component/pagination/pagination";
 import pageBase from "common/mixinPage.js";
 export default {
@@ -100,8 +101,12 @@ export default {
     console.log(this);
   },
   attached: function () {},
-  methods: {},
-  components: {search,tb,pagepanel,btnbar,pg},
+  methods: {
+    backCashHandler: function(){
+      alert(1);
+    }
+  },
+  components: {search,tb,pagepanel,btnbar,pg, btn},
   route:{
     data: function(){
       setTitle(this.$store, "分站账户管理");

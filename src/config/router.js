@@ -8,12 +8,12 @@ export function routerStart(router) {
                 "index": {
                     component: function(resovle) {require(['modules/index/index.vue'], resovle)},
                 },
-                // 账户管理
+                // 分站账户管理
                 "accountmgr": {
                     component: function(resovle) {require(['modules/account/accountmgr.vue'], resovle)},
                 },
 
-                // 员工管理
+                // 分站员工管理
                 "employee":{
                     component: function(resovle) {require(['modules/employee/employeemgr.vue'], resovle)},
                 },
@@ -23,9 +23,44 @@ export function routerStart(router) {
                     component: function(resovle) {require(['modules/user/userMgr.vue'], resovle)},
                 },
 
-                // 下单管理
+                // 客户管理
+                "custom":{
+                    component: function(resovle) {require(['modules/custom/customMgr.vue'], resovle)},
+                },
+
+                // 销售下单管理
                 "sale":{
                     component: function(resovle) {require(['modules/sale/saleMgr.vue'], resovle)},
+                },
+
+                // 采购订单管理
+                "purchase":{
+                    component: function(resovle) {require(['modules/purchase/purchaseOrder.vue'], resovle)},
+                },
+
+                // 备货管理
+                "prestoremgr":{
+                    component: function(resovle) {require(['modules/purchase/preStoreMgr.vue'], resovle)},
+                },
+
+                // 备货审核
+                "prestorevalidate":{
+                    component: function(resovle) {require(['modules/purchase/preStoreValidate.vue'], resovle)},
+                },
+
+                // 订制品设计申请管理
+                "specapplydesignmgr":{
+                    component: function(resovle) {require(['modules/spec/specApply.vue'], resovle)},
+                },
+
+                // 订制品设计管理
+                "specdesignmgr":{
+                    component: function(resovle) {require(['modules/spec/specMgr.vue'], resovle)},
+                },
+
+                // 加急卡管理
+                "urgent":{
+                    component: function(resovle) {require(['modules/urgent/urgentMgr.vue'], resovle)},
                 },
 
                 //开发文档
@@ -61,14 +96,9 @@ export function routerStart(router) {
           "/": "/index"
       })
 
-      // global before
-      // 3 options:
-      // 1. return a boolean
-      // 2. return a Promise that resolves to a boolean
-      // 3. call transition.next() or transition.abort()
-      router.beforeEach(function ({ to, next }) {
-         if(Utils.getUserInfo() != "" || !!Utils.getUserInfo()) next()
-         else if(to.path == "/login") next()
-         else router.go({path:"/login"})
+      router.beforeEach(function ({ to, next }) {next()
+        //  if(Utils.getUserInfo() != "" || !!Utils.getUserInfo()) next()
+        //  else if(to.path == "/login") next()
+        //  else router.go({path:"/login"})
       })
 }

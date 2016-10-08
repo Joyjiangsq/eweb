@@ -58,11 +58,16 @@
     padding: 10px;
     border-top: 1px solid #eae8e8;
 }
-
 .dialog .tipsIn {
-  text-align: center;
-height: 100px;
-line-height: 100px;
-color: gray;
-font-size: 16px;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    color: gray;
+    font-size: 16px;
+}
+.warninfo {
+    font-size: 30px;
+    vertical-align: middle;
+    margin-right: 12px;
+    color: #ecdf1d;
 }

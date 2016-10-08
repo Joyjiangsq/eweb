@@ -49,9 +49,9 @@
     color: #a0b0c1;
 }
 .menuSubAction span {
-   color: #a0b0c1;
-position: absolute;
-top: 15px;
+    color: #a0b0c1;
+    position: absolute;
+    top: 15px;
 }
 .menuSubAction a {
     display: block;
@@ -66,8 +66,8 @@ top: 15px;
     color: white;
 }
 .menuicon {
-  position: absolute;
-  left: 20px;
+    position: absolute;
+    left: 20px;
 }
 .directicon {
     position: absolute;

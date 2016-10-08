@@ -24,8 +24,11 @@
                     </td>
               </tr>
               <tr>
-                  <td  v-for="sone in headercaption">
-                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="sone.labelValue == enterdep">
+                  <td  v-for="(index, sone) in headercaption">
+                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 0">
+                    <span :class="tableCss.potert"  v-if="index == 0">
+                        <icon iconname="icon-elip"></icon>
+                    </span>
                   </td>
               </tr>
         </tbody>
@@ -42,6 +45,7 @@
 <script>
 import Utils from "common/Utils";
 import tableCss from "./tablespec.css";
+import icon from "component/sprite/icon";
 import iconbar from "component/sprite/iconbar";
 import tableBase from "common/mixinTable.js";
 export default {
@@ -76,6 +80,6 @@ export default {
     },
   },
   attached: function () {},
-  components: {iconbar},
+  components: {iconbar, icon},
 }
 </script>
