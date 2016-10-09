@@ -1,6 +1,6 @@
 .tablelist {}
 .tableBox {
-    overflow: hidden;
+    /*overflow: hidden;*/
     /*border: 1px solid #ddd;*/
     border-bottom: 0;
     border-left: 0;

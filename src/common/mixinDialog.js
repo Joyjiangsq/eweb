@@ -45,6 +45,7 @@ let dialogBase = {
     methods: {
       hide() {
           this.modalshow = false;
+          this.$dispatch("dialogclick", {action: "close"});
       }
     },
     watch:{

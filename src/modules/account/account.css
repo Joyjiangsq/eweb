@@ -29,10 +29,8 @@
   padding-top: 30px;*/
 }
 .accountBox .tableBox {}
-.accountBox .tableBox .tableIn {
-    width: 95%;
-    margin: 0px auto;
-    padding: 15px 0;
+.accountBox .tableIn {
+    overflow: scroll;
 }
 .backCash {
     position: absolute;

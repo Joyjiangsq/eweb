@@ -1,0 +1,14 @@
+.horizontal {
+    display: inline-block;
+}
+.propertyOne {
+    margin-top: 20px;
+}
+.key {
+    display: inline-block;
+    min-width: 110px;
+    text-align: right;
+}
+.value {
+    padding-left: 40px;
+}

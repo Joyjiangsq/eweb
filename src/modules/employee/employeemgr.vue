@@ -7,7 +7,7 @@
         </pagepanel>
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
-              <div class="">
+              <div class="epCss.tBox">
                 <tb :headercaption="headercaption" :totals.sync="totals" :load="load" :params="searchParams" url="employees" :events="tableEvents"></tb>
               </div>
               <pg :totals="totals" :size="searchParams.size" @pagechange="pagechange"></pg>
@@ -39,7 +39,7 @@ import formcb from "component/form/fmCombobox";
 import {roleData} from "config/roleConfig.js";
 import dialogtip from "component/dialog/dialogTip";
 import {showTips} from "actions/index";
-
+import pageBase from "common/mixinPage.js";
 let tableHeaderDatas = [{name:"员工编号", labelValue:"user_code", type:"data"},
                         {name:"员工姓名", labelValue:"name",type:"data"},
                         {name:"职位", labelValue:"roles",type:"data"},
@@ -48,6 +48,7 @@ let tableHeaderDatas = [{name:"员工编号", labelValue:"user_code", type:"data
                         {name:"时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
 export default {
+  mixins: [pageBase],
   data: function () {
     return {
       epCss,
@@ -130,13 +131,16 @@ export default {
             else this.$set("validateSuccess", true);
           })
        }
+       else {
+         this.resetParams(this.addParams);
+       }
     },
 
     addEmp: function(){
        this.$http.post(this.$Api+"employees", this.addParams).then((res)=>{
             this.$set("flagdep", !this.flagdep);
             this.loadlist()
-            this.resetParams();
+            this.resetParams(this.addParams);
             showTips(this.$store, {type:"success", msg:"新增成功！"});
        });
     },
@@ -145,13 +149,9 @@ export default {
        this.$http.put(this.$Api+"employees/"+this.curItem._id, this.addParams).then((res)=>{
             this.$set("flagdep", !this.flagdep);
             this.loadlist()
-            this.resetParams();
+            this.resetParams(this.addParams);
             showTips(this.$store, {type:"success", msg: "编辑成功！"});
        });
-    },
-
-    resetParams: function(){
-      this.addParams.phone="";this.addParams.name="";this.addParams.roles="";
     },
 
     confirmDelete: function(d){

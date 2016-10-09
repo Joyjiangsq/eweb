@@ -61,12 +61,15 @@ table thead th {
     font-weight: normal;
     color: #333;
     height: 40px;
-    border-bottom: 1px solid #ddd;
+    padding: 0 10px;
+    border-bottom: 1px solid #ddd;white-space: nowrap;
+
 }
 table tbody td {
   color: #232323;
   height: 40px;
-  text-align: center;
+  text-align: center;white-space: nowrap;
+
   vertical-align: middle;
   padding: 0 10px;
   line-height: 22px;

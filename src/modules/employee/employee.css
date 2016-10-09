@@ -1,3 +1,7 @@
 .empSearch {
   /*max-width:1040px;*/
 }
+
+.tBox {
+      overflow: scroll;
+}
