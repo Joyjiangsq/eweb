@@ -8,7 +8,7 @@
             </span>
             <!--文本输入-->
             <span v-if="one.type == 'text'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
-              <input type="text" name="name" :value="params[one.keyname]" v-model="params[one.keyname]">
+              <input type="text" name="name" @keydown="textKeyDownHandler(one)" :value="params[one.keyname]" v-model="params[one.keyname]">
             </span>
             <!--日选择-->
             <span v-if="one.type == 'datepicker'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
@@ -117,11 +117,15 @@ export default {
         this.events.onSearch.call(this._context, this.params);
         if(e) this.$router.go({ path: this.pathname, query: this.params});
       },
-
+      // 控制格式
       needShow: function(index){
         if(this.datas.length-1 != index) return false
         if(this.lastType == "cascade" || this.lastType == "daterange") return false
         return true
+      },
+      // 控制文本输入的类型有 邮件类型/手机号
+      textKeyDownHandler: function(d){
+
       }
   },
 
