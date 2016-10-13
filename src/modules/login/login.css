@@ -51,7 +51,7 @@
     top: 12px;
     left: 11px;
     font-size: 16px;
-color: gray;
+    color: gray;
 }
 .loginFormRow .iconinfo span {
     color: #d3d3d3;
@@ -60,11 +60,19 @@ color: gray;
 .loginFormRow button {
     width: 100%;
 }
+.loginFormRow .codeInput {
+    width: 40%;
+}
 .loginIn .errorTip {
-  color: #d70c18;
-  position: absolute;
-  width: 100%;
-  margin-top: -20px;
+    color: #d70c18;
+    position: absolute;
+    width: 100%;
+    margin-top: -20px;
+}
+.loginIn .codeimg {
+    width: 140px;
+    vertical-align: middle;
+    height: 40px;
 }
 @media screen and (max-width: 1280px) {
     .centerIn {

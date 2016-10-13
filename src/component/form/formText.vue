@@ -88,7 +88,6 @@ export default {
   components: {},
   watch:{
     "validatestart":function() {
-
        if(this.watchIgnore) return false;
        if(this.ingnore){
          this.$dispatch("onvalidate", {res:"success", msg: "被忽略的项目"});

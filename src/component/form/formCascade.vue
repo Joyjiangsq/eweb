@@ -3,7 +3,7 @@
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
             <combocascade :pid.sync="pid" :cid.sync="cid" :aid.sync="aid" @combocase="combocaseClick"></combocascade>
-            <input type="text" name="name" :value="detail" v-model="detail" :class="css.casinput"/>
+            <input type="text" name="name" :value="detail" v-model="detail" :class="css.casinput" v-if="detailneed"/>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -35,6 +35,9 @@ export default {
     },
     detail:{
       default:""
+    },
+    detailneed: {
+      default: ""
     }
   },
   data: function () {
@@ -57,7 +60,7 @@ export default {
   watch:{
     "validatestart":function() {
        if(this.watchIgnore) return false;
-       if(this.value == "comboxcas") {
+       if(this.value == "comboxcas" && this.must) {
          this.$dispatch("onvalidate", {res:"fail", msg: "请选择地址"});
          this.$set("errormsg", "必选选择地址");
          this.$set("error", true);
@@ -75,14 +78,21 @@ export default {
          this.$set("error", true);
          return false;
        }
-       if(!this.detail || this.detail == "") {
-         this.$dispatch("onvalidate", {res:"fail", msg: "请填写详细地址"});
-         this.$set("errormsg", "请填写详细地址");
-         this.$set("error", true);
-         return false;
+       if(this.detailneed) {
+         if(!this.detail || this.detail == "") {
+           this.$dispatch("onvalidate", {res:"fail", msg: "请填写详细地址"});
+           this.$set("errormsg", "请填写详细地址");
+           this.$set("error", true);
+           return false;
+         }
        }
-       this.value.detail = this.detail;
-       this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
+       if(this.value == "comboxcas") {
+          this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:"", name: this.formname});
+       }
+       else {
+         this.value.detail = this.detail;
+         this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
+       }
     }
   }
 }
