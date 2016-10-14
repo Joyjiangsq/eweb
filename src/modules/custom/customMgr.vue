@@ -13,7 +13,7 @@
           <pg :totals="100" ></pg>
     </pagepanel>
     <!--新增对话框-->
-    <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler">
+    <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" :scroll="true">
           <div class="" slot="containerDialog" :class="css.dBox">
                 <formtext labelname="业主姓名："  :value.sync="formData.name"  :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="业主电话："  :value.sync="formData.phone"  :vertical="true" :phone="true"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>

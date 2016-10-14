@@ -4,3 +4,24 @@
       padding: 20px;
       padding-top: 0;
 }
+
+.customLeft {
+  position: absolute;
+  padding: 20px;
+  left: 0px;
+}
+.customRight {
+  width: 200px;
+  position: absolute;
+  right: 20px;
+  margin-top: 50px;
+}
+
+.tBox {
+  overflow-x: scroll;
+}
+
+.inRow {
+  color: #04cff3;
+  cursor: pointer;
+}

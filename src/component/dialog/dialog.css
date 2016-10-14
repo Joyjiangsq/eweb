@@ -52,7 +52,9 @@
     min-width: 335px;
     max-width: 900px;
     max-height: 700px;
-    overflow-y: scroll;
+}
+.scrollLimit {
+  overflow-y: scroll;
 }
 .dialog .dialogFooter {
     text-align: right;

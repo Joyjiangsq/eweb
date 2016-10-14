@@ -36,7 +36,7 @@ import dialog from "component/dialog/dialog";
 import pg from "component/pagination/pagination";
 import Utils from "common/Utils.js";
 import formcb from "component/form/fmCombobox";
-import {roleData} from "config/roleConfig.js";
+import {roleData} from "config/const.js";
 import dialogtip from "component/dialog/dialogTip";
 import {showTips} from "actions/index";
 import pageBase from "common/mixinPage.js";

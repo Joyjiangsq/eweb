@@ -6,8 +6,7 @@
                     {{title}}
                     <span :class="dCss.close" @click="hide"><icon iconname="icon-close" ></icon></span>
                 </div>
-
-                <div :class="dCss.dialogContent">
+                <div :class="[dCss.dialogContent,scroll?dCss.scrollLimit:'']">
                     <slot name='containerDialog'>这是内容</slot>
                 </div>
 
@@ -28,6 +27,11 @@ import btnbar from "component/sprite/buttonbar";
 import dialogBase from "common/mixinDialog.js";
 export default {
   mixins:[dialogBase],
+  props:{
+    scroll: {
+      default: false
+    }
+  },
   data: function () {
     return {
       dCss

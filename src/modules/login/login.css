@@ -73,6 +73,7 @@
     width: 140px;
     vertical-align: middle;
     height: 40px;
+    cursor: pointer;
 }
 @media screen and (max-width: 1280px) {
     .centerIn {

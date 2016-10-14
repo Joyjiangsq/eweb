@@ -1,4 +1,3 @@
-
 let tableBase = {
         props:{
           classname:{
@@ -113,7 +112,8 @@ let tableBase = {
                        rowData[hone.labelValue] = hone.adapterFun.call(this._context, one);
                     }
                     rowData["_id"] = one["_id"];
-
+                    if(i == 0) rowData["selected"] = true;
+                    else rowData["selected"] = false;
                   }
                   this.dataList.push(rowData);
                   this.tpIds.push(one[this.codevalue]);

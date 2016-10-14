@@ -19,7 +19,7 @@
                             <div :class="lCss.loginFormRow">
                                   <icon iconname="icon-validate"  :classname="lCss.iconinfo"></icon>
                                   <input type="text" name="code" :class="lCss.codeInput" :value="code" v-model="code">
-                                  <img :src="codeImg" alt="" :class='lCss.codeimg' />
+                                  <img :src="codeSrc" alt="点击更换验证验证码" title="点击更换验证验证码" @click="changeImg" :class='lCss.codeimg' />
                             </div>
                             <div :class="lCss.errorTip" v-show="error">
  -                               {{error}}
@@ -49,6 +49,7 @@ export default {
   data: function () {
     return {
       lCss,
+      codeSrc:"http://172.20.8.109/check-code",
       logo1: logo1,
       ckData:[{label:"记住密码", checked: false}],
       checkedEevents: {
@@ -56,17 +57,22 @@ export default {
             this.$set("remember", checked);
         }
       },
-      userName:storejs("userName") || "fn_456",
+      userName:storejs("userName") || "jz_123",
       passwd:storejs("passwd") || "123456",
       code: "",
       remember:false,
       error:""
     }
   },
-  computed: {
-    codeImg: function() {
-      return "http://172.20.8.109/check-code";
+  router:{
+    data: function(){
+        this.changeImg();
     }
+  },
+  computed: {
+    // codeImg: function() {
+    //   return "http://172.20.8.109/check-code";
+    // }
   },
   ready: function () {
     if(storejs("userInfo"))  this.$router.go({path:"/index"});
@@ -80,6 +86,9 @@ export default {
   },
   attached: function () {},
   methods: {
+    changeImg: function(){
+       this.$set("codeSrc", "http://172.20.8.109/check-code?v="+Math.random());
+    },
     clickAction: function(){
         if(!this.userName || this.userName == "") {
             this.showTips("请填写用户名"); return false;
@@ -109,7 +118,9 @@ export default {
                 setUser(this.$store, d.data);
                 this.$router.go({path:"/index"});
               }
+              else this.changeImg()
         },(error) => {
+              this.changeImg();
               this.showTips(error.msg);
         })
     },
