@@ -82,7 +82,7 @@ export default {
     },
 
     numberValidate: function(code){
-        return (code >= 49 && code <= 57) || (code >= 96 && code <= 105)
+        return (code >= 48 && code <= 57) || (code >= 96 && code <= 105)
     }
   },
   components: {},

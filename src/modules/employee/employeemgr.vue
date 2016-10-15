@@ -10,7 +10,7 @@
               <div class="epCss.tBox">
                 <tb :headercaption="headercaption" :totals.sync="totals" :load="load" :params="searchParams" url="employees" :events="tableEvents"></tb>
               </div>
-              <pg :totals="totals" :size="searchParams.size" @pagechange="pagechange"></pg>
+              <pg :totals="totals"  @pagechange="pagechange"></pg>
         </pagepanel>
         <dialog :flag="flagdep" @dialogclick="diaologClick" :title="optitle">
               <div class="" slot="containerDialog">
@@ -61,7 +61,7 @@ export default {
       roleData: roleData,       // 角色配置项目
       flagdep: false,           // 控制表格显示隐藏
       validate: false,          // 表单验证动作的开关
-      searchParams: {size: 2, page:1}, // 初始查询依据
+      searchParams: {page:1}, // 初始查询依据
       addParams:{name:"", roles:"", phone:""}, // 新增、编辑的参数值
       headercaption:tableHeaderDatas, // 表格头部信息设置
       load: true,                 // 表格是否加载开关

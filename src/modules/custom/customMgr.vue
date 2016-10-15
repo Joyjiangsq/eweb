@@ -8,9 +8,9 @@
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
           <div class="">
-            <tb :headercaption="headercaption" :load="load" :datas="testData" url="" :events="tableEvents"></tb>
+            <tb :headercaption="headercaption" :load="load" :auto="true" :totoals.sync="totoals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
-          <pg :totals="100" ></pg>
+          <pg :totals="totoals"  @pagechange="pagechange"></pg>
     </pagepanel>
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" :scroll="true">
@@ -40,11 +40,15 @@ import pg from "component/pagination/pagination";
 import search from "component/search/search";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
+import Utils from "common/Utils";
 import cascadeformarray from "component/form/formCascadeArry";
 import pageBase from "common/mixinPage.js";
-let headerData = [{name:"用户名", labelValue:"type", type:"data"},{name:"角色", labelValue:"orderid",type:"data"},
-                  {name:"状态", labelValue:"cash",type:"data", attr:"price"},{name:"创建人", labelValue:"account",type:"data"},
-                  {name:"创建时间", labelValue:"name", type:"data"},{type:"operator", name:"操作"}]
+let headerData = [{name:"客户编号", labelValue:"type", type:"data"},{name:"业主姓名", labelValue:"name",type:"data"},
+                  {name:"业主联系方式", labelValue:"address",type:"data"},{name:"渠道", labelValue:"account",type:"data"},
+                  {name:"创建人", labelValue:"createdBy",type:"data"},
+                  {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
+                  {name:"是否签单", labelValue:"account",type:"data"},{name:"备注", labelValue:"account",type:"data"},
+                  {type:"operator", name:"操作"}]
 export default {
   mixins:[pageBase],
   data: function () {
@@ -56,6 +60,10 @@ export default {
       },
       formData:{      // 表单数据流
       },
+      searchParams:{   // 查询条件
+         page:1
+      },
+      totoals: 0,
       formControl:{
           validate: false,
           validateHandler: function(d){   // 表单验证
@@ -69,11 +77,10 @@ export default {
         }
       },
       headercaption: headerData,
-      load: false,
-      testData:[{type:"110202222219201", orderid:"卡拉", status: 1},{type:"1102019201", orderid:"卡拉", status:2}],
+      load: true,
       tableEvents:{
         operatorRender: function(d){
-          return [{name:"编辑", action:"edit",icon:"icon-edit", id:d.id},{name:"详情", action:"detail",icon:"icon-detail", id:""}];
+          return [{name:"编辑", action:"edit",icon:"icon-edit", id:d._id}];
         },
 
         operatorHandler: function(d){
@@ -97,7 +104,8 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.customName || "",  keyname:"customName", labelcaption:"业主姓名:"},
+      return [{type:"text",  value:q.cardCode || "",  keyname:"cardCode", labelcaption:"业主编号:"},
+              {type:"text",  value:q.customName || "",  keyname:"customName", labelcaption:"业主姓名:"},
               {type:"text",  value:q.phone || "",  keyname:"phone", labelcaption:"业主联系方式:", property: "phone"},
               {type:"combobox", keyid:"id", value:q.from || "", labelname:"name", keyname:"from", labelcaption:"渠道", datas:[{name:"淘宝", id:1},{name:"门店", id:2}]},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
@@ -110,11 +118,18 @@ export default {
   ready: function () {},
   attached: function () {},
   methods: {
+    pagechange: function(d){
+        this.searchParams.page = d.page;
+        this.loadlist();
+    },
     // 新增对话框 按钮回调
     dialogClickHandler: function(d) {
         if(d.action == "confirm") {
           this.formControl.validate = !this.formControl.validate;
         }
+    },
+    loadlist: function(){
+      this.$set("load", !this.load);
     }
   },
   components: {search,pagepanel,btnbar,pg,tb,dialog,formtext,cascadeformarray,cascadeform},

@@ -1,5 +1,5 @@
 <template>
-    <ft></ft>
+    <ft url="upload-customers"></ft>
 </template>
 
 <script>

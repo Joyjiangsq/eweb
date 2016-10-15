@@ -1,44 +1,46 @@
 <template>
-    <div :class="css.aa">
-          <form class="" action="index.html" method="post">
-
+    <div :class="css.fileBox">
+          <form :class="css.fileDeal"  method="post" enctype= "multipart/form-data">
+            <input type="file" name="uploadFile" :class="css.fileTarget" @change="changeFile" v-for="one in list"/>
+            <btn>{{text}} <span v-show="loading" :class="css.loading">...</span></btn>
           </form>
-
-          <span>2</span>
-          <span>2</span>
-          <span>2</span>
-
-          {{{a}}}
     </div>
 </template>
 
 <script>
-/** url(上传的地址)  auto(是否自动上传) upload(控制上传)  onsuccess()(上传成功)  onerror()(上传失败)**/
+/**
+    这里使用jq 和 jq-form  因为要兼容ie9 所以 formData对象  fileReader对象 都不可以使用 vue-resource只支持formData对象
+**/
 import css from "./file.css";
-import a from "./a.html";
-console.log(a);
+import btn from "component/sprite/button";
+import fileMixin from "common/mixinFile";
+import formShim from "vendor/jquery.form.js";  // jq form 的依赖
 export default {
-  props: {
-      url: {
-         default:"",
-         type: String
-      },
-
-      auto: {
-        default: true,
-        type: Boolean
-      }
-  },
+  mixins:[fileMixin],
   data: function () {
     return {
       css,
-      a: a
+      list:[1]  // 控制onchange的时候  选择相同文件
     }
   },
   computed: {},
   ready: function () {},
   attached: function () {},
-  methods: {},
-  components: {}
+  methods: {
+        toUpload: function(e){
+          var form = $("."+this.css.fileDeal);
+          this.upload(form);
+          return false;
+        },
+
+        subChangeFiles: function(file){
+            this.$set("loading", !this.loading);
+            console.log(file);
+            this.toUpload();
+            this.list.pop();
+            this.list.push(Math.random());
+        }
+  },
+  components: {btn}
 }
 </script>

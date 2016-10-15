@@ -41,6 +41,11 @@ let tableBase = {
             }
           },
 
+          size: {
+            type: Number,
+            default: 10
+          },
+
           datas:{
             type:Array,
             default:() => []
@@ -122,6 +127,7 @@ let tableBase = {
           },
 
           loadData: function() {
+            this.params.size = this.size;
             return this.$http.get(this.$Api+ (this.url || ""),{params:this.params}).then((res) => {
                 // 如果有数据 就渲染
                //  如果没有数据就显示没有数据

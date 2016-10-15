@@ -111,7 +111,8 @@ export default {
     },
 
     loginAction: function(){
-        this.$http.post(this.$Api + "login",{"user_code": this.userName,"passwd": this.passwd, "checkcode": this.code}).then((res) => {
+        // CardCode  *sap 的字段 *
+        this.$http.post(this.$Api + "login",{"CardCode": this.userName,"passwd": this.passwd, "checkcode": this.code}).then((res) => {
               let d = res.json();
               if(d.code == 200) {
                 storejs({"userInfo": d.data});
