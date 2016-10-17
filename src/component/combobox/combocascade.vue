@@ -1,8 +1,8 @@
 <template>
     <div :class="cascadeCss.cascadeBox">
-                  <combobox labelname="name" :classname="cascadeCss.limit" keyid="id"   :datas="parry" :value.sync="pid" @dropclick="dropclickHandler"></combobox>
-                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="id"   :datas="carry" :value.sync="cid" @dropclick="dropclickHandler" ></combobox>
-                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="id"   :datas="aarry" :value.sync="aid" @dropclick="dropclickHandler"></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit" keyid="name"  :value.sync="provient" :datas="parry"  @dropclick="pClick"></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :value.sync="cname"  :datas="carry"  @dropclick="cClick" ></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
     </div>
 </template>
 
@@ -10,66 +10,98 @@
 import datas from "./city.json";
 import cascadeCss from "./cascadeCss.css";
 import combobox from "./combobox";
-// console.log(datas);
 export default {
   props:{
-      pid:{
-        default: 0
-      },
-
-      cid:{
-        default: 0
-      },
-
-      aid: {
-        default: 0
+      value:{
+          default:"",
+          type:String
       }
   },
   data: function () {
     return {
         cascadeCss,
-        datas:datas
+        datas:datas,
+        parry:datas, // 省列表
+        carry: [], // 城市列表
+        aarry: [], // 区域列表
+        provient:"",
+        cname:"",
+        aname: ""
     }
   },
   computed: {
-      parry: function(){
-          return this.datas;
-      },
 
-      carry: function(){
-          let cdatas = [];
-          for(var i=0; i < this.datas.length; i++) {
-              if(this.datas[i].id == this.pid) cdatas = this.datas[i].citys;
-          }
-          return cdatas;
-      },
-
-      aarry: function(){
-          let adatas = [];
-          for(var i=0; i < this.carry.length; i++) {
-              if(this.carry[i].id == this.cid) adatas = this.carry[i].areas;
-          }
-          if(!adatas || adatas.length == 0) this.$set("aid", 0);
-          return adatas;
-      }
   },
   created(){
   },
-  ready: function () {},
+  ready: function () {
+      var sp = this.value.split(",");
+      this.provient = this.value.split(",")[0];
+      this.renderCitys(this.provient); // 渲染市
+      if(sp.length == 2) {
+        this.cname = this.value.split(",")[1];  // 设置默认市
+        this.renderAreas(this.cname);   // 渲染区域
+      }
+      else if(sp.length == 3) this.aname = this.value.split(",")[2];  // 设置默认区域
+  },
   attached: function () {},
   methods: {
-      dropclickHandler: function() {
-          if(!this.aarry || this.aarry.length == 0) this.$dispatch("combocase", {pid: this.pid, aid: this.aid, cid: this.cid}, 2);
-          else this.$dispatch("combocase", {pid: this.pid, aid: this.aid, cid: this.cid}, 3);
+    pClick: function(value){
+         this.renderCitys(value);
+         this.provient = value;
+         this.$dispatch("combocase", value);
+    },
+
+    cClick: function(value) {
+          this.renderAreas(value);
+          this.cname = value;
+          this.$dispatch("combocase", value);
+    },
+
+    aClick: function(value) {
+          console.log(value);
+          this.aname = value;
+          this.$dispatch("combocase", value);
+    },
+    renderAreas: function(value) {
+      for (var i = 0; i < this.carry.length; i++) {
+         var one = this.carry[i];
+         if(one.name == value) {
+             this.aarry = one.areas;
+         }
       }
+    },
+    renderCitys: function(value) {
+      for (var i = 0; i < this.datas.length; i++) {
+         var one = this.datas[i];
+         if(one.name == value) {
+             this.carry = one.citys;
+         }
+      }
+      this.aarry = [];
+    },
+
+    setTrigger:function(f){
+        if(f == "p") this.$set("value", this.provient);
+        else if(f == "c") this.$set("value", this.provient+","+this.cname);
+        else this.$set("value", this.provient+","+this.cname+","+this.aname);
+    }
   },
   components: {combobox},
   watch:{
-    "pid": function(){
-      this.$set("cid", 0);this.$set("aid", 0);
+    "provient": function(){
+          this.setTrigger("p")
     },
-    "cid": function(){
-      this.$set("aid", 0);
+    "cname": function(){
+          this.setTrigger("c")
+    },
+    "aname": function(){
+          this.setTrigger("a")
+    },
+    "value": function(o){
+          if(!o || o == "") {
+              this.provient = this.cname = this.aname = "";
+          }
     }
   }
 }

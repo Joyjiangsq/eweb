@@ -7,6 +7,7 @@
     </pagepanel>
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
+          {{formData|json}}
           <div class="">
             <tb :headercaption="headercaption" :load="load" :auto="true" :totoals.sync="totoals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
@@ -15,50 +16,66 @@
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" :scroll="true">
           <div class="" slot="containerDialog" :class="css.dBox">
-                <formtext labelname="业主姓名："  :value.sync="formData.name"  :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
-                <formtext labelname="业主电话："  :value.sync="formData.phone"  :vertical="true" :phone="true"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
-                <cascadeformarray  labelname="地址：" :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></cascadeformarray>
-                <cascadeform  labelname="城市：" :must="false" :detailneed="false" :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></cascadeform>
-                <formtext labelname="面积：" :must="false" :value.sync="formData.area" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
-                <formtext labelname="交房时间：" :must="false" :value.sync="formData.time" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
-                <formtext labelname="装修预算：" :must="false" :value.sync="formData.prePrice" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
-                <formtext labelname="装修风格：" :must="false" :value.sync="formData.spec" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
-                <formtext labelname="房屋类型：" :must="false" :value.sync="formData.type" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
-                <formtext labelname="备注：" :must="false" :value.sync="formData.remark" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+            {{formData|json}}
+                <formcb keyid="id" labelname="渠道：" :value.sync="formData.U_ComeFrom"  keyname="name" :must="false" formname="U_ComeFrom" :vertical="true" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formtext labelname="业主姓名："  :value.sync="formData.CardName" formname="CardName"  :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <formtext labelname="业主电话："  :value.sync="formData.Phone1" formname="Phone1"  :vertical="true" :phone="true"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <cascadeformarray  labelname="地址：" :vertical="true" :value.sync="formData.Address" formname="Address" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></cascadeformarray>
+                <cascadeform  labelname="城市：" :must="false" :value.sync= "formData.city" formname="city" :detailneed="false" :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></cascadeform>
+                <formtext labelname="面积：" unit="平米" :number="true" formname="U_Acreage" :must="false" :value.sync="formData.U_Acreage" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+                <formdt labelname="交房时间：" :must="false" formname="U_OthersDate" :value.sync="formData.U_OthersDate" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdt>
+                <formtext labelname="装修预算："  :number="true" unit="元" :must="false" :value.sync="formData.prePrice" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+                <formcb keyid="id" labelname="装修风格：" :value.sync="formData.U_Renovation2"  keyname="name" :must="false" formname="U_Renovation2" :datas="formArray.decorateStyle" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formcb keyid="id" labelname="房屋类型：" :value.sync="formData.U_HouseType"  keyname="name" :must="false" formname="U_HouseType"  :datas="formArray.houseType" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formtext labelname="备注：" formname="Notes" :must="false" :value.sync="formData.Notes" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+                <formtext labelname="天猫订单：" :must="false" formname="U_TmallOrderId" :value.sync="formData.U_TmallOrderId" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+                <formtext labelname="天猫订单金额：" :must="false" formname="U_TmOrAmout" :value.sync="formData.U_TmOrAmout" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+                <formtext labelname="旺旺号：" :must="false" formname="U_WWId" :value.sync="formData.U_WWId" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
+                <formtext labelname="销售订单号：" :must="false" :value.sync="formData.U_FZSalesOrder" formname="U_FZSalesOrder" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
           </div>
     </dialog>
   </div>
 </template>
 <script>
 import {setTitle} from "actions";
+import {fromConst, decorateStyle, houseType} from "config/const";
 import css from "./custom.css";
+import formdt from "component/form/formDate";
 import tb from "component/grid/tableListBase";
 import dialog from "component/dialog/dialog";
 import pagepanel from "component/panel/pagepanel";
 import btnbar from "component/sprite/buttonbar";
 import pg from "component/pagination/pagination";
 import search from "component/search/search";
+import formcb from "component/form/fmCombobox";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import Utils from "common/Utils";
 import cascadeformarray from "component/form/formCascadeArry";
 import pageBase from "common/mixinPage.js";
-let headerData = [{name:"客户编号", labelValue:"type", type:"data"},{name:"业主姓名", labelValue:"name",type:"data"},
-                  {name:"业主联系方式", labelValue:"address",type:"data"},{name:"渠道", labelValue:"account",type:"data"},
-                  {name:"创建人", labelValue:"createdBy",type:"data"},
-                  {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
-                  {name:"是否签单", labelValue:"account",type:"data"},{name:"备注", labelValue:"account",type:"data"},
+let headerData = [{name:"客户编号", labelValue:"CardCode", type:"data"},{name:"客户名称", labelValue:"CardName",type:"data"},
+                  {name:"业主联系方式", labelValue:"Address",type:"data"},{name:"渠道", labelValue:"U_ComeFrom",type:"data"},
+                  {name:"创建人", labelValue:"createdBy",type:"data"},  // TODO
+                  {name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
+                  {name:"是否签单", labelValue:"account",type:"data"},{name:"备注", labelValue:"Notes",type:"data"},
                   {type:"operator", name:"操作"}]
 export default {
   mixins:[pageBase],
   data: function () {
     return {
       css,
+      // 类型列表
+      formArray:{
+        fromConst: fromConst,
+        decorateStyle:decorateStyle,
+        houseType: houseType
+      },
       curAction:"add", // 默认当前操作为add  其他操作有edit
       dialogMap: {
         showFormDialog: false // 新增对话框控制
       },
       formData:{      // 表单数据流
+         validate: true
       },
       searchParams:{   // 查询条件
          page:1
@@ -67,7 +84,10 @@ export default {
       formControl:{
           validate: false,
           validateHandler: function(d){   // 表单验证
-              console.log(d);
+               if(d.res == "fail") {
+                  this.formData.validate = false
+               }
+               else   this.formData.validate = true
           }
       },
       searchEvents:{          // 查询数据
@@ -90,7 +110,7 @@ export default {
               }
         }
       },
-      btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导出", icon:"icon-share", action:"export"}],
+      btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导入", action:"inport"}, {name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
               if(d.action == "add") {
@@ -107,7 +127,8 @@ export default {
       return [{type:"text",  value:q.cardCode || "",  keyname:"cardCode", labelcaption:"业主编号:"},
               {type:"text",  value:q.customName || "",  keyname:"customName", labelcaption:"业主姓名:"},
               {type:"text",  value:q.phone || "",  keyname:"phone", labelcaption:"业主联系方式:", property: "phone"},
-              {type:"combobox", keyid:"id", value:q.from || "", labelname:"name", keyname:"from", labelcaption:"渠道", datas:[{name:"淘宝", id:1},{name:"门店", id:2}]},
+              {type:"combobox", keyid:"id", value:q.from || "", labelname:"name", keyname:"from", labelcaption:"渠道", datas:this.formArray.fromConst},
+              {type:"dim", iptvalue: q.dimLabel || "", value:q.ename || "",  keyname:"ename", labelcaption:"分站名称:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     },
 
@@ -115,7 +136,11 @@ export default {
        return this.curAction == "add"? "新增":"编辑"
     }
   },
-  ready: function () {},
+  ready: function () {
+    setInterval(()=>{
+          console.log(JSON.stringify(this.formData));
+    }, 1000)
+  },
   attached: function () {},
   methods: {
     pagechange: function(d){
@@ -126,13 +151,18 @@ export default {
     dialogClickHandler: function(d) {
         if(d.action == "confirm") {
           this.formControl.validate = !this.formControl.validate;
+          if(this.formData.validate) {
+              // this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
+              // this.loadlist();
+              // this.formData = {validate: true}
+          }
         }
     },
     loadlist: function(){
       this.$set("load", !this.load);
     }
   },
-  components: {search,pagepanel,btnbar,pg,tb,dialog,formtext,cascadeformarray,cascadeform},
+  components: {search,pagepanel,btnbar,pg,tb,dialog,formtext,cascadeformarray,cascadeform, formcb,formdt},
   route:{
     data: function(){
       setTitle(this.$store, "客户管理");

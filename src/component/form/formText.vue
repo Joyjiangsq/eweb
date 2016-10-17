@@ -2,7 +2,8 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <input :type="inputtype" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
+            <input :type="inputtype" :class="unit?css.unitStay:''" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
+            <span :class="css.unit" v-if="!!unit">{{unit}}</span>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -16,6 +17,9 @@ import mixin from "common/mixinForm.js";
 export default {
   mixins: [mixin],
   props:{
+      unit:{
+        default:""
+      },
       placeholder:{
         type:String,
         default:"请填写"

@@ -39,7 +39,6 @@
 .icon-right2:before { content: "\e60e"; }
 .icon-left1:before { content: "\e60f"; }
 .icon-right1:before { content: "\e610"; }
-.icon-right:before { content: "\e611"; }
 .icon-key:before { content: "\e612"; }
 .icon-downaction:before { content: "\e613"; }
 .icon-validate:before { content: "\e614"; }
@@ -55,3 +54,5 @@
 .icon-uncheck:before { content: "\e615"; }
 .icon-radio1:before { content: "\e617"; }
 .icon-radio:before { content: "\e61e"; }
+.icon-right:before { content: "\e61f"; }
+.icon-warn:before { content: "\e611"; }

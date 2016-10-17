@@ -1,15 +1,22 @@
 <template>
     <div :class="acCss.accountBox">
         <pagepanel classname="needpadding" direct="bottom">
+
+          <div class="">
+            <propertytext key="邮箱" :horizontal="true" :value="accountBaseInfo.U_Email"></propertytext>
+            <propertytext key="账号" :horizontal="true" :value="accountBaseInfo.U_AccountName"></propertytext>
+            <propertytext key="所属银行" :horizontal="true" :value="accountBaseInfo.U_Bbank"></propertytext>
+            <propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_Baddress"></propertytext>
+          </div>
           <div :class="acCss.accountTitleBox">
               <div :class="acCss.accountTitleIn">
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>账户余额 : </span>
-                        <span> 冻结金额 : <span :class='acCss.cashText'>2000000</span>元 </span>
+                        <span> 冻结金额 : <span :class='acCss.cashText'>{{accountBaseInfo.FrozenMount}}</span>元 </span>
                       </div>
                       <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>15000000</span>
+                            <span :class='acCss.cash'>{{accountBaseInfo.Balance}}</span>
                             <span :class='acCss.unit'>元</span>
                       </div>
                       <span :class="acCss.backCash"><btn  @clickaction="backCashHandler">回款</btn></span>
@@ -18,10 +25,10 @@
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
                         <span :class='acCss.mintitle'>授信余额 : </span>
-                        <span> 授信额度 : <span :class='acCss.cashText'>2000000</span>元 </span>
+                        <span> 授信额度 : <span :class='acCss.cashText'>{{accountBaseInfo.Creditline}}</span>元 </span>
                       </div>
                       <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>15000000</span>
+                            <span :class='acCss.cash'>{{accountBaseInfo.CreditlineBalance}}</span>
                             <span :class='acCss.unit'>元</span>
                       </div>
                 </span>
@@ -44,10 +51,11 @@
         <!--回款对话框-->
         <dialog :flag="!showBackCashDialog" @dialogclick="dialogClickHandler">
               <div  slot="containerDialog">
-                  <propertytext key="账户余额" value="20000"></propertytext>
-                  <propertytext key="冻结金额" value="8000"></propertytext>
-                  <propertytext key="可回款金额" value="12000"></propertytext>
+                  <propertytext key="账户余额" :value="accountBaseInfo.Balance"></propertytext>
+                  <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount"></propertytext>
+                  <propertytext key="可回款金额" :value="accountBaseInfo.AvailableBalance"></propertytext>
                   <formtext labelname="回款金额：" :value.sync="backCashParams.backCash" placeholder="请输入回款金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="备注：" :value.sync="backCashParams.backCash" placeholder="备注" :vertical="true" formname='backCash'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>
         </dialog>
 
@@ -71,6 +79,17 @@ export default {
   mixins: [pageBase],
   data: function () {
     return {
+      accountBaseInfo:{
+          Balance: "", // 账户余额
+          Creditline: "", //授信额度
+          FrozenMount: "", // 冻结金额
+          U_Email:"", // 邮箱
+          U_AccountName:"", // 账号
+          U_Baddress:"", // 开户行地址
+          CreditlineBalance:"", // 授信余额
+          AvailableBalance:"", //可回款金额
+          U_Bbank: "" // 所属银行
+      },
       acCss,
       totals: 0,
       searchParams:{}, // 查询参数
@@ -102,7 +121,9 @@ export default {
       btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
-            console.log(d);
+            if(d.action == "export") {
+                  //  TODO
+            }
         }
       }
     }
@@ -115,7 +136,6 @@ export default {
     }
   },
   ready: function () {
-    console.log(this);
   },
   attached: function () {},
   methods: {
@@ -137,6 +157,10 @@ export default {
       if(d.action == "confirm") {
          this.backCashParams["validate"] = true;
          this.$set("validate", !this.validate);
+         if(this.backCashParams.validate) {
+            this.loadlist();
+            this.$set("showBackCashDialog", !this.showBackCashDialog);
+         }
          // 验证结束去执行逻辑
       }
     },

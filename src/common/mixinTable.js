@@ -28,7 +28,7 @@ let tableBase = {
 
           params:{
             type:Object,
-            default:() => {}
+            default:function(){return {}}
           },
           totals:{
               twoway: true

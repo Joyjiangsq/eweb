@@ -4,7 +4,7 @@
           <div :class="[dCss.dialog, 'bounce']">
                 <div :class="dCss.dialogContent">
                     <div :class="dCss.tipsIn">
-                        <icon iconname="icon-forbidden"  :classname="dCss.warninfo"></icon>{{msg}}
+                        <icon iconname="icon-warn"  :classname="dCss.warninfo"></icon>{{msg}}
                     </div>
                 </div>
 

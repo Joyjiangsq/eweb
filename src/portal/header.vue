@@ -1,5 +1,6 @@
 <template>
   <div :class="portalCss.headerView">
+
         <div :class="portalCss.logoBox"><img :src="logo" alt="" /></div>
         <div :class="portalCss.headerBars">
               <span :class="portalCss.who"><icon iconname="icon-user" :iconlabel="user.user_code || userName"></icon></span>
@@ -8,7 +9,6 @@
                 <span  @click="loginOutAction"><icon iconname="icon-downaction" iconlabel="退出"></icon></span>
               </span>
         </div>
-
 
         <!--退出提示-->
         <dialogtip :flag="exitTag" @dialogclick="confirmLogout" msg="你确定退出吗？">

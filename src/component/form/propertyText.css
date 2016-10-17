@@ -1,9 +1,19 @@
-.horizontal {
-    display: inline-block;
-}
+
 .propertyOne {
     margin-top: 20px;
 }
+.horizontal {
+  margin-top: 0;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-right: 10px;
+
+}
+.horizontal .key {
+    min-width: auto;
+    font-weight: bold;
+}
+.horizontal .value {padding: 0;}
 .key {
     display: inline-block;
     min-width: 110px;

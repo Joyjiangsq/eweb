@@ -3,7 +3,7 @@
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
             <div :class="css.casrowone" v-for="(index,addone) in addresses">
-                <combocascade :pid.sync="addone.pid" :cid.sync="addone.cid" :aid.sync="addone.aid" @combocase="combocaseClick"></combocascade>
+                <combocascade :value.sync="addone.value"  @combocase="combocaseClick"></combocascade>
                 <input type="text" name="name" :value="addone.detail" v-model="addone.detail" :class="css.casinputArr"/>
                 <span v-if="this.addresses.length > 1" :class="css.casclosebtn" @click="removeRow(index)"><icon iconname="icon-close" ></icon></span>
             </div>
@@ -26,13 +26,11 @@ export default {
   props:{
     addresses:{
       type: Array,
-      default:() => [{pid:0, aid:0, cid:0, detail:""}]
+      default:() => [{value:"", detail:""}]
     },
+
     value:{
-      default:"comboxcasay"
-    },
-    detail:{
-      default:""
+      default:"-"
     }
   },
   data: function () {
@@ -41,14 +39,18 @@ export default {
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+      // setInterval(()=>{
+      //   console.log(JSON.stringify(this.addresses));
+      // }, 1000)
+  },
   attached: function () {},
   methods: {
       removeRow: function(index){
           this.addresses.splice(index,1);
       },
       addNew: function(){
-          this.addresses.push({pid:0, aid:0, cid:0, detail:""});
+          this.addresses.push({value:"", detail:""});
       },
       combocaseClick: function(value, length) {
           this.$set("error", false);
@@ -57,18 +59,8 @@ export default {
           let success = true;
           for (var i = 0; i < this.addresses.length; i++) {
             let one = this.addresses[i];
-            if(one.pid == "") {
-              success = false; break;
-            }
-            if(one.cid == "") {
-              success = false; break;
-            }
-            if(one.aid == "") {
-              success = false; break;
-            }
-            if(one.detail == "") {
-              success = false; break;
-            }
+            if(one.value== "" || !one.value) {success = false; break}
+            if(one.detail== "" || !one.detail) {success = false; break}
           }
           return success;
       }

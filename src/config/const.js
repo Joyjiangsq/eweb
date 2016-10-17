@@ -7,7 +7,21 @@ export const roleData = [
   {name:"销售", id:2},
   {name:"客服", id:3}
 ]
+//装修风格
+export const decorateStyle =[
+  {name:"中式", id:1},
+  {name:"简式", id:2},
+  {name:"欧式", id:3},
+  {name:"地中海式", id:4},
+  {name:"田园", id:5},
+  {name:"美式", id:6},
+  {name:"其他", id:0}
+]
 
+// 渠道配置
+export const fromConst= [{name:"淘宝", id:1},{name:"门店", id:2}]
+// 房屋类型配置
+export const houseType= [{name:"毛坯新房", id:1},{name:"二手房", id:2}]
 // 组包类型配置
 export const packageType = [
   {name:"国民包", id: 1},

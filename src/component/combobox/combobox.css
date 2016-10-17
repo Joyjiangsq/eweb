@@ -35,7 +35,15 @@
     cursor: pointer;
 }
 .combobox .dropBox {
-    position: absolute;
+  position: fixed;
+line-height: 30px;
+background: white;
+min-width: 100px;
+z-index: 112;
+margin-top: 3px;
+border: 1px solid #ddd;
+box-shadow: 0 1px 8px rgba(0, 0, 0, .13);
+    /*position: absolute;
     line-height: 30px;
     background: white;
     left: 0;
@@ -43,7 +51,7 @@
     z-index: 112;
     margin-top: 3px;
     border: 1px solid #ddd;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, .13);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .13);*/
 }
 .combobox .dropBox .dropOne {
     padding: 0 10px;

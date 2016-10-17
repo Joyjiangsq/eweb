@@ -33,6 +33,10 @@ export function routerStart(router) {
                     component: function(resovle) {require(['modules/sale/saleMgr.vue'], resovle)},
                 },
 
+                "addSale":{
+                    component: function(resovle) {require(['modules/sale/saleAdd.vue'], resovle)},
+                },
+
                 // 采购订单管理
                 "purchase":{
                     component: function(resovle) {require(['modules/purchase/purchaseOrder.vue'], resovle)},

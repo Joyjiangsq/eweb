@@ -11,16 +11,17 @@
                     <div class="app_container_in">
                         <div class="subTitle">
                             <span v-if="titleIsArray">
-                                <a v-link="one.link" v-for="(index, one) in getTitle">
-                                  <span v-if="!index==0">/</span>
+                                <span v-for="(index, one) in getTitle">
+                                  <span v-if="one.type == 'back'" class='backbtn' @click="closeHandler"><icon iconname="icon-back"></icon></span>
+                                  <span v-if="index!=0" class='subSplit'>/</span>
                                   {{one.name}}
-                                </a>
+                                </span>
                             </span>
                             <span v-else> {{getTitle}}</span>
 
-                            <span class='rightClose' @click="closeHandler" v-if="titleIsArray">
+                            <!-- <span class='rightClose' @click="closeHandler" v-if="titleIsArray">
                                 <icon iconname="icon-close"></icon>
-                            </span>
+                            </span> -->
                         </div>
                         <router-view ></router-view>
                         <div class="clear"></div>
@@ -57,6 +58,8 @@ export default {
     closeHandler: function(){
        history.back();
     }
+
+
   },
   components: {headerbox,menus,foot,icon},
   vuex: {

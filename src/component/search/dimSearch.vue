@@ -1,6 +1,6 @@
 <template>
       <div :class="dCss.box">
-          <input type="text" name="name" :value="value" v-model="value" @keydown="keydownHandler" @keyup="onUpHandler">
+          <input type="text" name="name" :value="iptvalue" @keydown="keydownHandler" @keyup="onUpHandler">
           <div :class="dCss.dropBox" v-show="showDropBox">
               <span v-for="one in datas" @click="oneClickHandler(one)">{{one.name}}</span>
           </div>
@@ -16,14 +16,19 @@ export default {
       type: String,
       default:"name"
     },
+    iptvalue:{
+      default:"",
+    },
     value:{
         default:""
+    },
+    id:{
+      default: "id"
     }
   },
   data: function () {
     return {
       dCss,
-
       datas:[],
       showDropBox: false
     }
@@ -40,7 +45,7 @@ export default {
           // 此时去查询数据
           setTimeout(()=>{
             this.$set("showDropBox", true);
-            this.datas = [{name:"adaas", code:1},{name:"vvvv", code:1},{name:"ddd", code:1},{name:"vvv", code:1}]
+            this.datas = [{name:"adaas", id:1},{name:"vvvv", id:13},{name:"ddd", id:12},{name:"vvv", id:11}]
             this.getData();
           },500)
       },
@@ -58,7 +63,8 @@ export default {
       },
 
       oneClickHandler: function(one){
-          this.$set("value", one[this.labelname]);
+          this.$set("value", one[this.id]);
+          this.$set("iptvalue", one[this.labelname]);
           this.$set("showDropBox", !this.showDropBox);
           this.$dispatch("dimclick", one);
       },

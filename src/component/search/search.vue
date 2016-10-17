@@ -14,7 +14,10 @@
             <span v-if="one.type == 'datepicker'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
                <datepicker  :value.sync="params[one.keyname]" :formate="one.formate" ></datepicker>
              </span>
-
+             <!--模糊下拉-->
+             <span v-if="one.type == 'dim'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
+                <dim :url="one.url" :labelname="one.labelName" :id="one.code" :iptvalue="one.iptvalue" :value.sync="params[one.keyname]" @dimclick="dimClick" @valuechange="valuechange"></dim>
+             </span>
 
             <!--范围选择-->
             <span v-if="one.type == 'daterange'" :class="[sCss.sone, sCss.itemtwo]"><label for="">{{one.labelcaption}}</label>
@@ -28,7 +31,7 @@
 
             <!--下拉选择-->
             <span v-if="one.type == 'combobox'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
-                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid"  :datas="one.datas" :value.sync="params[one.keyname]"></combobox>
+                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid"  :datas="one.datas" :url="one.url" :value.sync="params[one.keyname]"></combobox>
             </span>
 
             <span :class='sCss.searchbtn' v-if="needShow(index)"><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
@@ -44,6 +47,7 @@ import datemonth from "component/datemonth/dateMonth";
 import datepicker from "component/datepicker/datePicker";
 import daterange from "component/datepicker/dateRange";
 import cascade from "component/combobox/combocascade";
+import dim from "./dimSearch";
 import {triggerChange} from "actions/index";
 import btn from "component/sprite/button.vue";
 export default {
@@ -107,12 +111,24 @@ export default {
           this.$set("params.cid", one.cid);
           this.$set("params.aid", one.aid);
         }
+        else if(one.type == "dim") {
+          this.$set("params." + one.keyname, one.value);
+          this.$set("params.dimLabel", one.iptvalue);
+          // this.$set("params.dimLabel", one.cid);
+        }
     }
 
     this.searchHandler();
   },
   attached: function () {},
   methods: {
+      dimClick: function(d) {
+        console.log(d);
+        this.$set("params.dimLabel", d.name);
+      },
+      valuechange: function(){
+
+      },
       searchHandler: function(e){
         this.events.onSearch.call(this._context, this.params);
         if(e) this.$router.go({ path: this.pathname, query: this.params});
@@ -129,7 +145,7 @@ export default {
       }
   },
 
-  components: {combobox,datemonth,datepicker,daterange,cascade, btn},
+  components: {combobox,datemonth,datepicker,daterange,cascade, btn, dim},
   watch:{
     "p": {
       handler: function(v,o){

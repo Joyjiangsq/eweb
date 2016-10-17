@@ -164,14 +164,15 @@ table tbody td span {
     z-index: 1;
     top: 80px;
 }
-:global(.app_main_container .subTitle a) {
-    text-decoration: none;
-}
-:global(.app_main_container .subTitle a span) {
+:global(.app_main_container .subTitle .subSplit) {
   width: 20px;
   text-align: center;
-  margin-right: -4px;
-  color: gray;
+}
+:global(.app_main_container .subTitle .backbtn) {
+  cursor: pointer;
+  width: 10px;
+  text-align: center;
+  margin-right: 8px;
 }
 :global(.app_main_container .subTitle .rightClose) {
   position: absolute;
