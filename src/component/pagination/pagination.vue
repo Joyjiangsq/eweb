@@ -98,7 +98,11 @@ export default {
 
     clickPage(page) {
         if(!page || isNaN(page*1) || page < 1 || page > this.getPages()) return false;
+        let q = this.$route.query;
+        let path = this.$route.path.split("?")[0];
+        q.page = page*1;
         this.curpage = page*1;
+        this.$router.go({path:path, query: q});
     }
   },
   watch:{

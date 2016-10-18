@@ -53,7 +53,7 @@ export default {
           this.datas[index].show = true;
         }
         this.$set("defaultValue", index);
-        this.$dispatch("tabclick", d);
+        this.$dispatch("tabclick", {data: d, index: index});
     }
   },
   components: {}

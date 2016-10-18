@@ -70,8 +70,8 @@ export default {
     "validatestart":function() {
        if(this.watchIgnore) return false;
        if(!this.checkValue()) {
-         this.$dispatch("onvalidate", {res:"fail", msg: "请选择地址"});
-         this.$set("errormsg", "必选选择地址");
+         this.$dispatch("onvalidate", {res:"fail", msg: "地址必须填写完整"});
+         this.$set("errormsg", "地址必须填写完整");
          this.$set("error", true);
          return false;
        }

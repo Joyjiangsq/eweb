@@ -1,5 +1,5 @@
 <template>
-    <div :class="[pCss.propertyOne, horizontal?pCss.horizontal:'', classname]">
+    <div :class="[pCss.propertyOne, horizontal?pCss.horizontal:'', pCss[type],classname]">
           <span :class="pCss.key">{{key}}：</span>
           <span :class="pCss.value">{{value}}</span>
     </div>
@@ -13,6 +13,10 @@ export default {
       type: String,
       default:""
     },
+    type: {
+      default:"",
+      type:String
+    },
     horizontal:{    // 是否是水平排列
       type: Boolean,
       default: false
@@ -23,7 +27,6 @@ export default {
     },
 
     value:{
-      type:String,
       default:"值"
     }
   },

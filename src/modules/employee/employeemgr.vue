@@ -10,7 +10,7 @@
               <div class="epCss.tBox">
                 <tb :headercaption="headercaption" :totals.sync="totals" :load="load" :params="searchParams" url="employees" :events="tableEvents"></tb>
               </div>
-              <pg :totals="totals"  @pagechange="pagechange"></pg>
+              <pg :totals="totals" :curpage="getCurPage"  @pagechange="pagechange"></pg>
         </pagepanel>
         <dialog :flag="flagdep" @dialogclick="diaologClick" :title="optitle">
               <div class="" slot="containerDialog">
@@ -107,6 +107,11 @@ export default {
               {type:"text",  value:q.empcode || "",  keyname:"empcode", labelcaption:"员工编号:"},
               {type:"text",  value:q.empname || "",  keyname:"empname", labelcaption:"员工姓名:"}];
 
+    },
+
+    getCurPage: function(){
+      if(this.$route.query.page) return this.$route.query.page
+      else return 1
     }
   },
   ready: function () {
@@ -114,6 +119,7 @@ export default {
   attached: function () {},
   methods: {
     pagechange: function(d){
+        if(!d.page) return false;
         this.searchParams.page = d.page;
         this.loadlist();
     },
@@ -172,6 +178,7 @@ export default {
   route:{
     data: function(){
       setTitle(this.$store, "员工管理");
+      this.pagechange(this.$route.query);
     }
   }
 }

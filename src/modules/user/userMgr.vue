@@ -160,6 +160,7 @@ export default {
   route:{
     data: function(){
       setTitle(this.$store, "用户管理");
+      
     }
   }
 }

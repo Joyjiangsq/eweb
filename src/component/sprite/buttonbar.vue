@@ -1,6 +1,6 @@
 <template>
     <div :class="btnCss.buttonbar">
-        <btn v-for="one in buttons"  @click="btnClickHandler(one)" :iconname="one.icon?one.icon:''" :btnname="one.type?one.type:'btn-default'">{{one.name}}</btn>
+        <btn v-for="one in buttons" :disabled="disabled" @clickaction="btnClickHandler(one)" :iconname="one.icon?one.icon:''" :btnname="one.type?one.type:'btn-default'">{{one.name}}</btn>
     </div>
 </template>
 
@@ -13,7 +13,9 @@ export default {
         type: Array,
         default: () => []
       },
-
+      disabled: {
+        default: false
+      },
       events:{
         type: Object,
         default: function(){

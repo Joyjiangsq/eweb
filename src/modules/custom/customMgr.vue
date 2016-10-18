@@ -7,7 +7,6 @@
     </pagepanel>
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
-          {{formData|json}}
           <div class="">
             <tb :headercaption="headercaption" :load="load" :auto="true" :totoals.sync="totoals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
@@ -15,8 +14,7 @@
     </pagepanel>
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" :scroll="true">
-          <div class="" slot="containerDialog" :class="css.dBox">
-            {{formData|json}}
+          <div slot="containerDialog" :class="css.dBox">
                 <formcb keyid="id" labelname="渠道：" :value.sync="formData.U_ComeFrom"  keyname="name" :must="false" formname="U_ComeFrom" :vertical="true" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <formtext labelname="业主姓名："  :value.sync="formData.CardName" formname="CardName"  :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="业主电话："  :value.sync="formData.Phone1" formname="Phone1"  :vertical="true" :phone="true"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
@@ -34,6 +32,27 @@
                 <formtext labelname="销售订单号：" :must="false" :value.sync="formData.U_FZSalesOrder" formname="U_FZSalesOrder" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
           </div>
     </dialog>
+    <!--详情对话框-->
+    <dialog :flag="dialogMap.showDetailDialog" :title="gettName" :scroll="true">
+        <div slot="containerDialog" :class="css.dBox">
+                <propertytext type="form" key="客户编码" :value="detailData.CardCode"></propertytext>
+                <propertytext type="form" key="渠道" :value="detailData.U_ComeFrom"></propertytext>
+                <propertytext type="form" key="业主姓名" :value="detailData.CardName"></propertytext>
+                <propertytext type="form" key="业主电话" :value="detailData.Phone1"></propertytext>
+                <propertytext type="form" key="业主地址" :value="detailData.Address"></propertytext>
+                <propertytext type="form" key="面积" :horizontal="true" :value="detailData.U_Acreage"></propertytext>
+                <propertytext type="form" key="交房时间" :horizontal="true" :value="detailData.U_OthersDate"></propertytext>
+                <propertytext type="form" key="装修预算" :horizontal="true" :value="detailData.prePrice"></propertytext>
+                <propertytext type="form" key="装修风格" :horizontal="true" :value="detailData.U_Renovation2"></propertytext>
+                <propertytext type="form" key="房屋类型" :horizontal="true" :value="detailData.U_HouseType"></propertytext>
+                <propertytext type="form" key="备注" :horizontal="true" :value="detailData.Notes"></propertytext>
+                <propertytext type="form" key="天猫订单" :horizontal="true" :value="detailData.U_TmallOrderId"></propertytext>
+                <propertytext type="form" key="天猫订单金额" :horizontal="true" :value="detailData.U_TmOrAmout"></propertytext>
+                <propertytext type="form" key="旺旺号" :horizontal="true" :value="detailData.U_WWId"></propertytext>
+                <propertytext type="form" key="销售订单号" :horizontal="true" :value="detailData.U_FZSalesOrder"></propertytext>
+        </div>
+        <div slot="footerDialog"></div>
+    </dialog>
   </div>
 </template>
 <script>
@@ -48,6 +67,7 @@ import btnbar from "component/sprite/buttonbar";
 import pg from "component/pagination/pagination";
 import search from "component/search/search";
 import formcb from "component/form/fmCombobox";
+import propertytext from "component/form/propertyText.vue";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import Utils from "common/Utils";
@@ -72,13 +92,17 @@ export default {
       },
       curAction:"add", // 默认当前操作为add  其他操作有edit
       dialogMap: {
-        showFormDialog: false // 新增对话框控制
+        showFormDialog: false, // 新增对话框控制
+        showDetailDialog: false  // 详情对话框
       },
       formData:{      // 表单数据流
          validate: true
       },
       searchParams:{   // 查询条件
          page:1
+      },
+      detailData:{    // 详情数据
+          CardCode:"xxxx"
       },
       totoals: 0,
       formControl:{
@@ -100,7 +124,7 @@ export default {
       load: true,
       tableEvents:{
         operatorRender: function(d){
-          return [{name:"编辑", action:"edit",icon:"icon-edit", id:d._id}];
+          return [{name:"编辑", action:"edit",icon:"icon-edit", id:d},{name:"详情",action:"detail",icon:"icon-tip", id:d }];
         },
 
         operatorHandler: function(d){
@@ -108,9 +132,13 @@ export default {
                 this.$set("curAction", "edit");
                 this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
+              else if(d.action == "detail") {
+                this.$set("curAction", "detail");
+                this.dialogMap.showDetailDialog = !this.dialogMap.showDetailDialog;
+              }
         }
       },
-      btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导入", action:"inport"}, {name:"导出", icon:"icon-share", action:"export"}],
+      btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导入",  icon:"icon-share",action:"inport"}, {name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
               if(d.action == "add") {
@@ -133,13 +161,12 @@ export default {
     },
 
     gettName: function(){
-       return this.curAction == "add"? "新增":"编辑"
+       let m = {"add":"新增", "edit":"编辑", "detail":"详情"}
+       return m[this.curAction] || "编辑"
     }
   },
   ready: function () {
-    setInterval(()=>{
-          console.log(JSON.stringify(this.formData));
-    }, 1000)
+
   },
   attached: function () {},
   methods: {
@@ -162,7 +189,7 @@ export default {
       this.$set("load", !this.load);
     }
   },
-  components: {search,pagepanel,btnbar,pg,tb,dialog,formtext,cascadeformarray,cascadeform, formcb,formdt},
+  components: {search,pagepanel,btnbar,pg,tb,dialog,formtext,cascadeformarray,cascadeform, formcb,formdt, propertytext},
   route:{
     data: function(){
       setTitle(this.$store, "客户管理");

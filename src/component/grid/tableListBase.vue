@@ -62,7 +62,7 @@ export default {
     }
   },
   created: function(){
-    if(this.needindex) this.headercaption.unshift({type:"index"});
+    if(this.headercaption[0].type != "index" && this.needindex) this.headercaption.unshift({type:"index"});
   },
   methods:{
     clickRow: function(index, d) {

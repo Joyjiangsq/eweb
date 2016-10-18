@@ -57,7 +57,7 @@ export default {
             this.$set("remember", checked);
         }
       },
-      userName:storejs("userName") || "jz_123",
+      userName:storejs("userName") || "111111",
       passwd:storejs("passwd") || "123456",
       code: "",
       remember:false,

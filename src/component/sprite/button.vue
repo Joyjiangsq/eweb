@@ -17,6 +17,9 @@ export default {
 
       iconname:{
         default: false
+      },
+      disabled :{
+        default: false
       }
   },
   data: function () {
@@ -29,6 +32,7 @@ export default {
   attached: function () {},
   methods: {
     btnClickHandler: function(){
+      if(this.disabled) return false
       this.$dispatch("clickaction", '');
     }
   },

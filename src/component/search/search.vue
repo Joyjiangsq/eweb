@@ -131,6 +131,8 @@ export default {
       },
       searchHandler: function(e){
         this.events.onSearch.call(this._context, this.params);
+        let cPage = this.$route.query.page;
+        if(cPage) this.params.page = cPage;
         if(e) this.$router.go({ path: this.pathname, query: this.params});
       },
       // 控制格式

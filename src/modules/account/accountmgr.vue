@@ -5,8 +5,8 @@
           <div class="">
             <propertytext key="邮箱" :horizontal="true" :value="accountBaseInfo.U_Email"></propertytext>
             <propertytext key="账号" :horizontal="true" :value="accountBaseInfo.U_AccountName"></propertytext>
-            <propertytext key="所属银行" :horizontal="true" :value="accountBaseInfo.U_Bbank"></propertytext>
-            <propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_Baddress"></propertytext>
+            <propertytext key="所属银行" :horizontal="true" :value="accountBaseInfo.U_BBank"></propertytext>
+            <propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_BAddress"></propertytext>
           </div>
           <div :class="acCss.accountTitleBox">
               <div :class="acCss.accountTitleIn">
@@ -25,10 +25,10 @@
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
                         <span :class='acCss.mintitle'>授信余额 : </span>
-                        <span> 授信额度 : <span :class='acCss.cashText'>{{accountBaseInfo.Creditline}}</span>元 </span>
+                        <span> 授信额度 : <span :class='acCss.cashText'>{{accountBaseInfo.CreditLine}}</span>元 </span>
                       </div>
                       <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>{{accountBaseInfo.CreditlineBalance}}</span>
+                            <span :class='acCss.cash'>{{accountBaseInfo.CreditLineBalance}}</span>
                             <span :class='acCss.unit'>元</span>
                       </div>
                 </span>
@@ -81,14 +81,14 @@ export default {
     return {
       accountBaseInfo:{
           Balance: "", // 账户余额
-          Creditline: "", //授信额度
+          CreditLine: "", //授信额度
           FrozenMount: "", // 冻结金额
           U_Email:"", // 邮箱
           U_AccountName:"", // 账号
-          U_Baddress:"", // 开户行地址
+          U_BAddress:"", // 开户行地址
           CreditlineBalance:"", // 授信余额
           AvailableBalance:"", //可回款金额
-          U_Bbank: "" // 所属银行
+          U_BBank: "" // 所属银行
       },
       acCss,
       totals: 0,
@@ -136,6 +136,8 @@ export default {
     }
   },
   ready: function () {
+    console.log("==============");
+    this.loadInfo();
   },
   attached: function () {},
   methods: {
@@ -151,6 +153,14 @@ export default {
           this.backCashParams[d.name] = d.value;
       }
       else this.backCashParams["validate"] = false;
+    },
+
+    loadInfo: function(){
+      this.$http.get(this.$Api+ "station-account",{}).then((res) => {
+            let r = res.json();
+            console.log(r);
+            this.$set("accountBaseInfo", r.data);
+      })
     },
 
     dialogClickHandler: function(d) {

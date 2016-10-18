@@ -13,12 +13,19 @@
     min-width: auto;
     font-weight: bold;
 }
+.form {
+  margin-top: 20px;
+  margin-right: 10px;
+  width: 40%;
+}
+.form .key {
+  font-weight: normal;
+  min-width: 110px;
+  text-align: left;
+}
 .horizontal .value {padding: 0;}
 .key {
     display: inline-block;
     min-width: 110px;
     text-align: right;
-}
-.value {
-    padding-left: 40px;
 }

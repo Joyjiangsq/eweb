@@ -3,7 +3,7 @@
 
         <div :class="portalCss.logoBox"><img :src="logo" alt="" /></div>
         <div :class="portalCss.headerBars">
-              <span :class="portalCss.who"><icon iconname="icon-user" :iconlabel="user.user_code || userName"></icon></span>
+              <span :class="portalCss.who"><icon iconname="icon-user" :iconlabel="userName"></icon></span>
               <span :class="portalCss.operator">
                 <span  @click="changePasswd"><icon iconname="icon-key" iconlabel="修改密码"></icon></span>
                 <span  @click="loginOutAction"><icon iconname="icon-downaction" iconlabel="退出"></icon></span>
@@ -59,7 +59,8 @@ export default {
     },
     ready: function(){
         let userInfo = Utils.getUserInfo();
-        if(userInfo) this.$set("userName", userInfo.user_code);
+        console.log(userInfo);
+        if(userInfo) this.$set("userName", userInfo.CardName);
     },
     methods:{
       changePasswd: function(){

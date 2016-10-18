@@ -62,7 +62,7 @@ export default {
   components: {panel, formtext, cascadeform,comboxform, tblab},
   route:{
     data: function(){
-      setTitle(this.$store, [{name:"下单管理", type:"back"}, {name:"下单"}]);
+      setTitle(this.$store, [{name:"销售订单管理", type:"back"}, {name:"新增销售订单"}]);
     }
   }
 }

@@ -9,18 +9,18 @@
                 </th>
               </tr>
         </thead>
-        <tbody  v-show="loading? false:noresult? false: true">
+        <tbody >
               <tr v-for="(order, done)  in dataList" >
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])">
+                          <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])"> -->
                           <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
-                          <span v-if="sone.type == 'edit'" >
+                          <!-- <span v-if="sone.type == 'edit'" >
                                 <input type="text" name="name" :class='tableCss.inptext' :value="done[sone.labelValue]" v-model="done[sone.labelValue]">
-                          </span>
-                          <span v-if="sone.type == 'operator'" >
+                          </span> -->
+                          <!-- <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
-                          </span>
+                          </span> -->
                     </td>
               </tr>
               <tr>
@@ -33,12 +33,6 @@
               </tr>
         </tbody>
     </table>
-    <div v-show="noresult" :class='tableCss.noresult'>
-          没有数据
-    </div>
-    <div v-show="loading"  :class='tableCss.loading'>
-          加载中...
-    </div>
   </div>
 </template>
 
