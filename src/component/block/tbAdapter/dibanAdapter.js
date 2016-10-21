@@ -5,18 +5,6 @@ export default function adapterData(d) {
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
-
-              if(data.useStores.errorMsg != "") {
-                  if(this.def*1 >= data.useStores.def*1) {
-                    data.useStores.defCss = "default";
-                    data.useStores.errorMsg = "";
-                  }
-              }
-              else if(this.def*1 <  data.useStores.def*1) {
-                this.defCss = "errorHappend";
-                this.errorMsg = "采购数量必须大于或者等于使用的库存量";
-                return false
-              }
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
                 this.errorMsg = "采购数量必须是整数";

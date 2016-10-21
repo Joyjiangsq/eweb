@@ -11,7 +11,7 @@
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <jiejulist :hash="false" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testData"></jiejulist>
+                      <zhuangxiufucailist :hash="false" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testData"></zhuangxiufucailist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>
@@ -21,18 +21,18 @@
 // 瓷砖分类
 import tb from "component/grid/tableSpec";
 import css from "./type.css";
-import jiejulist from "./tblist/jiejulist";
+import zhuangxiufucailist from "./tblist/zhuangxiufucailist";
 import dialog from "component/dialog/dialog";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
-import adapter from "./tbAdapter/jiejuAdapter";
+import adapter from "./tbAdapter/zhuangxiufucaiAdapter";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
   data: function () {
     return {
       css,
-      curName:"jieju",
+      curName:"zhuangxiufucai",
       validate:false,
       headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
                     {name:"产品包", labelValue:"SWW", type:"data"},{name:"二级分类", labelValue:"FirmName", type:"data"},
@@ -44,7 +44,7 @@ export default {
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"remark",type:"data"},
                     ],
       recData:{},
-      testData: [{ItemCode:"xxx01ww", ItemName:"谢谢洁具", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"谢谢洁具", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
+      testData: [{ItemCode:"xxx01ww", ItemName:"装修辅材", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅材", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
       validateInfo: true // 验证 收件信息
     }
   },
@@ -55,6 +55,6 @@ export default {
   methods: {
 
   },
-  components: {tb, formtext, cascadeform, dialog, jiejulist},
+  components: {tb, formtext, cascadeform, dialog, zhuangxiufucailist},
 }
 </script>

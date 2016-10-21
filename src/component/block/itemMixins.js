@@ -65,6 +65,7 @@ export default {
           let one = this.testData[i];
             for(var key in one) {
               if(typeof(one[key]) == "object") {
+                  if(!one[key].validateFun) continue;
                   let res = one[key].validateFun(one, i);
                   if(!res) {this.validateRec = false; break;}
               }

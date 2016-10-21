@@ -14,7 +14,7 @@
           </div>
 
           <div  v-show="tabArray[3].show">
-            {{tabArray[3] | json}}
+            <jichengdiaodingtb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jichengdiaodingtb>
           </div>
 
           <div  v-show="tabArray[4].show">
@@ -26,11 +26,11 @@
           </div>
 
           <div  v-show="tabArray[6].show">
-            {{tabArray[6] | json}}
+            <zhuangxiufucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
           </div>
 
           <div  v-show="tabArray[7].show">
-            {{tabArray[7] | json}}
+            <shigongfucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></shigongfucaitb>
           </div>
         </tabbar>
     </div>
@@ -43,6 +43,11 @@ import tpcss from "./type.css";
 import cizhuantb from "./tb_cizhuan";
 import dibantb from "./tb_diban";
 import jiejutb from "./tb_jieju";
+
+import jichengdiaodingtb from "./tb_jichengdiaoding";
+import shigongfucaitb from "./tb_shigongfucai";
+import zhuangxiufucaitb from "./tb_zhuangxiufucai";
+
 export default {
   props:{
     tabs: {
@@ -100,10 +105,10 @@ export default {
         this.lastDataMap[d.project] = d.data;
         let dataLenth = Object.keys(this.lastDataMap).length;
         console.log(dataLenth);
-        if(dataLenth == 2) this.$dispatch("success", this.lastDataMap);
+        if(dataLenth == 6) this.$dispatch("success", this.lastDataMap);
     }
   },
-  components: {tabbar, cizhuantb, dibantb, jiejutb},
+  components: {tabbar, cizhuantb, dibantb, jiejutb,jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
   watch:{
     "startvalidate": function() {
         this.subvalidate = !this.subvalidate;
