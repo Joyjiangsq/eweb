@@ -1,8 +1,9 @@
 <template>
     <div :class="cascadeCss.cascadeBox">
-                  <combobox labelname="name" :classname="cascadeCss.limit" keyid="name"  :value.sync="provient" :datas="parry"  @dropclick="pClick"></combobox>
-                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :value.sync="cname"  :datas="carry"  @dropclick="cClick" ></combobox>
-                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit" keyid="name" :read = "read"  :value.sync="provient" :datas="parry"  @dropclick="pClick"></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="cname"  :datas="carry"  @dropclick="cClick" ></combobox>
+                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
+
     </div>
 </template>
 
@@ -15,6 +16,9 @@ export default {
       value:{
           default:"",
           type:String
+      },
+      read:{
+          default: false
       }
   },
   data: function () {
@@ -38,11 +42,11 @@ export default {
       var sp = this.value.split(",");
       this.provient = this.value.split(",")[0];
       this.renderCitys(this.provient); // 渲染市
-      if(sp.length == 2) {
-        this.cname = this.value.split(",")[1];  // 设置默认市
+      if(sp.length >= 1) {
+        this.cname = sp[1];  // 设置默认市
         this.renderAreas(this.cname);   // 渲染区域
       }
-      else if(sp.length == 3) this.aname = this.value.split(",")[2];  // 设置默认区域
+      if(sp.length >=2) this.aname = sp[2];  // 设置默认区域
   },
   attached: function () {},
   methods: {
@@ -59,7 +63,6 @@ export default {
     },
 
     aClick: function(value) {
-          console.log(value);
           this.aname = value;
           this.$dispatch("combocase", value);
     },

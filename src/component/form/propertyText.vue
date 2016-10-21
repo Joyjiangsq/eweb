@@ -1,5 +1,5 @@
 <template>
-    <div :class="[pCss.propertyOne, horizontal?pCss.horizontal:'', pCss[type],classname]">
+    <div :class="[pCss.propertyOne, horizontal?pCss.horizontal:'', pCss[type], classname]">
           <span :class="pCss.key">{{key}}：</span>
           <span :class="pCss.value">{{value}}</span>
     </div>

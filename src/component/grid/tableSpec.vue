@@ -15,18 +15,22 @@
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])"> -->
                           <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
-                          <!-- <span v-if="sone.type == 'edit'" >
-                                <input type="text" name="name" :class='tableCss.inptext' :value="done[sone.labelValue]" v-model="done[sone.labelValue]">
-                          </span> -->
-                          <!-- <span v-if="sone.type == 'operator'" >
+                          <div v-if="sone.type == 'edit'" >
+                              <div :class="tableCss.iptBox">
+                                  <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def" @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
+                                  <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
+                              </div>
+                          </div>
+                          <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
-                          </span> -->
+                          </span>
+
                     </td>
               </tr>
               <tr>
                   <td  v-for="(index, sone) in headercaption">
-                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 0">
-                    <span :class="tableCss.potert"  v-if="index == 0">
+                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
+                    <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
                         <icon iconname="icon-elip"></icon>
                     </span>
                   </td>
@@ -66,12 +70,30 @@ export default {
   },
   methods:{
     onEnterLook: function(e) {
-        this.$http.get(this.$Api+ (this.enterUrl || ""),{params:{id: e.target.value}}).then((res) => {
-            this.dataList.push({"orderid":Math.random(),"name":"杭州谷鼎暖通设备有限公司","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"});
-        },(error) =>{
-          console.log(error);
-        })
+        // this.$http.get(this.$Api+ (this.enterUrl || ""),{params:{id: e.target.value}}).then((res) => {
+        // },(error) =>{
+        //   console.log(error);
+        // })
+        this.$dispatch("loadsuccess", {      // 默认产品规格
+            "ItemCode":Math.random(),
+            "ItemName":"这是产品名称",
+            "SWW":"这是产品包",
+            "FirmName":"这是二级分类",
+            "U_ThreeL":"这是三级分类",
+            "U_Brand":"这是品牌",
+            "U_CardName":"这是供应商",
+            "U_Modle":"这是型号",
+            "U_Series":"这是系列",
+            "U_MQuality":"这是材质",
+            "Spec":"这是规格",
+            "avalibleStores":20,
+            "SalUnitMsr":"这是单位"
+        });
     },
+
+    moreClikHandler: function(){
+        this.$dispatch("more");
+    }
   },
   attached: function () {},
   components: {iconbar, icon},

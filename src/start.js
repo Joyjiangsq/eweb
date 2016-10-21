@@ -52,11 +52,11 @@ Vue.http.interceptors.push(function(request, next) {
         let d = res.json();
         if (!d.code) d = JSON.parse(d);
         if (d.code == 302) {
-            Utils.clearUserInfo();
-            showTips(_self.$store, {
-                type: "error",
-                msg: d.msg
-            });
+            // Utils.clearUserInfo();
+            // showTips(_self.$store, {
+            //     type: "error",
+            //     msg: d.msg
+            // });
             return d
         } else if (d.code != 200) {
             showTips(_self.$store, {

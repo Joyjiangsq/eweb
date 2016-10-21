@@ -3,21 +3,35 @@
     white-space: nowrap;
     padding: 0 15px;
 }
-
 .tableBox table .potert {
-  position: ABSOLUTE;
-margin-left: -23px;
-margin-top: 4px;
-cursor: pointer;
+    position: ABSOLUTE;
+    margin-left: -23px;
+    margin-top: 4px;
+    cursor: pointer;
 }
-
 .tableBox {
-  width: 90%;
-margin: 0 auto;
-overflow-x: scroll;
+    width: 94%;
+    margin: 0 auto;
+    overflow-x: scroll;
 }
-
 .tableBox table {
     min-width: 100%;
     width: auto;
+}
+.iptBox {
+    height: 60px;
+    display: inline-block;
+    line-height: 60px;
+}
+.iptBox input {
+    width: 70px;
+}
+.default {}
+.iptBox .errorRow {
+    color: red;
+    line-height: 0px;
+    text-align: left;
+}
+.errorHappend {
+    border: 1px solid red;
 }

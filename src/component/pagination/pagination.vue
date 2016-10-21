@@ -25,7 +25,9 @@ export default {
       // type: Number,
       default: 1
     },
-
+    hash:{
+      default: true
+    },
     size:{
       type: Number,
       default: 10
@@ -102,7 +104,7 @@ export default {
         let path = this.$route.path.split("?")[0];
         q.page = page*1;
         this.curpage = page*1;
-        this.$router.go({path:path, query: q});
+        if(this.hash) this.$router.go({path:path, query: q});
     }
   },
   watch:{

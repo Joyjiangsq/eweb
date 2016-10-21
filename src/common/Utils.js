@@ -30,6 +30,7 @@ import storejs from "storejs";
          var exp = new Date();
          exp.setTime(exp.getTime() - 1);
          var cval = this.getCookie(name);
+         console.log(cval);
          if (cval != null)
              document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
      },

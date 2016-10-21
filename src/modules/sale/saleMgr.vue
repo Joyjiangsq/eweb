@@ -96,7 +96,7 @@ export default {
       btnEvents:{
         btnClick: function(d){
             if(d.action == "add") {
-                  this.$router.go({path:"addSale"})
+                  this.$router.go({path:"sale/addSale"})
             }
         }
       }

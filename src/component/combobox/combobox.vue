@@ -1,10 +1,10 @@
 <template>
     <div :class="[combCss.combobox, classname]" v-show="true">
-          <div :class="combCss.comboLabel"  @click="changeDropAction">
-                  <span :class="combCss.comboLabelspan">{{defaultInfo.label}}</span>
+          <div :class="[combCss.comboLabel, read?combCss.read:'']"  @click="changeDropAction">
+                  <span :class="[combCss.comboLabelspan]">{{defaultInfo.label}}</span>
                   <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
           </div>
-          <div :class="combCss.dropBox" v-show="dropshow">
+          <div :class="[combCss.dropBox, combCss[dropfixed]]" v-show="dropshow">
               <div :class="combCss.dropOne" v-for="item in datas" @click="dropClick(item)">
                     {{item[labelname]}}
               </div>
@@ -20,6 +20,12 @@ export default {
   props:{
       classname:{
 
+      },
+      read:{
+        default: false
+      },
+      dropfixed:{   //dropfixed
+        default:""
       },
       labelname:{                  // 渲染dom 显示的可见名称
         type:String,
@@ -80,10 +86,12 @@ export default {
   attached: function () {},
   methods: {
     changeDropAction(e){
+        if(this.read) return false;
         this.dropshow = !this.dropshow;
     },
 
     dropClick(item) {
+
       this.defaultInfo = {
           label:item[this.labelname], key:item[this.keyid]
       }

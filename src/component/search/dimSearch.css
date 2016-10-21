@@ -2,7 +2,7 @@
     display: inline-block;
 }
 .box input {
-    z-index: 112;
+    z-index: 1;
 }
 .dropBox {
     position: absolute;

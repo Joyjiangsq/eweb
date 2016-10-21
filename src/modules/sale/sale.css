@@ -22,6 +22,21 @@
 }
 
 .inRow {
-  color: #04cff3;
+  color: #0066cc;
   cursor: pointer;
+}
+
+.footerBar {
+  text-align: right;
+  width: 100%;
+  position: fixed;
+  padding: 10px;
+  bottom: 0;
+  right: 0;
+  background-color: #e6e6e6;
+  padding-right: 3%;
+    z-index: 11;
+}
+.dataArea {
+      margin-bottom: 50px;
 }

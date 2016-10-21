@@ -1,7 +1,7 @@
 <template>
     <div :class="[css.formOne,classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
-        <div :class="css.formtarget">
+        <div :class="[css.formtarget, css.arryBox]">
             <div :class="css.casrowone" v-for="(index,addone) in addresses">
                 <combocascade :value.sync="addone.value"  @combocase="combocaseClick"></combocascade>
                 <input type="text" name="name" :value="addone.detail" v-model="addone.detail" :class="css.casinputArr"/>

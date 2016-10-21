@@ -1,6 +1,6 @@
 <template>
       <div :class="dCss.box">
-          <input type="text" name="name" :value="iptvalue" @keydown="keydownHandler" @keyup="onUpHandler">
+          <input type="text" name="name" :value="iptvalue" :placeholder="placeholder" @keydown="keydownHandler" @keyup="onUpHandler">
           <div :class="dCss.dropBox" v-show="showDropBox">
               <span v-for="one in datas" @click="oneClickHandler(one)">{{one.name}}</span>
           </div>
@@ -12,11 +12,15 @@
 import dCss from "./dimSearch.css";
 export default {
   props:{
+    placeholder: {
+      type:String,
+      default:""
+    },
     labelname:{
       type: String,
       default:"name"
     },
-    iptvalue:{
+    iptvalue:{  // 默认值
       default:"",
     },
     value:{

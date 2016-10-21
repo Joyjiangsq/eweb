@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <searchdim :url="url" :labelname="dimlabel" :value="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
+            <searchdim :url="url" :labelname="dimlabel" :placeholder="placeholder" :value="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -18,6 +18,10 @@ export default {
   mixins: [mixin],
   props:{
     url: {
+      type:String,
+      default:""
+    },
+    placeholder:{
       type:String,
       default:""
     },

@@ -13,7 +13,7 @@
           <pg :totals="totoals"  @pagechange="pagechange"></pg>
     </pagepanel>
     <!--新增对话框-->
-    <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" :scroll="true">
+    <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
                 <formcb keyid="id" labelname="渠道：" :value.sync="formData.U_ComeFrom"  keyname="name" :must="false" formname="U_ComeFrom" :vertical="true" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <formtext labelname="业主姓名："  :value.sync="formData.CardName" formname="CardName"  :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>

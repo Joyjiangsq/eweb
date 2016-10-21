@@ -29,9 +29,14 @@ export const barData = {
         labelName: "橱柜",
         id: 6
     },
-    "fucai": {
+    "zhuangxiufucai": {
         show: false,
         labelName: "装修辅材",
+        id: 7
+    },
+    "shigongfucai": {
+        show: false,
+        labelName: "施工辅材",
         id: 7
     }
 }

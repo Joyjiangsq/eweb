@@ -2,8 +2,8 @@
     <div :class="[css.formOne,css.formOneTwo, classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <combocascade :value.sync="value" @combocase="combocaseClick"></combocascade>
-            <input type="text" name="name" :value="detail" v-model="detail" :class="css.casinput" v-if="detailneed"/>
+            <combocascade :value.sync="value" :read="read" @combocase="combocaseClick"></combocascade>
+            <input type="text" name="name" :disabled="read" :value="detail"  v-model="detail" :class="css.casinput" v-if="detailneed"/>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -21,6 +21,9 @@ export default {
     value:{
       default:""
     },
+    read:{
+      default:false
+    },
     detail:{
       default:""
     },
@@ -35,7 +38,8 @@ export default {
   },
   computed: {},
   ready: function () {
-
+      var sp = this.value.split(",");
+      if(sp.length >= 3) this.detail = sp[3];
   },
   attached: function () {},
   methods: {

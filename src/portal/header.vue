@@ -59,7 +59,6 @@ export default {
     },
     ready: function(){
         let userInfo = Utils.getUserInfo();
-        console.log(userInfo);
         if(userInfo) this.$set("userName", userInfo.CardName);
     },
     methods:{
@@ -74,7 +73,14 @@ export default {
       confirmLogout: function(d) {
           if(d.action == "confirm") {
               this.$set("exitTag", !this.exitTag);
-              Utils.clearUserInfo();
+              // Utils.clearUserInfo(); // 改成登出接口   cookie 设置了 httponly  js无法操作cookie了
+              this.$http.get(this.$Api + "logout",{}).then((res) => {
+                  console.log(res);
+                  storejs("userInfo", "");
+                  location.hash="login";
+              },(error) => {
+                    console.log(error);
+              })
           }
       },
 

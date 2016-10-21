@@ -22,8 +22,8 @@
                           </span>
                           <span v-if="sone.type == 'index'" >{{order + 1}}</span>
                           <span v-if="sone.type == 'operator'" >
-                                <iconbar v-if="sone.icon"  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
-                                <btnbar :buttons="btnData(done)"  @btnclick="btnEventHandler" v-else></btnbar>
+                                <iconbar v-if="sone.icon"  :buttons="btnData(done,order)"  @btnclick="btnEventHandler"></iconbar>
+                                <btnbar :buttons="btnData(done,order)"  @btnclick="btnEventHandler" v-else></btnbar>
                           </span>
                     </td>
               </tr>

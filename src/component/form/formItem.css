@@ -12,11 +12,13 @@
 }
 .formtarget {
     display: inline-block;
+    margin-top: -3px;
 }
 .errorMsg {
     position: absolute;
     left: 0;
     color: red;
+    font-size: 12px;
 }
 .verticalitem {
     display: block;
@@ -58,12 +60,15 @@
 .limitCombo {
     width: 200px;
 }
-
+.arryBox {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: -3px;
+}
 .formOne .unitStay {
   padding-right: 30px;
   width: 170px;
 }
-
 .unit {
   font-size: 12px;
   font-style: italic;

@@ -30,11 +30,15 @@ export function routerStart(router) {
 
                 // 销售下单管理
                 "sale":{
-                    component: function(resovle) {require(['modules/sale/saleMgr.vue'], resovle)},
-                },
-
-                "addSale":{
-                    component: function(resovle) {require(['modules/sale/saleAdd.vue'], resovle)},
+                    component: function(resovle) {require(['modules/sale/sale.vue'], resovle)},
+                    subRoutes: {
+                      "/":{
+                          component: function(resovle) {require(['modules/sale/saleMgr.vue'], resovle)},
+                      },
+                      "/addSale":{
+                          component: function(resovle) {require(['modules/sale/saleAdd.vue'], resovle)},
+                      },
+                    }
                 },
 
                 // 采购订单管理

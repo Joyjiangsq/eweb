@@ -24,6 +24,15 @@
   text-align: left;
 }
 .horizontal .value {padding: 0;}
+
+.rowform .key {
+  text-align: right;
+  font-weight: normal;
+  min-width: 110px;
+}
+.rowform .value {
+  min-width: 202px;
+}
 .key {
     display: inline-block;
     min-width: 110px;

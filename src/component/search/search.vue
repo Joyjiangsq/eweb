@@ -63,6 +63,9 @@ export default {
           {type:"text", keyname:"detail", value:"", labelcaption:""}
       ]
     **/
+    hash:{
+      default: true
+    },
     datas:{
       type:Array,
       default:() => [
@@ -94,7 +97,6 @@ export default {
 
   },
   ready: function () {
-    console.log(this.lastType);
   },
   created(){
     for(var i=0; i < this.datas.length; i++) {
@@ -133,7 +135,7 @@ export default {
         this.events.onSearch.call(this._context, this.params);
         let cPage = this.$route.query.page;
         if(cPage) this.params.page = cPage;
-        if(e) this.$router.go({ path: this.pathname, query: this.params});
+        if(e && this.hash) this.$router.go({ path: this.pathname, query: this.params});
       },
       // 控制格式
       needShow: function(index){

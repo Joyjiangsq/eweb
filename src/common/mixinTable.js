@@ -100,8 +100,8 @@ let tableBase = {
           btnEventHandler: function(d){
             this.events.operatorHandler.call(this._context, d)
           },
-          btnData: function(one){
-              return   this.events.operatorRender.call(this._context, one);
+          btnData: function(one, index){
+              return   this.events.operatorRender.call(this._context, one, index);
           },
           adapertData(d){
               if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
@@ -144,6 +144,7 @@ let tableBase = {
         },
         watch:{
           "load": function(){
+
             this.$set("loading", true);
             this.$set("noresult", false);
             this.loadData();
