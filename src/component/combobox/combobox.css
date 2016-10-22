@@ -43,7 +43,7 @@
     line-height: 30px;
     background: white;
     left: 0;
-    width: 130%;
+    min-width: 130%;
     z-index: 112;
     margin-top: 3px;
     border: 1px solid #ddd;
@@ -51,7 +51,7 @@
 }
 .combobox .dropfixed {
   position: fixed;
-line-height: 30px;
+line-height: 30px;left: auto;
 background: white;
 min-width: 100px;
 z-index: 112;

@@ -35,3 +35,8 @@
 .errorHappend {
     border: 1px solid red;
 }
+.wrap {
+  white-space: normal;
+word-break: break-all;
+word-wrap: break-word;
+}

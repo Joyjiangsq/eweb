@@ -1,8 +1,10 @@
-import adapter from "./tbAdapter/cizhuanAdapter";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
       default: false
+    },
+    testdata:{
+      default: ()=> []
     }
   },
   data: function () {
@@ -13,10 +15,10 @@ export default {
           },
           operatorHandler: function(d){
               if(d.action == "delete") {
-                for (var i = 0; i < this.testData.length; i++) {
-                  let one = this.testData[i];
+                for (var i = 0; i < this.testdata.length; i++) {
+                  let one = this.testdata[i];
                   if(d.data.ItemCode == one.ItemCode) {
-                    this.testData.splice(i,1);
+                    this.testdata.splice(i,1);
                     break;
                   }
                 }
@@ -33,9 +35,9 @@ export default {
   },
   created: function () {
     // 初始化验证(如果有第一次)
-    for (var i = 0; i < this.testData.length; i++) {
-      let one = this.testData[i];
-      adapter(one);
+    for (var i = 0; i < this.testdata.length; i++) {
+      let one = this.testdata[i];
+      this.adapterFun(one);
     }
   },
   attached: function () {},
@@ -46,9 +48,9 @@ export default {
     },
     // 根据产品编码查询的结果
     oneSuccessHandler: function(d) {
-      let one = adapter(d);
+      let one = this.adapterFun(d);
       console.log(JSON.stringify(one));
-      this.testData.push(one);
+      this.testdata.push(one);
     },
     // 收件信息验证函数
     validateHandler: function(d) {
@@ -61,8 +63,8 @@ export default {
     // 验证列表数据
     validateFun: function(){
         this.validateRec = true;
-        for (var i = 0; i < this.testData.length; i++) {
-          let one = this.testData[i];
+        for (var i = 0; i < this.testdata.length; i++) {
+          let one = this.testdata[i];
             for(var key in one) {
               if(typeof(one[key]) == "object") {
                   if(!one[key].validateFun) continue;
@@ -75,18 +77,18 @@ export default {
         this.validate = !this.validate;
         setTimeout(()=>{
           if(!this.validateRec) this.$dispatch("fail", {project:this.curName});
-          else this.$dispatch("success", {project: this.curName,data:{list: this.testData, rec_info: this.recData}});
+          else this.$dispatch("success", {project: this.curName,data:{list: this.testdata, rec_info: this.recData}});
         });
     },
 
     deleteoneHandler: function(d) {
-        this.testData.split(d.index,1);
+        this.testdata.split(d.index,1);
     },
 
     addoneHandler : function(d){
-        let one = adapter(d.data);
+        let one = this.adapterFun(d.data);
         console.log(JSON.stringify(one));
-        this.testData.push(one);
+        this.testdata.push(one);
     }
   },
   ready: function(){

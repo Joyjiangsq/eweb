@@ -18,7 +18,7 @@
           </div>
 
           <div  v-show="tabArray[4].show">
-            {{tabArray[4] | json}}
+            <mentb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></mentb>
           </div>
 
           <div  v-show="tabArray[5].show">
@@ -26,7 +26,7 @@
           </div>
 
           <div  v-show="tabArray[6].show">
-            <zhuangxiufucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
+            <zhuangxiufucaitb :testdata="zhuangxiu"  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
           </div>
 
           <div  v-show="tabArray[7].show">
@@ -43,7 +43,7 @@ import tpcss from "./type.css";
 import cizhuantb from "./tb_cizhuan";
 import dibantb from "./tb_diban";
 import jiejutb from "./tb_jieju";
-
+import mentb from "./tb_men";
 import jichengdiaodingtb from "./tb_jichengdiaoding";
 import shigongfucaitb from "./tb_shigongfucai";
 import zhuangxiufucaitb from "./tb_zhuangxiufucai";
@@ -65,22 +65,27 @@ export default {
       subvalidate: false,
       lastDataMap:{},
       tabArray: [{show: false},{show: false},{show: false},{show: false},{show: false},{show: false},{show: false}, {show: false}],
+      zhuangxiu:[{ItemCode:"xxx01ww", ItemName:"装修辅材", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅材", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
 
     }
   },
   computed: {
 
   },
+
   ready: function () {
-      // 控制品类的开放和关闭
-      this.renderTabs();
+    // 控制品类的开放和关闭
+    this.renderTabs();
   },
-  attached: function () {},
+  attached: function () {
+
+  },
   methods: {
     renderTabs: function(){
       this.tabArray = [];
       for (var i in mData.barData) {
           if(this.tabs.indexOf(i) != -1) {
+              mData.barData[i].show = false;
               this.tabArray.push(mData.barData[i])
           }
       }
@@ -108,7 +113,7 @@ export default {
         if(dataLenth == 6) this.$dispatch("success", this.lastDataMap);
     }
   },
-  components: {tabbar, cizhuantb, dibantb, jiejutb,jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
+  components: {tabbar, cizhuantb, dibantb, jiejutb,mentb, jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
   watch:{
     "startvalidate": function() {
         this.subvalidate = !this.subvalidate;

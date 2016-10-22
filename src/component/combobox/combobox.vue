@@ -4,7 +4,7 @@
                   <span :class="[combCss.comboLabelspan]">{{defaultInfo.label}}</span>
                   <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
           </div>
-          <div :class="[combCss.dropBox, combCss[dropfixed]]" v-show="dropshow">
+          <div :class="[combCss.dropBox, combCss[dropfixed]]" v-show="dropshow" :style="style">
               <div :class="combCss.dropOne" v-for="item in datas" @click="dropClick(item)">
                     {{item[labelname]}}
               </div>
@@ -62,7 +62,8 @@ export default {
     return {
       combCss,
       dropshow: false,
-      havedatas: true
+      havedatas: true,
+      style:{}
     }
   },
   computed: {
@@ -87,11 +88,25 @@ export default {
   methods: {
     changeDropAction(e){
         if(this.read) return false;
+        if(this.dropfixed == "dropfixed" && !!e) {
+
+          // 下拉在fixed状态的时候 跟随点击位置走
+          let offx = e.offsetX || 0;    // 点击相对点击的对象元素的偏移位置
+          let offy = e.offsetY || 0;
+          let w = e.currentTarget.clientWidth;   // 点击的对象的宽高
+          let h = e.currentTarget.clientHeight;
+          let x = e.x;                  // 点击相对body的位置
+          let y = e.y;
+          console.log(offx);
+          if(e.target.className.indexOf("icon") != -1) x = x-w+15;    // 微调
+          else if(e.target.className.indexOf("comboLabelspan") != -1) x= x -offx-10; // 微调
+          else x = x -offx;
+          this.style = {left: x +"px", top: (y+h-offy) + "px"}
+        }
         this.dropshow = !this.dropshow;
     },
 
     dropClick(item) {
-
       this.defaultInfo = {
           label:item[this.labelname], key:item[this.keyid]
       }
