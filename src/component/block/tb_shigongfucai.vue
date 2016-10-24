@@ -11,7 +11,7 @@
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <shigongfucailist :hash="false" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></shigongfucailist>
+                      <shigongfucailist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></shigongfucailist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>

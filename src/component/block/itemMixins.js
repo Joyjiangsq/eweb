@@ -4,8 +4,11 @@ export default {
       default: false
     },
     testdata:{
-      default: ()=> []
+      default: function(){
+        return []
+      }
     }
+
   },
   data: function () {
     return {
@@ -28,6 +31,7 @@ export default {
       showSelectDialog:false, // 选品对话框控制
       validateRec :true, // 验证 列表
       recData:{},
+      toload: false, // 展开选品对话框再加载
       validateInfo: true // 验证 收件信息
     }
   },
@@ -44,6 +48,7 @@ export default {
   methods: {
     // 显示选品弹框
     moreClickHandler: function(){
+          this.$set("toload", true);
           this.showSelectDialog = !this.showSelectDialog;
     },
     // 根据产品编码查询的结果
@@ -87,7 +92,6 @@ export default {
 
     addoneHandler : function(d){
         let one = this.adapterFun(d.data);
-        console.log(JSON.stringify(one));
         this.testdata.push(one);
     }
   },

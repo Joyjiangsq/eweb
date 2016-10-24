@@ -11,7 +11,7 @@
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <dibanlist :hash="false" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></dibanlist>
+                      <dibanlist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></dibanlist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>
@@ -36,7 +36,7 @@ export default {
       validate:false,
       headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
                     {name:"产品包", labelValue:"SWW", type:"data"},{name:"二级分类", labelValue:"FirmName", type:"data"},
-                    {name:"三级分类", labelValue:"U_ThreeL", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
+                    {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
                     {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},

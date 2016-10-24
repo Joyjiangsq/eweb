@@ -11,7 +11,7 @@
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <jiejulist :hash="false" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></jiejulist>
+                      <jiejulist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></jiejulist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>

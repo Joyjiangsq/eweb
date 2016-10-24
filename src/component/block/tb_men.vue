@@ -17,6 +17,7 @@
     </div>
 </template>
 <script>
+
 // 瓷砖分类
 import Vue from "vue";
 import tb from "component/grid/menTable";
@@ -26,7 +27,6 @@ import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import adapter from "./tbAdapter/menAdapter";
 import baseMixins from "./itemMixins";
-
 
 export default {
   mixins:[baseMixins],
@@ -46,16 +46,16 @@ export default {
                     {name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"颜色", labelValue:"Color", type:"data"},
                     {name:"切角方式", labelValue:"U_CutAMe", type:"data"},
-                    {name:"门洞宽", labelValue:"U_DSWide", type:""}, // 特殊类型 需要考虑到 编辑的状态 如何去渲染与更改关联值
-                    {name:"门洞高", labelValue:"U_DSHigh", type:""},
-                    {name:"门洞深", labelValue:"U_DSThick", type:""},
-                    {name:"门扇宽", labelValue:"U_TDWide", type:""},
-                    {name:"门扇高", labelValue:"U_TDHigh", type:""},
-                    {name:"门扇厚", labelValue:"U_TDThick", type:""},
-                    {name:"合页品牌型号/规格", labelValue:"temp1", type:"component", component: heyeComponent},   // 下拉组件
-                    {name:"门吸品牌型号", labelValue:"temp2", type:""},        // 下拉组件
+                    {name:"门洞宽", labelValue:"U_DSWide", type:"edit"}, // 特殊类型 需要考虑到 编辑的状态 如何去渲染与更改关联值
+                    {name:"门洞高", labelValue:"U_DSHigh", type:"edit"},
+                    {name:"门洞深", labelValue:"U_DSThick", type:"edit"},
+                    {name:"门扇宽", labelValue:"U_TDWide", type:"edit"},
+                    {name:"门扇高", labelValue:"U_TDHigh", type:"edit"},
+                    {name:"门扇厚", labelValue:"U_TDThick", type:"edit"},
+                    {name:"合页品牌型号/规格", labelValue:"temp1", type:"component", cname:"heye", component: heyeComponent},   // 下拉组件
+                    {name:"门吸品牌型号", labelValue:"temp2", type:"component",cname:"menxi",  component:menxiComponent},        // 下拉组件
                     {name:"开启方式", labelValue:"U_OpenWay", type:""},        // 下拉组件 TODO
-                    {name:"是否开孔", labelValue:"U_IKeyHole", type:""},     // 下拉组件  TODO
+                    {name:"是否开孔", labelValue:"U_IKeyHole", type:"component", cname:"kaikong",component: holeComponent},     // 下拉组件  TODO
                     {name:"智能门锁厚度", labelValue:"U_DThick", type:"edit", style:{width: '100px'}},
                     {name:"智能门锁锁体挡板长度", labelValue:"U_LBLength", type:"edit", style:{width: '100px'}},
                     {name:"智能门锁锁体挡板宽度", labelValue:"U_LBWide", type:"edit", style:{width: '100px'}},
@@ -78,7 +78,12 @@ export default {
   },
   computed: {
   },
-
+  ready:function(){
+      console.log(this);
+      setInterval(()=>{
+        console.log(JSON.stringify(this.testdata));
+      }, 2000);
+  },
   attached: function () {},
   methods: {
     adapterFun: function(d) {
@@ -89,30 +94,80 @@ export default {
 }
 // 木门表格 内的自定义合页组建
 import combobox from "component/combobox/combobox";
-// 自定义
+// 自定义  selfData 是自定义指令注入的参数  也是变更testdata的依据
+// 合页
 var heyeComponent = Vue.extend({
   data:function(){
     return {
       test:[{name:"xxx",id:1}, {name:"ooo", id:2}, {name:"aaa", id:3}, {name:"ccc", id:4}, {name:"ddd", id:5}]
     }
   },
-  props:{
-    datas:{
-      default:{}
-    }
-  },
-  template: '<div><combobox labelname="name"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
-    console.log(this.datas);
+      console.log(this);
   },
   methods:{
-
+      dropclick: function(d){
+          // 变更对应的值
+            console.log(d);
+      }
   },
   components: {combobox},
   computed: {
-    getData: function(){
-      return JSON.parse(this.datas)
+
+  }
+})
+// 门吸
+var menxiComponent = Vue.extend({
+  data:function(){
+    return {
+      test:[{name:"xxx",id:1}, {name:"ooo", id:2}, {name:"aaa", id:3}, {name:"ccc", id:4}, {name:"ddd", id:5}]
     }
+  },
+  template: '<div><combobox labelname="name" @dropclick="dropclick"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  ready: function(){
+      console.log(this);
+  },
+  methods:{
+      dropclick: function(d){
+          // 变更对应的值
+            console.log(d);
+      }
+  },
+  components: {combobox},
+  computed: {
+
+  }
+})
+
+// 是否开孔
+var holeComponent = Vue.extend({
+  data:function(){
+    return {
+      test:[{name:"是",id:1}, {name:"否", id:2}]
+    }
+  },
+  template: '<div><combobox labelname="name" @dropclick="dropclick"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  ready: function(){
+      console.log(this);
+  },
+  methods:{
+      dropclick: function(d){
+        console.log(d);
+          // 变更对应的值
+          this.selfData.U_IKeyHole = d;   // 控制表格显示隐藏
+          var tf = d==1?false:true;
+          this.selfData.U_DSWide.tb_disabled= tf;  // 门洞宽
+          this.selfData.U_DSHigh.tb_disabled= tf; // 门洞高
+          this.selfData.U_DSThick.tb_disabled= tf;  // 门洞深
+          this.selfData.U_TDWide.tb_disabled= tf;  // 门扇宽
+          this.selfData.U_TDHigh.tb_disabled= tf; // 门扇高
+          this.selfData.U_TDThick.tb_disabled= tf;  // 门扇厚
+      }
+  },
+  components: {combobox},
+  computed: {
+
   }
 })
 </script>

@@ -21,6 +21,8 @@ export default function adapterData(d) {
                 return true;
               }
 
+              d.xxoo = this.def;
+
           }
       };
       // d.useStores = {    // 使用库存量 限制不能超过可用库存量

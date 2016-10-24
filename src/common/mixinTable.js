@@ -48,13 +48,15 @@ let tableBase = {
 
           datas:{
             type:Array,
-            default:() => []
+            default:function() {
+              return []
+            }
           }
         },
 
         data: function () {
           return {
-              dataList: this.datas || [],
+              dataList: [],
               noresult: false,
               loading:true,
               checked: false,
@@ -76,6 +78,20 @@ let tableBase = {
         },
         ready: function(){
           if(this.load) this.loadData();
+          if(this.datas) {
+              setTimeout(()=>{
+                this.adapertDataMin(this.datas);
+              }, 1000)
+          }
+          // if(!this.url) {
+          //   setTimeout(()=>{
+          //     this.adapertDataMin(this.datas);
+          //   }, 1000)
+          //
+          //   setTimeout(()=>{
+          //     this.adapertDataMin(this.datas);
+          //   }, 3000)
+          // }
         },
         methods: {
           clickOne: function(one){
@@ -105,7 +121,6 @@ let tableBase = {
           },
           adapertData(d){
               if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
-
               this.dataList = [];
               for (var i = 0; i < d.data.length; i++) {
                   let one = d.data[i];
@@ -117,13 +132,34 @@ let tableBase = {
                        rowData[hone.labelValue] = hone.adapterFun.call(this._context, one);
                     }
                     rowData["_id"] = one["_id"];
-                    if(i == 0) rowData["selected"] = true;
+                    if(i == 0) rowData["selected"] = true;  // 选中行样式
                     else rowData["selected"] = false;
                   }
                   this.dataList.push(rowData);
                   this.tpIds.push(one[this.codevalue]);
               }
                 this.$set("loading", false);
+          },
+
+          adapertDataMin: function() {
+              // if(!this.datas || this.datas.length == 0) {this.noresult = true; this.loading = false; return false;}
+              console.log(111111111);
+              this.dataList = [];
+              for (var i = 0; i < this.datas.length; i++) {
+                  let one = this.datas[i];
+                  console.log(one);
+                  for (var j = 0; j < this.headercaption.length; j++) {
+                    var hone = this.headercaption[j];
+                    if(hone.adapterFun) {
+                      var s  =  hone.adapterFun.call(this._context, one);
+                      console.log(s);
+                      console.log(hone.labelValue);
+                      one[hone.labelValue] = s
+                    }
+                  }
+                  this.dataList.push(one);
+              }
+              alert(JSON.stringify(this.dataList));
           },
 
           loadData: function() {

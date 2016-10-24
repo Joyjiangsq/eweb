@@ -15,17 +15,24 @@
               <tr v-for="(order, done)  in dataList" >
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])"> -->
-                          <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
+                          <span v-if="sone.type == 'data'" >
+                            <span v-if="done[sone.labelValue].tb_disabled">-</span>
+                              <span v-else>
+                                <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue].def}}
+                              </span>
+                          </span>
                           <div v-if="sone.type == 'edit'" >
-                              <div :class="tableCss.iptBox">
+                              <span v-if="done[sone.labelValue].tb_disabled">-</span>
+                              <div :class="tableCss.iptBox" v-else>
                                   <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def" @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
                                   <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>
                           </div>
                           <div v-if="sone.type == 'component'">
-                                <span v-widget="{widget: sone, data: done}"></span>
+                                <span v-if="done[sone.labelValue].tb_disabled">-</span>
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}" v-else></span>
                           </div>
+
                           <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
                           </span>
@@ -85,7 +92,7 @@ export default {
         this.$dispatch("loadsuccess", {      // 默认产品规格
             "ItemCode":Math.random(),
             "ItemName":"这是产品名称",
-            "SWW":"这是产品包",
+            "U_CutAMe":"切角方式",
             "FirmName":"这是二级分类",
             "U_ThreeL":"这是三级分类",
             "U_Brand":"这是品牌",
@@ -95,7 +102,12 @@ export default {
             "U_MQuality":"这是材质",
             "Spec":"这是规格",
             "avalibleStores":20,
-            "SalUnitMsr":"这是单位"
+            "U_IKeyHole":"1", // 手否开孔
+            "Color":"红色",
+            "SalUnitMsr":"这是单位",
+            "remark":"---xxx",
+            "avalibleStores":11
+
         });
     },
 

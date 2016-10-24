@@ -1,35 +1,35 @@
 <template>
     <div :class="tpcss.box">
         <tabbar :datas="tabArray"  @tabclick="tabClickHandler">
-          <div v-show="tabArray[0].show" >
+          <div v-show="tabArray[0].show"  :class="tpcss.row">
                 <cizhuantb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></cizhuantb>
           </div>
 
-          <div  v-show="tabArray[1].show">
+          <div  v-show="tabArray[1].show" :class="tpcss.row">
             <dibantb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></dibantb>
           </div>
 
-          <div  v-show="tabArray[2].show">
+          <div  v-show="tabArray[2].show" :class="tpcss.row">
             <jiejutb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jiejutb>
           </div>
 
-          <div  v-show="tabArray[3].show">
+          <div  v-show="tabArray[3].show" :class="tpcss.row">
             <jichengdiaodingtb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jichengdiaodingtb>
           </div>
 
-          <div  v-show="tabArray[4].show">
+          <div  v-show="tabArray[4].show" :class="tpcss.row">
             <mentb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></mentb>
           </div>
 
-          <div  v-show="tabArray[5].show">
+          <div  v-show="tabArray[5].show" :class="tpcss.row">
             {{tabArray[5] | json}}
           </div>
 
-          <div  v-show="tabArray[6].show">
+          <div  v-show="tabArray[6].show" :class="tpcss.row">
             <zhuangxiufucaitb :testdata="zhuangxiu"  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
           </div>
 
-          <div  v-show="tabArray[7].show">
+          <div  v-show="tabArray[7].show" :class="tpcss.row">
             <shigongfucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></shigongfucaitb>
           </div>
         </tabbar>

@@ -11,7 +11,7 @@
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <jichengdiaodinglist :hash="false" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></jichengdiaodinglist>
+                      <jichengdiaodinglist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></jichengdiaodinglist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>

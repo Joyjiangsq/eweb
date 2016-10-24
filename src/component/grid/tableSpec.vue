@@ -14,7 +14,8 @@
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])"> -->
-                          <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
+                          <span v-if="sone.type == 'data'" >
+                            <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
                           <div v-if="sone.type == 'edit'" >
                               <div :class="tableCss.iptBox">
                                   <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def" @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
@@ -27,7 +28,7 @@
 
                     </td>
               </tr>
-              <tr>
+              <tr v-if="curaction == 'add'">
                   <td  v-for="(index, sone) in headercaption">
                     <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
                     <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
@@ -53,7 +54,9 @@ export default {
       type: String,
       default:"id"
     },
-
+    curaction:{
+      default:"add"
+    },
     enterUrl: {
       type: String,
       default:""
@@ -73,7 +76,7 @@ export default {
         // this.$http.get(this.$Api+ (this.enterUrl || ""),{params:{id: e.target.value}}).then((res) => {
         // },(error) =>{
         //   console.log(error);
-        // })
+        // });
         this.$dispatch("loadsuccess", {      // 默认产品规格
             "ItemCode":Math.random(),
             "ItemName":"这是产品名称",

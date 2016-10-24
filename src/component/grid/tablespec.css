@@ -10,7 +10,7 @@
     cursor: pointer;
 }
 .tableBox {
-    width: 94%;
+    width: 100%;
     margin: 0 auto;
     overflow-x: scroll;
 }

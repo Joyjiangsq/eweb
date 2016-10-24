@@ -2,10 +2,14 @@ let tbMixin = {
     props:{
       listdata:{
         default:() => []
+      },
+      toload: {
+        default: false
       }
     },
     data: function() {
         return {
+          products:"products",
            headerCaption:[
                   {type:"operator", name:"", icon: true},
                   {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
@@ -16,7 +20,7 @@ let tbMixin = {
                   {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
            ],
            totals:0,                 // 表格load结束之后 传递给分页的页数
-           searchParams: {page:1}, // 初始查询依据
+           searchParams: {}, // 初始查询依据
            load: false,                 // 表格是否加载开关
            tableEvents:{
                    operatorRender: function(d){
@@ -61,6 +65,7 @@ let tbMixin = {
     attached: function() {},
     methods: {
       loadlist: function(){
+        console.log(111111111);
         this.$set("load", !this.load);
       },
       pagechange: function(d){
@@ -70,7 +75,9 @@ let tbMixin = {
       }
     },
     watch: {
-
+      "toload": function(){
+          this.loadlist();
+      }
     },
 }
 

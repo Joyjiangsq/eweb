@@ -6,7 +6,7 @@
               </div>
         </pagepanel>
           <div :class="css.tBox">
-            <tb :headercaption="headerCaption" :needindex="false"  :totals.sync="totals" :load="load" :params="searchParams" :datas="testData" :events="tableEvents"></tb>
+            <tb :headercaption="headerCaption" :needindex="false" :url="products"  :totals.sync="totals" :load="load" :params="searchParams" :datas="testData" :events="tableEvents"></tb>
           </div>
           <pg :totals="totals" :curpage="1" :hash="false"  @pagechange="pagechange"></pg>
 
@@ -28,6 +28,7 @@ export default {
 
   data: function () {
     return {
+      searchParams: {ItmsGrpNam:"施工辅材"}, // 初始查询依据
       css,
       testData:[{ItemCode:"xxx01", ItemName:"施工辅材", SWW:"主材包", avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"03133",U_Series:"xxoo",U_MQuality:"金子",SalUnitMsr:"个", Spec:"哦，哦，哦，"},
                 {ItemCode:"xxx01ww", ItemName:"施工辅材", SWW:"主材包",avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],

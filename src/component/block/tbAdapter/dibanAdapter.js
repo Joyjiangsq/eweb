@@ -18,6 +18,7 @@ export default function adapterData(d) {
               else {
                 this.defCss = "default";
                 this.errorMsg = "";
+                d.xxoo = this.def;
                 return true;
               }
 
