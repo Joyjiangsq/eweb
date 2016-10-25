@@ -6,7 +6,8 @@ export default {
     testdata:{
       default: function(){
         return []
-      }
+      },
+       twoWay: true
     }
 
   },
@@ -17,6 +18,7 @@ export default {
             return [{action:"delete",icon:"icon-delete", data:d}]
           },
           operatorHandler: function(d){
+            console.log(d);
               if(d.action == "delete") {
                 for (var i = 0; i < this.testdata.length; i++) {
                   let one = this.testdata[i];
@@ -39,10 +41,10 @@ export default {
   },
   created: function () {
     // 初始化验证(如果有第一次)
-    for (var i = 0; i < this.testdata.length; i++) {
-      let one = this.testdata[i];
-      this.adapterFun(one);
-    }
+    // for (var i = 0; i < this.testdata.length; i++) {
+    //   let one = this.testdata[i];
+    //   this.adapterFun(one);
+    // }
   },
   attached: function () {},
   methods: {
@@ -54,12 +56,11 @@ export default {
     // 根据产品编码查询的结果
     oneSuccessHandler: function(d) {
       let one = this.adapterFun(d);
-      console.log(JSON.stringify(one));
+      console.log(this.testdata);
       this.testdata.push(one);
     },
     // 收件信息验证函数
     validateHandler: function(d) {
-        console.log(d);
         if(d.res == "fail") this.validateInfo = false;
         else {
             this.recData[d.name] = d.value;
@@ -87,6 +88,7 @@ export default {
     },
 
     deleteoneHandler: function(d) {
+        console.log(d);
         this.testdata.split(d.index,1);
     },
 

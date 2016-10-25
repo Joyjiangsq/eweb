@@ -31,7 +31,7 @@
 
             <!--下拉选择-->
             <span v-if="one.type == 'combobox'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
-                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid"  :datas="one.datas" :url="one.url" :value.sync="params[one.keyname]"></combobox>
+                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid" :params="one.params"  :datas="one.datas" :url="one.url" :value.sync="params[one.keyname]"></combobox>
             </span>
 
             <span :class='sCss.searchbtn' v-if="needShow(index)"><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
@@ -65,6 +65,9 @@ export default {
     **/
     hash:{
       default: true
+    },
+    needsearch:{
+      default: true  // 有的场景不需要开始查询
     },
     datas:{
       type:Array,
@@ -120,12 +123,11 @@ export default {
         }
     }
 
-    this.searchHandler();
+    if(this.needsearch) this.searchHandler();
   },
   attached: function () {},
   methods: {
       dimClick: function(d) {
-        console.log(d);
         this.$set("params.dimLabel", d.name);
       },
       valuechange: function(){

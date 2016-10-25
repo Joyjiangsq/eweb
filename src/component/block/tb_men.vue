@@ -79,10 +79,7 @@ export default {
   computed: {
   },
   ready:function(){
-      console.log(this);
-      setInterval(()=>{
-        console.log(JSON.stringify(this.testdata));
-      }, 2000);
+  
   },
   attached: function () {},
   methods: {

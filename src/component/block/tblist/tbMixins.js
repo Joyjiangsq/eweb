@@ -10,18 +10,18 @@ let tbMixin = {
     data: function() {
         return {
           products:"products",
-           headerCaption:[
-                  {type:"operator", name:"", icon: true},
-                  {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
-                  {name:"产品包", labelValue:"SWW", type:"data"},{name:"二级分类", labelValue:"FirmName", type:"data"},
-                  {name:"三级分类", labelValue:"U_ThreeL", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
-                  {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
-                  {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                  {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
-           ],
+          //  headerCaption:[
+          //         {type:"operator", name:"", icon: true},
+          //         {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+          //         {name:"产品包", labelValue:"SWW", type:"data"},{name:"二级分类", labelValue:"FirmName", type:"data"},
+          //         {name:"三级分类", labelValue:"U_ThreeL", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
+          //         {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
+          //         {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+          //         {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
+          //  ],
            totals:0,                 // 表格load结束之后 传递给分页的页数
            searchParams: {}, // 初始查询依据
-           load: false,                 // 表格是否加载开关
+           load: this.toload,                 // 表格是否加载开关
            tableEvents:{
                    operatorRender: function(d){
                        let exit = false;
@@ -55,17 +55,28 @@ let tbMixin = {
             },
             searchEvents:{                  // 查询回调函数
               onSearch: function(params) {
-                  // this.$set("params", params);
+                  this.searchParams = Object.assign(this.searchParams, params);
+                  this.loadlist();
               }
             }
         }
     },
-    computed: {},
+    computed: {
+      sdata: function(){
+        return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam:"瓷砖"}, url:"products/firms", labelcaption:"二级分类："},
+                {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
+                {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
+                {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
+                {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
+                {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
+                {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}];
+
+      }
+    },
     ready: function() {},
     attached: function() {},
     methods: {
       loadlist: function(){
-        console.log(111111111);
         this.$set("load", !this.load);
       },
       pagechange: function(d){

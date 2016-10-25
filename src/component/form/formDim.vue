@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <searchdim :url="url" :labelname="dimlabel" :placeholder="placeholder" :value="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
+            <searchdim :url="url" :labelname="dimlabel" :placeholder="placeholder" :value.sync="value" :iptvalue.sync="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>

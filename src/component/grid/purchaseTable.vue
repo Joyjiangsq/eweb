@@ -64,7 +64,8 @@ export default {
   },
   data: function () {
     return {
-        tableCss
+        tableCss,
+        dataList: this.curaction == "purchase"? [] : this.datas
     }
   },
   created: function(){

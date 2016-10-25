@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     defaultInfo: function(){
-      let info ={label:"请选择", key:"0"};
+      let info ={label:"请选择", key:"-1"};
       if(!this.datas || this.datas.length == 0 || this.value == 0) return info;
 
       for(var i = 0; i < this.datas.length; i++){
@@ -117,8 +117,9 @@ export default {
 
     loadData(p) {
       p = p? p: this.params;
-      return this.$http.get(this.url,{params:p}).then((res) => {
-        this.datas = res.data.data;
+      return this.$http.get(this.$Api+this.url,{params:p}).then((res) => {
+        var d = res.json();
+        this.datas = d.data;
       },(error) =>{
         console.log(error);
       })

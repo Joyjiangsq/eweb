@@ -72,12 +72,15 @@ export default {
         }
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
-          else this.$dispatch("success", {project:this.curName,data:{list: this.testdata, recInfo: this.recData}});
+          else this.$dispatch("success", {project:this.curName,data:{list: this.testdata, rec_info: this.recData}});
         })
     },
     adapterFun: function(d) {
       return adapter(d);
-    }
+    },
+  },
+  ready: function(){
+
   },
   components: {tb, formtext, cascadeform, dialog, cizhuanlist},
 }

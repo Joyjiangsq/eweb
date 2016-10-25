@@ -1,37 +1,32 @@
 <template>
     <div :class="tpcss.box">
         <tabbar :datas="tabArray"  @tabclick="tabClickHandler">
-          <div v-show="tabArray[0].show"  :class="tpcss.row">
-                <cizhuantb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></cizhuantb>
+          <div class="" v-for="(index, one) in tabArray">
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'cizhuan'">
+                      <cizhuantb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></cizhuantb>
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'diban'">
+                      <dibantb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></dibantb>
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'jieju'">
+                      <jiejutb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jiejutb>
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'jichengdiaoding'">
+                      <jichengdiaodingtb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jichengdiaodingtb>
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'mumen'">
+                      <mentb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></mentb>
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chuigui'">
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'zhuangxiufucai'">
+                    <zhuangxiufucaitb :testdata.sync="zhuangxiu"  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
+                </div>
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'shigongfucai'">
+                    <shigongfucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></shigongfucaitb>
+                </div>
           </div>
 
-          <div  v-show="tabArray[1].show" :class="tpcss.row">
-            <dibantb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></dibantb>
-          </div>
-
-          <div  v-show="tabArray[2].show" :class="tpcss.row">
-            <jiejutb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jiejutb>
-          </div>
-
-          <div  v-show="tabArray[3].show" :class="tpcss.row">
-            <jichengdiaodingtb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jichengdiaodingtb>
-          </div>
-
-          <div  v-show="tabArray[4].show" :class="tpcss.row">
-            <mentb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></mentb>
-          </div>
-
-          <div  v-show="tabArray[5].show" :class="tpcss.row">
-            {{tabArray[5] | json}}
-          </div>
-
-          <div  v-show="tabArray[6].show" :class="tpcss.row">
-            <zhuangxiufucaitb :testdata="zhuangxiu"  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
-          </div>
-
-          <div  v-show="tabArray[7].show" :class="tpcss.row">
-            <shigongfucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></shigongfucaitb>
-          </div>
         </tabbar>
     </div>
 </template>
@@ -51,7 +46,7 @@ import zhuangxiufucaitb from "./tb_zhuangxiufucai";
 export default {
   props:{
     tabs: {
-        default: () => ["cizhuan", "diban", "jieju", "diaoding", "mumen", "chugui", "zhuangxiufucai", "shigongfucai"]
+        default: () => ["cizhuan", "diban", "jieju", "jichengdiaoding", "mumen", "chugui", "zhuangxiufucai", "shigongfucai"]
     },
     startvalidate: {
       default: false
@@ -64,9 +59,9 @@ export default {
       // mapCount:0, // 数据记录器
       subvalidate: false,
       lastDataMap:{},
+      tabTpl:{index:110, ename:""},
       tabArray: [{show: false},{show: false},{show: false},{show: false},{show: false},{show: false},{show: false}, {show: false}],
       zhuangxiu:[{ItemCode:"xxx01ww", ItemName:"装修辅材", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅材", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
-
     }
   },
   computed: {
@@ -76,6 +71,10 @@ export default {
   ready: function () {
     // 控制品类的开放和关闭
     this.renderTabs();
+
+    setTimeout(()=>{
+      console.log(this.zhuangxiu);
+    },2000)
   },
   attached: function () {
 
@@ -86,6 +85,7 @@ export default {
       for (var i in mData.barData) {
           if(this.tabs.indexOf(i) != -1) {
               mData.barData[i].show = false;
+              mData.barData[i].ename = i;
               this.tabArray.push(mData.barData[i])
           }
       }
@@ -103,20 +103,36 @@ export default {
         // 只要有一个验证失败就不让过
         // 失败之后 重置数据集
         this.lastDataMap = {};
+        // console.log(d);
         this.$dispatch("fail", d);
+        var index = this.tabs.indexOf(d.project);
+        if(index != -1) return false;
+        if(index < this.tabTpl.index) {
+            this.tabTpl.index = index;
+            this.tabTpl.ename = d.project;
+            for (var i = 0; i < this.tabArray.length; i++) {
+               var one = this.tabArray[i];
+               one.show = false;
+               if(one.ename == d.project) {
+                 one.show = true;
+                 this.index = i;
+               }
+            }
+        }
     },
     successHandler: function(d){
       //{project: "cizhuan", data: {list:'', rec_info:""}}
         this.lastDataMap[d.project] = d.data;
         let dataLenth = Object.keys(this.lastDataMap).length;
         console.log(dataLenth);
-        if(dataLenth == 6) this.$dispatch("success", this.lastDataMap);
+        if(dataLenth == 7) this.$dispatch("success", this.lastDataMap);
     }
   },
   components: {tabbar, cizhuantb, dibantb, jiejutb,mentb, jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
   watch:{
     "startvalidate": function() {
         this.subvalidate = !this.subvalidate;
+        this.tabTpl.index = 100;
         this.lastDataMap = {};
     }
   }

@@ -8,3 +8,17 @@
 .rowhead {
   line-height: 55px;
 }
+
+.tBox {
+      padding-top: 12px;
+}
+.check {
+  margin-left: 25px
+}
+
+.clicktarget {
+  display: inline;
+position: absolute;
+cursor: pointer;
+width: 25px;
+}

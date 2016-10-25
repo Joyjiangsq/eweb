@@ -16,7 +16,7 @@
               <div class="" slot="containerDialog">
                   <formtext labelname="姓名：" :value.sync="addParams.name"  placeholder="请输入姓名" :vertical="true" formname='name' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="电话：" :value.sync="addParams.phone"  placeholder="请输入电话" :vertical="true" :phone="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                  <formcb keyid="name" labelname="职位：" keyname="name" formname="roles" :vertical="true" :value.sync="addParams.roles" :datas="roleData" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+                  <formcb keyid="name" labelname="职位：" dropfixed="dropfixed" keyname="name" formname="roles" :vertical="true" :value.sync="addParams.roles" :datas="roleData" :validatestart="validate" @onvalidate="validateHandler"></formcb>
               </div>
         </dialog>
         <!--删除提示-->

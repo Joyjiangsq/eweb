@@ -3,14 +3,18 @@
             <span v-if="curStatus == 'no-result'">没有数据</span>
             <span v-if="curStatus =='loading'">加载中</span>
             <div v-if="curStatus == 'renderData'">
-                    <div :class="css.rowbox" v-for="one in dataList">
+                    <div :class="css.rowbox" v-for="one in viewData">
                           <div :class="css.rowhead">
+                              <icon :classname="css.clicktarget" :iconname="one.show?'icon-down':'icon-right3'" @click="iconClick(one)"></icon>
+                              <span :class="css.check">
+                                    <checkbx  @checkclick="checkClick(one)"></checkbx>
+                              </span>
                               <span :class="css.srow">采购订单号： {{one.U_PurchaseNum}}</span>
                               <span :class="css.srow">采购订单状态： 待采购</span>
                               <span :class="css.srow">供应商：xxx</span>
                           </div>
-                          <div :class="css.tbbox">
-                                <tb :datas="one['orderList']"></tb>
+                          <div :class="css.tbbox" v-show="one.show">
+                                <tb :datas="one['orderList']" :srcdata="one" :orderid="one.U_PurchaseNum" :ignorevalidate="one.ignorevalidate" :subvalidate="subvalidate" @fail="failHandler" @success="successHandler"></tb>
                           </div>
                     </div>
             </div>
@@ -22,20 +26,44 @@ import css from "./p.css";
 import list from "common/mixinList";
 import tb from "component/block/tb_purchase.vue";
 import icon from "component/sprite/icon";
+import checkbx from "component/checkbox/checkBox";
+import utils from "common/Utils";
 export default {
   mixins:[list],
   props:{
-
+    subvalidate: {
+      default:false
+    }
   },
   data: function () {
     return {
-      css
+      css,
+      viewData:[]
     }
   },
   computed: {},
   ready: function () {
+    for (var i = 0; i < this.dataList.length; i++) {
+        var one = this.dataList[i];
+        one.show = false;
+        one.ignorevalidate = true;
+        this.viewData.push(utils.cloneObj(one));
+    }
   },
   methods:{
+    iconClick: function(one){
+        one.show = !one.show
+    },
+    checkClick: function(one) {
+        one.ignorevalidate = !one.ignorevalidate
+    },
+    successHandler: function(d) {
+      console.log(d);
+    },
+    failHandler : function(d) {
+      console.log(d);
+      d.show = true;
+    },
     adapter: function(){
       this.curStatus = 'renderData';
       this.dataList =  [{
@@ -80,7 +108,7 @@ export default {
     }
   },
   attached: function () {},
-  components: {icon,tb}
+  components: {icon,tb,checkbx}
 
 }
 </script>

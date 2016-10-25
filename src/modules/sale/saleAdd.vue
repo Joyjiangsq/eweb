@@ -41,6 +41,7 @@ import comboxform from "component/form/fmCombobox";
 import css from "./sale.css";
 import btn from "component/sprite/button.vue";
 import tblab from "component/block/typeLab";
+import saleAdapter from "./adapter.js";
 import formdim from "component/form/formDim";
 export default {
   data: function () {
@@ -67,6 +68,13 @@ export default {
     successHandler: function(d) {
         // console.log(d);
         console.log(JSON.stringify(d));
+        saleAdapter(d);
+        this.$http.post(this.$Api+"sales",JSON.stringify({sub_orders:d})).then((res) => {
+            var d = res.json();
+            console.log(d);
+        },(error) =>{
+          console.log(error);
+        })
     },
     btnClickHandler: function() {
       this.startvalidate = !this.startvalidate;
@@ -74,6 +82,7 @@ export default {
     },
     formDimClick: function(d) {
         console.log(d);
+
     }
   },
   components: {panel, formtext, cascadeform,comboxform, tblab, btn,formdim},

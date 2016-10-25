@@ -3,7 +3,7 @@
         <input type="text"  :class="[classname,datepCss.datePickerInput]"  :value="value" readonly="true">
         <span @click="changePickerMain" :class="datepCss.showBtn"><icon iconname="icon-date"></icon></span>
         <div :class="datepCss.coverPicker"  v-show="showDatePicker" @click="changePickerMain" ></div>
-        <div :class="datepCss.pickerMain" v-show="showDatePicker">
+        <div :class="datepCss.pickerMain" v-show="showDatePicker" :style="style">
                 <div :class="datepCss.datePickerTitleRow">
                       <span :class='datepCss.pickerIn'>
                         <span  @click='changeAttachOperator'>{{tplDate | dateformate formate}}</span>
@@ -65,6 +65,10 @@ export default {
           }
         }
       },
+
+      dropfixed: {
+        default:""
+      },
       stopdate:{              // 定义截止日期限制
         // type: Date,
         default: () => new Date()
@@ -80,6 +84,7 @@ export default {
   data: function () {
     return {
       datepCss,
+      style:{},
       showDatePicker: false,    //是否日历视图控制
       showYmBoxer:false,        // 年月视图控制
       dayCaption:["周日","周一","周二","周三","周四","周五","周六"],
@@ -139,10 +144,22 @@ export default {
   attached: function () {},
   methods: {
     // 改变主日历视图的显示隐藏
-    changePickerMain() {
+    changePickerMain(e) {
         this.tplDate = this.value? new Date(this.value) : new Date();
         this.showYmBoxer = false;
         this.showDatePicker = !this.showDatePicker;
+        if(this.dropfixed == "dropfixed" && !!e) {
+
+          // 下拉在fixed状态的时候 跟随点击位置走
+          let offx = e.offsetX || 0;    // 点击相对点击的对象元素的偏移位置
+          let offy = e.offsetY || 0;
+          let w = e.currentTarget.clientWidth;   // 点击的对象的宽高
+          let h = e.currentTarget.clientHeight;
+          let x = e.x;                  // 点击相对body的位置
+          let y = e.y;
+          x = x - 185;
+          this.style = {left: x +"px", top: (y+h-offy+5) + "px"}
+        }
     },
 
     dayClick(e) {

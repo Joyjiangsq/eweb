@@ -2,8 +2,8 @@
     <div :class="[css.formOne,css.formOneTwo, classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <combocascade :value.sync="value" :read="read" @combocase="combocaseClick"></combocascade>
-            <input type="text" name="name" :disabled="read" :value="detail"  v-model="detail" :class="css.casinput" v-if="detailneed"/>
+            <combocascade :value.sync="value" :read="read" @combocase="combocaseClick" :dropfixed="dropfixed"></combocascade>
+            <input type="text" name="name" :disabled="read" :value="detail"  v-model="detail" :class="css.casinput" @focus="combocaseClick" v-if="detailneed"/>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -18,6 +18,9 @@ import combocascade from "component/combobox/combocascade";
 export default {
   mixins: [mixin],
   props:{
+    dropfixed:{   //dropfixed
+      default:""
+    },
     value:{
       default:""
     },
@@ -53,13 +56,13 @@ export default {
     "validatestart":function() {
        if(this.watchIgnore) return false;
 
-       if(this.value.split(",").length < 3 && this.must) {
+       if(this.value.split(",").length < 2 && this.must) {
          this.$dispatch("onvalidate", {res:"fail", msg: "请填写好地址"});
          this.$set("errormsg", "请填写好地址");
          this.$set("error", true);
          return false;
        }
-       if(this.detailneed) {
+       if(this.detailneed && this.must) {
          if(!this.detail || this.detail == "") {
            this.$dispatch("onvalidate", {res:"fail", msg: "请填写详细地址"});
            this.$set("errormsg", "请填写详细地址");

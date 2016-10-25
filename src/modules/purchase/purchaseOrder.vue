@@ -7,8 +7,8 @@
         </pagepanel>
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
-              <div class="css.tBox">
-                <orderlist></orderlist>
+              <div :class="css.tBox">
+                <orderlist :subvalidate="subvalidate"></orderlist>
               </div>
               <pg :totals="totals" :curpage="getCurPage"  @pagechange="pagechange"></pg>
         </pagepanel>
@@ -34,6 +34,7 @@ export default {
   data: function () {
     return {
       css,
+      subvalidate: false,
       statusData:[{name:"已完成", id:1}],
       totals:0,                 // 表格load结束之后 传递给分页的页数
       searchParams: {}, // 初始查询依据
@@ -46,8 +47,8 @@ export default {
       btnsData:[{name:"导出", icon:"icon-share", action:"export"},{name:"核价并购买", icon:"icon-check", action:"buy"},{name:"驳回", icon:"icon-back", action:"back"}],
       btnEvents:{
         btnClick: function(d){
-            if(d.action == "apply") {
-
+            if(d.action == "buy") {
+                  this.subvalidate = !this.subvalidate;
             }
         }
       }

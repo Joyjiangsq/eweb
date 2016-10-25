@@ -2,7 +2,7 @@
     <div>
         <pagepanel direct="bottom">
               <div>
-                <search  pathname="" :datas="sdata" :hash="false" :events = 'searchEvents'></search>
+                <search  pathname="" :datas="sdata" :hash="false" :needsearch="false" :events = 'searchEvents'></search>
               </div>
         </pagepanel>
           <div :class="css.tBox">
@@ -43,16 +43,7 @@ export default {
                 {ItemCode:"xxx01ww", ItemName:"集成吊顶", SWW:"主材包",avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
-  computed: {
-    sdata: function(){
-      return [{type:"combobox", keyname:"jobname", labelname:"name", keyid:"name", value:"", datas:[], labelcaption:"产品项目："},
-              {type:"text",  value:"",  keyname:"brand", labelcaption:"型号:"},
-              {type:"text",  value:"",  keyname:"spec", labelcaption:"规格:"},
-              {type:"combobox", keyname:"material", labelname:"name", keyid:"name", value:"", datas:[], labelcaption:"材质："},
-              {type:"text",  value:"",  keyname:"color", labelcaption:"颜色:"}];
 
-    }
-  },
   ready: function () {
   },
   attached: function () {},

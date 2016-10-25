@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <comb :keyid="keyid" :labelname="keyname" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
+            <comb :keyid="keyid" :labelname="keyname" :dropfixed="dropfixed" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -23,6 +23,9 @@ export default {
     keyname:{
         default:"name"
     },
+    dropfixed:{
+      default:""
+    },
     datas: {
       default:[]
     }
@@ -33,7 +36,8 @@ export default {
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+  },
   attached: function () {},
   methods: {
       dropclick: function(value) {
@@ -46,6 +50,10 @@ export default {
     "validatestart":function() {
        if(this.watchIgnore) return false;
        this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
+    },
+
+    "value": function(){
+      console.log(this.value);
     }
   }
 }

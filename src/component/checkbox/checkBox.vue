@@ -14,7 +14,9 @@ export default {
   props:{
       datas:{
         type: Array,
-        default:[]  // [{label:"足球", id: 1, checked: true}]
+        default:function(){
+          return [{checked: false}]
+        } // [{label:"足球", id: 1, checked: true}]
       },
 
       value:{
@@ -63,6 +65,7 @@ export default {
       if(this.datas[index][this.labelkey] || this.datas[index][this.labelkey] == 0) this.resetValues();
       else  this.$set("value", this.datas[index].checked);
       this.events.checkClick.call(this._context, this.value);
+      this.$dispatch("checkclick", this.value);
     },
 
     resetValues: function(){

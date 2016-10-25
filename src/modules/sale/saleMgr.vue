@@ -14,7 +14,7 @@
     </div>
 
     <div  :class="css.customRight">
-          <tb :headercaption="subHeaders" :totals.sync="totals" :needindex="false" :load="load" :params="subParams" url="" :events="tableEvents"></tb>
+          <tb :headercaption="subHeaders" :totals.sync="totals" :needindex="false" :load="load" :params="searchParams" url="sales" :events="tableEvents"></tb>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ import pagepanel from "component/panel/pagepanel";
 import pg from "component/pagination/pagination";
 import tb from "component/grid/tableListBase";
 import btnbar from "component/sprite/buttonbar";
+import Utils from "common/Utils.js";
 import css from "./sale.css";
 import {setTitle} from "actions";
 import {packageType, orderType, orderStatus} from "config/const";
@@ -56,7 +57,7 @@ var MyComponent = Vue.extend({
 
 let tableHeaderDatas = [{name:"订单号", labelValue:"orderId", type:"data"},
                         {name:"订单状态", labelValue:"orderStatus",type:"data"},
-                        {name:"销售总额", labelValue:"totals",type:"component", component: MyComponent, cname:"test"},
+                        {name:"销售总额", labelValue:"totals",type:"data"},//, component: MyComponent, cname:"test"},
                         {name:"产品包", labelValue:"packageType",type:"data"},
                         {name:"订单类型", labelValue:"createdBy",type:"data"},
                         {name:"客户姓名", labelValue:"customName",type:"data"},
@@ -75,7 +76,7 @@ export default {
       subHeaders: subHeaders, // 子订单表格表头
       totals:0,
       subLoad: false, // 子列表加载
-      load: false,      // 加载控制
+      load: true,      // 加载控制
       searchParams:{}, // 查询条件
       searchEvents:{          // 查询数据
         onSearch: function(params) {

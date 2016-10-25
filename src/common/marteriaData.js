@@ -7,14 +7,14 @@ export const barData = {
     "diban": {
         show: false,
         labelName: "地板",
-        　id: 2
+        id: 2
     },
     "jieju": {
         show: false,
         labelName: "洁具",
         id: 3
     },
-    "diaoding": {
+    "jichengdiaoding": {
         show: false,
         labelName: "集成吊顶",
         id: 4

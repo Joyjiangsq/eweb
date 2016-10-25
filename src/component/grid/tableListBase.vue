@@ -73,6 +73,7 @@ export default {
     }
   },
   ready: function () {
+
   },
   attached: function () {},
   components: {btnbar, iconbar},

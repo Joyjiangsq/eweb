@@ -50,13 +50,13 @@ let tableBase = {
             type:Array,
             default:function() {
               return []
-            }
+            },
           }
         },
 
         data: function () {
           return {
-              dataList: [],
+              dataList: this.datas || [],
               noresult: false,
               loading:true,
               checked: false,
@@ -78,20 +78,11 @@ let tableBase = {
         },
         ready: function(){
           if(this.load) this.loadData();
-          if(this.datas) {
+          if(this.datas.length != 0) {
               setTimeout(()=>{
                 this.adapertDataMin(this.datas);
-              }, 1000)
+              }, 1)
           }
-          // if(!this.url) {
-          //   setTimeout(()=>{
-          //     this.adapertDataMin(this.datas);
-          //   }, 1000)
-          //
-          //   setTimeout(()=>{
-          //     this.adapertDataMin(this.datas);
-          //   }, 3000)
-          // }
         },
         methods: {
           clickOne: function(one){
@@ -135,31 +126,32 @@ let tableBase = {
                     if(i == 0) rowData["selected"] = true;  // 选中行样式
                     else rowData["selected"] = false;
                   }
-                  this.dataList.push(rowData);
+                  let nd = Object.assign(one, rowData);
+                  this.dataList.push(nd);
                   this.tpIds.push(one[this.codevalue]);
               }
                 this.$set("loading", false);
           },
 
           adapertDataMin: function() {
-              // if(!this.datas || this.datas.length == 0) {this.noresult = true; this.loading = false; return false;}
-              console.log(111111111);
+              if(!this.datas || this.datas.length == 0) {
+                this.dataList = [];
+                this.noresult = true;
+                this.loading = false;
+                return false;
+              }
               this.dataList = [];
               for (var i = 0; i < this.datas.length; i++) {
                   let one = this.datas[i];
-                  console.log(one);
                   for (var j = 0; j < this.headercaption.length; j++) {
                     var hone = this.headercaption[j];
                     if(hone.adapterFun) {
                       var s  =  hone.adapterFun.call(this._context, one);
-                      console.log(s);
-                      console.log(hone.labelValue);
                       one[hone.labelValue] = s
                     }
                   }
                   this.dataList.push(one);
               }
-              alert(JSON.stringify(this.dataList));
           },
 
           loadData: function() {
@@ -184,6 +176,15 @@ let tableBase = {
             this.$set("loading", true);
             this.$set("noresult", false);
             this.loadData();
+          },
+
+          "datas": {      // 监听静态datas变化  驱动dataList渲染视图
+              deep: true,
+              handler: function(n, o) {
+                //  console.log(JSON.stringify(this.datas));
+                 this.adapertDataMin();   // 静态datas 渲染
+                  // this.dataList = this.datas;
+              }
           }
         }
  }

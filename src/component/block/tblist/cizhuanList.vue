@@ -2,7 +2,7 @@
     <div>
         <pagepanel direct="bottom">
               <div>
-                <search  pathname="" :datas="sdata" :hash="false" :events = 'searchEvents'></search>
+                <search  pathname="" :datas="sdata" :hash="false" :needsearch="false" :events = 'searchEvents'></search>
               </div>
         </pagepanel>
           <div :class="css.tBox">
@@ -39,22 +39,12 @@ export default {
              {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
       ],
       searchParams: {ItmsGrpNam:"瓷砖"}, // 初始查询依据
+
       testData:[{ItemCode:"xxx01", ItemName:"大卫瓷砖", SWW:"主材包", avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"03133",U_Series:"xxoo",U_MQuality:"金子",SalUnitMsr:"个", Spec:"哦，哦，哦，"},
                 {ItemCode:"xxx01ww", ItemName:"大卫瓷砖", SWW:"主材包",avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
-  computed: {
-    sdata: function(){
-      return [{type:"combobox", keyname:"jobname", labelname:"name", keyid:"name", value:"", datas:[], labelcaption:"二级分类："},
-              {type:"text",  value:"",  keyname:"brand", labelcaption:"型号:"},
-              {type:"text",  value:"",  keyname:"spec", labelcaption:"规格:"},
-              {type:"text",  value:"",  keyname:"brand", labelcaption:"产品名称:"},
-              {type:"text",  value:"",  keyname:"spec", labelcaption:"品牌:"},
-              {type:"text",  value:"",  keyname:"spec", labelcaption:"材质:"},
-              {type:"text",  value:"",  keyname:"color", labelcaption:"颜色:"}];
 
-    }
-  },
   ready: function () {
 
   },

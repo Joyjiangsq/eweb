@@ -19,6 +19,9 @@ export default {
       },
       read:{
           default: false
+      },
+      dropfixed:{
+        default:""
       }
   },
   data: function () {
@@ -39,6 +42,7 @@ export default {
   created(){
   },
   ready: function () {
+    if(this.value != "") {
       var sp = this.value.split(",");
       this.provient = this.value.split(",")[0];
       this.renderCitys(this.provient); // 渲染市
@@ -47,6 +51,7 @@ export default {
         this.renderAreas(this.cname);   // 渲染区域
       }
       if(sp.length >=2) this.aname = sp[2];  // 设置默认区域
+    }
   },
   attached: function () {},
   methods: {
