@@ -20,7 +20,7 @@ import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import pg from "component/pagination/pagination";
 import Utils from "common/Utils.js";
-import adapter from "../tbAdapter/jiejuAdapter";
+import adapter from "../tbAdapter/menAdapter";
 import dialogtip from "component/dialog/dialogTip";
 import basetb from "./tbMixins";
 export default {
@@ -28,40 +28,29 @@ export default {
 
   data: function () {
     return {
-      name:"",
       css,
       headerCaption:[
-             {type:"operator", name:"", icon: true},
-             {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
-             {name:"产品包", labelValue:"SWW", type:"data"},
-             {name:"二级分类", labelValue:"FirmName", type:"data"},
+             {type:"operator", name:"", icon: true},{name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"三级分类", labelValue:"U_ThreeL", type:"data"},
+             {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
              {name:"品牌", labelValue:"U_Brand", type:"data"},
              {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
-             {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-             {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
+             {name:"产品规格", labelValue:"Spec", type:"data"},
+             {name:"颜色", labelValue:"U_Colour", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+             {name:"门套线类型", labelValue:"U_DLType", type:"data"},
+             {name:"切角方式", labelValue:"U_CutAMe", type:"data"},
+             {name:"玻璃类型", labelValue:"U_GType", type:"data"},
+             {name:"门扇数", labelValue:"U_DLNum", type:"data"},
+             {name:"门套线边数", labelValue:"U_DCLNum", type:"data"},
+             {name:"单位", labelValue:"SalUnitMsr",type:"data"}
       ],
-      searchParams: {ItmsGrpNam:"洁具"}, // 初始查询依据
+      searchParams: {ItmsGrpNam:"门"}, // 初始查询依据
       testData:[{ItemCode:"xxx01", ItemName:"xxx洁具", SWW:"主材包", avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"03133",U_Series:"xxoo",U_MQuality:"金子",SalUnitMsr:"个", Spec:"哦，哦，哦，"},
                 {ItemCode:"xxx01ww", ItemName:"xxx洁具", SWW:"主材包",avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
 
   ready: function () {
-  },
-  computed: {
-    sdata: function(){
-      return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam:"洁具"}, url:"products/firms", labelcaption:"二级分类："},
-              {type:"combobox", keyname:"U_ThreeL", labelname:"U_ThreeL", keyid:"FirmCode", value:"", params:{U_ThreeL:"洁具"}, url:"products/firms", labelcaption:"三级分类："},
-              {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
-              {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
-              {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
-              {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
-              {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
-              {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
-              {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}];
-
-    }
   },
   attached: function () {},
   methods: {

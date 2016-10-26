@@ -8,9 +8,9 @@
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
           <div class="">
-            <tb :headercaption="headercaption" :load="load"  :totoals.sync="totoals" :params="searchParams" url="customers" :events="tableEvents"></tb>
+            <tb :headercaption="headercaption" :load="load"  :totals.sync="totals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
-          <pg :totals="totoals"  @pagechange="pagechange"></pg>
+          <pg :totals="totals"  @pagechange="pagechange"></pg>
     </pagepanel>
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
@@ -74,7 +74,7 @@ export default {
       searchParams:{   // 查询条件
          page:1
       },
-      totoals: 0,
+      totals: 0,
       formControl:{
           validate: false,
           validateHandler: function(d){   // 表单验证
@@ -100,8 +100,7 @@ export default {
         operatorHandler: function(d){
               if(d.action == "edit") {
                 this.$set("curAction", "edit");
-                alert(JSON.stringify(d.data));
-                this.formData = d.data;
+                this.formData = Utils.cloneObj(d.data);
                 this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
               else if(d.action == "detail") {
@@ -158,9 +157,16 @@ export default {
           setTimeout(()=>{
             if(this.formData.validate) {
                 delete this.formData.validate;
-                this.addOne();
+                if(this.curAction == "add") this.addOne();
+                else if(this.curAction == "edit") this.editOne();
             }
           })
+        }
+        else {
+          this.formData = {   // 重置数据
+            validate: true,
+            house_list:[{}]
+          }
         }
     },
     loadlist: function(){
@@ -173,6 +179,17 @@ export default {
         house_list:[{}]
       }
       this.loadlist();
+    },
+    editOne: function(){
+      this.$http.put(this.$Api+"customers",JSON.stringify(this.formData)).then((res) => {
+          var d = res.json();
+          console.log(d);
+          if(d.code == 200) {
+            this.retInfo();
+          }
+      },(error) =>{
+        console.log(error);
+      })
     },
     addOne: function(){
       this.$http.post(this.$Api+"customers",JSON.stringify(this.formData)).then((res) => {
@@ -191,6 +208,8 @@ export default {
     data: function(){
       setTitle(this.$store, "客户管理");
     }
+  },
+  watch:{
   }
 }
 </script>

@@ -14,7 +14,7 @@
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'jichengdiaoding'">
                       <jichengdiaodingtb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></jichengdiaodingtb>
                 </div>
-                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'mumen'">
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'men'">
                       <mentb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></mentb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chuigui'">
@@ -46,7 +46,7 @@ import zhuangxiufucaitb from "./tb_zhuangxiufucai";
 export default {
   props:{
     tabs: {
-        default: () => ["cizhuan", "diban", "jieju", "jichengdiaoding", "mumen", "chugui", "zhuangxiufucai", "shigongfucai"]
+        default: () => ["cizhuan", "diban", "jieju", "jichengdiaoding", "men", "chugui", "zhuangxiufucai", "shigongfucai"]
     },
     startvalidate: {
       default: false
@@ -106,7 +106,7 @@ export default {
         // console.log(d);
         this.$dispatch("fail", d);
         var index = this.tabs.indexOf(d.project);
-        if(index != -1) return false;
+        if(index == -1) return false;
         if(index < this.tabTpl.index) {
             this.tabTpl.index = index;
             this.tabTpl.ename = d.project;

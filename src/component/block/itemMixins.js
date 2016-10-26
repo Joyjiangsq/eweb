@@ -69,23 +69,48 @@ export default {
     // 验证列表数据
     validateFun: function(){
         this.validateRec = true;
+        this.validateInfo = true;
         for (var i = 0; i < this.testdata.length; i++) {
           let one = this.testdata[i];
             for(var key in one) {
               if(typeof(one[key]) == "object") {
-                  if(!one[key].validateFun) continue;
+                  if(one[key].tb_disabled) continue;
                   let res = one[key].validateFun(one, i);
-                  if(!res) {this.validateRec = false; break;}
+                  if(!res) {this.validateRec = false;}
               }
           }
         }
-        // 备注
-        this.validate = !this.validate;
+        if(this.testdata.length != 0) {
+          // 收件信息验证
+          this.validate = !this.validate;
+        }
         setTimeout(()=>{
-          if(!this.validateRec) this.$dispatch("fail", {project:this.curName});
-          else this.$dispatch("success", {project: this.curName,data:{list: this.testdata, rec_info: this.recData}});
-        });
+          if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
+          else this.$dispatch("success", {project:this.curName,data:{list: this.testdata, rec_info: this.recData}});
+        })
     },
+    // 验证列表数据
+    // validateFun: function(){
+    //   console.log(111);
+    //     this.validateRec = true;
+    //     for (var i = 0; i < this.testdata.length; i++) {
+    //       let one = this.testdata[i];
+    //         for(var key in one) {
+    //           if(typeof(one[key]) == "object") {
+    //               if(!one[key].validateFun) continue;
+    //               if(one[key].tb_disabled) continue;
+    //               let res = one[key].validateFun(one, i);
+    //               if(!res) {this.validateRec = false;}
+    //           }
+    //       }
+    //     }
+    //     // 备注
+    //     this.validate = !this.validate;
+    //     setTimeout(()=>{
+    //       if(!this.validateRec) this.$dispatch("fail", {project:this.curName});
+    //       else this.$dispatch("success", {project: this.curName,data:{list: this.testdata, rec_info: this.recData}});
+    //     });
+    // },
 
     deleteoneHandler: function(d) {
         console.log(d);

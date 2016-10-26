@@ -31,7 +31,7 @@ let tableBase = {
             default:function(){return {}}
           },
           totals:{
-              twoway: true
+              // twoway: true
           },
           events: {
             type: Object,

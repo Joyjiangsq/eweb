@@ -15,7 +15,7 @@
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])"> -->
                           <span v-if="sone.type == 'data'" >
-                            <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue]}}</span>
+                            <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}</span>
                           <div v-if="sone.type == 'edit'" >
                               <div :class="tableCss.iptBox">
                                   <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def" @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">

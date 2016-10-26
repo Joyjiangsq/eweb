@@ -15,7 +15,7 @@ export const decorateStyle =[
   {name:"地中海式", id:4},
   {name:"田园", id:5},
   {name:"美式", id:6},
-  {name:"其他", id:0}
+  {name:"其他", id:-2}
 ]
 
 // 渠道配置

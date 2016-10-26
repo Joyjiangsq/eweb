@@ -19,9 +19,9 @@ export const barData = {
         labelName: "集成吊顶",
         id: 4
     },
-    "mumen": {
+    "men": {
         show: false,
-        labelName: "木门",
+        labelName: "门",
         id: 5
     },
     "chugui": {

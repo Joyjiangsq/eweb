@@ -1,3 +1,4 @@
+import Utils from "common/Utils";
 let tbMixin = {
     props:{
       listdata:{
@@ -20,7 +21,7 @@ let tbMixin = {
           //         {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
           //  ],
            totals:0,                 // 表格load结束之后 传递给分页的页数
-           searchParams: {}, // 初始查询依据
+           searchParams: {page: 1}, // 初始查询依据
            load: this.toload,                 // 表格是否加载开关
            tableEvents:{
                    operatorRender: function(d){
@@ -28,7 +29,10 @@ let tbMixin = {
                        let index = 0;
                        for (var i = 0; i < this.listdata.length; i++) {
                          let one = this.listdata[i];
-                         if(one.ItemCode == d.ItemCode) {
+                         let str = "";
+                         if(typeof(one.ItemCode) == "object") str = one.ItemCode.def;
+                         else str = one.ItemCode
+                         if(str == d.ItemCode) {
                            exit = true;
                            index = i;
                            break;
@@ -40,11 +44,9 @@ let tbMixin = {
                    operatorHandler: function(d){
                        if(d.action == "add") {
                            // adapter这个动作一定要做， vue之所以能够数据驱动视图前提是必须有数据的项目
-                           let one = this.adapterFun(d.data);
-                           one = Object.assign({}, one);
+                           let one = Utils.cloneObj(d.data);
+                           one = this.adapterFun(one);
                            this.listdata.push(one);
-                           d.action == "delete";
-                           d.icon = "icon-add";
                        }
                       //  else if(d.action == "delete") {
                       //      this.listdata.splice(d.index,1);
@@ -63,17 +65,20 @@ let tbMixin = {
     },
     computed: {
       sdata: function(){
-        return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam:"瓷砖"}, url:"products/firms", labelcaption:"二级分类："},
+        return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam: this.name}, url:"products/firms", labelcaption:"二级分类："},
+        {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
                 {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
                 {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
-                {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
                 {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
+                {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
                 {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
                 {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}];
 
       }
     },
-    ready: function() {},
+    ready: function() {
+      console.log(11111111);
+    },
     attached: function() {},
     methods: {
       loadlist: function(){
