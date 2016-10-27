@@ -1,5 +1,5 @@
 export default function adapterData(d) {
-d.U_ThreeL ="柜门"
+d.U_ThreeL ="台面"
       let exepFun = function(scope, msg){
         scope.defCss = "errorHappend";
         scope.errorMsg = msg;
