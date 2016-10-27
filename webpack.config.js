@@ -37,7 +37,8 @@ var webconfig = {
             loader: 'babel',
             cacheDirectory: true,
             query: {
-              presets: ['es2015', 'stage-2']
+              presets: ['es2015', 'stage-2'],
+              plugins: ["transform-object-assign"]
             },
             exclude: /node_modules/
           },

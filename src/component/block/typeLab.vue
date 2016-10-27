@@ -17,7 +17,8 @@
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'men'">
                       <mentb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></mentb>
                 </div>
-                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chuigui'">
+                <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chugui'">
+                      <chuguitb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></chuguitb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'zhuangxiufucai'">
                     <zhuangxiufucaitb :testdata.sync="zhuangxiu"  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
@@ -39,6 +40,7 @@ import cizhuantb from "./tb_cizhuan";
 import dibantb from "./tb_diban";
 import jiejutb from "./tb_jieju";
 import mentb from "./tb_men";
+import chuguitb from "./tb_chugui";
 import jichengdiaodingtb from "./tb_jichengdiaoding";
 import shigongfucaitb from "./tb_shigongfucai";
 import zhuangxiufucaitb from "./tb_zhuangxiufucai";
@@ -71,10 +73,6 @@ export default {
   ready: function () {
     // 控制品类的开放和关闭
     this.renderTabs();
-
-    setTimeout(()=>{
-      console.log(this.zhuangxiu);
-    },2000)
   },
   attached: function () {
 
@@ -125,10 +123,10 @@ export default {
         this.lastDataMap[d.project] = d.data;
         let dataLenth = Object.keys(this.lastDataMap).length;
         console.log(dataLenth);
-        if(dataLenth == 7) this.$dispatch("success", this.lastDataMap);
+        if(dataLenth == 8) this.$dispatch("success", this.lastDataMap);
     }
   },
-  components: {tabbar, cizhuantb, dibantb, jiejutb,mentb, jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
+  components: {tabbar, cizhuantb, dibantb, jiejutb,mentb, chuguitb, jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
   watch:{
     "startvalidate": function() {
         this.subvalidate = !this.subvalidate;

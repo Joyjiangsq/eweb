@@ -18,6 +18,7 @@
                             <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}</span>
                           <div v-if="sone.type == 'edit'" >
                               <div :class="tableCss.iptBox">
+                                {{sone.number}}
                                   <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def" @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
                                   <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>

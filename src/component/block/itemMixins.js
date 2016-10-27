@@ -68,6 +68,7 @@ export default {
     },
     // 验证列表数据
     validateFun: function(){
+      console.log("11111111");
         this.validateRec = true;
         this.validateInfo = true;
         for (var i = 0; i < this.testdata.length; i++) {

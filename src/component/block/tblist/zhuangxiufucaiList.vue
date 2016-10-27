@@ -29,6 +29,7 @@ export default {
   data: function () {
     return {
       css,
+      name:"装修辅材",
       headerCaption:[
              {type:"operator", name:"", icon: true},
              {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
@@ -43,20 +44,7 @@ export default {
                 {ItemCode:"xxx01ww", ItemName:"装修辅材", SWW:"主材包",avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
-  computed: {
-    sdata: function(){
-      return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam:"装修辅材"}, url:"products/firms", labelcaption:"二级分类："},
-              {type:"combobox", keyname:"U_ThreeL", labelname:"U_ThreeL", keyid:"FirmCode", value:"", params:{U_ThreeL:"装修辅材"}, url:"products/firms", labelcaption:"三级分类："},
-              {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
-              {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
-              {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
-              {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
-              {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
-              {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
-              {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}];
 
-    }
-  },
   ready: function () {
   },
   attached: function () {},

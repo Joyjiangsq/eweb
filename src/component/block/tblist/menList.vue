@@ -29,6 +29,7 @@ export default {
   data: function () {
     return {
       css,
+      name:"门",
       headerCaption:[
              {type:"operator", name:"", icon: true},{name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"三级分类", labelValue:"U_ThreeL", type:"data"},

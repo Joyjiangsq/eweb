@@ -11,18 +11,10 @@ let tbMixin = {
     data: function() {
         return {
           products:"products",
-          //  headerCaption:[
-          //         {type:"operator", name:"", icon: true},
-          //         {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
-          //         {name:"产品包", labelValue:"SWW", type:"data"},{name:"二级分类", labelValue:"FirmName", type:"data"},
-          //         {name:"三级分类", labelValue:"U_ThreeL", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
-          //         {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
-          //         {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-          //         {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
-          //  ],
            totals:0,                 // 表格load结束之后 传递给分页的页数
            searchParams: {page: 1}, // 初始查询依据
            load: this.toload,                 // 表格是否加载开关
+           cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
                    operatorRender: function(d){
                        let exit = false;
@@ -60,24 +52,27 @@ let tbMixin = {
                   this.searchParams = Object.assign(this.searchParams, params);
                   this.loadlist();
               }
-            }
+            },
+            dtArray:["厨柜", "集成吊顶","洁具","施工辅材", "装修辅材", '门'],
+            sDatas: [
+              {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
+              {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
+              {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
+              {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
+              {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
+              {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
+              {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}]
         }
     },
     computed: {
       sdata: function(){
-        return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam: this.name}, url:"products/firms", labelcaption:"二级分类："},
-        {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
-                {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
-                {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
-                {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
-                {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
-                {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
-                {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}];
+        //,
+        console.log(this.load);
+        return this.sDatas;
 
       }
     },
     ready: function() {
-      console.log(11111111);
     },
     attached: function() {},
     methods: {
@@ -92,6 +87,10 @@ let tbMixin = {
     },
     watch: {
       "toload": function(){
+          if(this.dtArray.indexOf(this.name) != -1) {
+                this.sDatas.unshift({type:"combobox", keyname:"U_ThreeL", labelname:"U_ThreeL", keyid:"FirmCode", value:"", params:{U_ThreeL:this.name}, url:"products/firms", labelcaption:"三级分类："});
+          }
+          this.sDatas.unshift({type:"combobox", keyname:"FirmName", labelname:"FirmName",params:{ItmsGrpNam: this.name}, url:"products/firms", keyid:"FirmCode", value:"", labelcaption:"二级分类："});
           this.loadlist();
       }
     },

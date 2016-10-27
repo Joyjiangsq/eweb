@@ -25,7 +25,7 @@
 
           </div>
           <div :class="css.dataArea">
-                <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler"></tblab>
+                <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
           </div>
           <div :class="css.footerBar">
               <btn @clickaction="btnClickHandler" >下单</btn>
@@ -51,10 +51,15 @@ export default {
       startvalidate: false, // 这参数作为大类 数据验证开始的依据  只要改变就开始验证
       packageDatas: [{name:"国名包", id:1}, {name:"名品包", id:2}, {name:"尊享包", id:3}],
       hasDianti:[{name:'是', id:1},{name:'否', id:2}], // 是否有电梯
+      show: false
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    setTimeout(()=>{
+        this.show = true;
+    })
+  },
   attached: function () {},
   methods: {
     validateHandler: function(d){

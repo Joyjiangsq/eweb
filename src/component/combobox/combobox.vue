@@ -33,7 +33,7 @@ export default {
       },
 
       value:{                     // 控件的实际值 使用者需要.sync才可以同步接收
-        default:0
+        default:"-1"
       },
 
       keyid:{                     // 控件的id 依据  默认为id
@@ -63,27 +63,38 @@ export default {
       combCss,
       dropshow: false,
       havedatas: true,
-      style:{}
+      style:{},
+      defaultInfo:{label:"请选择", key:"-1"}
     }
   },
   computed: {
-    defaultInfo: function(){
-      let info ={label:"请选择", key:"-1"};
-      if(!this.datas || this.datas.length == 0 || this.value == 0) return info;
-
-      for(var i = 0; i < this.datas.length; i++){
-        if(this.value == this.datas[i][this.keyid]) {
-          info.label = this.datas[i][this.labelname];
-          info.key = this.datas[i][this.keyid];
-        }
-      }
-      return info;
-    }      // 展示的默认值   不管是ajax  还是datas渲染  都要重新初始化这个值
+    // defaultInfo: function(){
+    //   let info ={label:"请选择", key:"-1"};
+    //   if(!this.datas || this.datas.length == 0 || this.value == 0) return info;
+    //
+    //   for(var i = 0; i < this.datas.length; i++){
+    //     if(this.value == this.datas[i][this.keyid]) {
+    //       this.defaultInfo.label = this.datas[i][this.labelname];
+    //       this.defaultInfo.key = this.datas[i][this.keyid];
+    //     }
+    //   }
+    //   return info;
+    // }      // 展示的默认值   不管是ajax  还是datas渲染  都要重新初始化这个值
   },
   created: function(){
     if(this.url) this.loadData();
   },
-  ready: function () {},
+  ready: function () {
+      if(!this.url) {
+        for(var i = 0; i < this.datas.length; i++){
+          if(this.value == this.datas[i][this.keyid]) {
+            this.defaultInfo.label = this.datas[i][this.labelname];
+            this.defaultInfo.key = this.datas[i][this.keyid];
+          }
+        }
+      }
+
+  },
   attached: function () {},
   methods: {
     changeDropAction(e){
@@ -107,9 +118,8 @@ export default {
     },
 
     dropClick(item) {
-      this.defaultInfo = {
-          label:item[this.labelname], key:item[this.keyid]
-      }
+      this.defaultInfo.label = item[this.labelname];
+      this.defaultInfo.key = item[this.keyid];
       this.value = item[this.keyid];
       this.changeDropAction();
       this.$dispatch("dropclick", this.value);
@@ -120,6 +130,10 @@ export default {
       return this.$http.get(this.$Api+this.url,{params:p}).then((res) => {
         var d = res.json();
         this.datas = d.data;
+        let p = {};
+        p[this.labelname] = "请选择";
+        p[this.keyid] = "-1";
+        this.datas.unshift(p);
       },(error) =>{
         console.log(error);
       })

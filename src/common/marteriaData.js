@@ -26,7 +26,7 @@ export const barData = {
     },
     "chugui": {
         show: false,
-        labelName: "橱柜",
+        labelName: "厨柜",
         id: 6
     },
     "zhuangxiufucai": {

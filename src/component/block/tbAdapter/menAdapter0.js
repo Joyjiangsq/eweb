@@ -1,16 +1,4 @@
 export default function adapterData(d) {
-
-  let exepFun = function(scope, msg){
-    scope.defCss = "errorHappend";
-    scope.errorMsg = msg;
-    return false;
-  }
-
-  let resetFun = function(scope){
-    scope.defCss = "default";
-    scope.errorMsg = "";
-    return true;
-  }
   // 产品编码、产品名称、二级分类、三级分类、品牌、供应商、型号、 产品规格、材质、颜色、可用库存量、单位、备注 为固定字段
 
   // 前面这一大坨 本不需要写  但是 后台给的数据可能有些字段是没有的， 不存在的字段会导致vue 的数据绑定失效   所以。。。
@@ -39,35 +27,21 @@ export default function adapterData(d) {
       errorMsg:"",tb_disabled: false,
       validateFun:function(data, index){ return true; }
   };
-  d.U_DSWide = {     // 门洞宽   // 门洞宽   最小值 U_DWWideMin   极限值 U_DWWideL
+  d.U_DSWide = {     // 门洞宽
       def: d.U_DSWide || "",
       defCss: "default",
       errorMsg:"",tb_disabled: false,
-      validateFun:function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "门洞宽必须是数字")
-          else if(this.def < 0) return exepFun(this, "此项必须大于0")
-          else if(this.def == 0 || this.def == "" || !this.def)  return exepFun(this, "门洞宽必须填写")
-          else if(this.def*1 < d.U_DWWideMin*1) return exepFun(this, "门洞宽不能小于"+d.U_DWWideMin)
-          else if(this.def*1 > d.U_DWWideL*1) return exepFun(this, "门洞宽不能大于"+d.U_DWWideL)
-          else return resetFun();
-      }
+      validateFun:function(data, index){ return true; }
   };
   // 设置验证参数规则
-  d.U_DSHigh = {     // 门洞高       // 门洞高    最小值 U_DWHighMin  极限值 U_DWHighL
+  d.U_DSHigh = {     // 门洞高
       def: d.U_DSHigh || "",
       defCss: "default",
       errorMsg:"",tb_disabled: false,
-      validateFun:function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "门洞高必须是数字")
-          else if(this.def < 0)  return exepFun(this, "此项必须大于0")
-          else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "门洞高必须填写")
-          else if(this.def*1 < d.U_DWHighMin*1) return exepFun(this, "门洞高不能小于"+d.U_DWHighMin)
-          else if(this.def*1 > d.U_DWHighL*1) return exepFun(this, "门洞高不能大于"+d.U_DWHighL)
-          else return resetFun();
-      }
+      validateFun:function(data, index){ return true; }
   };
   // 设置验证参数规则
-  d.U_DSThick = {     // 门洞深  TODO
+  d.U_DSThick = {     // 门洞深
       def: d.U_DSThick || "",
       defCss: "default",
       errorMsg:"",tb_disabled: false,
@@ -375,13 +349,74 @@ export default function adapterData(d) {
           //(1)门洞宽、门洞高、门洞深、开启方式、是否开锁孔、销售数量 限制必填
           //(2)门洞宽、门洞高、门洞深、门扇宽、门扇高、门扇厚、开启方式、是否开锁孔
           //(3) 当选择是开孔的时候 门锁／品牌／规格／型号  -门锁／品牌／规格／型号 可填写 并且验证必填
-
+          // 门洞宽   最小值 U_DWWideMin   极限值 U_DWWideL
 
           // 默认是平开门（铝框门）  平开门（木门）
+          d.U_DSWide.validateFun = function(data, index){
+                if(isNaN(this.def)) {
+                  this.defCss = "errorHappend";
+                  this.errorMsg = "门洞宽必须是数字";
+                  return false
+                }
+                else if(this.def < 0) {
+                  this.defCss = "errorHappend";
+                  this.errorMsg = "此项必须大于0";
+                  return false
+                }
+                else if(this.def == 0 || this.def == "" || !this.def) {
+                  this.defCss = "errorHappend";
+                  this.errorMsg = "门洞宽必须填写";
+                  return false
+                }
+                else if(this.def*1 < d.U_DWWideMin*1) {
+                  this.defCss = "errorHappend";
+                  this.errorMsg = "门洞宽不能小于"+d.U_DWWideMin;
+                  return false
+                }
+                else if(this.def*1 > d.U_DWWideL*1) {
+                  this.defCss = "errorHappend";
+                  this.errorMsg = "门洞宽不能大于"+d.U_DWWideL;
+                  return false
+                }
+                else {
+                  this.defCss = "default";
+                  this.errorMsg = "";
+                  return true;
+                }
+            }
           // 设置验证参数规则
           // 门洞高    最小值 U_DWHighMin  极限值 U_DWHighL
               d.U_DSHigh.validateFun = function(data, index){
-
+                  if(isNaN(this.def)) {
+                    this.defCss = "errorHappend";
+                    this.errorMsg = "门洞高必须是数字";
+                    return false
+                  }
+                  else if(this.def < 0) {
+                    this.defCss = "errorHappend";
+                    this.errorMsg = "此项必须大于0";
+                    return false
+                  }
+                  else if(this.def == 0 || this.def == "" || !this.def) {
+                    this.defCss = "errorHappend";
+                    this.errorMsg = "门洞高必须填写";
+                    return false
+                  }
+                  else if(this.def*1 < d.U_DWHighMin*1) {
+                    this.defCss = "errorHappend";
+                    this.errorMsg = "门洞高不能小于"+d.U_DWHighMin;
+                    return false
+                  }
+                  else if(this.def*1 > d.U_DWHighL*1) {
+                    this.defCss = "errorHappend";
+                    this.errorMsg = "门洞高不能大于"+d.U_DWHighL;
+                    return false
+                  }
+                  else {
+                    this.defCss = "default";
+                    this.errorMsg = "";
+                    return true;
+                  }
               }
           // 设置验证参数规则
           // 门洞深  最小值 U_DWDeepMin  极限值 U_DWDeepL

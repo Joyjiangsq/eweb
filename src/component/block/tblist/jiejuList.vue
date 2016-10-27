@@ -28,7 +28,7 @@ export default {
 
   data: function () {
     return {
-      name:"",
+      name:"洁具",
       css,
       headerCaption:[
              {type:"operator", name:"", icon: true},
@@ -48,20 +48,6 @@ export default {
   },
 
   ready: function () {
-  },
-  computed: {
-    sdata: function(){
-      return [{type:"combobox", keyname:"FirmName", labelname:"FirmName", keyid:"FirmCode", value:"", params:{ItmsGrpNam:"洁具"}, url:"products/firms", labelcaption:"二级分类："},
-              {type:"combobox", keyname:"U_ThreeL", labelname:"U_ThreeL", keyid:"FirmCode", value:"", params:{U_ThreeL:"洁具"}, url:"products/firms", labelcaption:"三级分类："},
-              {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
-              {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},
-              {type:"text",  value:"",  keyname:"Spec", labelcaption:"规格:"},
-              {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
-              {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
-              {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
-              {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}];
-
-    }
   },
   attached: function () {},
   methods: {
