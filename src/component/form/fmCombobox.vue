@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <comb :keyid="keyid" :labelname="keyname" :dropfixed="dropfixed" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
+            <comb :keyid="keyid" :labelname="keyname" :read="read" :dropfixed="dropfixed" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -17,6 +17,9 @@ import comb from "component/combobox/combobox";
 export default {
   mixins: [mixin],
   props:{
+    read:{
+
+    },
     keyid:{     // 月份选择的区间限制的 起始日期
         default:"id"
     },
@@ -43,6 +46,7 @@ export default {
       dropclick: function(value) {
          this.$set("error", false);
          this.$set("value", value);
+         this.$dispatch("cashandler", {name: this.formname, value: value});
       }
   },
   components: {comb},

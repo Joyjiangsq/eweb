@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <searchdim :url="url" :labelname="dimlabel" :placeholder="placeholder" :value.sync="value" :iptvalue.sync="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
+            <searchdim :url="url" :labelname="dimlabel" :read="read" :placeholder="placeholder" id="id" :value.sync="value" :iptvalue.sync="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -17,6 +17,9 @@ import mixin from "common/mixinForm.js";
 export default {
   mixins: [mixin],
   props:{
+    read:{
+      default: false
+    },
     url: {
       type:String,
       default:""
@@ -28,6 +31,9 @@ export default {
     dimlabel:{
       type:String,
       default: "name"
+    },
+    id:{
+      // 取值依据
     }
   },
   data: function () {

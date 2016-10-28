@@ -8,9 +8,9 @@
     <div  :class="css.customLeft">
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
           <div :class="css.tBox">
-            <tb :headercaption="tableHeaderDatas"  :needselected= "true" :needindex="false" :totals.sync="totals" :datas="testData" :load="load" :params="searchParams" url="" :events="tableEvents"></tb>
+            <tb :headercaption="tableHeaderDatas"  :needselected= "true" :needindex="false" :totals.sync="totals" :datas="testData" :params="searchParams" url="" :events="tableEvents"></tb>
           </div>
-          <pg :totals="totals" :pix="2"  @pagechange="pagechange"></pg>
+          <pg :totals="totals" :pix="4" :curpage.sync="searchParams.page" ></pg>
     </div>
 
     <div  :class="css.customRight">
@@ -20,44 +20,33 @@
 </template>
 <script>
 import Vue from "vue";
-import search from "component/search/search";
-import pagepanel from "component/panel/pagepanel";
-import pg from "component/pagination/pagination";
-import tb from "component/grid/tableListBase";
-import btnbar from "component/sprite/buttonbar";
 import Utils from "common/Utils.js";
 import css from "./sale.css";
 import {setTitle} from "actions";
 import {packageType, orderType, orderStatus} from "config/const";
+import pageBase from "common/mixinPage.js";
 // 自定义
 var MyComponent = Vue.extend({
   data:function(){
     return {
-      css
+      css,
+      totals:0
     }
   },
-  props:{
-    datas:{
-      default:{}
-    }
+  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  ready: function(){
+    this.totals = this.selfData.totals;
   },
-  template: '<div :class="css.inRow" @click="clickHandler">{{getData.totals}}</div>',
-  ready: function(){},
   methods:{
     clickHandler: function(){
-        alert(this.datas);
-    }
-  },
-  computed: {
-    getData: function(){
-      return JSON.parse(this.datas)
+        alert(this.totals);
     }
   }
 })
 
 let tableHeaderDatas = [{name:"订单号", labelValue:"orderId", type:"data"},
                         {name:"订单状态", labelValue:"orderStatus",type:"data"},
-                        {name:"销售总额", labelValue:"totals",type:"data"},//, component: MyComponent, cname:"test"},
+                        {name:"销售总额", labelValue:"totals",type:"component", component: MyComponent, cname:"test"},
                         {name:"产品包", labelValue:"packageType",type:"data"},
                         {name:"订单类型", labelValue:"createdBy",type:"data"},
                         {name:"客户姓名", labelValue:"customName",type:"data"},
@@ -68,22 +57,15 @@ let tableHeaderDatas = [{name:"订单号", labelValue:"orderId", type:"data"},
                         {type:"operator", name:"操作"}]
 let subHeaders = [{name:"销售子订单号",labelValue:"user_code", type:"data"},{name:"订单状态", labelValue:"status",type:"data"}]
 export default {
+  mixins:[pageBase],
   data: function () {
     return {
       css,
+      moduleName:"销售订单管理",
       testData:[{totals:"xxxx", html:true, orderId:"卡拉", orderStatus: 1, selected: true},{totals:"1102019201", orderId:"卡拉", orderStatus:2, selected: false}],
       tableHeaderDatas: tableHeaderDatas,  // 表头初始化
       subHeaders: subHeaders, // 子订单表格表头
-      totals:0,
       subLoad: false, // 子列表加载
-      load: true,      // 加载控制
-      searchParams:{}, // 查询条件
-      searchEvents:{          // 查询数据
-        onSearch: function(params) {
-            // this.$set("params", params);
-            // this.loadtag = !this.loadtag;
-        }
-      },
       // 表格回调
       tableEvents:{
         operatorRender: function(d){
@@ -122,19 +104,9 @@ export default {
   },
   attached: function () {},
   methods: {
-    pagechange: function(d){
-        this.searchParams.page = d.page;
-        this.loadlist();
-    },
-    loadlist: function(){
-      this.$set("load", !this.load);
-    }
+
   },
-  components: {search,pagepanel,btnbar,pg,tb},
-  route:{
-    data: function(){
-      setTitle(this.$store, "销售订单管理");
-    }
-  }
+  components: {},
+
 }
 </script>

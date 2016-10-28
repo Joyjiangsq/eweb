@@ -10,17 +10,17 @@
           <div class="">
             <tb :headercaption="headercaption" :load="load"  :totals.sync="totals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
-          <pg :totals="totals"  @pagechange="pagechange"></pg>
+            <pg :totals="totals" :curpage.sync="searchParams.page"></pg>
     </pagepanel>
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
-                <formcb keyid="id" labelname="客户来源：" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formcb keyid="id" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
-                <formdim labelname="归属分站："  :value.sync="formData.U_BTSubstation"  @fromdim="formDimClick"  formname='U_BTSubstation' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdim>
-                <formtext labelname="e站客服："  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
-                <formtext labelname="客户名称："  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
-                <formtext labelname="手机号码："  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <formdim labelname="归属分站："   :read="curAction!='add'"  :value.sync="formData.U_BTSubstation"  @fromdim="formDimClick"  formname='U_BTSubstation' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdim>
+                <formtext labelname="e站客服："  :read="curAction!='add'"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <formtext labelname="手机号码：" :read="curAction!='add'"  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
 
                 <house :startvalidate="startvalidate" :houselist="formData.house_list"></house>
           </div>
@@ -29,20 +29,12 @@
   </div>
 </template>
 <script>
-import {setTitle} from "actions";
 import {fromConst} from "config/const";
 import formcb from "component/form/fmCombobox";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import css from "./custom.css";
-import tb from "component/grid/tableListBase";
-import dialog from "component/dialog/dialog";
-import pagepanel from "component/panel/pagepanel";
-import btnbar from "component/sprite/buttonbar";
 import formdim from "component/form/formDim";
-import pg from "component/pagination/pagination";
-import search from "component/search/search";
-// import propertytext from "component/form/propertyText.vue";
 import Utils from "common/Utils";
 import house from "./houseOne";
 import pageBase from "common/mixinPage.js";
@@ -57,7 +49,7 @@ export default {
   data: function () {
     return {
       css,
-
+      moduleName:"客户管理",
       // 类型列表
       formArray:{
         fromConst: fromConst
@@ -71,10 +63,6 @@ export default {
          validate: true,
          house_list:[{}]
       },
-      searchParams:{   // 查询条件
-         page:1
-      },
-      totals: 0,
       formControl:{
           validate: false,
           validateHandler: function(d){   // 表单验证
@@ -84,14 +72,7 @@ export default {
                else   this.formData.validate = true
           }
       },
-      searchEvents:{          // 查询数据
-        onSearch: function(params) {
-            // this.$set("params", params);
-            // this.loadtag = !this.loadtag;
-        }
-      },
       headercaption: headerData,
-      load: true,
       tableEvents:{
         operatorRender: function(d){
           return [{name:"编辑", action:"edit",icon:"icon-edit", data:d},{name:"详情",action:"detail",icon:"icon-tip", id:d }];
@@ -141,10 +122,6 @@ export default {
   },
   attached: function () {},
   methods: {
-    pagechange: function(d){
-        this.searchParams.page = d.page;
-        this.loadlist();
-    },
     // 模糊查询分站
     formDimClick: function(d) {
 
@@ -169,9 +146,7 @@ export default {
           }
         }
     },
-    loadlist: function(){
-      this.$set("load", !this.load);
-    },
+
     retInfo: function(){
       this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
       this.formData = {   // 重置数据
@@ -203,13 +178,6 @@ export default {
       })
     }
   },
-  components: {search,pagepanel,btnbar,pg,tb,dialog,formtext,cascadeform, formcb, formdim, house},
-  route:{
-    data: function(){
-      setTitle(this.$store, "客户管理");
-    }
-  },
-  watch:{
-  }
+  components: {formtext,cascadeform, formcb, formdim, house},
 }
 </script>

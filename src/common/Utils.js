@@ -44,6 +44,10 @@ import storejs from "storejs";
      getUserInfo: function(){
         return storejs("userInfo") || false;
      },
+     // 是不是e站管理员
+     isEAdmin: function(){
+        return false
+     },
 
      cloneObj: function(obj){
           var str, newobj = obj.constructor === Array ? [] : {};

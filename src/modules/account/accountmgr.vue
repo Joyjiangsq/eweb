@@ -45,7 +45,7 @@
               <div :class="acCss.tableIn">
                     <tb :headercaption="headercaption" :totals.sync="totals"  :params="searchParams" url="" :load="load"  :datas="testData"></tb>
               </div>
-              <pg :totals="totals" @pagechange="pagechange"></pg>
+              <pg :totals="totals"  :curpage.sync="searchParams.page"></pg>
         </pagepanel>
 
         <!--回款对话框-->
@@ -63,22 +63,16 @@
 </template>
 
 <script>
-import {setTitle} from "actions";
 import acCss from "./account.css";
-import search from "component/search/search";
-import tb from "component/grid/tableListBase";
-import pagepanel from "component/panel/pagepanel";
-import btnbar from "component/sprite/buttonbar";
 import btn from "component/sprite/button";
-import pg from "component/pagination/pagination";
 import pageBase from "common/mixinPage.js";
-import dialog from "component/dialog/dialog";
 import propertytext from "component/form/propertyText.vue";
 import formtext from "component/form/formText";
 export default {
   mixins: [pageBase],
   data: function () {
     return {
+      moduleName:"账户管理",
       accountBaseInfo:{
           Balance: "", // 账户余额
           CreditLine: "", //授信额度
@@ -91,15 +85,11 @@ export default {
           U_BBank: "" // 所属银行
       },
       acCss,
-      totals: 0,
-      searchParams:{}, // 查询参数
       // 表格头
       headercaption:[{name:"交易类型", labelValue:"type", type:"data"},{name:"订单号", labelValue:"orderid",type:"data"}, {name:"交易金额", labelValue:"cash",type:"data", attr:"price"},
                     {name:"交易时间", labelValue:"date",type:"data"},{name:"收款账号", labelValue:"account",type:"data"}, {name:"收款账号名称", labelValue:"name", type:"data"},
                     {name:"付款账号", labelValue:"date",type:"data"},{name:"付款账号名称", labelValue:"date",type:"data"},{name:"交易流水号", labelValue:"date",type:"data"},
                     {name:"关联流水号", labelValue:"date",type:"data"}],
-      // 是否加载表格
-      load: false,
       // 验证回款表单参数
       validate: false,
       // 测试数据
@@ -107,17 +97,9 @@ export default {
                   {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
                   {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
                   {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"}],
-      // 查询事件回调
-      searchEvents:{
-        onSearch: function(params) {
-            // this.$set("params", params);
-            // this.load = !this.load;
-        }
-      },
       // 显示回款对话框
       showBackCashDialog: true,
       backCashParams: {validate: true, backCash:""},  // 回款参数
-
       btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
@@ -136,18 +118,14 @@ export default {
     }
   },
   ready: function () {
-    console.log("==============");
-    this.loadInfo();
+      this.loadInfo();
   },
   attached: function () {},
   methods: {
     backCashHandler: function(){
        this.$set("showBackCashDialog", !this.showBackCashDialog);
     },
-    pagechange: function(d){
-        this.searchParams.page = d.page;
-        this.loadlist();
-    },
+
     validateHandler: function(d){
       if(d.res == "success") {
           this.backCashParams[d.name] = d.value;
@@ -174,17 +152,10 @@ export default {
          // 验证结束去执行逻辑
       }
     },
-    loadlist: function(){
-      this.$set("load", !this.load);
-    }
+
   },
   // 注册查询组件， 表格组件， 面板组件， 按钮组组件，分页组件， 按钮组件， 对话框组件, 键值文本组建
-  components: {search,tb,pagepanel,btnbar,pg, btn, dialog, propertytext,formtext},
-  route:{
-    data: function(){
-      setTitle(this.$store, "分站账户管理");
-    }
-  }
+  components: {btn, propertytext,formtext}
 }
 
 </script>

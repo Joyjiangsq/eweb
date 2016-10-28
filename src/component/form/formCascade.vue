@@ -50,6 +50,7 @@ export default {
       combocaseClick: function(value) {
           this.$set("error", false);
           // this.$set("value", value);
+          // this.dispatch("cashandler", {name: this.formname, value: value});
       }
   },
   components: {combocascade},

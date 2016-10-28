@@ -21,13 +21,13 @@
                     <formtext labelname="系统账号："  :value.sync="addFormData.accountName"  :vertical="true" :read="true" :ingnore='true' ></formtext>
                     <formtext labelname="用户电话：" :value.sync="addFormData.userPhone" :vertical="true" :read="true" :ingnore='true' ></formtext>
                     <formrd labelname="是否启用：" :vertical="true" formname="open" :value.sync="addFormData.isOpen" :datas="[{label:'是', id:1, checked: false},{label:'否', id:2, checked: false},]" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formrd>
-                    <formck labelname="角色：" :vertical="true" formname="role" :value.sync="addFormData.role"  :datas="[{label:'设计师', id:1, checked: false},{label:'销售', id:2, checked: false}]" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                    <formck labelname="角色：" :vertical="true" formname="role" lname="name" lkey="name" :value.sync="addFormData.role"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
               </div>
         </dialog>
         <!--重设角色对话框-->
         <dialog :flag="showRolesDialog" title="更改角色" @dialogclick="rolesDialogClickHandler">
               <div class="" slot="containerDialog">
-                  <formck labelname="角色：" :vertical="true" formname="role" :value.sync="rolesData.roles"  :datas="[{label:'设计师', id:1, checked: false},{label:'销售', id:2, checked: false}]" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                  <!-- <formck labelname="角色：" :vertical="true" formname="role" :value.sync="rolesData.roles"  :datas="[{label:'设计师', id:1, checked: false},{label:'销售', id:2, checked: false}]" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck> -->
               </div>
         </dialog>
         <!--重置密码提示-->
@@ -36,21 +36,15 @@
 </template>
 
 <script>
-import {setTitle} from "actions";
+import {rolesE, rolesS} from "config/const";
 import epCss from "./user.css";
-import search from "component/search/search";
-import tb from "component/grid/tableListBase";
-import pagepanel from "component/panel/pagepanel";
-import btnbar from "component/sprite/buttonbar";
-import dialog from "component/dialog/dialog";
-import pg from "component/pagination/pagination";
 import formdim from "component/form/formDim";
 import formtext from "component/form/formText";
 import formck from "component/form/formCheckBox";
 import formrd from "component/form/formRadio";
 import pageBase from "common/mixinPage.js";
 import dialogtip from "component/dialog/dialogTip";
-
+import Utils from "common/Utils";
 let headerData = [{name:"用户名", labelValue:"type", type:"data"},{name:"角色", labelValue:"orderid",type:"data"},
                   {name:"状态", labelValue:"cash",type:"data", attr:"price"},{name:"创建人", labelValue:"account",type:"data"},
                   {name:"创建时间", labelValue:"name", type:"data"},{type:"operator", name:"操作"}]
@@ -59,18 +53,12 @@ export default {
   data: function () {
     return {
       epCss,
+      moduleName:"用户管理",
       headercaption: headerData,
       showFormDialog: false,  // 显示表单对话框
       resetDialog: false,     // 密码重置对话框
       showRolesDialog: false, // 角色分配对话框
-      load: false,            // 加载列表
       testData:[{type:"110202222219201", orderid:"卡拉", status: 1},{type:"1102019201", orderid:"卡拉", status:2}],
-      searchEvents:{          // 查询数据
-        onSearch: function(params) {
-            // this.$set("params", params);
-            // this.loadtag = !this.loadtag;
-        }
-      },
       // 新增表单验证
       newForm:{
           validate: false,
@@ -130,9 +118,15 @@ export default {
       return [{type:"text",  value:q.username || "",  keyname:"username", labelcaption:"用户名:"},
               {type:"text",  value:q.status || "",  keyname:"status", labelcaption:"用户状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"员工姓名:"}];
+    },
+    getRoles: function(){
+      if(Utils.isEAdmin()) return rolesE
+      return rolesS;
     }
   },
-  ready: function () {},
+  ready: function () {
+
+  },
   attached: function () {},
   methods: {
     // 新增权限用户对话框
@@ -140,7 +134,6 @@ export default {
       if(d.action == "confirm") {
           this.newForm.validate = !this.newForm.validate;
       }
-      setTimeout(()=>{this.resetParams(this.addFormData);})
       // console.log(this.addFormData);
     },
     // 修改角色对话框
@@ -156,12 +149,7 @@ export default {
       console.log(d);
     }
   },
-  components: {search,tb,pagepanel,btnbar,dialog, pg, formdim,formtext,formck,formrd, dialogtip},
-  route:{
-    data: function(){
-      setTitle(this.$store, "用户管理");
+  components: {formdim,formtext,formck,formrd, dialogtip},
 
-    }
-  }
 }
 </script>

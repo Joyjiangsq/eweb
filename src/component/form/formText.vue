@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <input :type="inputtype" :class="unit?css.unitStay:''" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
+            <input :type="inputtype" :class="unit?css.unitStay:''" @blur="blurHandler" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" v-model="value" @focus="focusHandler">
             <span :class="css.unit" v-if="!!unit">{{unit}}</span>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
@@ -87,6 +87,10 @@ export default {
 
     numberValidate: function(code){
         return (code >= 48 && code <= 57) || (code >= 96 && code <= 105)
+    },
+
+    blurHandler: function(){
+        this.$dispatch("blurhandler", {name:this.formname, value:this.value});
     }
   },
   components: {},

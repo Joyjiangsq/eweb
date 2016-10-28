@@ -18,7 +18,7 @@
                           <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])">
                           <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{{done[sone.labelValue] || '-'}}}</span>
                           <span v-if="sone.type == 'component'" >
-                              <span v-widget="{widget: sone, data: done}"></span>
+                              <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </span>
                           <span v-if="sone.type == 'index'" >{{order + 1}}</span>
                           <span v-if="sone.type == 'operator'" >

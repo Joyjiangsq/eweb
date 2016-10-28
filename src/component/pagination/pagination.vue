@@ -7,7 +7,7 @@
                           <span v-for="one in pageArry"  @click="clickPage(one)" :class="one == curpage?pageCss.active:''">{{one}}</span>
                     </span>
                     <span :class='nextBtn'  @click="clickPage(curpage+1)">下一页</span>
-                    <span :class='lastBtn'  @click="clickPage(getPages())">尾页</span>
+                    <span :class='lastBtn'  @click="clickPage(tPages)">尾页</span>
               </div>
               <div :class="pageCss.gotoBox">
                     跳转至
@@ -56,6 +56,7 @@ export default {
   data: function () {
     return {
       pageCss,
+      tPages: 0,
       indexBtn:pageCss.defTheme,
       prevBtn:pageCss.defTheme,
       nextBtn:pageCss.defTheme,
@@ -70,6 +71,8 @@ export default {
   computed: {
       pageArry() {
           let ay = [];
+          let pp = [];
+          console.log(this.tPages);  // 这个可以触发pageArry执行
           this.curpage = isNaN(this.curpage*1)? 1: this.curpage*1;
           //
           for(var i = this.pix; i >0; i--) {
@@ -79,41 +82,38 @@ export default {
 
           ay.push(this.curpage);
           for(var i = 1; i <= this.pix; i++) {
-              if(this.curpage + i > this.getPages()) break;
+              if(this.curpage + i > this.tPages) break;
               ay.push(this.curpage + i);
           }
           return ay
       }
+
   },
   ready: function () {},
   attached: function () {},
   methods: {
-    getPages(){
-      return Math.ceil(this.totals/this.size)
-    },
+
 
     validateBtn() {
       this.indexBtn = this.prevBtn = this.lastBtn = this.nextBtn = this.pageCss.defTheme;
       if(this.curpage == 1) {this.indexBtn = this.prevBtn = this.pageCss.closeBtn;return false}
-      if(this.curpage == this.getPages()) {this.lastBtn = this.nextBtn = this.pageCss.closeBtn; return false}
+      if(this.curpage == this.tPages) {this.lastBtn = this.nextBtn = this.pageCss.closeBtn; return false}
     },
 
     clickPage(page) {
-        if(!page || isNaN(page*1) || page < 1 || page > this.getPages()) return false;
+        if(!page || isNaN(page*1) || page < 1 || page > this.tPages) return false;
         let q = this.$route.query;
         let path = this.$route.path.split("?")[0];
         q.page = page*1;
         this.curpage = page*1;
-        if(this.hash) this.$router.go({path:path, query: q});
+        if(this.hash) this.$router.go({path:path, query: q});  // 路由驱动
+        else this.$dispatch("pagechange");      // 事件驱动
+        this.validateBtn();
     }
   },
   watch:{
-    "curpage": function(){
-        // 发射页面变更事件
-        this.$dispatch("pagechange", {page: this.curpage});
-        this.events.pageChange.call(this._context, this.curpage);
-        // 验证操作按钮的点击
-        this.validateBtn();
+    "totals": function(){
+        this.tPages = Math.ceil(this.totals/this.size);
     }
   },
   components: {}

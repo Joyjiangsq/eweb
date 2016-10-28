@@ -51,3 +51,16 @@ export const orderStatus = [
   {name:"已发货", id: 11},
   {name:"已收货", id: 12}
 ]
+
+// 角色
+export const rolesE = [
+  {name:"总部客服", id:7},
+  {name:"总部设计师", id:8},
+]
+export const rolesS = [
+  {name:"店长", id:2},
+  {name:"精算师", id:3},
+  {name:"销售员", id:4},
+  {name:"材料员", id:5},
+  {name:"财务", id:6}
+]
