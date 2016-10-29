@@ -17,12 +17,12 @@
           <div slot="containerDialog" :class="css.dBox">
                 <formcb keyid="id" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
-                <formdim labelname="归属分站："   :read="curAction!='add'"  :value.sync="formData.U_BTSubstation"  @fromdim="formDimClick"  formname='U_BTSubstation' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdim>
+                <!-- <formdim labelname="归属分站："   :read="curAction!='add'"  :value.sync="formData.U_BTSubstation"  @fromdim="formDimClick"  formname='U_BTSubstation' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdim> -->
                 <formtext labelname="e站客服："  :read="curAction!='add'"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="手机号码：" :read="curAction!='add'"  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
 
-                <house :startvalidate="startvalidate" :houselist="formData.house_list"></house>
+                <house :startvalidate="startvalidate" :houselist="formData.house_list" @errorh="errorh"></house>
           </div>
     </dialog>
 
@@ -125,6 +125,9 @@ export default {
     // 模糊查询分站
     formDimClick: function(d) {
 
+    },
+    errorh: function(){
+        this.formData.validate = false;
     },
     // 新增对话框 按钮回调
     dialogClickHandler: function(d) {

@@ -42,26 +42,34 @@ export default {
   },
   computed: {},
   ready: function () {
-      // var sp = this.value.split(",");
-      // if(sp.length >= 3) this.detailv = sp[3];
+      var sp = this.value.split(",");
+      if(sp.length > 3) this.detailv = sp[3];
   },
   attached: function () {},
   methods: {
       combocaseClick: function(value) {
           this.$set("error", false);
-          // this.$set("value", value);
           // this.dispatch("cashandler", {name: this.formname, value: value});
       }
   },
   components: {combocascade},
   watch:{
     "detailv":function(){
-      console.log(this.detailv);
+        // console.log(this.detailv);
+        console.log(this.value);
+        if(this.value != "") {
+          var sp = this.value.split(",");
+          if(sp.length > 3) {
+            sp.pop();
+            this.value =  sp.join(",") +  "," + this.detailv;
+          }
+          else  this.value =  this.value + "," +this.detailv;
+        }
     },
     "validatestart":function() {
        if(this.watchIgnore) return false;
 
-       if(this.value.split(",").length < 2 && this.must) {
+       if(this.value.split(",").length <4 && this.must) {
          this.$dispatch("onvalidate", {res:"fail", msg: "请填写好地址"});
          this.$set("errormsg", "请填写好地址");
          this.$set("error", true);

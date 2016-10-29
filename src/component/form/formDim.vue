@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <searchdim :url="url" :labelname="dimlabel" :read="read" :placeholder="placeholder" id="id" :value.sync="value" :iptvalue.sync="value" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
+            <searchdim :url="url" :labelname="dimlabel" :params="params" :adapter="adapter" :read="read" :placeholder="placeholder" :id="id" :value.sync="value" :iptvalue.sync="iptvalue" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -20,9 +20,20 @@ export default {
     read:{
       default: false
     },
+    iptvalue:{
+      default:""
+    },
+    adapter:{
+      type: Function
+    },
     url: {
       type:String,
       default:""
+    },
+    params:{
+      default: function() {
+        return {}
+      }
     },
     placeholder:{
       type:String,
@@ -42,7 +53,9 @@ export default {
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    console.log(this.dimlabel);
+  },
   attached: function () {},
   methods: {
       dimClick: function(d){

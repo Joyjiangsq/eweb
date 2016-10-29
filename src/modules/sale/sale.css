@@ -40,3 +40,11 @@
 .dataArea {
       margin-bottom: 50px;
 }
+.rowItem {
+    padding: 10px;
+    border-bottom: 1px dashed #ddd;
+    cursor: pointer;
+}
+.rowItem:last-child {
+  border: 0
+}

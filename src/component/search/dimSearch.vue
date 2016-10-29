@@ -1,8 +1,8 @@
 <template>
       <div :class="dCss.box">
-          <input type="text" name="name" :value="iptvalue" :placeholder="placeholder" @keydown="keydownHandler" @keyup="onUpHandler" :disabled="read">
+          <input type="text" name="name" :value="iptvalue" v-model="iptvalue" :placeholder="placeholder" @keydown="keydownHandler" @keyup="onUpHandler" :disabled="read">
           <div :class="dCss.dropBox" v-show="showDropBox">
-              <span v-for="one in datas" @click="oneClickHandler(one)">{{one.name}}</span>
+              <span v-for="(index,one) in datas" @click="oneClickHandler(index)">{{one[labelname]}}</span>
           </div>
           <div :class="dCss.cover" v-show="showDropBox"  @click="changeDropAction"></div>
       </div>
@@ -10,10 +10,14 @@
 
 <script>
 import dCss from "./dimSearch.css";
+import Utils from "common/Utils";
 export default {
   props:{
     read:{
       default: false
+    },
+    adapter:{
+      type: Function
     },
     placeholder: {
       type:String,
@@ -31,49 +35,69 @@ export default {
     },
     id:{
       default: "id"
+    },
+    url:{
+      default:""
+    },
+    params:{
+      default: function() {return {}}
     }
   },
   data: function () {
     return {
       dCss,
       datas:[],
+      tplArr:[],
       showDropBox: false
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    console.log(this.labename);
+  },
   attached: function () {},
   methods: {
       onUpHandler: function(e){
-          if(e.keyCode == 32) {
-            e.preventDefault();
-            return false;
+          if(e.keyCode == 8 && this.iptvalue == "") {
+            this.datas = [];
+            return false
           }
+          if(this.iptvalue == "" || !this.iptvalue) return false;
           // 此时去查询数据
           setTimeout(()=>{
             this.$set("showDropBox", true);
-            this.datas = [{name:"adaas", id:1},{name:"vvvv", id:13},{name:"ddd", id:12},{name:"vvv", id:11}]
             this.getData();
           },500)
       },
 
       keydownHandler: function(e){
-          if(e.keyCode == 32) {
-            e.preventDefault();
-            return false;
-          }
+
       },
 
       getData: function(){
-          this.$http.post(this.$Api+this.url, {params: this.value}).then((res)=>{
+          this.params.name_or_phone = this.iptvalue;
+          this.$http.get(this.$Api+this.url,{params: this.params}).then((res)=>{
+                var one = res.json();
+                this.adapterDatas(one.data.docs);
           });
       },
-
-      oneClickHandler: function(one){
-          this.$set("value", one[this.id]);
-          this.$set("iptvalue", one[this.labelname]);
+      adapterDatas: function(ds){
+            this.tplArr = ds;
+            let newDs = Utils.cloneObj(ds);
+            for (var i = 0; i < newDs.length; i++) {
+              let one = newDs[i];
+              if(this.adapter) {
+                  one[this.labelname] = this.adapter(one);
+              }
+            }
+            this.datas = newDs;
+      },
+      oneClickHandler: function(index){
+        console.log(index);
+          this.$set("value", this.tplArr[index][this.id]);
+          this.$set("iptvalue", this.tplArr[index][this.labelname]);
           this.$set("showDropBox", !this.showDropBox);
-          this.$dispatch("dimclick", one);
+          this.$dispatch("dimclick", this.tplArr[index]);
       },
 
       changeDropAction: function(){
@@ -84,7 +108,7 @@ export default {
   components: {},
   watch:{
     "value": function(o) {
-        this.$dispatch("valuechange", o);
+        // this.$dispatch("valuechange", o);
     }
   }
 }

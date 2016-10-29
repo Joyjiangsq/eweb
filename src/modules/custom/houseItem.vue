@@ -1,6 +1,6 @@
 <template lang="html">
     <div >
-      <cascadeform  labelname="客户地址：" :must="false"  :detailneed="true" :value.sync= "data.Address" :detailv.sync="data.detail" formname="Address" :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></cascadeform>
+      <cascadeform  labelname="客户地址："  :detailneed="true" :value.sync= "data.Address" :detailv.sync="data.detail" formname="Address" :vertical="true" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></cascadeform>
       <formtext labelname="面积：" unit="平米" :number="true" formname="U_Acreage" :must="false" :value.sync="data.U_Acreage" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
       <formdt labelname="交房时间："  dropfixed="dropfixed"  :must="false" formname="U_OthersDate" :value.sync="data.U_OthersDate" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdt>
       <formtext labelname="装修预算："  :number="true" unit="元" :must="false" :value.sync="data.prePrice" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formtext>
@@ -49,7 +49,7 @@ export default {
       formControl:{
           validate: false,
           validateHandler: function(d){   // 表单验证
-              console.log(d);
+                if(d.res == "fail") this.$dispatch("errorhp");
           }
       },
     }

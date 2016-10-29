@@ -42,7 +42,11 @@ export default {
   created(){
   },
   ready: function () {
-    if(this.value != "") {
+    if(this.value != "") this.rendeDefault()
+  },
+  attached: function () {},
+  methods: {
+    rendeDefault: function(){
       var sp = this.value.split(",");
       this.provient = this.value.split(",")[0];
       this.renderCitys(this.provient); // 渲染市
@@ -51,10 +55,7 @@ export default {
         this.renderAreas(this.cname);   // 渲染区域
       }
       if(sp.length >=2) this.aname = sp[2];  // 设置默认区域
-    }
-  },
-  attached: function () {},
-  methods: {
+    },
     pClick: function(value){
          this.renderCitys(value);
          this.provient = value;
@@ -110,6 +111,7 @@ export default {
           if(!o || o == "") {
               this.provient = this.cname = this.aname = "";
           }
+          else this.rendeDefault()
     }
   }
 }

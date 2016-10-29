@@ -21,7 +21,7 @@
                       <chuguitb @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></chuguitb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'zhuangxiufucai'">
-                    <zhuangxiufucaitb :testdata.sync="zhuangxiu"  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
+                    <zhuangxiufucaitb   @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></zhuangxiufucaitb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'shigongfucai'">
                     <shigongfucaitb  @fail="failHandler" :subvalidate="subvalidate" @success="successHandler"></shigongfucaitb>
@@ -63,7 +63,7 @@ export default {
       lastDataMap:{},
       tabTpl:{index:110, ename:""},
       tabArray: [{show: false},{show: false},{show: false},{show: false},{show: false},{show: false},{show: false}, {show: false}],
-      zhuangxiu:[{ItemCode:"xxx01ww", ItemName:"装修辅材", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅材", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
+      // zhuangxiu:[{ItemCode:"xxx01ww", ItemName:"装修辅材", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅材", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
   computed: {

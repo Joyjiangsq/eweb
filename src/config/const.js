@@ -25,7 +25,7 @@ export const houseType= [{name:"毛坯新房", id:1},{name:"二手房", id:2}]
 // 组包类型配置
 export const packageType = [
   {name:"国民包", id: 1},
-  {name:"民品包", id: 2},
+  {name:"名品包", id: 2},
   {name:"尊享包", id: 3}
 ]
 

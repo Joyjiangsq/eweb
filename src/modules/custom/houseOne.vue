@@ -2,7 +2,7 @@
     <div :class="css.itemList">
           <div class="" v-for="(index, one) in houselist">
                 <span :class="css.titlerow">房屋信息{{index+1}}</span>
-                <houseitem :data="one" :startvalidate="startvalidate"></houseitem>
+                <houseitem :data="one" :startvalidate="startvalidate" @errorhp="errorhp"></houseitem>
           </div>
           <div :class="css.btnrow">
               <btn  iconname="icon-add" @clickaction="clickaction">新增房屋信息</btn>
@@ -32,14 +32,14 @@ export default {
   },
   computed: {},
   ready: function () {
-    setInterval(()=>{
-      console.log(JSON.stringify(this.houselist));
-    }, 1000);
   },
   attached: function () {},
   methods: {
     clickaction: function(){
         this.houselist.push({});
+    },
+    errorhp: function(){
+      this.$dispatch("errorh")
     }
   },
   components: {houseitem, btn},
