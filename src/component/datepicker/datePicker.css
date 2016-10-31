@@ -50,10 +50,10 @@
     cursor: pointer;
 }
 .pickerMain table td {
-    /*padding: 10px 0;*/
+    padding: 10px 0;
 }
 .pickerMain table td span {
-    /*padding: 5px;*/
+    padding: 5px;
     line-height: 15px;
     border-radius: 42px;
     width: 15px;
@@ -70,7 +70,8 @@
     /*top: 100%;*/
     box-shadow: 3px 5px 15px -9px rgba(0, 0, 0, .5);
     /*right: 0;*/
-    width: 320px;
+    /*width: 320px;*/
+    width: 384px;
     min-height: 100px;
     z-index: 111;
     margin-top: -1px;

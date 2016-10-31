@@ -44,12 +44,12 @@
     border-left: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
+.active {
+  background-color: #f2f2f2;
+}
 .selectedRow {
   background-color: #fcf3e2;
 }
 .selectedRow:hover {
-  background-color: #fcf3e2;
-}
-table .active {
-    background-color: #f2f2f2;
+  /*background-color: #fcf3e2;*/
 }

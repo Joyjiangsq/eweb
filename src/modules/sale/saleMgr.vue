@@ -8,13 +8,13 @@
     <div  :class="css.customLeft">
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
           <div :class="css.tBox">
-            <tb :headercaption="tableHeaderDatas"  :needselected= "true" :needindex="false" :totals.sync="totals" :datas="testData" :params="searchParams" url="" :events="tableEvents"></tb>
+            <tb :headercaption="tableHeaderDatas"  :needselected= "true" @successload="successloadHandler" :needindex="false" :totals.sync="totals" @rowclick="rowClickHanlder"  :params="searchParams" url="sales" :events="tableEvents"></tb>
           </div>
           <pg :totals="totals" :pix="4" :curpage.sync="searchParams.page" ></pg>
     </div>
 
     <div  :class="css.customRight">
-          <tb :headercaption="subHeaders" :totals.sync="totals" :needindex="false" :load="load" :params="searchParams" url="sales" :events="tableEvents"></tb>
+          <tb :headercaption="subHeaders"  :needindex="false" :load="subLoad" url="sales/all-sub-orders" :params="subSearchParams"  :events="subTableEvents"></tb>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ import {setTitle} from "actions";
 import {packageType, orderType, orderStatus} from "config/const";
 import pageBase from "common/mixinPage.js";
 // 自定义
-var MyComponent = Vue.extend({
+var orderComponent = Vue.extend({
   data:function(){
     return {
       css,
@@ -35,27 +35,42 @@ var MyComponent = Vue.extend({
   },
   template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
   ready: function(){
-    this.totals = this.selfData.totals;
+    this.totals = this.selfData.U_FZOrder;
   },
   methods:{
     clickHandler: function(){
-        alert(this.totals);
+        this.$router.go({path:"sale/detail", query:{orderid: this.totals}})
     }
   }
 })
-
-let tableHeaderDatas = [{name:"订单号", labelValue:"orderId", type:"data"},
-                        {name:"订单状态", labelValue:"orderStatus",type:"data"},
-                        {name:"销售总额", labelValue:"totals",type:"component", component: MyComponent, cname:"test"},
-                        {name:"产品包", labelValue:"packageType",type:"data"},
-                        {name:"订单类型", labelValue:"createdBy",type:"data"},
-                        {name:"客户姓名", labelValue:"customName",type:"data"},
-                        {name:"电话", labelValue:"phone",type:"data"},
-                        {name:"业主地址", labelValue:"customAddress",type:"data"},
-                        {name:"创建人", labelValue:"createdBy",type:"data"},
+var sorderComponent = Vue.extend({
+  data:function(){
+    return {
+      css,
+      totals:0
+    }
+  },
+  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  ready: function(){
+    this.totals = this.selfData.U_PurchaseNum;
+  },
+  methods:{
+    clickHandler: function(){
+        this.$router.go({path:"sale/subdetail", query:{orderid: this.totals}})
+    }
+  }
+})
+let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"component", component: orderComponent, cname:"ordercomponent"},
+                        {name:"订单状态", labelValue:"order_status",type:"data"},
+                        {name:"产品包", labelValue:"grp_package",type:"data", adapterFun: function(d) {return d.base_info.grp_package}},
+                        {name:"订单类型", labelValue:"order_type",type:"data", adapterFun: function(d) {return d.base_info.order_type}},
+                        {name:"客户姓名", labelValue:"CardName",type:"data", adapterFun: function(d) {return d.base_info.CardName}},
+                        {name:"电话", labelValue:"Phone2",type:"data", adapterFun: function(d) {return d.base_info.Phone2}},
+                        {name:"业主地址", labelValue:"Address",type:"data", adapterFun: function(d) {return d.base_info.Address}},
+                        {name:"创建人", labelValue:"CardCode",type:"data"},
                         {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
-let subHeaders = [{name:"销售子订单号",labelValue:"user_code", type:"data"},{name:"订单状态", labelValue:"status",type:"data"}]
+let subHeaders = [{name:"销售子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},{name:"订单状态", labelValue:"status",type:"data"}] // 0 被驳回
 export default {
   mixins:[pageBase],
   data: function () {
@@ -66,6 +81,7 @@ export default {
       tableHeaderDatas: tableHeaderDatas,  // 表头初始化
       subHeaders: subHeaders, // 子订单表格表头
       subLoad: false, // 子列表加载
+      subSearchParams:{},
       // 表格回调
       tableEvents:{
         operatorRender: function(d){
@@ -74,6 +90,9 @@ export default {
         operatorHandler: function(d){
             console.log(d);
         }
+      },
+      subTableEvents:{
+
       },
       btnsData:[{name:"新增", icon:"icon-add", action:"add"}],
       btnEvents:{
@@ -99,12 +118,22 @@ export default {
   },
   ready: function () {
     this.$nextTick(function () {
-       this.$el.querySelector("."+this.css.customLeft).style.width = (window.innerWidth - 455 )+"px";
+       this.$el.querySelector("."+this.css.customLeft).style.width = (window.innerWidth - 495 )+"px";
     })
   },
   attached: function () {},
   methods: {
-
+      rowClickHanlder: function(one) {
+            console.log(one);
+            this.subSearchParams.U_FZOrder = one.U_FZOrder;
+            this.$set("subLoad", !this.subLoad);
+      },
+      successloadHandler: function(datas){
+            if(datas.length == 0) return false;
+            let one = datas[0];
+            this.subSearchParams.U_FZOrder = one.U_FZOrder;
+            this.$set("subLoad", !this.subLoad);
+      }
   },
   components: {},
 

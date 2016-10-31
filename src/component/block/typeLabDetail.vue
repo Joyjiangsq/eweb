@@ -4,31 +4,23 @@
           <div class="" v-for="(index, one) in tabArray">
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'cizhuan'">
                       <div class="" v-if="datamap.cizhuan">
-                        <cizhuantb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.cizhuan.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.cizhuan.rec_info"></cizhuantb>
-                        <cizhuantb  @fail="failHandler" curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.cizhuan.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.cizhuan.rec_info" v-else></cizhuantb>
+                        <cizhuantb  @fail="failHandler" curaction="alldetail"  :subvalidate="subvalidate" :testdata="datamap.cizhuan"   @success="successHandler" ></cizhuantb>
                       </div>
-                      <cizhuantb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></cizhuantb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'diban'">
                       <div class="" v-if="datamap.diban">
-                        <dibantb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.diban.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.diban.rec_info"></dibantb>
-                        <dibantb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.diban.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.diban.rec_info" v-else></dibantb>
+                        <dibantb  @fail="failHandler"  curaction="alldetail"  :subvalidate="subvalidate" :testdata="datamap.diban" @success="successHandler"></dibantb>
                       </div>
-                      <dibantb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></dibantb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'jieju'">
                       <div class="" v-if="datamap.jieju">
-                        <jiejutb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.jieju.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.jieju.rec_info"></jiejutb>
-                        <jiejutb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.jieju.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.jieju.rec_info" v-else></jiejutb>
+                        <jiejutb  @fail="failHandler"  curaction="alldetail"  :subvalidate="subvalidate" :testdata="datamap.jieju"  @success="successHandler" ></jiejutb>
                       </div>
-                      <jiejutb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></jiejutb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'jichengdiaoding'">
                       <div class="" v-if="datamap.jichengdiaoding">
-                        <jichengdiaodingtb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.jichengdiaoding.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.jichengdiaoding.rec_info"></jichengdiaodingtb>
-                        <jichengdiaodingtb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.jichengdiaoding.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.jichengdiaoding.rec_info" v-else></jichengdiaodingtb>
+                        <jichengdiaodingtb  @fail="failHandler"  curaction="alldetail"  :subvalidate="subvalidate" :testdata="datamap.jichengdiaoding" @success="successHandler" ></jichengdiaodingtb>
                       </div>
-                      <jichengdiaodingtb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></jichengdiaodingtb>
                 </div>
 
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'men'">
@@ -42,17 +34,13 @@
 
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'zhuangxiufucai'">
                       <div class="" v-if="datamap.zhuangxiufucai">
-                        <zhuangxiufucaitb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.zhuangxiufucai.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.zhuangxiufucai.rec_info"></zhuangxiufucaitb>
-                        <zhuangxiufucaitb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.zhuangxiufucai.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.zhuangxiufucai.rec_info" v-else></zhuangxiufucaitb>
+                        <zhuangxiufucaitb  @fail="failHandler"  curaction="alldetail"  :subvalidate="subvalidate" :testdata="datamap.zhuangxiufucai"  @success="successHandler"></zhuangxiufucaitb>
                       </div>
-                      <zhuangxiufucaitb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></zhuangxiufucaitb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'shigongfucai'">
                       <div class="" v-if="datamap.shigongfucai">
-                        <shigongfucaitb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.shigongfucai.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.shigongfucai.rec_info"></shigongfucaitb>
-                        <shigongfucaitb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.shigongfucai.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.shigongfucai.rec_info" v-else></shigongfucaitb>
+                        <shigongfucaitb  @fail="failHandler"  curaction="alldetail"  :subvalidate="subvalidate" :testdata="datamap.shigongfucai"  @success="successHandler" ></shigongfucaitb>
                       </div>
-                      <shigongfucaitb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></shigongfucaitb>
                 </div>
           </div>
 

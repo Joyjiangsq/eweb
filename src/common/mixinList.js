@@ -41,8 +41,8 @@ let list = {
   },
   ready: function () {
       if(this.datas.length != 0) this.$set("curStatus", "renderData");  // 如果是静态的datas
-      if(this.load) this.loadData();
-      this.adapter();
+      if(this.url) this.loadData();
+      // this.adapter();
   },
   methods: {
     loadData: function() {
@@ -52,10 +52,15 @@ let list = {
           // 如果有数据 就渲染
          //  如果没有数据就显示没有数据
           let datas = res.json();
-          this.dataList = [{name:"1", id: 0}];
-          // 回调totals
+          if(datas.data.docs.length == 0) {
+            this.$set("curStatus", "no-result");
+          }
+          else {
+            this.adapter(datas.data.docs);
+            // 回调totals
+            this.$set("curStatus", "renderData");
+          }
           this.$set("totals", datas.data.count);
-          this.$set("curStatus", "renderData");
       },(error) => {this.$set("curStatus", "no-result");})
     }
   },

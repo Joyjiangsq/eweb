@@ -38,6 +38,12 @@ export function routerStart(router) {
                       "/addSale":{
                           component: function(resovle) {require(['modules/sale/saleAdd.vue'], resovle)},
                       },
+                      "detail" :{
+                        component: function(resovle) {require(["modules/sale/saleDetail.vue"], resovle)}
+                      },
+                      "subdetail" :{
+                        component: function(resovle) {require(["modules/sale/subSaleDetail.vue"], resovle)}
+                      }
                     }
                 },
 

@@ -2,10 +2,10 @@
     <div class="">
           <div class="">
               <tb :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :datas="testdata" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb>
-              <formtext labelname="收货人："  :value.sync="recData.recName" placeholder=""  formname='recName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-              <formtext labelname="收货人电话：" :phone="true"  :length="11" :number="true" :value.sync="recData.recphone" placeholder=""  formname='recphone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-              <cascadeform  labelname="收货地址：" :must="false"  :detailneed="true" :read="true" formname="recAddr" :value.sync="recData.recAddr"  :detailv.sync="recData.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
-              <formtext labelname="备注：" :must="false" :value.sync="recData.Notes"  placeholder=""  formname='Notes' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              <formtext labelname="收货人："  :value.sync="recdata.recName" placeholder=""  formname='recName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              <formtext labelname="收货人电话：" :phone="true"  :length="11" :number="true" :value.sync="recdata.recphone" placeholder=""  formname='recphone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              <cascadeform  labelname="收货地址：" :must="false"  :detailneed="true" :read="true" formname="recAddr" :value.sync="recdata.recAddr"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
+              <formtext labelname="备注：" :must="false" :value.sync="recdata.Notes"  placeholder=""  formname='Notes' :validatestart="validate" @onvalidate="validateHandler"></formtext>
           </div>
           <div class="">
 
@@ -66,10 +66,6 @@ export default {
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
                     {name:"备注", labelValue:"Notes",type:"edit"}
                     ],
-      recData:{
-          recAddr:"安徽省,芜湖市,弋江区",
-          detail:"xxxxx"
-      },
       validateInfo: true // 验证 收件信息
     }
   },

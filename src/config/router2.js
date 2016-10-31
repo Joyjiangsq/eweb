@@ -9,13 +9,14 @@ import customView from 'modules/custom/customMgr.vue';
 import saleMgr from 'modules/sale/saleMgr.vue';
 import addSale from 'modules/sale/saleAdd.vue';
 import saleView from 'modules/sale/sale.vue';
+import saleDetail from "modules/sale/saleDetail.vue";
 
 import purchaseOrder from 'modules/purchase/purchaseOrder.vue';
 import spViewA from 'modules/spec/specApply.vue';
 import spViewb from 'modules/spec/specMgr.vue'
 import loginView from 'modules/login/login.vue'
 import urView from 'modules/urgent/urgentMgr.vue'
-import fView from 'portalview/404.vue'
+import fView from 'portalview/404.vue';
 export function routerStart(router) {
   router.map({
       '/': {
@@ -45,6 +46,9 @@ export function routerStart(router) {
                     },
                     "addSale":{
                       component: addSale
+                    },
+                    "detail":{
+                      component: saleDetail
                     }
                   }
                 },

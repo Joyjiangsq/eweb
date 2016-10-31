@@ -162,6 +162,7 @@ let tableBase = {
                 let datas = res.json();
                 this.adapertData({data: datas.data.docs});
                 this.$set("totals", datas.data.count);
+                this.$dispatch("successload", datas.data.docs);
             })
           },
 

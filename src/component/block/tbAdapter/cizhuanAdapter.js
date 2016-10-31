@@ -1,7 +1,8 @@
 export default function adapterData(d) {
       // 设置验证参数规则
+      console.log(d);
       d.buyCounts = {     // 销售数量 限制不能购买0 个
-          def: 0,
+          def: d.sale_counts || 0,
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){

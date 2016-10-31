@@ -1,3 +1,7 @@
+import tb from "component/grid/tableSpec";
+import tbbase from "component/grid/tableListBase";
+import css from "./type.css";
+import dialog from "component/dialog/dialog";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -7,23 +11,41 @@ export default {
       default: function(){
         return []
       },
-       twoWay: true
+    },
+    recdata:{
+      default: function(){
+        return {
+          recAddr:"安徽省,合肥市,高新区,xxx街道"
+        }
+      },
+    },
+    curaction:{
+      default: "add"
+    },
+    detail:{
+      default: false
     }
-
   },
   data: function () {
     return {
+      css,
+      plist:[],
+      vlist:[],
+      pshow:false,
       tableEvents:{
           operatorRender: function(d){
-            return [{action:"delete",icon:"icon-delete", data:d}]
+            if(!d.ProductList || d.ProductList == "") {
+              return [{action:"delete",icon:"icon-delete", data: d}]
+            }
+            else return [{action:"delete",icon:"icon-delete", data:d}, {action:"tip",icon:"icon-tip", data:d}]
           },
           operatorHandler: function(d){
             console.log(d);
               if(d.action == "delete") {
-                for (var i = 0; i < this.testdata.length; i++) {
-                  let one = this.testdata[i];
+                for (var i = 0; i < this.vlist.length; i++) {
+                  let one = this.vlist[i];
                   if(d.data.ItemCode == one.ItemCode) {
-                    this.testdata.splice(i,1);
+                    this.vlist.splice(i,1);
                     break;
                   }
                 }
@@ -32,7 +54,6 @@ export default {
       },
       showSelectDialog:false, // 选品对话框控制
       validateRec :true, // 验证 列表
-      recData:{},
       toload: false, // 展开选品对话框再加载
       validateInfo: true // 验证 收件信息
     }
@@ -56,14 +77,13 @@ export default {
     // 根据产品编码查询的结果
     oneSuccessHandler: function(d) {
       let one = this.adapterFun(d);
-      console.log(this.testdata);
-      this.testdata.push(one);
+      this.vlist.push(one);
     },
     // 收件信息验证函数
     validateHandler: function(d) {
         if(d.res == "fail") this.validateInfo = false;
         else {
-            this.recData[d.name] = d.value;
+            this.recdata[d.name] = d.value;
         }
     },
     // 验证列表数据
@@ -71,8 +91,8 @@ export default {
       console.log("11111111");
         this.validateRec = true;
         this.validateInfo = true;
-        for (var i = 0; i < this.testdata.length; i++) {
-          let one = this.testdata[i];
+        for (var i = 0; i < this.vlist.length; i++) {
+          let one = this.vlist[i];
             for(var key in one) {
               if(typeof(one[key]) == "object") {
                   if(one[key].tb_disabled) continue;
@@ -81,13 +101,13 @@ export default {
               }
           }
         }
-        if(this.testdata.length != 0) {
+        if(this.vlist.length != 0) {
           // 收件信息验证
           this.validate = !this.validate;
         }
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
-          else this.$dispatch("success", {project:this.curName,data:{list: this.testdata, rec_info: this.recData}});
+          else this.$dispatch("success", {project:this.curName,data:{list: this.vlist, rec_info: this.recdata}});
         })
     },
     // 验证列表数据
@@ -109,23 +129,33 @@ export default {
     //     this.validate = !this.validate;
     //     setTimeout(()=>{
     //       if(!this.validateRec) this.$dispatch("fail", {project:this.curName});
-    //       else this.$dispatch("success", {project: this.curName,data:{list: this.testdata, rec_info: this.recData}});
+    //       else this.$dispatch("success", {project: this.curName,data:{list: this.testdata, rec_info: this.recdata}});
     //     });
     // },
 
     deleteoneHandler: function(d) {
-        console.log(d);
-        this.testdata.split(d.index,1);
+        this.vlist.split(d.index,1);
     },
 
     addoneHandler : function(d){
         let one = this.adapterFun(d.data);
-        this.testdata.push(one);
+        this.vlist.push(one);
     }
   },
   ready: function(){
-
+    if(!this.detail) {
+      console.log(this.testdata);
+      for (var i = 0; i < this.testdata.length; i++) {
+        var one = this.testdata[i];
+        this.vlist.push(this.adapterFun(one));
+      }
+      console.log(this.vlist);
+    }
+    if(this.curaction == "edit") {
+      this.headercaption.splice(0,1);
+    }
   },
+  components: {tb, dialog, tbbase},
   watch:{
     "subvalidate": function() {
         // 执行验证

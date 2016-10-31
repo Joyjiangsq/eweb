@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                <orderlist :subvalidate="subvalidate" ></orderlist>
+                <orderlist :subvalidate="subvalidate" url="sales/sub-orders"></orderlist>
               </div>
               <pg :totals="totals" :curpage="searchParams.page" ></pg>
         </pagepanel>

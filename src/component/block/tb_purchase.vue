@@ -33,7 +33,7 @@ export default {
                     {name:"型号", labelValue:"U_Modle", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
                     {name:"可用库存量", labelValue:"avalibleStores",type:"data"},{name:"使用库存数", labelValue:"useStores",type:"edit"},
-                    {name:"采购数量", labelValue:"purchaseCounts",type:"edit"},{name:"包装规格", labelValue:"tt",type:"data", adapterFun: function(d) {console.log(d);return d.SalPackUn+d.SalUnitMsr+"/"+d.SalPackMsr}},
+                    {name:"采购数量", labelValue:"purchaseCounts",type:"edit"},{name:"包装规格", labelValue:"tt",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
                     {name:"转化数量", labelValue:"Quantity",type:"data"},
                     {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"remark",type:"data"},
                     ],

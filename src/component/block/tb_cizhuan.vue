@@ -1,40 +1,56 @@
 <template lang="html">
     <div class="">
-          <div class="">
-              <tb :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :datas="testdata" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb>
-              <formtext labelname="收货人："  :value.sync="recData.recName" placeholder=""  formname='recName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-              <formtext labelname="收货人电话：" :phone="true"  :length="11" :number="true" :value.sync="recData.recphone" placeholder=""  formname='recphone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-              <cascadeform  labelname="收货地址：" :detailneed="true" formname="recAddr" :value.sync="recData.recAddr"  :detailv.sync="recData.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
-              <formtext labelname="备注：" :must="false" :value.sync="recData.Notes"  placeholder=""  formname='Notes' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+          <div v-if="curaction != 'alldetail'">
+              <tb v-if="!detail"  :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :curaction="curaction"  :detail="detail" :datas="vlist" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb>
+              <tbbase :headercaption="headerdetail" :datas="vlist" :load="false" v-else></tbbase>
+              <formtext labelname="收货人："  :read="detail" :value.sync="recdata.recName" placeholder=""  formname='recName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              <formtext labelname="收货人电话："  :read="detail" :phone="true"  :length="11" :number="true" :value.sync="recdata.recphone" placeholder=""  formname='recphone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              <cascadeform  labelname="收货地址："  :read="detail" :detailneed="true" formname="recAddr" :value.sync="recdata.recAddr"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
+              <formtext labelname="备注："  :read="detail"  :must="false" :value.sync="recdata.Notes"  placeholder=""  formname='Notes' :validatestart="validate" @onvalidate="validateHandler"></formtext>
           </div>
-          <div class="">
-
+          <div v-else>
+              <div  :class="css.spone" v-for="one in testdata">
+                <tbbase :headercaption="headerdetail" :datas="one.sub_orders" :load="false"></tbbase>
+                <formtext labelname="收货人："  :read="true" :value="one.rec_info.recName" ></formtext>
+                <formtext labelname="收货人电话："  :read="true" :value="one.rec_info.recphone"></formtext>
+                <cascadeform  labelname="收货地址："  :read="true" :detailneed="true" :value="one.rec_info.recAddr"  :detailv.sync="one.rec_info.detail" ></cascadeform>
+                 <formtext labelname="备注："  :read="true"  :value.sync="one.rec_info.Notes"></formtext>
+              </div>
           </div>
 
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <cizhuanlist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="testdata"></cizhuanlist>
+                      <cizhuanlist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="vlist"></cizhuanlist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>
+
+          <!-- <prolist :plist="plist" :show="pshow"></prolist> -->
     </div>
 </template>
 <script>
 // 瓷砖分类
-import tb from "component/grid/tableSpec";
-import css from "./type.css";
+
 import cizhuanlist from "./tblist/cizhuanList";
-import dialog from "component/dialog/dialog";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import adapter from "./tbAdapter/cizhuanAdapter";
 import baseMixins from "./itemMixins";
+// import prolist from "./prolist.vue";
 export default {
   mixins:[baseMixins],
+  props:{
+    recdata:{
+      default: function(){
+        return {
+          recAddr:""
+        }
+      },
+    },
+  },
   data: function () {
     return {
-      css,
       curName:"cizhuan",
       validate:false,
       headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
@@ -46,7 +62,15 @@ export default {
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},
                     {name:"可用库存量", labelValue:"avalibleStores",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"remark",type:"data"},
-                    ]
+                  ],
+      headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品包", labelValue:"SWW", type:"data"},
+                    {name:"品牌", labelValue:"U_Brand", type:"data"},
+                    {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
+                    {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
+                    {name:"可用库存量", labelValue:"avalibleStores",type:"data"},
+                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"remark",type:"data"}]
     }
   },
   computed: {
@@ -62,6 +86,6 @@ export default {
   ready: function(){
 
   },
-  components: {tb, formtext, cascadeform, dialog, cizhuanlist},
+  components: { formtext, cascadeform, cizhuanlist},
 }
 </script>

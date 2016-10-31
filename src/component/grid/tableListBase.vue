@@ -12,7 +12,7 @@
               </tr>
         </thead>
         <tbody  v-show="loading? false:noresult? false: true">
-              <tr v-for="(order, done)  in dataList" :class="[order%2 == 1? tableCss.active:'', done.selected && needselected?tableCss.selectedRow:'']" @click="clickRow(order, done)">
+              <tr v-for="(order, done)  in dataList" :class="[done.selected && needselected?tableCss.selectedRow:'',order%2 == 1? tableCss.active:'']" @click="clickRow(order, done)">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])">
@@ -62,10 +62,13 @@ export default {
     }
   },
   created: function(){
-    if(this.headercaption[0].type != "index" && this.needindex) this.headercaption.unshift({type:"index"});
+    if(this.headercaption[0].type) {
+      if (this.headercaption[0].type != "index" && this.needindex) this.headercaption.unshift({type:"index"});
+    }
   },
   methods:{
     clickRow: function(index, d) {
+        if(d.selected) return false;
         this.dataList[this.oldIndex].selected = false;
         d.selected = true;
         this.$set("oldIndex", index);

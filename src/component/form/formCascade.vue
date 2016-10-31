@@ -66,10 +66,19 @@ export default {
           else  this.value =  this.value + "," +this.detailv;
         }
     },
+    "value": function(){
+      var sp = this.value.split(",");
+      if(sp.length > 3) this.detailv = sp[3];
+    },
     "validatestart":function() {
        if(this.watchIgnore) return false;
-
-       if(this.value.split(",").length <4 && this.must) {
+       if(this.value.indexOf("undefined") != -1 && this.must) {
+         this.$dispatch("onvalidate", {res:"fail", msg: "请填写好地址"});
+         this.$set("errormsg", "请填写好地址");
+         this.$set("error", true);
+         return false;
+       }
+       if(!this.detailv && this.must) {
          this.$dispatch("onvalidate", {res:"fail", msg: "请填写好地址"});
          this.$set("errormsg", "请填写好地址");
          this.$set("error", true);

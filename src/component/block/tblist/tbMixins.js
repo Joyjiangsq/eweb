@@ -17,6 +17,7 @@ let tbMixin = {
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
                    operatorRender: function(d){
+                      console.log(JSON.stringify(d.ProductList));
                        let exit = false;
                        let index = 0;
                        for (var i = 0; i < this.listdata.length; i++) {
@@ -30,8 +31,16 @@ let tbMixin = {
                            break;
                          }
                        }
-                       if(exit) return [] //{action:"delete",icon:"icon-delete", index: index}
-                       else return [{action:"add",icon:"icon-add", data: d}]
+                       if(exit) {
+                         if(!d.ProductList || d.ProductList == "") return [];
+                         else return [{action:"tip",icon:"icon-tip", data: d}]
+                       }
+                       else {
+                           if(!d.ProductList || d.ProductList == "") {
+                             return [{action:"add",icon:"icon-add", data: d}]
+                           }
+                           else return [{action:"add",icon:"icon-add", data: d}, {action:"tip",icon:"icon-tip", data: d}]
+                       }
                    },
                    operatorHandler: function(d){
                        if(d.action == "add") {

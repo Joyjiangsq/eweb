@@ -107,7 +107,7 @@ export default {
         q.page = page*1;
         this.curpage = page*1;
         if(this.hash) this.$router.go({path:path, query: q});  // 路由驱动
-        else this.$dispatch("pagechange");      // 事件驱动
+        else this.$dispatch("pagechange", {page:this.curpage});      // 事件驱动
         this.validateBtn();
     }
   },

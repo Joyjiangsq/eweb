@@ -43,7 +43,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="acCss.tableIn">
-                    <tb :headercaption="headercaption" :totals.sync="totals"  :params="searchParams" url="" :load="load"  :datas="testData"></tb>
+                    <tb :headercaption="headercaption" :totals.sync="totals"  :params="searchParams" url="station-account/bills" :load="load"  :datas="testData"></tb>
               </div>
               <pg :totals="totals"  :curpage.sync="searchParams.page"></pg>
         </pagepanel>

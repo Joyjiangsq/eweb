@@ -23,8 +23,10 @@ export default {
     startdate:{     // 起始日期
 
     },
-    startdate:{    // 结束日期
-
+    stopdate:{    // 结束日期
+      default: function(){
+        return new Date(2100, 10,1)
+      }
     },
 
     formate:{
