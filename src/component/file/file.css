@@ -3,11 +3,14 @@
 }
 .fileDeal {}
 .fileTarget {
-    width: 65px;
-    position: absolute;
-    z-index: 1;
-    left: -9px;
-    opacity: 0;
+  width: 87px;
+  position: absolute;
+  z-index: 1;
+  left: -9px;
+  opacity: 0;
+  border: 1px solid #ddd;
+  height: 32px;
+  cursor: pointer;
 }
 .fileBox {
     display: inline-block;

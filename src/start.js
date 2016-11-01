@@ -32,7 +32,7 @@ routerStart(router);
 
 // 全局
 Vue.prototype.$Api = config.serverUrl;
-
+Vue.prototype.$SpecApi = process.env.NODE_ENV == 'dev '? "http://172.20.8.109/" : config.serverUrl;
 // 自定义过滤器
 new filter().init(Vue)
 

@@ -40,9 +40,10 @@
                       <mentb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></mentb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chugui'">
+                      <!--厨柜 特殊 处理附件 U_Enclosure -->
                       <div class="" v-if="datamap.chugui">
                         <chuguitb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info"></chuguitb>
-                        <chuguitb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" v-else></chuguitb>
+                        <chuguitb  @fail="failHandler"  curaction="edit"  :eclosure="datamap.chugui.U_Enclosure"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" v-else></chuguitb>
                       </div>
                       <chuguitb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></chuguitb>
                 </div>

@@ -14,6 +14,11 @@ let fileMixins = {
         text: {
             default: "导入",
             type: String
+        },
+        filter:{
+          default: function() {
+            return [];
+          }
         }
     },
     data: function() {
@@ -28,19 +33,20 @@ let fileMixins = {
     methods: {
         upload: function(form) {
             var self = this;
-            console.log(self);
-            console.log(form);
             // var nf = new FormData(form);
             form.ajaxSubmit({
                 method: "post",
                 // params: nf,
-                url: "http://172.20.8.109/v1/api/" + this.url, //默认是form action
+                url: this.$SpecApi + "v1/api/" + this.url, //默认是form action
                 success: function(data) {
                     self.$set("loading", !self.loading);
                     console.log(data);
-                    if(data.code == 200) showTips(self.$store, {type:"success", msg:"上传成功！"});
+                    if(data.code == 200) {
+                      showTips(self.$store, {type:"success", msg:"上传成功！"});
+                      this.$dispatch("upsuccess", {});
+                    }
                     else {
-                      showTips(self.$store, {type:"success", msg:data.msg});
+                      showTips(self.$store, {type:"warn", msg:data.msg});
                     }
                 },
                 error: function(d) {
@@ -54,7 +60,17 @@ let fileMixins = {
 
         changeFile: function(e) {
             var file = e.currentTarget.files[0];
-            this.subChangeFiles(file);
+            let name = file.name;
+            let endName = name.split(".")[name.split(".").length -1];
+            if(this.filter.length == 0) this.subChangeFiles(file);
+            else {
+              if(this.filter.indexOf(endName) == -1) {
+                  showTips(this.$store, {type:"error", msg:"请上传正确的文件格式"});
+                  this.reset();
+              }
+              else this.subChangeFiles(file);
+            }
+
         }
     },
     watch: {

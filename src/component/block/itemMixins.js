@@ -3,6 +3,7 @@ import tbbase from "component/grid/tableListBase";
 import css from "./type.css";
 import dialog from "component/dialog/dialog";
 import itemtpl from "./itemtpl.vue";
+import {showTips} from "actions/index";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -89,7 +90,6 @@ export default {
     },
     // 验证列表数据
     validateFun: function(){
-      console.log("11111111");
         this.validateRec = true;
         this.validateInfo = true;
         for (var i = 0; i < this.vlist.length; i++) {
@@ -103,13 +103,24 @@ export default {
               }
           }
         }
-        if(this.vlist.length != 0) {
-          // 收件信息验证
-          this.validate = !this.validate;
-        }
+        // 收件信息验证
+        if(this.vlist.length != 0)  this.validate = !this.validate;
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
-          else this.$dispatch("success", {project:this.curName,data:{list: this.vlist, rec_info: this.recdata}});
+          else {
+            let params = {list: this.vlist, rec_info: this.recdata}
+            if(this.curName == "chugui") {
+              if(!this.eclosure) {
+                this.$dispatch("fail", {project: this.curName});
+                showTips(this.$store, {type:"error", msg:"厨柜需必须上传附件"});
+              }
+              else {
+                params["U_Enclosure"] = this.eclosure;
+                this.$dispatch("success", {project:this.curName,data:params});
+              }
+            }
+            else this.$dispatch("success", {project:this.curName,data:params});
+          }
         })
     },
     // 验证列表数据

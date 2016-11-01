@@ -74,6 +74,7 @@ export default {
           this.tabs.push(d.data.type);
           this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
+          this.datamap["U_Enclosure"] = d.U_Enclosure || "";
           this.tabType = d.data.type;
       },(error) =>{
         console.log(error);

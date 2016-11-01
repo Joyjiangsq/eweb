@@ -1,4 +1,5 @@
 import Utils from "common/Utils";
+import {showTips} from "actions/index";
 let tbMixin = {
     props:{
       listdata:{
@@ -17,7 +18,6 @@ let tbMixin = {
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
                    operatorRender: function(d){
-                      console.log(JSON.stringify(d.ProductList));
                        let exit = false;
                        let index = 0;
                        for (var i = 0; i < this.listdata.length; i++) {
@@ -44,16 +44,30 @@ let tbMixin = {
                    },
                    operatorHandler: function(d){
                        if(d.action == "add") {
-                           // adapter这个动作一定要做， vue之所以能够数据驱动视图前提是必须有数据的项目
-                           let one = Utils.cloneObj(d.data);
-                           one = this.adapterFun(one);
-                           this.listdata.push(one);
+                          // 厨柜特殊
+                           if(this.name == "厨柜") {
+                                if(d.data.U_CardName == ""　|| !d.data.U_CardName)  this.putOne(d.data); // 如果不存在供应商 直接过
+                                else {
+                                    let flg = true;
+                                    for (var i = 0; i < this.listdata.length; i++) {
+                                        let one = this.listdata[i];
+                                        if(this.filter.indexOf(one.U_ThreeL) != -1) {
+                                            if(one.CardCode != d.data.CardCode) {
+                                                  showTips(this.$store, {type:"error", msg:this.filter.join(",") + "不允许夸供应商选品"});
+                                                  flg = false;
+                                                  break;
+                                            }
+                                        }
+
+                                    }
+                                    if(flg)  this.putOne(d.data);
+                                }
+                           }
+                           else {
+                               // adapter这个动作一定要做， vue之所以能够数据驱动视图前提是必须有数据的项目
+                               this.putOne(d.data);
+                           }
                        }
-                      //  else if(d.action == "delete") {
-                      //      this.listdata.splice(d.index,1);
-                      //      d.action == "add";
-                      //      d.icon = "icon-delete";
-                      //  }
                    }
             },
             searchEvents:{                  // 查询回调函数
@@ -92,6 +106,11 @@ let tbMixin = {
           if(!d.page) return false;
           this.searchParams.page = d.page;
           this.loadlist();
+      },
+      putOne: function(data){
+        let one = Utils.cloneObj(data);
+        one = this.adapterFun(one);
+        this.listdata.push(one);
       }
     },
     watch: {

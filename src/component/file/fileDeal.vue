@@ -1,6 +1,6 @@
 <template>
     <div :class="css.fileBox">
-          <form :class="css.fileDeal"  method="post" enctype= "multipart/form-data">
+          <form :class="css.fileDeal"  method="post" enctype= "multipart/form-data" onsubmit="javascript: alert(1)">
             <input type="file" name="uploadFile" :class="css.fileTarget" @change="changeFile" v-for="one in list"/>
             <btn>{{text}} <span v-show="loading" :class="css.loading">...</span></btn>
           </form>
@@ -37,8 +37,12 @@ export default {
             this.$set("loading", !this.loading);
             console.log(file);
             this.toUpload();
-            this.list.pop();
-            this.list.push(Math.random());
+            this.reset();
+        },
+
+        reset: function(){
+          this.list.pop();
+          this.list.push(Math.random());
         }
   },
   components: {btn}

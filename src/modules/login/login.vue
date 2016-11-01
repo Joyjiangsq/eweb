@@ -49,7 +49,7 @@ export default {
   data: function () {
     return {
       lCss,
-      codeSrc:"http://172.20.8.109/check-code",
+      codeSrc: this.$SpecApi + "check-code",
       logo1: logo1,
       ckData:[{label:"记住密码", checked: false}],
       checkedEevents: {
@@ -87,7 +87,7 @@ export default {
   attached: function () {},
   methods: {
     changeImg: function(){
-       this.$set("codeSrc", "http://172.20.8.109/check-code?v="+Math.random());
+       this.$set("codeSrc", this.$SpecApi + "check-code?v="+Math.random());
     },
     clickAction: function(){
         if(!this.userName || this.userName == "") {

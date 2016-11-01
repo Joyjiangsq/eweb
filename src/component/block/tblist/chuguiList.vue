@@ -30,6 +30,7 @@ export default {
     return {
       css,
       name:"厨柜",
+      filter:["柜体","门板","五金","配件"],
       headerCaption:[
              {type:"operator", name:"", icon: true},{name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"三级分类", labelValue:"U_ThreeL", type:"data"},

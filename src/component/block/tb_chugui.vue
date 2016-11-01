@@ -15,6 +15,9 @@
             <itemtpl :testdata="testdata" :header="headerdetail"></itemtpl>
           </div>
 
+          <div :class="css.attachrow" v-if="curaction != 'alldetail' && !detail">
+                <ft url="upload-customers" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span><span>{{statusRes}}</span>(仅允许上传zip,rar格式的文件包)</span>
+          </div>
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
@@ -27,6 +30,7 @@
 <script>
 
 // 厨柜分类
+import ft from "component/file/filedeal";
 import Vue from "vue";
 import tb from "component/grid/menTable";
 import css from "./type.css";
@@ -38,11 +42,17 @@ import baseMixins from "./itemMixins";
 import chuguitb from "./tblist/chuguiList";
 export default {
   mixins:[baseMixins],
+  props:{
+    eclosure: {   // 附件特殊字段
+      default:""
+    }
+  },
   data: function () {
     return {
       css,
       curName:"chugui",
       validate:false,
+      statusRes:"",
       headercaption:[{type:"operator", name:""},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
                     {name:"产品名称", labelValue:"ItemName", type:"data"},
@@ -109,9 +119,13 @@ export default {
   methods: {
     adapterFun: function(d) {
       return adapter(d);
+    },
+
+    upSuccessHandler: function(){
+      console.log("success");
     }
   },
-  components: {tb, formtext, cascadeform, dialog,chuguitb},
+  components: {tb, formtext, cascadeform, dialog,chuguitb, ft},
 }
 import combobox from "component/combobox/combobox";
 //  U_FModeling  前沿造型   下拉组件 默认 、、  DM-008-直边、  DM-002-罗马边
