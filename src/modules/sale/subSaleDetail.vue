@@ -1,6 +1,9 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
+            <div :class="css.hrow">
+                <span><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
+            </div>
             <panel>
 
                 <div slot="panelTitle">
@@ -10,7 +13,7 @@
                 <div slot="panelContent">
                       <formtext labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
                       <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
-                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.grp_package" ></formtext>
+                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
                       <formtext labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
                       <formtext labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
                       <formtext labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
@@ -23,15 +26,16 @@
             </panel>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" :datamap="datamap" :detail="false"></tblab>
+                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
-          <div :class="css.footerBar">
+          <div :class="css.footerBar" v-show="!detail">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>
         </div>
 </template>
 
 <script>
+import Utils from "common/Utils";
 import {setTitle} from "actions";
 import panel from "component/panel/panel";
 import css from "./sale.css";
@@ -40,17 +44,20 @@ import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
+import adapter from "./adapter";
 export default {
   mixins:[basePage],
   data: function () {
     return {
       css,
+      detail: false,
       startvalidate: false,
       orderId:"",
       baseInfo:{},
       tabs:[],
       show: false,
-      datamap:{}
+      datamap:{},
+      tabType:""
     }
   },
   computed: {},
@@ -67,12 +74,40 @@ export default {
           this.tabs.push(d.data.type);
           this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
+          this.tabType = d.data.type;
       },(error) =>{
         console.log(error);
       })
     },
     btnClickHandler: function(){
       this.startvalidate = !this.startvalidate;
+    },
+    successHandler: function(d){
+        let one = adapter(Utils.cloneObj(d));
+        // 这里的one只可能有一项
+        if(one[this.tabType]) this.editAction(one[this.tabType]);
+    },
+    failHandler: function(d){
+        console.log(d);
+    },
+    editAction: function(sub){
+      //{ "U_PurchaseNum": "FZXS201611100132_101", "sub_orders": [{产品及数量等信息}]}
+      let params = {
+        U_PurchaseNum:this.orderId,
+        sub_orders:sub.list || [],
+        rec_info: sub.rec_info
+      }
+      this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify(params)).then((res) => {
+          var d = res.json();
+          console.log(d);
+          this.showMsg("success", "提交成功");
+          this.getData(this.orderId);
+          this.show = !this.show;
+          this.detail = true;
+      },(error) =>{
+        console.log(error);
+        this.showMsg("error", error.msg);
+      })
     }
   },
   components: {tblab, panel,formtext,cascadeform,btn},

@@ -1,5 +1,6 @@
 export default function adapterData(d) {
-
+  d.U_SWW = d.SWW; // 这里sap xxx 不解释了
+  if(!d.stock || d.stock == 0) d.stock = "0";
   let exepFun = function(scope, msg){
     scope.defCss = "errorHappend";
     scope.errorMsg = msg;
@@ -10,6 +11,20 @@ export default function adapterData(d) {
     scope.defCss = "default";
     scope.errorMsg = "";
     return true;
+  }
+
+  d.U_LockCodes = {
+    def: d.U_LockCodes || [],
+    defCss: "default",
+    errorMsg:"",tb_disabled: true,
+    validateFun:function(data, index){ return true; }
+  }
+
+  d.U_HingeCodes = {
+    def: d.U_HingeCodes || [],
+    defCss: "default",
+    errorMsg:"",tb_disabled: true,
+    validateFun:function(data, index){ return true; }
   }
   // 产品编码、产品名称、二级分类、三级分类、品牌、供应商、型号、 产品规格、材质、颜色、可用库存量、单位、备注 为固定字段
 
@@ -49,7 +64,7 @@ export default function adapterData(d) {
           else if(this.def == 0 || this.def == "" || !this.def)  return exepFun(this, "门洞宽必须填写")
           else if(this.def*1 < d.U_DWWideMin*1) return exepFun(this, "门洞宽不能小于"+d.U_DWWideMin)
           else if(this.def*1 > d.U_DWWideL*1) return exepFun(this, "门洞宽不能大于"+d.U_DWWideL)
-          else return resetFun();
+          else return resetFun(this);
       }
   };
   // 设置验证参数规则
@@ -63,7 +78,7 @@ export default function adapterData(d) {
           else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "门洞高必须填写")
           else if(this.def*1 < d.U_DWHighMin*1) return exepFun(this, "门洞高不能小于"+d.U_DWHighMin)
           else if(this.def*1 > d.U_DWHighL*1) return exepFun(this, "门洞高不能大于"+d.U_DWHighL)
-          else return resetFun();
+          else return resetFun(this);
       }
   };
   // 设置验证参数规则
@@ -105,15 +120,15 @@ export default function adapterData(d) {
       validateFun:function(data, index){ return true; }
   };
 
-  d.U_HiPro = {     // 合页品牌/型号/规格
-      def: d.U_HiPro || "",
+  d.U_HingeName = {     // 合页品牌/型号/规格
+      def: d.U_HingeName || "",
       defCss: "",
       errorMsg:"",
       tb_disabled: false,
       validateFun:function(data, index){return true; }
   };
-  d.U_LoPro = {     // 门锁品牌/型号/规格
-      def:   d.U_LoPro || "",
+  d.U_LockName = {     // 门锁品牌/型号/规格
+      def:   d.U_LockName || "",
       defCss: "",
       errorMsg:"",
       tb_disabled: false,
@@ -303,7 +318,7 @@ export default function adapterData(d) {
   };
 
   d.U_DType = {     // 智能门锁门的类别
-      def: d.U_DType || "",
+      def: d.U_DType || "木门",
       defCss: "default",
       errorMsg:"",tb_disabled: true,
       validateFun:function(data, index){
@@ -342,7 +357,7 @@ export default function adapterData(d) {
   };
   // 设置验证参数规则 销售数量是公用的验证
   d.buyCounts = {     // 销售数量 限制不能购买0 个
-      def: 0,
+      def: d.sale_counts || 0,
       defCss: "default",
       errorMsg:"",tb_disabled: false,
       validateFun:function(data, index){
@@ -380,9 +395,6 @@ export default function adapterData(d) {
           // 默认是平开门（铝框门）  平开门（木门）
           // 设置验证参数规则
           // 门洞高    最小值 U_DWHighMin  极限值 U_DWHighL
-              d.U_DSHigh.validateFun = function(data, index){
-
-              }
           // 设置验证参数规则
           // 门洞深  最小值 U_DWDeepMin  极限值 U_DWDeepL
             d.U_DSThick.validateFun =function(data, index){
@@ -549,15 +561,16 @@ export default function adapterData(d) {
           }
           // 是否开孔
           d.U_IKeyHole.validateFun = function(data, index){
-                  if(this.def == "是")  {
-                      d.U_HiPro.def = "";
-                      d.U_LoPro.def = "";
+                  if(this.def == "否")  {
+                      d.U_LockCode.def = "";
+                      d.U_HingeCode.def = "";
                   }// 如果否的时候  重置 合页与门锁的值
                   return true;
           }
 
            // 合页品牌/型号/规格
-          d.U_HiPro.validateFun = function(data, index){
+          d.U_HingeName.validateFun = function(data, index){
+            console.log(this.def);
                 if(this.def == 0 || this.def == "" || !this.def) {
                     if(data.U_IKeyHole.def == "是") {  // 是开孔的时候  此项必填
                       this.defCss = "errorHappend";
@@ -572,7 +585,7 @@ export default function adapterData(d) {
                 }
           }
            // 门锁品牌/型号/规格
-          d.U_LoPro.validateFun = function(data, index){
+          d.U_LockName.validateFun = function(data, index){
                 if(this.def == 0 || this.def == "" || !this.def) {
                     if(data.U_IKeyHole.def == "是") {  // 是开孔的时候  此项必填
                       this.defCss = "errorHappend";
@@ -593,8 +606,8 @@ export default function adapterData(d) {
           if(levelOneArray.indexOf(d.U_ThreeL) != -1) {
               // 移门的时候 去除 开启方式， 是否开孔 门锁，合页
               d.U_IKeyHole.tb_disabled = true; // 是否开孔
-              d.U_HiPro.tb_disabled = true; // 合页
-              d.U_LoPro.tb_disabled = true; // 门锁
+              d.U_HingeName.tb_disabled = true; // 合页
+              d.U_LockName.tb_disabled = true; // 门锁
               d.U_OpenWay.tb_disabled = true; // 手否开孔
 
               // 门套木门是没有 门扇
@@ -627,8 +640,8 @@ export default function adapterData(d) {
                  d.U_TDHigh.tb_disabled = true;  //门扇高
                  d.U_TDThick.tb_disabled = true;  //门扇厚
                  d.U_IKeyHole.tb_disabled = true;  //是否开孔
-                 d.U_HiPro.tb_disabled = true;  //合页品牌/型号/规格
-                 d.U_LoPro.tb_disabled = true;  //门锁品牌/型号/规格
+                 d.U_HingeName.tb_disabled = true;  //合页品牌/型号/规格
+                 d.U_LockName.tb_disabled = true;  //门锁品牌/型号/规格
                  d.U_OpenWay.tb_disabled = true;  //开启方式   左开  右开
 
                  // 智能门锁厚度
@@ -668,6 +681,12 @@ export default function adapterData(d) {
                  }
            }
 
+           d.Notes = {     // 备注
+               def: d.Notes || "",
+               defCss: "default",
+               errorMsg:"",tb_disabled: false,
+               validateFun:function(data, index){ return true; }
+           };
 
   // 开门（木门）的时候
   return d;

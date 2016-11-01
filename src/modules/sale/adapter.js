@@ -10,7 +10,14 @@ export default function adapterData(d) {
            // 页面端  销售数量  这里格式化一下
            if(one.buyCounts) one.sale_counts = one.buyCounts.def || 0;
            delete one.buyCounts;
+
+           for (var k in one) {
+              if(typeof(one[k]) == "object") {
+                  one[k] = one[k].def || "";
+              }
+           }
         }
     }
+    console.log(d);
     return d
 }

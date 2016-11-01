@@ -86,7 +86,7 @@ export default {
       //     "SalPackUn":3, // 一包的数量
       //     "SalPackMsr":"包装的单位",
       //     "remark":"---xxx",
-      //     "avalibleStores":11}]
+      //     "stock":11}]
       // },{
       //     U_PurchaseNum:Math.random(),
       //     orderList:[{"ItemCode":Math.random(),
@@ -105,7 +105,7 @@ export default {
       //     "sale_counts":"10", // 销售数量
       //     "SalUnitMsr":"这是单位",
       //     "remark":"---xxx",
-      //     "avalibleStores":11}]
+      //     "stock":11}]
       // }]
     }
   },

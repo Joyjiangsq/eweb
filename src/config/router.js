@@ -43,6 +43,9 @@ export function routerStart(router) {
                       },
                       "subdetail" :{
                         component: function(resovle) {require(["modules/sale/subSaleDetail.vue"], resovle)}
+                      },
+                      "saleappend" :{
+                        component: function(resovle) {require(["modules/sale/saleAppend.vue"], resovle)}
                       }
                     }
                 },

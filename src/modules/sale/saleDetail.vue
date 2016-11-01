@@ -1,6 +1,9 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
+            <div :class="css.hrow">
+                <span><span :class="css.hitem">主订单号：</span> {{orderId}}</span>
+            </div>
             <panel>
 
                 <div slot="panelTitle">
@@ -10,7 +13,7 @@
                 <div slot="panelContent">
                       <formtext labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
                       <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
-                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.grp_package" ></formtext>
+                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
                       <formtext labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
                       <formtext labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
                       <formtext labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
@@ -25,9 +28,6 @@
           <div :class="css.dataArea">
                 <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" :datamap="datamap" ></tblab>
           </div>
-          <div :class="css.footerBar">
-              <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
-          </div>
         </div>
 </template>
 
@@ -39,7 +39,6 @@ import cascadeform from "component/form/formCascade";
 import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLabDetail";
-import btn from "component/sprite/button";
 export default {
   mixins:[basePage],
   data: function () {
@@ -74,7 +73,6 @@ export default {
                 this.datamap[one.type].push(one);
               }
           }
-          // console.log(Object.keys(this.datamap));
           this.tabs = Object.keys(this.datamap);
           this.baseInfo = d.data.base_info;
       },(error) =>{
@@ -85,7 +83,7 @@ export default {
       this.startvalidate = !this.startvalidate;
     }
   },
-  components: {tblab, panel,formtext,cascadeform,btn},
+  components: {tblab, panel,formtext,cascadeform},
   route:{
     data: function(){
       if(!this.$route.query.orderid) history.back();

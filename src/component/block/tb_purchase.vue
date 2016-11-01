@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="">
-              <tb :headercaption="headercaption" curaction="purchase"   @loadsuccess="oneSuccessHandler" :load="false" :datas="testdata" ></tb>
+              <tb :headercaption="headercaption" curaction="purchase"   @loadsuccess="oneSuccessHandler" :load="false" :datas="vlist" ></tb>
     </div>
 </template>
 <script>
@@ -32,10 +32,10 @@ export default {
                     {name:"产品包", labelValue:"SWW", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
-                    {name:"可用库存量", labelValue:"avalibleStores",type:"data"},{name:"使用库存数", labelValue:"useStores",type:"edit"},
-                    {name:"采购数量", labelValue:"purchaseCounts",type:"edit"},{name:"包装规格", labelValue:"tt",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
+                    {name:"可用库存量", labelValue:"stock",type:"data"},{name:"使用库存数", labelValue:"use_stores",type:"edit"},
+                    {name:"采购数量", labelValue:"purchase_counts",type:"edit"},{name:"包装规格", labelValue:"tt",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
                     {name:"转化数量", labelValue:"Quantity",type:"data"},
-                    {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"remark",type:"data"},
+                    {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Comments",type:"data"},
                     ],
     }
   },
@@ -57,8 +57,8 @@ export default {
         console.log(this.ignorevalidate);
         this.validateRec = true;
         if(this.ignorevalidate) return false
-        for (var i = 0; i < this.testdata.length; i++) {
-          let one = this.testdata[i];
+        for (var i = 0; i < this.vlist.length; i++) {
+          let one = this.vlist[i];
             for(var key in one) {
               if(typeof(one[key]) == "object") {
                   if(!one[key].validateFun) continue;

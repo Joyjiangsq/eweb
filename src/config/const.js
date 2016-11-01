@@ -38,18 +38,17 @@ export const orderType = [
 
 // 订单状态  TODO 暂时前端写死
 export const orderStatus = [
-  {name:"待销售", id: 1},
-  {name:"待采购", id: 2},
-  {name:"分站审核", id: 3},
-  {name:"部分驳回", id: 4},
-  {name:"店长驳回", id: 5},
-  {name:"工厂审核", id: 6},
-  {name:"工厂驳回", id: 7},
-  {name:"待扣款", id: 8},
-  {name:"待生产", id: 9},
-  {name:"待发货", id: 10},
-  {name:"已发货", id: 11},
-  {name:"已收货", id: 12}
+  {name:"工厂提货", id: 1},
+  {name:"D仓收货", id: 2},
+  {name:"S仓提货", id: 3},
+  {name:"S仓收货", id: 4},
+  {name:"分站提货", id: 5},
+  {name:"分站签收", id: 6},
+  {name:"e站驳回", id: 7},
+  {name:"工厂接单", id: 8},
+  {name:"待结单", id: 9},
+  {name:"待采购", id: 10},
+  {name:"店长驳回", id: 11}
 ]
 
 // 角色

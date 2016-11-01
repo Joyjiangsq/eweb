@@ -1,6 +1,7 @@
 import {setTitle} from "actions";
 import {showTips} from "actions/index";
 //
+
 import search from "component/search/search";
 import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";

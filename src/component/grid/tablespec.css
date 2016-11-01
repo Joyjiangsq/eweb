@@ -13,7 +13,7 @@ table tbody td {
     cursor: pointer;
 }
 .tableBox {
-    width: 100%;
+      width: 99.9%;
     margin: 0 auto;
     overflow-x: scroll;
 }

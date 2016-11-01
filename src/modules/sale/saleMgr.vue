@@ -62,7 +62,7 @@ var sorderComponent = Vue.extend({
 })
 let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"component", component: orderComponent, cname:"ordercomponent"},
                         {name:"订单状态", labelValue:"order_status",type:"data"},
-                        {name:"产品包", labelValue:"grp_package",type:"data", adapterFun: function(d) {return d.base_info.grp_package}},
+                        {name:"产品包", labelValue:"U_SWW",type:"data", adapterFun: function(d) {return d.base_info.U_SWW}},
                         {name:"订单类型", labelValue:"order_type",type:"data", adapterFun: function(d) {return d.base_info.order_type}},
                         {name:"客户姓名", labelValue:"CardName",type:"data", adapterFun: function(d) {return d.base_info.CardName}},
                         {name:"电话", labelValue:"Phone2",type:"data", adapterFun: function(d) {return d.base_info.Phone2}},
@@ -88,7 +88,9 @@ export default {
           return [{name:"补单",action:"addOrder",data: d},{name:"付款记录",action:"payHistory",data: d},{name:"二维码",action:"code",data: d}]
         },
         operatorHandler: function(d){
-            console.log(d);
+            if(d.action == "addOrder") {
+                this.$router.go({path:"sale/saleappend", query:{orderid:d.data.U_FZOrder}})
+            }
         }
       },
       subTableEvents:{

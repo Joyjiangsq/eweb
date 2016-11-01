@@ -2,6 +2,7 @@ import tb from "component/grid/tableSpec";
 import tbbase from "component/grid/tableListBase";
 import css from "./type.css";
 import dialog from "component/dialog/dialog";
+import itemtpl from "./itemtpl.vue";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -15,7 +16,7 @@ export default {
     recdata:{
       default: function(){
         return {
-          recAddr:"安徽省,合肥市,高新区,xxx街道"
+          Address2:"安徽省,合肥市,高新区,xxx街道"
         }
       },
     },
@@ -23,7 +24,7 @@ export default {
       default: "add"
     },
     detail:{
-      default: false
+      default: false,
     }
   },
   data: function () {
@@ -95,6 +96,7 @@ export default {
           let one = this.vlist[i];
             for(var key in one) {
               if(typeof(one[key]) == "object") {
+                console.log(key);
                   if(one[key].tb_disabled) continue;
                   let res = one[key].validateFun(one, i);
                   if(!res) {this.validateRec = false;}
@@ -144,7 +146,6 @@ export default {
   },
   ready: function(){
     if(!this.detail) {
-      console.log(this.testdata);
       for (var i = 0; i < this.testdata.length; i++) {
         var one = this.testdata[i];
         this.vlist.push(this.adapterFun(one));
@@ -155,7 +156,7 @@ export default {
       this.headercaption.splice(0,1);
     }
   },
-  components: {tb, dialog, tbbase},
+  components: {tb, dialog, tbbase, itemtpl},
   watch:{
     "subvalidate": function() {
         // 执行验证

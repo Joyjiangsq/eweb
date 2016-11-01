@@ -1,5 +1,6 @@
 export default function adapterData(d) {
-d.U_ThreeL ="台面"
+      d.U_SWW = d.SWW; // 这里sap xxx 不解释了
+      if(!d.stock || d.stock == 0) d.stock = "0";
       let exepFun = function(scope, msg){
         scope.defCss = "errorHappend";
         scope.errorMsg = msg;
@@ -11,9 +12,16 @@ d.U_ThreeL ="台面"
         scope.errorMsg = "";
         return true;
       }
-
+      d.U_HandleCodes = {
+        def: d.U_HandleCodes || [],
+        defCss: "default",
+        errorMsg:"",tb_disabled: false,
+        validateFun:function(data, index){
+             return true;
+        }
+      }
       d.U_FModeling = {     // 前沿造型   下拉组件 默认 、、 DM-008-直边、  DM-002-罗马边
-          def: d.U_FModeling || "",
+          def: d.U_FModeling || "DM-008-直边",
           defCss: "default",
           errorMsg:"",tb_disabled: false,
           validateFun:function(data, index){
@@ -31,7 +39,7 @@ d.U_ThreeL ="台面"
           validateFun:function(data, index){ return true; }
       };
       d.U_BasinT = {     // 台盆工艺   下拉组件 默认  台上工艺、台下工艺
-          def: d.U_BasinT || "",
+          def: d.U_BasinT || "台上工艺",
           defCss: "default",
           errorMsg:"",tb_disabled: false,
           validateFun:function(data, index){
@@ -43,12 +51,19 @@ d.U_ThreeL ="台面"
           }
       };
 
-      //bashou TODO
-      d.bashou = {     // 把手型号   下拉组件 默认 、、
-          def: d.bashou || "请选择",
+      //U_HandleName TODO
+      let bav = ["吊柜","地柜","高柜","半高柜","柜门","板件"];
+      d.U_HandleName = {     // 把手型号   下拉组件 默认 、、
+          def: d.U_HandleName || "",
           defCss: "default",
           errorMsg:"",tb_disabled: false,
-          validateFun:function(data, index){ return true; }
+          validateFun:function(data, index){
+              if(bav.indexOf(d.U_ThreeL) != -1) {
+                  if(!this.def || this.def == "")  return exepFun(this, "把手型号必填")
+                  else  return resetFun(this)
+              }
+              else  return resetFun(this)
+          }
       };
       d.U_PSWide = {     // 宽度（mm）   文本输入   个性化宽度 最小值 U_PSWideMin  个性化宽度最大值 U_PSWideMax
           def: d.U_PSWide || "",
@@ -85,7 +100,7 @@ d.U_ThreeL ="台面"
              else if(isNaN(this.def)) return exepFun(this, "进深填写不正确")
              else if(this.def*1 < 0)  return exepFun(this, "进深必须大于0")
              else if(this.def*1 < d.U_PSDeepMin) return exepFun(this, "进深不能小于" + d.U_PSDeepMin)
-             else if(this.def*1 > d.U_PSDeepMin)  return exepFun(this, "进深不能大于" + d.U_PSDeepMax)
+             else if(this.def*1 > d.U_PSDeepMax)  return exepFun(this, "进深不能大于" + d.U_PSDeepMax)
              else return resetFun(this)
           }
       };
@@ -99,7 +114,7 @@ d.U_ThreeL ="台面"
                  else if(isNaN(this.def)) return exepFun(this, "台面进深填写不正确")
                  else if(this.def*1 < 0)  return exepFun(this, "台面进深必须大于0")
                  else if(this.def*1 < d.U_PSDeepMin) return exepFun(this, "台面进深不能小于" + d.U_PSDeepMin)
-                 else if(this.def*1 > d.U_PSDeepMin)  return exepFun(this, "台面进深不能大于" + d.U_PSDeepMax)
+                 else if(this.def*1 > d.U_PSDeepMax)  return exepFun(this, "台面进深不能大于" + d.U_PSDeepMax)
                  else return resetFun(this)
             }
             else return resetFun(this)
@@ -114,8 +129,8 @@ d.U_ThreeL ="台面"
                    if(!this.def || this.def == "") return exepFun(this, "必须填写挡水高度")
                    else if(isNaN(this.def)) return exepFun(this, "挡水高度填写不正确")
                    else if(this.def*1 < 0)  return exepFun(this, "挡水高度必须大于0")
-                   else if(this.def*1 < d.U_PSHighMin) return exepFun(this, "挡水高度不能小于" + d.U_PSDeepMin)
-                   else if(this.def*1 > d.U_PSHighMax)  return exepFun(this, "挡水高度不能大于" + d.U_PSDeepMax)
+                   else if(this.def*1 < d.U_PSHighMin) return exepFun(this, "挡水高度不能小于" + d.U_PSHighMin)
+                   else if(this.def*1 > d.U_PSHighMax)  return exepFun(this, "挡水高度不能大于" + d.U_PSHighMax)
                    else return resetFun(this)
               }
               else return resetFun(this)
@@ -163,7 +178,7 @@ d.U_ThreeL ="台面"
 
       // 设置验证参数规则
       d.buyCounts = {     // 延米线（m）/销售数量
-          def: 0,
+          def: d.sale_counts || 0,
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
@@ -193,10 +208,10 @@ d.U_ThreeL ="台面"
             d.U_ASDeep.tb_disabled = true;
             if(levelOne.indexOf(d.U_ThreeL) != -1) {
                 d.U_PSDeep.tb_disabled = true; // 关闭进深
+                d.U_HandleName.tb_disabled = true // 关闭把手型号
                 if(d.U_ThreeL != "板件") {
                     d.U_PSWide.tb_disabled = true // 关闭宽
                     d.U_PSHigh.tb_disabled = true // 关闭高
-                    d.bashou.tb_disabled = true // 关闭把手型号
                 }
             }
       }
@@ -204,7 +219,7 @@ d.U_ThreeL ="台面"
             d.U_PSDeep.tb_disabled = true; // 关闭进深
             d.U_PSWide.tb_disabled = true; // 关闭宽
             d.U_PSHigh.tb_disabled = true; // 关闭高
-            d.bashou.tb_disabled = true // 关闭把手型号
+            d.U_HandleName.tb_disabled = true // 关闭把手型号
             if(d.U_ThreeL == "灶台") {
                 //灶台  关闭 包管展开宽、包管展开高、台盆工艺、台面进深、挡水高度、前沿造型
                 d.U_FModeling.tb_disabled = true;

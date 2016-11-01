@@ -33,6 +33,7 @@ export default {
       headerCaption:[
              {type:"operator", name:"", icon: true},
              {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+             {name:"所属包", labelValue:"SWW", type:"data"},
              {name:"产品包", labelValue:"SWW", type:"data"},
              {name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"品牌", labelValue:"U_Brand", type:"data"},
@@ -41,9 +42,6 @@ export default {
              {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
       ],
       searchParams: {ItmsGrpNam:"瓷砖"}, // 初始查询依据
-
-      testData:[{ItemCode:"xxx01", ItemName:"大卫瓷砖", SWW:"主材包", avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"03133",U_Series:"xxoo",U_MQuality:"金子",SalUnitMsr:"个", Spec:"哦，哦，哦，"},
-                {ItemCode:"xxx01ww", ItemName:"大卫瓷砖", SWW:"主材包",avalibleStores: 22, FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"供应商大卫", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
 

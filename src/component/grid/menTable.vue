@@ -40,7 +40,7 @@
 
                     </td>
               </tr>
-              <tr>
+              <tr v-if="curaction == 'add'">
                   <td  v-for="(index, sone) in headercaption">
                     <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
                     <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
@@ -69,7 +69,9 @@ export default {
       type: String,
       default:"id"
     },
-
+    curaction:{
+      default:"add"
+    },
     enterUrl: {
       type: String,
       default:""
@@ -102,12 +104,12 @@ export default {
             "U_Series":"这是系列",
             "U_MQuality":"这是材质",
             "Spec":"这是规格",
-            "avalibleStores":20,
+            "stock":20,
             "U_IKeyHole":"1", // 手否开孔
             "Color":"红色",
             "SalUnitMsr":"这是单位",
             "remark":"---xxx",
-            "avalibleStores":11
+            "stock":11
 
         });
     },

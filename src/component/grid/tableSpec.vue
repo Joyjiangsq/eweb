@@ -89,7 +89,7 @@ export default {
             "U_Series":"这是系列",
             "U_MQuality":"这是材质",
             "Spec":"这是规格",
-            "avalibleStores":20,
+            "stock":20,
             "SalUnitMsr":"这是单位"
         });
     },

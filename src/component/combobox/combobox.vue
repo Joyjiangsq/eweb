@@ -63,27 +63,30 @@ export default {
       combCss,
       dropshow: false,
       havedatas: true,
-      style:{}
+      style:{},
+      defaultInfo:{label:"请选择", key:"-1"}
     }
   },
   computed: {
-    defaultInfo: function(){
-      let info ={label:"请选择", key:"-1"};
-      if(!this.datas || this.datas.length == 0 || this.value == 0) return info;
-
-      for(var i = 0; i < this.datas.length; i++){
-        if(this.value == this.datas[i][this.keyid]) {
-          info.label = this.datas[i][this.labelname];
-          info.key = this.datas[i][this.keyid];
-        }
-      }
-      return info;
-    }      // 展示的默认值   不管是ajax  还是datas渲染  都要重新初始化这个值
+    // defaultInfo: function(){
+    //   let info ={label:"请选择", key:"-1"};
+    //   if(!this.datas || this.datas.length == 0 || this.value == 0) return info;
+    //
+    //   for(var i = 0; i < this.datas.length; i++){
+    //     if(this.value == this.datas[i][this.keyid]) {
+    //       info.label = this.datas[i][this.labelname];
+    //       info.key = this.datas[i][this.keyid];
+    //     }
+    //   }
+    //   return info;
+    // }      // 展示的默认值   不管是ajax  还是datas渲染  都要重新初始化这个值
   },
   created: function(){
     if(this.url) this.loadData();
   },
   ready: function () {
+    console.log(this.value+"------------------");
+    if(this.value) this.setDef();
   },
   attached: function () {},
   methods: {
@@ -108,9 +111,8 @@ export default {
     },
 
     dropClick(item) {
-      this.defaultInfo = {
-          label:item[this.labelname], key:item[this.keyid]
-      }
+      this.defaultInfo.label = item[this.labelname];
+      this.defaultInfo.key = item[this.keyid];
       this.value = item[this.keyid];
       this.changeDropAction();
       this.$dispatch("dropclick", this.value);
@@ -123,6 +125,15 @@ export default {
       },(error) =>{
         console.log(error);
       })
+    },
+
+    setDef: function(){
+      for(var i = 0; i < this.datas.length; i++){
+          if(this.value == this.datas[i][this.keyid]) {
+            this.defaultInfo.label = this.datas[i][this.labelname];
+            this.defaultInfo.key = this.datas[i][this.keyid];
+          }
+      }
     }
   },
   components: {icon},
@@ -136,6 +147,9 @@ export default {
     "datas": function(){
       if(this.datas.length == 0) this.havedatas = false;
       else this.havedatas = true
+    },
+    "value":function(){
+        this.setDef();
     }
   }
 }

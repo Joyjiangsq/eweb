@@ -25,6 +25,7 @@
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'jichengdiaoding'">
                       <div class="" v-if="datamap.jichengdiaoding">
+
                         <jichengdiaodingtb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.jichengdiaoding.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.jichengdiaoding.rec_info"></jichengdiaodingtb>
                         <jichengdiaodingtb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.jichengdiaoding.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.jichengdiaoding.rec_info" v-else></jichengdiaodingtb>
                       </div>
@@ -32,12 +33,18 @@
                 </div>
 
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'men'">
-                      <mentb v-if="!!datamap.men && detail"  @fail="failHandler" :subvalidate="subvalidate" :testdata="datamap.men.sub_orders" :detail="detail"  @success="successHandler"  :recdata="datamap.men.rec_info"></mentb>
-                      <mentb  @fail="failHandler" :subvalidate="subvalidate"  @success="successHandler" v-else></mentb>
+                      <div class="" v-if="datamap.men">
+                        <mentb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.men.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.men.rec_info"></mentb>
+                        <mentb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.men.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.men.rec_info" v-else></mentb>
+                      </div>
+                      <mentb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></mentb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chugui'">
-                      <chuguitb v-if="!!datamap.chugui && detail"  @fail="failHandler" :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler"  :recdata="datamap.chugui.rec_info"></chuguitb>
-                      <chuguitb  @fail="failHandler" :subvalidate="subvalidate"  @success="successHandler" v-else></chuguitb>
+                      <div class="" v-if="datamap.chugui">
+                        <chuguitb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info"></chuguitb>
+                        <chuguitb  @fail="failHandler"  curaction="edit"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" v-else></chuguitb>
+                      </div>
+                      <chuguitb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></chuguitb>
                 </div>
 
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'zhuangxiufucai'">
@@ -98,7 +105,6 @@ export default {
       lastDataMap:{},
       tabTpl:{index:110, ename:""},
       tabArray: [{show: false},{show: false},{show: false},{show: false},{show: false},{show: false},{show: false}, {show: false}],
-      // zhuangxiu:[{ItemCode:"xxx01ww", ItemName:"装修辅材", buyCounts:{}, avalibleStores:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅材", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
   computed: {
@@ -159,8 +165,9 @@ export default {
         console.log(d);
         this.lastDataMap[d.project] = d.data;
         let dataLenth = Object.keys(this.lastDataMap).length;
-        console.log(dataLenth);
-        if(dataLenth == 8) this.$dispatch("success", this.lastDataMap);
+        // console.log(dataLenth);
+        // console.log(this.tabs.length);
+        if(dataLenth == this.tabs.length) this.$dispatch("success", this.lastDataMap);
     }
   },
   components: {tabbar, cizhuantb, dibantb, jiejutb,mentb, chuguitb, jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
