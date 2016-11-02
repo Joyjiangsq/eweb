@@ -108,18 +108,20 @@ export default {
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
           else {
-            let params = {list: this.vlist, rec_info: this.recdata}
-            if(this.curName == "chugui") {
-              if(!this.eclosure) {
-                this.$dispatch("fail", {project: this.curName});
-                showTips(this.$store, {type:"error", msg:"厨柜需必须上传附件"});
-              }
-              else {
-                params["U_Enclosure"] = this.eclosure;
-                this.$dispatch("success", {project:this.curName,data:params});
-              }
-            }
-            else this.$dispatch("success", {project:this.curName,data:params});
+              let params = {list: this.vlist, rec_info: this.recdata};
+              if(this.eclosure) params["U_Enclosure"] = this.eclosure;
+              // if(this.curName == "chugui" && this.vlist.length > 0) {
+              //   if(!this.eclosure) {
+              //     this.$dispatch("fail", {project: this.curName});
+              //     showTips(this.$store, {type:"error", msg:"厨柜需必须上传附件"});
+              //   }
+              //   else {
+              //     params["U_Enclosure"] = this.eclosure;
+              //     this.$dispatch("success", {project:this.curName,data:params});
+              //   }
+              // }
+              // else this.$dispatch("success", {project:this.curName,data:params});
+              this.$dispatch("success", {project:this.curName,data:params});
           }
         })
     },

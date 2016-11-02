@@ -3,7 +3,7 @@ import * as PORTAL from './mutation-types'
 // initial state
 
 const state = {
-  tipData:{msg:"", type:"", datePicker:""}
+  tipData:{msg:"", type:"", datePicker:"", time:2000}
 }
 
 // mutations

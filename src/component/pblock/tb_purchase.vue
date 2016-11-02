@@ -4,7 +4,6 @@
     </div>
 </template>
 <script>
-// 不使用
 // 瓷砖分类
 import tb from "component/grid/purchaseTable";
 import css from "./type.css";
@@ -24,6 +23,9 @@ export default {
     },
     srcdata:{  // 数据源 更改状态
 
+    },
+    type:{
+      default:""
     }
   },
   data: function () {
@@ -54,6 +56,11 @@ export default {
     adapterFun: function(d) {
       return adapter(d);
     },
+    // 根据产品编码查询的结果
+    oneSuccessHandler: function(d) {
+      let one = this.adapterFun(d);
+      this.vlist.push(one);
+    },
     // 验证列表数据
     validateFun: function(){
         console.log(this.ignorevalidate);
@@ -70,8 +77,12 @@ export default {
           }
         }
         if(!this.validateRec) this.$dispatch("fail",this.srcdata);
-        else this.$dispatch("success", {data:this.vlist, PurchaseNum: this.orderid});
+        else this.$dispatch("success", {data:this.vlist, rec_info: this.recdata, type: this.type, PurchaseNum: this.orderid});
     },
+    addoneHandler : function(d){
+        let one = this.adapterFun(d.data);
+        this.vlist.push(one);
+    }
   },
   components: {tb},
   watch:{

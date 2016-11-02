@@ -13,6 +13,5 @@ export const setUser = ({ dispatch, state }, data) => {
 }
 
 export const showTips = ({ dispatch, state }, data) => {
-  console.log(data);
     if(data) dispatch(types.TIPDATA, data)
 }

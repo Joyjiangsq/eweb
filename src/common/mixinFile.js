@@ -40,10 +40,9 @@ let fileMixins = {
                 url: this.$SpecApi + "v1/api/" + this.url, //默认是form action
                 success: function(data) {
                     self.$set("loading", !self.loading);
-                    console.log(data);
                     if(data.code == 200) {
                       showTips(self.$store, {type:"success", msg:"上传成功！"});
-                      this.$dispatch("upsuccess", {});
+                      self.$dispatch("upsuccess", {url: data.url, name:self.file.name});
                     }
                     else {
                       showTips(self.$store, {type:"warn", msg:data.msg});
@@ -59,16 +58,16 @@ let fileMixins = {
         },
 
         changeFile: function(e) {
-            var file = e.currentTarget.files[0];
-            let name = file.name;
+            this.file = e.currentTarget.files[0];
+            let name = this.file.name;
             let endName = name.split(".")[name.split(".").length -1];
-            if(this.filter.length == 0) this.subChangeFiles(file);
+            if(this.filter.length == 0) this.subChangeFiles(this.file);
             else {
               if(this.filter.indexOf(endName) == -1) {
                   showTips(this.$store, {type:"error", msg:"请上传正确的文件格式"});
                   this.reset();
               }
-              else this.subChangeFiles(file);
+              else this.subChangeFiles(this.file);
             }
 
         }

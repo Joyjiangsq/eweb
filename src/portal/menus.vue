@@ -30,10 +30,10 @@ export default {
           {name:"销售订单管理", url:"/sale", icon:"icon-tip"},
           {name:"采购管理", icon:"icon-tip",show: false,subMenus:[{
                   url:"/purchase",name:"采购订单管理"
-              },//{
-                  // url:"/prestoremgr",name:"备货管理"
-              // },{
-                  // url:"/prestorevalidate",name:"备货审核"}
+              },{
+                  url:"/prestore",name:"备货申请"
+              },{
+                  url:"/prestorevalidate",name:"备货审核"}
               ]
           },
           {name:"订制品设计申请", url:"/specapplydesignmgr", icon:"icon-tip"},

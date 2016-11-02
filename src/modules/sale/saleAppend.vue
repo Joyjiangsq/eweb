@@ -53,6 +53,7 @@ export default {
       orderid:"",
       startvalidate: false, // 这参数作为大类 数据验证开始的依据  只要改变就开始验证
       show: false,
+      self: true,
       baseInfo:{
         mult:"", // 客户信息的手机号 加姓名
         Address:"",// 客户地址
@@ -86,6 +87,7 @@ export default {
     successHandler: function(d) {
         // 几大类 数据适配
         saleAdapter(d);
+        this.self = false;
         if(Object.keys(d).length == 0) {
           showTips(this.$store, {type:"warn", msg:"没有选择任何项目"});
           return false;
@@ -93,8 +95,12 @@ export default {
         this.$http.post(this.$Api+"sales/append",JSON.stringify({sub_orders:d, U_FZOrder:this.orderid})).then((res) => {
             var d = res.json();
             console.log(d);
+            this.self = true;
             showTips(this.$store, {type:"success", msg:"补单成功"});
-            history.back();
+            window.onbeforeunload  = function(){}
+            setTimeout(()=>{
+              history.back();
+            })
         },(error) =>{
           console.log(error);
         })
@@ -122,6 +128,21 @@ export default {
           this.orderid = this.$route.query.orderid;
       }
       this.getData(this.orderid);
+      window.onbeforeunload  = function(){return true;}
+    },
+    canDeactivate: function(transition){
+        if(this.self) {
+          transition.next();
+          window.onbeforeunload  = function(){}
+        }
+        else {
+          let tag = confirm("离开页面不会保存数据，请注意操作");
+          if(tag) {
+            transition.next();
+            window.onbeforeunload  = function(){}
+          }
+          else transition.abort();
+        }
     }
   }
 }

@@ -16,7 +16,7 @@
                       <comboxform keyid="name" labelname="是否有电梯：" :must="false" :value.sync="baseInfo.U_IsElevator" keyname="name" formname="U_IsElevator" :datas="hasDianti" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
                       <formtext :read="true"  labelname="一口价：" :must="false" unit="元" :value.sync="baseInfo.one_price" placeholder=""  formname='one_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="实收金额：" unit="元" :must="false" :value.sync="baseInfo.U_PaInAmount" placeholder=""  formname='U_PaInAmount' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <comboxform keyid="name" labelname="订单类型：" :value.sync="baseInfo.order_type" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
+                      <comboxform keyid="name" labelname="订单类型：" :value.sync="baseInfo.order_type" dropfixed="dropfixed" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
                       <formtext labelname="跟单员：" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="跟单员电话：" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :length="11" :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                 </div>
@@ -65,6 +65,7 @@ export default {
       hasDianti:[{name:'是'},{name:'否'}], // 是否有电梯
       show: false,
       showUserDialog: false, // 控制用户选择多个地址
+      self: false,
       baseInfo:{
         mult:"", // 客户信息的手机号 加姓名
         Address:"",// 客户地址
@@ -88,6 +89,7 @@ export default {
         this.show = true;
 
     })
+
   },
   attached: function () {},
   methods: {
@@ -146,6 +148,7 @@ export default {
           showTips(this.$store, {type:"warn", msg:"没有选择任何项目"});
           return false;
         }
+        this.self = false;
         // 复制一份基础数据
         let newInfo = Utils.cloneObj(this.baseInfo);
         // 拼接 Address 前端地址和详情是两个字段   后台接收是一个字段
@@ -161,7 +164,9 @@ export default {
         this.$http.post(this.$Api+"sales",JSON.stringify({sub_orders:d, base_info:newInfo})).then((res) => {
             var d = res.json();
             console.log(d);
+            this.self = true;
             showTips(this.$store, {type:"success", msg:"新增成功"});
+            window.onbeforeunload  = function(){}
             this.$router.go({path:"/sale"})
         },(error) =>{
           console.log(error);
@@ -202,6 +207,21 @@ export default {
   route:{
     data: function(){
       setTitle(this.$store, [{name:"销售订单管理", type:"back"}, {name:"新增销售订单"}]);
+      window.onbeforeunload  = function(){return true;}
+    },
+    canDeactivate: function(transition){
+        if(this.self) {
+          transition.next();
+          window.onbeforeunload  = function(){}
+        }
+        else {
+          let tag = confirm("离开页面不会保存数据，请注意操作");
+          if(tag) {
+            transition.next();
+            window.onbeforeunload  = function(){}
+          }
+          else transition.abort();
+        }
     }
   }
 }

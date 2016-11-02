@@ -2,7 +2,7 @@
         <div class="">
           <div :class="css.paddingType">
             <div :class="css.hrow">
-                <span><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
+                <span><span :class="css.hitem">采购订单号：</span> {{orderId}}</span>
             </div>
             <panel>
 
@@ -29,7 +29,8 @@
                 <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
           <div :class="css.footerBar" v-show="!detail">
-              <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
+            <span :class="css.itemone"><btn @clickaction="backClickHandler" btnname="btn-default" iconname="icon-back">驳回</btn></span>
+              <span :class="css.itemone"><btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">核价并购买</btn></span>
           </div>
         </div>
 </template>
@@ -38,13 +39,13 @@
 import Utils from "common/Utils";
 import {setTitle} from "actions";
 import panel from "component/panel/panel";
-import css from "./sale.css";
+import css from "./p.css";
 import cascadeform from "component/form/formCascade";
 import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
-import tblab from "component/block/typeLab";
+import tblab from "component/pblock/typeLab";
 import btn from "component/sprite/button";
-import adapter from "./adapter";
+import adapter from "./itemAdapter";
 export default {
   mixins:[basePage],
   data: function () {
@@ -67,6 +68,9 @@ export default {
 
   },
   methods: {
+    backClickHandler: function(){
+
+    },
     getData: function(id){
       this.$http.get(this.$Api+"sales/sub-orders/" + id,{}).then((res) => {
           var d = res.json();
@@ -74,7 +78,6 @@ export default {
           this.tabs.push(d.data.type);
           this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
-          this.datamap["U_Enclosure"] = d.U_Enclosure || "";
           this.tabType = d.data.type;
       },(error) =>{
         console.log(error);
@@ -84,28 +87,25 @@ export default {
       this.startvalidate = !this.startvalidate;
     },
     successHandler: function(d){
-        let one = adapter(Utils.cloneObj(d));
-        // 这里的one只可能有一项
-        if(one[this.tabType]) this.editAction(one[this.tabType]);
+      let one = adapter(Utils.cloneObj(d));
+      adapter(one.sub_orders);
+      this.editAction(one);
     },
     failHandler: function(d){
         console.log(d);
     },
-    editAction: function(sub){
-      //{ "U_PurchaseNum": "FZXS201611100132_101", "sub_orders": [{产品及数量等信息}]}
-      let params = {
-        U_PurchaseNum:this.orderId,
-        sub_orders:sub.list || [],
-        rec_info: sub.rec_info
-      }
-      if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
-      this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify(params)).then((res) => {
+    editAction: function(one){
+      one.U_PurchaseNum = this.orderId;
+      one.type = this.tabType;
+      let arr = [];
+      arr.push(one);
+      this.$http.put(this.$Api+"sales/sub-orders/calculate",JSON.stringify(arr)).then((res) => {
           var d = res.json();
           console.log(d);
-          this.showMsg("success", "提交成功");
-          this.getData(this.orderId);
-          this.show = !this.show;
-          this.detail = true;
+          // this.showMsg("success", "提交成功");
+          // this.getData(this.orderId);
+          // this.show = !this.show;
+          // this.detail = true;
       },(error) =>{
         console.log(error);
         this.showMsg("error", error.msg);
@@ -120,7 +120,7 @@ export default {
           this.orderId = this.$route.query.orderid;
       }
       this.getData(this.orderId);
-      setTitle(this.$store, [{name:"销售订单管理", type:"back"}, {name:"子订单详情"}]);
+      setTitle(this.$store, [{name:"采购订单管理", type:"back"}, {name:"采购订单"}]);
     }
   }
 }

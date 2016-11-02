@@ -89,7 +89,7 @@ export default {
         },
         operatorHandler: function(d){
             if(d.action == "addOrder") {
-                this.$router.go({path:"sale/saleappend", query:{orderid:d.data.U_FZOrder}})
+                this.$router.go({path:"saleappend", query:{orderid:d.data.U_FZOrder}})
             }
         }
       },
@@ -120,7 +120,7 @@ export default {
   },
   ready: function () {
     this.$nextTick(function () {
-       this.$el.querySelector("."+this.css.customLeft).style.width = (window.innerWidth - 495 )+"px";
+       this.$el.querySelector("."+this.css.customLeft).style.width = (window.innerWidth - 505 )+"px";
     })
   },
   attached: function () {},

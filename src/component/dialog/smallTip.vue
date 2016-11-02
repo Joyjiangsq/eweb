@@ -21,6 +21,9 @@ export default {
     },
     datepicker:{
 
+    },
+    time:{
+      default: 2000
     }
   },
   data: function () {
@@ -37,7 +40,7 @@ export default {
         this.$set("show", true);
         setTimeout(()=>{
             this.$set("show", false);
-        }, 1500)
+        }, this.time)
     }
   },
   components: {},

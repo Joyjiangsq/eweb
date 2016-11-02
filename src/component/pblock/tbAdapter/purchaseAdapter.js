@@ -1,9 +1,8 @@
-// 不使用
 export default function adapterData(d) {
       if(!d.stock || d.stock == 0) d.stock = "0";
       // 设置验证参数规则
       d.use_stores = {     //
-          def: 0,
+          def: d.use_stores || "0",
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){

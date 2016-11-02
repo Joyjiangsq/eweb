@@ -8,9 +8,9 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                <orderlist :subvalidate="subvalidate" url="sales/sub-orders"></orderlist>
+                <orderlist :subvalidate="subvalidate" :load="load" :params="searchParams" :totals.sync="totals" url="sales/sub-orders" @success="successHandler" @fail="failHandler" :orderids="orderids"></orderlist>
               </div>
-              <pg :totals="totals" :curpage="searchParams.page" ></pg>
+              <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
     </div>
 </template>
@@ -22,19 +22,29 @@ import formcb from "component/form/fmCombobox";
 import dialogtip from "component/dialog/dialogTip";
 import pageBase from "common/mixinPage.js";
 import orderlist from "./purchaseList";
+import {orderStatus} from "config/const";
 export default {
   mixins: [pageBase],
   data: function () {
     return {
       css,
+      totals: 0,
       subvalidate: false,
       moduleName:"采购订单管理",
-      statusData:[{name:"已完成", id:1}],
+      curaction:"",
+      statusData:orderStatus,
+      orderids:[],
+      finalData:[],
       btnsData:[{name:"导出", icon:"icon-share", action:"export"},{name:"核价并购买", icon:"icon-check", action:"buy"},{name:"驳回", icon:"icon-back", action:"back"}],
       btnEvents:{
         btnClick: function(d){
             if(d.action == "buy") {
+                  this.curaction = "buy";
                   this.subvalidate = !this.subvalidate;
+            }
+            else if(d.action == "back") {
+                  this.curaction = "back";
+                  console.log(this.orderids);
             }
         }
       }
@@ -54,6 +64,21 @@ export default {
   },
   attached: function () {},
   methods: {
+      successHandler: function(d) {
+          if(this.curaction == "buy") {
+              console.log(d); // 核价
+              this.finalData = d;
+              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
+                  var d = res.json();
+              },(error) =>{
+                console.log(error);
+              })
+          }
+
+      },
+      failHandler: function(d){
+
+      }
 
   },
   components: {formcb,dialogtip, orderlist},

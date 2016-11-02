@@ -1,7 +1,7 @@
 <template>
     <div>
       <router-view></router-view>
-      <smalltip :msg="tipData.msg" :type="tipData.type" :datepicker="tipData.datePicker"></smalltip>
+      <smalltip :msg="tipData.msg" :type="tipData.type" :datepicker="tipData.datePicker" :time="tipData.time"></smalltip>
     </div>
 </template>
 <script>
@@ -22,7 +22,7 @@ export default {
     vuex: {
         getters: {
            tipData: function(scope) {
-             return  getTipData(scope) || {msg:"", type:"", datePicker:""};
+             return  getTipData(scope) || {msg:"", type:"", datePicker:"", time: 2000};
            }
          }
     },

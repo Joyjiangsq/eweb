@@ -681,12 +681,6 @@ export default function adapterData(d) {
                  }
            }
 
-           d.Notes = {     // 备注
-               def: d.Notes || "",
-               defCss: "default",
-               errorMsg:"",tb_disabled: false,
-               validateFun:function(data, index){ return true; }
-           };
 
   // 开门（木门）的时候
   return d;

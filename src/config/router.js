@@ -35,7 +35,7 @@ export function routerStart(router) {
                       "/":{
                           component: function(resovle) {require(['modules/sale/saleMgr.vue'], resovle)},
                       },
-                      "/addSale":{
+                      "addSale":{
                           component: function(resovle) {require(['modules/sale/saleAdd.vue'], resovle)},
                       },
                       "detail" :{
@@ -52,19 +52,44 @@ export function routerStart(router) {
 
                 // 采购订单管理
                 "purchase":{
-                    component: function(resovle) {require(['modules/purchase/purchaseOrder.vue'], resovle)},
+                    component: function(resovle) {require(['modules/purchase/purchase.vue'], resovle)},
+                    subRoutes:{
+                      "/":{
+                          component: function(resovle) {require(['modules/purchase/purchaseOrder.vue'], resovle)},
+                      },
+                      "purchasedetail":{
+                          component: function(resovle) {require(['modules/purchase/purchaseDetail.vue'], resovle)},
+                      }
+                    }
                 },
 
-                // 备货管理
-                "prestoremgr":{
-                    component: function(resovle) {require(['modules/purchase/preStoreMgr.vue'], resovle)},
+                // 备货申请
+                "prestore":{
+                    component: function(resovle) {require(['modules/prestore/preStore.vue'], resovle)},
+                    subRoutes:{
+                      "/":{
+                          component: function(resovle) {require(['modules/prestore/preStoreMgr.vue'], resovle)},
+                      },
+                      "detail":{
+                          component: function(resovle) {require(['modules/prestore/preStoreDetail.vue'], resovle)},
+                      },
+                      "add":{
+                          component: function(resovle) {require(['modules/prestore/preStoreAdd.vue'], resovle)},
+                      }
+                    }
                 },
-
                 // 备货审核
-                "prestorevalidate":{
-                    component: function(resovle) {require(['modules/purchase/preStoreValidate.vue'], resovle)},
+                "/prestorevalidate":{
+                    component: function(resovle) {require(['modules/prestore/preValidate.vue'], resovle)},
+                    subRoutes:{
+                      "/":{
+                          component: function(resovle) {require(['modules/prestore/prestoreValidate.vue'], resovle)},
+                      },
+                      "detail":{
+                          component: function(resovle) {require(['modules/prestore/prestoreValidateDetail.vue'], resovle)},
+                      }
+                    }
                 },
-
                 // 订制品设计申请管理
                 "specapplydesignmgr":{
                     component: function(resovle) {require(['modules/spec/specApply.vue'], resovle)},

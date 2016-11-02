@@ -1,5 +1,6 @@
 <template>
   <div :class="tableCss.tableBox" :style="stylein">
+
     <table :class="classname">
         <thead>
               <tr>

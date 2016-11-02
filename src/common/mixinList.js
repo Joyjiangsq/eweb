@@ -41,7 +41,7 @@ let list = {
   },
   ready: function () {
       if(this.datas.length != 0) this.$set("curStatus", "renderData");  // 如果是静态的datas
-      if(this.url) this.loadData();
+      // if(this.url) this.loadData();
       // this.adapter();
   },
   methods: {

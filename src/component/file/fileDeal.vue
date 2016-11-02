@@ -1,7 +1,7 @@
 <template>
     <div :class="css.fileBox">
-          <form :class="css.fileDeal"  method="post" enctype= "multipart/form-data" onsubmit="javascript: alert(1)">
-            <input type="file" name="uploadFile" :class="css.fileTarget" @change="changeFile" v-for="one in list"/>
+          <form :class="css.fileDeal"  method="post" enctype= "multipart/form-data" onsubmit="javascript: return false">
+            <input type="file" name="uploadFile" :class="css.fileTarget" @change="changeFile" v-for="one in list" v-show="!loading"/>
             <btn>{{text}} <span v-show="loading" :class="css.loading">...</span></btn>
           </form>
     </div>
@@ -35,7 +35,6 @@ export default {
 
         subChangeFiles: function(file){
             this.$set("loading", !this.loading);
-            console.log(file);
             this.toUpload();
             this.reset();
         },

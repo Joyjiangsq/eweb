@@ -16,7 +16,13 @@
           </div>
 
           <div :class="css.attachrow" v-if="curaction != 'alldetail' && !detail">
-                <ft url="upload-customers" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span><span>{{statusRes}}</span>(仅允许上传zip,rar格式的文件包)</span>
+                <ft url="upload" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span :class="css.upsu">{{statusRes}}</span><span :class="css.uptip">(仅允许上传zip,rar格式的文件包)</span>
+          </div>
+          <div v-if="curaction != 'alldetail' && !!detail">
+            <div :class="css.attachrow">
+              <a :href="eclosure" target="_blank" v-if="eclosure">下载附件</a>
+              <span :class='css.noattach' v-else>没有附件</span>
+            </div>
           </div>
           <!--选品对话框-->
           <dialog :flag="showSelectDialog" title="选品" >
@@ -121,8 +127,10 @@ export default {
       return adapter(d);
     },
 
-    upSuccessHandler: function(){
-      console.log("success");
+    upSuccessHandler: function(d){
+      console.log(d);
+      this.eclosure = d.url; // 赋值附件的url
+      this.statusRes = "上传成功" + (d.name || "")
     }
   },
   components: {tb, formtext, cascadeform, dialog,chuguitb, ft},

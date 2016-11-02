@@ -51,9 +51,9 @@ let tbMixin = {
                                     let flg = true;
                                     for (var i = 0; i < this.listdata.length; i++) {
                                         let one = this.listdata[i];
-                                        if(this.filter.indexOf(one.U_ThreeL) != -1) {
-                                            if(one.CardCode != d.data.CardCode) {
-                                                  showTips(this.$store, {type:"error", msg:this.filter.join(",") + "不允许夸供应商选品"});
+                                        if(this.filter.indexOf(one.FirmName) != -1) {  // 校验二级分类  如果存在限制
+                                            if(one.CardCode != d.data.CardCode) {     // 校验供应商id 如果不等
+                                                  showTips(this.$store, {type:"error", msg:this.filter.join(",") + "不允许夸供应商选品", time:4000});
                                                   flg = false;
                                                   break;
                                             }

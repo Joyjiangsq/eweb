@@ -13,7 +13,9 @@ export default function adapterData(d) {
 
            for (var k in one) {
               if(typeof(one[k]) == "object") {
-                  one[k] = one[k].def || "";
+                  if(one[k].def == "" || one[k].def == 0) {  one[k] = one[k].def || ""}
+                  else if(!one[k].def) {}
+                  else one[k] = one[k].def
               }
            }
         }

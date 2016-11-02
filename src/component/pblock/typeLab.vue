@@ -40,10 +40,9 @@
                       <mentb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></mentb>
                 </div>
                 <div v-show="tabArray[index].show"  :class="tpcss.row"  v-if="one.ename == 'chugui'">
-                      <!--厨柜 特殊 处理附件 U_Enclosure -->
                       <div class="" v-if="datamap.chugui">
-                        <chuguitb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" :eclosure="datamap.chugui.U_Enclosure" ></chuguitb>
-                        <chuguitb  @fail="failHandler"  curaction="edit"  :eclosure="datamap.chugui.U_Enclosure"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" v-else></chuguitb>
+                        <chuguitb v-if="detail"  @fail="failHandler"  :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" ></chuguitb>
+                        <chuguitb  @fail="failHandler"  curaction="edit"   :subvalidate="subvalidate" :testdata="datamap.chugui.sub_orders" :detail="detail"  @success="successHandler" :recdata="datamap.chugui.rec_info" v-else></chuguitb>
                       </div>
                       <chuguitb  @fail="failHandler"  :subvalidate="subvalidate"  @success="successHandler"  v-else></chuguitb>
                 </div>
@@ -100,11 +99,9 @@ export default {
   data: function () {
     return {
       tpcss,
-      index: 0, // 记录tab index
       // mapCount:0, // 数据记录器
       subvalidate: false,
       lastDataMap:{},
-      tabTpl:{index:110, ename:""},
       tabArray: [{show: false},{show: false},{show: false},{show: false},{show: false},{show: false},{show: false}, {show: false}],
     }
   },
@@ -114,7 +111,6 @@ export default {
 
   ready: function () {
     // 控制品类的开放和关闭
-    console.log(this.datamap);
     this.renderTabs();
   },
   attached: function () {
@@ -144,38 +140,17 @@ export default {
         // 只要有一个验证失败就不让过
         // 失败之后 重置数据集
         this.lastDataMap = {};
-        // console.log(d);
-        this.$dispatch("fail", d);
-        var index = this.tabs.indexOf(d.project);
-        if(index == -1) return false;
-        if(index < this.tabTpl.index) {
-            this.tabTpl.index = index;
-            this.tabTpl.ename = d.project;
-            for (var i = 0; i < this.tabArray.length; i++) {
-               var one = this.tabArray[i];
-               one.show = false;
-               if(one.ename == d.project) {
-                 one.show = true;
-                 this.index = i;
-               }
-            }
-        }
+        this.$dispatch("fail");
     },
     successHandler: function(d){
       //{project: "cizhuan", data: {list:'', rec_info:""}}
-        console.log(d);
-        this.lastDataMap[d.project] = d.data;
-        let dataLenth = Object.keys(this.lastDataMap).length;
-        // console.log(dataLenth);
-        // console.log(this.tabs.length);
-        if(dataLenth == this.tabs.length) this.$dispatch("success", this.lastDataMap);
+        this.$dispatch("success", d.data);
     }
   },
   components: {tabbar, cizhuantb, dibantb, jiejutb,mentb, chuguitb, jichengdiaodingtb,shigongfucaitb,zhuangxiufucaitb},
   watch:{
     "startvalidate": function() {
         this.subvalidate = !this.subvalidate;
-        this.tabTpl.index = 100;
         this.lastDataMap = {};
     }
   }
