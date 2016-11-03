@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <comb :keyid="keyid" :labelname="keyname" :read="read" :dropfixed="dropfixed" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
+            <comb :keyid="keyid" :labelname="keyname" @itemclick="itemclick" :read="read" :dropfixed="dropfixed" :classname="css.limitCombo" :datas="datas" :value="value" @dropclick="dropclick"></comb>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -44,9 +44,14 @@ export default {
   attached: function () {},
   methods: {
       dropclick: function(value) {
+          console.log(value);
          this.$set("error", false);
          this.$set("value", value);
          this.$dispatch("cashandler", {name: this.formname, value: value});
+      },
+
+      itemclick: function(item) {
+         this.$dispatch("itemclick", item);
       }
   },
   components: {comb},

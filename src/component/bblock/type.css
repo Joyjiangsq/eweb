@@ -1,0 +1,41 @@
+.box {
+    padding-bottom: 30px;
+}
+.dataBox {
+    margin-top: 20px;
+}
+.row {
+    width: 94%;
+    margin: 0 auto;
+}
+.spone {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px dashed #ddd;
+}
+.spone:last-child {
+    border: 0;
+}
+.rowBox {
+    width: 99.9%;
+    margin: 0 auto;
+    overflow-x: scroll;
+}
+.attachrow {
+    padding-top: 20px;
+}
+.upsu {
+    color: green;
+    padding: 0 10px;
+    text-align: center;
+}
+.uptip {
+    font-style: italic;
+    color: gray;
+    font-size: 12px;
+}
+.noattach {
+  color: gray;
+  font-size: 12px;
+  font-style: italic;
+}

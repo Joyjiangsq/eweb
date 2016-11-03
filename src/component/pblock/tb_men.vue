@@ -66,7 +66,7 @@ export default {
                     {name:"转化数量", labelValue:"U_Pquantity",type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Notes",type:"data"},
+                    {name:"备注", labelValue:"Freetxt",type:"data"},
                     ],
       headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
                     {name:"产品名称", labelValue:"ItemName", type:"data"},
@@ -107,7 +107,7 @@ export default {
                     {name:"转化数量", labelValue:"U_Pquantity",type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Notes",type:"data"}],
+                    {name:"备注", labelValue:"Freetxt",type:"data"}],
     }
   },
   computed: {

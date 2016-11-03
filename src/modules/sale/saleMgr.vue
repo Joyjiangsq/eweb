@@ -89,7 +89,7 @@ export default {
         },
         operatorHandler: function(d){
             if(d.action == "addOrder") {
-                this.$router.go({path:"saleappend", query:{orderid:d.data.U_FZOrder}})
+                this.$router.go({path:"sale/append", query:{orderid:d.data.U_FZOrder}})
             }
         }
       },

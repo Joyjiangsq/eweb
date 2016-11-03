@@ -5,7 +5,6 @@
         <thead>
               <tr>
                 <th v-for="tone in headercaption" :style="tone.style">
-                      <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all">
                       {{tone.name}}
                 </th>
               </tr>
@@ -14,7 +13,6 @@
               <tr v-for="(order, done)  in dataList" >
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="checked" @click="clickOne(done[codevalue])"> -->
                           <span v-if="sone.type == 'data'" >
                             <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}</span>
                           <div v-if="sone.type == 'edit'" >

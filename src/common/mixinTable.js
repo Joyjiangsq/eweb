@@ -1,3 +1,4 @@
+import Utils from "common/Utils";
 let tableBase = {
         props:{
           classname:{
@@ -59,17 +60,21 @@ let tableBase = {
               dataList: this.datas || [],
               noresult: false,
               loading:true,
-              checked: false,
-              checkeds:[],
-              tpIds:[],
+              checkeds:{},
               stag: false,
-              smsg:""
+              smsg:"",
           }
         },
 
         computed: {
           all: function(){
-            return this.checkeds.length == this.dataList.length
+              let counts = 0;
+              for (var i = 0; i < this.dataList.length; i++) {
+                  if(this.dataList[i].checkTag) {
+                    counts += 1;
+                  }
+              }
+              return counts < this.dataList.length? false:true
           }
         },
 
@@ -85,24 +90,20 @@ let tableBase = {
           }
         },
         methods: {
-          clickOne: function(one){
-              let index = this.checkeds.indexOf(one);
-              if(index != -1)  this.checkeds.splice(index, 1);
-              else  this.checkeds.push(one);
-              this.$dispatch("checkedchange", this.checkeds.join(","));
+          clickOne: function(one, index){
           },
           checkedAll: function(){
-            this.checkeds = []
-            this.$set("checked", !this.checked);
-            if(this.checked) {
-              if(this.tpIds.length != 0) this.checkeds = this.tpIds;
-              else {
-                for(let i = 0; i < this.datas.length; i++) {
-                      this.checkeds.push(this.datas[i][this.codevalue]);
+              console.log(this.all);
+              if(this.all) {
+                for (var i = 0; i < this.dataList.length; i++) {
+                    this.dataList[i].checkTag = false
                 }
               }
-            }
-            this.$dispatch("checkedchange", this.checkeds.join(","));
+              else {
+                for (var i = 0; i < this.dataList.length; i++) {
+                    this.dataList[i].checkTag = true
+                }
+              }
           },
           btnEventHandler: function(d){
             this.events.operatorHandler.call(this._context, d)
@@ -125,10 +126,11 @@ let tableBase = {
                     rowData["_id"] = one["_id"];
                     if(i == 0) rowData["selected"] = true;  // 选中行样式
                     else rowData["selected"] = false;
+                    if(hone.checkbox) one.checkTag = false;
                   }
                   let nd = Object.assign(one, rowData);
                   this.dataList.push(nd);
-                  this.tpIds.push(one[this.codevalue]);
+                  // this.tpIds.push(one[this.codevalue]);
               }
                 this.$set("loading", false);
           },
@@ -149,8 +151,10 @@ let tableBase = {
                       var s  =  hone.adapterFun.call(this._context, one);
                       one[hone.labelValue] = s
                     }
+                    if(hone.checkbox) one.checkTag = false;
                   }
-                  this.dataList.push(one);
+                  if(one.checkTag === false) this.dataList.push(Utils.cloneObj(one));
+                  else this.dataList.push(one);
               }
           },
 

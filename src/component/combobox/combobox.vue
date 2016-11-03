@@ -116,6 +116,7 @@ export default {
       this.value = item[this.keyid];
       this.changeDropAction();
       this.$dispatch("dropclick", this.value);
+      this.$dispatch("itemclick", item);
     },
 
     loadData(p) {

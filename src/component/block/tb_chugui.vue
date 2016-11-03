@@ -84,7 +84,7 @@ export default {
                     {name:"延米线（m）/销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Notes",type:"edit"}
+                    {name:"备注", labelValue:"Freetxt",type:"edit"}
                     ],
       headerdetail:[
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
@@ -111,7 +111,7 @@ export default {
                     {name:"延米线（m）/销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Notes",type:"edit"}
+                    {name:"备注", labelValue:"Freetxt",type:"data"}
                     ],
       validateInfo: true // 验证 收件信息
     }

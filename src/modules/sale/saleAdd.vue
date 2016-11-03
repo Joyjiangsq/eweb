@@ -16,7 +16,7 @@
                       <comboxform keyid="name" labelname="是否有电梯：" :must="false" :value.sync="baseInfo.U_IsElevator" keyname="name" formname="U_IsElevator" :datas="hasDianti" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
                       <formtext :read="true"  labelname="一口价：" :must="false" unit="元" :value.sync="baseInfo.one_price" placeholder=""  formname='one_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="实收金额：" unit="元" :must="false" :value.sync="baseInfo.U_PaInAmount" placeholder=""  formname='U_PaInAmount' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <comboxform keyid="name" labelname="订单类型：" :value.sync="baseInfo.order_type" dropfixed="dropfixed" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
+                      <comboxform keyid="name" labelname="订单类型：" @itemclick="itemclick" :value.sync="baseInfo.order_type" dropfixed="dropfixed" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
                       <formtext labelname="跟单员：" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="跟单员电话：" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :length="11" :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                 </div>
@@ -49,8 +49,9 @@ import saleAdapter from "./adapter.js";
 import formdim from "component/form/formDim";
 import Utils from "common/Utils";
 import {showTips} from "actions/index";
-import {packageType} from "config/const";
+import {packageType, orderType} from "config/const";
 import clist from "./customListDialog";
+import utils from "common/Utils";
 export default {
   data: function () {
     return {
@@ -60,14 +61,15 @@ export default {
       customDatas:[],
       startvalidate: false, // 这参数作为大类 数据验证开始的依据  只要改变就开始验证
       packageDatas: packageType,
-      orderDatas:[{name:"正单"}, {name:"售后订单"}],
+      orderDatas:orderType,
       priceInfo:{U_ToiletNum: 1},
       hasDianti:[{name:'是'},{name:'否'}], // 是否有电梯
       show: false,
       showUserDialog: false, // 控制用户选择多个地址
       self: false,
       baseInfo:{
-        mult:"", // 客户信息的手机号 加姓名
+        GroupCode: "103", // 客户组
+        U_OcrdType: "终端客户",// 业务伙伴类型
         Address:"",// 客户地址
         detail:"", //详情地址
         U_SWW:"", // 组包
@@ -76,7 +78,7 @@ export default {
         U_IsElevator:"", //是否有电梯
         one_price:"", // 一口价
         U_PaInAmount:"", // 实收金额
-        order_type:"", //订单类型
+        order_type:"", //订单类型描述
         U_CntctCode:"", // 跟单员
         U_CntctPhone:"", // 跟单员电话
         validate: true // 验证依据
@@ -93,17 +95,21 @@ export default {
   },
   attached: function () {},
   methods: {
+    itemclick: function(item) {
+      this.baseInfo.Series = item.id;  // 订单类型需要传递id
+    },
     dimAdapter: function(one) {
         return one.CardName + "-" + one.Phone2
     },
     oneUserCheck: function(one) {
-          for (var i in this.baseInfo) {
-              if(!one[i]) continue;
-              this.baseInfo[i] = one[i];
-          }
-         if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
-         if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
-         delete this.priceInfoU_SWWe;
+          // for (var i in this.baseInfo) {
+          //     if(!one[i]) continue;
+          //     this.baseInfo[i] = one[i];
+          // }
+         this.baseInfo = Object.assign(this.baseInfo, one);
+        //  if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
+        //  if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
+        //  delete this.priceInfoU_SWWe;
          this.setOnePrice();
     },
     // 一口价
@@ -159,7 +165,6 @@ export default {
 
         delete newInfo.detail;      // 删除多余详情字段
         delete newInfo.validate;    // 删除验证字段
-        delete newInfo.mult;        // 删除多余用户文本描述
 
         this.$http.post(this.$Api+"sales",JSON.stringify({sub_orders:d, base_info:newInfo})).then((res) => {
             var d = res.json();
@@ -183,7 +188,12 @@ export default {
         if(d.house_list.length == 0) return false;
         this.baseInfo.CardCode = d.CardCode; // 设置用户id
         this.baseInfo.CardName = d.CardName; // 设置用户名称
-        this.baseInfo.Phone2 = d.Phone2;
+        this.baseInfo.U_Phone = d.Phone2; //TODO
+        this.baseInfo.CntctCode = d.CardName;
+        this.baseInfo.Phone2 = d.Phone2;    // 设置用户手机号
+        this.baseInfo.U_ComeFrom = d.U_ComeFrom; // 设置客户来源
+        this.baseInfo.U_BTSubstation = d.station; // 设置归属分站编码
+        this.baseInfo.U_DateRgst = utils.formate(new Date(d.createAt), "yyyy-mm-dd"); // 设置登记日期
         if(d.house_list.length > 1) {
             this.showUserDialog = !this.showUserDialog;
             this.customDatas = d.house_list;
@@ -191,13 +201,14 @@ export default {
         else {
             let one = d.house_list[0];
             one.U_ToiletNum = one.U_ToiletNum || 1;
-            for (var i in this.baseInfo) {
-                if(!one[i]) continue;
-                this.baseInfo[i] = one[i];
-            }
-            if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
-            if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
-            delete this.priceInfoU_SWWe;
+            // for (var i in this.baseInfo) {
+            //     if(!one[i]) continue;
+            //     this.baseInfo[i] = one[i];
+            // }
+            this.baseInfo = Object.assign(this.baseInfo, one);
+            // if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
+            // if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
+            // delete this.priceInfoU_SWWe;
             this.setOnePrice();
         }
 

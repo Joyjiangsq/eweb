@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="">
-              <tb :headercaption="headercaption" curaction="purchase"   @loadsuccess="oneSuccessHandler" :load="false" :datas="vlist" ></tb>
+              <tb :headercaption="pheader" curaction="purchase"   @loadsuccess="oneSuccessHandler" :load="false" :datas="vlist" ></tb>
     </div>
 </template>
 <script>
@@ -26,20 +26,26 @@ export default {
     },
     type:{
       default:""
+    },
+    station:{     // 分站编码  U_ShortName
+      default:""
+    },
+    supnum:{    // 供应商编码 U_SupNum
+      default:""
     }
   },
   data: function () {
     return {
       css,
-      headercaption:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+      pheader:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
                     {name:"产品包", labelValue:"SWW", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},{name:"使用库存数", labelValue:"use_stores",type:"edit"},
-                    {name:"采购数量", labelValue:"Quantity",type:"edit"},
+                    {name:"采购数量", labelValue:"U_Pquantity",type:"edit"},
                     {name:"包装规格", labelValue:"tt",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
-                    {name:"转化数量", labelValue:"U_Pquantity",type:"data"},
-                    {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Comments",type:"data"},
+                    {name:"转化数量", labelValue:"Quantity",type:"data"},
+                    {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
                     ],
     }
   },
@@ -77,7 +83,7 @@ export default {
           }
         }
         if(!this.validateRec) this.$dispatch("fail",this.srcdata);
-        else this.$dispatch("success", {data:this.vlist, rec_info: this.recdata, type: this.type, PurchaseNum: this.orderid});
+        else this.$dispatch("success", {data:this.vlist, rec_info: this.recdata, type: this.type,U_SupNum: this.supnum, U_ShortName:this.station, PurchaseNum: this.orderid});
     },
     addoneHandler : function(d){
         let one = this.adapterFun(d.data);

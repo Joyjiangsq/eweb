@@ -30,8 +30,8 @@ export default function adapterData(d) {
 
           }
       };
-      d.Notes = {     // 备注
-          def: d.Notes || "",
+      d.Freetxt = {     // 备注
+          def: d.Freetxt || "",
           defCss: "default",
           errorMsg:"",tb_disabled: false,
           validateFun:function(data, index){ return true; }

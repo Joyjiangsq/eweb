@@ -47,7 +47,7 @@ export default {
                     {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},
                     {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Notes",type:"edit"},
+                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"edit"},
                     ],
       headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
                     {name:"产品包", labelValue:"SWW", type:"data"},
@@ -56,7 +56,7 @@ export default {
                     {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Notes",type:"edit"}],
+                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"}],
       validateInfo: true // 验证 收件信息
     }
   },

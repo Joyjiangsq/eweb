@@ -5,7 +5,6 @@
               <tr>
                 <th v-for="tone in headercaption" >
                   <span :style="tone.style" :class="tone.style?tableCss.wrap:''">
-                    <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all">
                     {{tone.name}}</span>
 
                 </th>

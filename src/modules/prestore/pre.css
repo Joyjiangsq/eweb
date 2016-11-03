@@ -1,0 +1,77 @@
+@charset "UTF-8";
+.rowbox {
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 10px;
+}
+.srow {
+    margin-right: 5%;
+}
+.rowhead {
+    line-height: 55px;
+}
+.tBox {
+    padding-top: 12px;
+}
+.check {
+    margin-left: 25px
+}
+.clicktarget {
+    display: inline;
+    position: absolute;
+    cursor: pointer;
+    width: 25px;
+}
+.inrow {
+    color: #0066cc;
+    cursor: pointer;
+}
+.paddingType {
+    background-color: rgb(230, 230, 230);
+    padding: 20px;
+    padding-top: 0;
+}
+.customLeft {
+    position: absolute;
+    padding: 20px;
+    left: 0px;
+}
+.customRight {
+    width: 248px;
+    position: absolute;
+    right: 29px;
+    margin-top: 50px;
+}
+.tBox {
+    overflow-x: scroll;
+}
+.footerBar {
+    text-align: right;
+    width: 100%;
+    position: fixed;
+    padding: 10px;
+    bottom: 0;
+    right: 0;
+    background-color: #e6e6e6;
+    padding-right: 3%;
+    z-index: 11;
+}
+.dataArea {
+    margin-bottom: 50px;
+}
+.rowItem {
+    padding: 10px;
+    border-bottom: 1px dashed #ddd;
+    cursor: pointer;
+}
+.rowItem:last-child {
+    border: 0
+}
+.hrow {
+    padding-top: 15px;
+}
+.hitem {
+    margin-right: 5px;
+}
+.itemone {
+  margin-right:20px;
+}

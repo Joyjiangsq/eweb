@@ -15,7 +15,7 @@
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
-                <formcb keyid="id" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formcb keyid="name" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
                 <!-- <formdim labelname="归属分站："   :read="curAction!='add'"  :value.sync="formData.U_BTSubstation"  @fromdim="formDimClick"  formname='U_BTSubstation' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdim> -->
                 <formtext labelname="e站客服："  :read="curAction!='add'"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>

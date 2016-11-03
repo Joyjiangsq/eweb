@@ -9,7 +9,7 @@
               <formtext labelname="收货人："  :read="detail" :value.sync="recdata.U_Consignee" placeholder=""  formname='U_Consignee' :validatestart="validate" @onvalidate="validateHandler"></formtext>
               <formtext labelname="收货人电话：" :read="detail" :phone="true"  :length="11" :number="true" :value.sync="recdata.U_ConsigneePhone" placeholder=""  formname='U_ConsigneePhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
               <cascadeform  labelname="收货地址：" :must="false"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
-              <formtext labelname="备注：" :read="detail" :must="false" :value.sync="recdata.Comments"  placeholder=""  formname='Comments' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              <formtext labelname="备注：" :read="detail" :must="false" :value.sync="recdata.Freetxt"  placeholder=""  formname='Freetxt' :validatestart="validate" @onvalidate="validateHandler"></formtext>
           </div>
           <div v-else>
             <itemtpl :testdata="testdata" :header="headerdetail"></itemtpl>
@@ -81,7 +81,7 @@ export default {
                     {name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Notes",type:"edit"},
+                    {name:"备注", labelValue:"Freetxt",type:"edit"},
                     ],
       headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
                     {name:"产品名称", labelValue:"ItemName", type:"data"},
@@ -119,7 +119,7 @@ export default {
                     {name:"销售数量", labelValue:"sale_counts", type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Notes",type:"data"}],
+                    {name:"备注", labelValue:"Freetxt",type:"data"}],
       validateInfo: true // 验证 收件信息
     }
   },

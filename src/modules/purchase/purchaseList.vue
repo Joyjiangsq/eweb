@@ -10,11 +10,11 @@
                                     <checkbx  @checkclick="checkClick(one)"></checkbx>
                               </span>
                               <span :class="css.srow">采购订单号： <span :class="css.inrow" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span></span>
-                              <span :class="css.srow">采购订单状态： 待采购</span>
-                              <span :class="css.srow">供应商：xxx</span>
+                              <span :class="css.srow">采购订单状态： {{one.U_OrderStatus || '-'}}</span>
+                              <span :class="css.srow">供应商： {{one.sub_orders[0].U_CardName || '-'}}</span>
                           </div>
                           <div :class="css.tbbox" v-show="one.show">
-                                <tb :datas="one['sub_orders']" :srcdata="one" :recdata="one.rec_info" :type="one.type" :orderid="one.U_PurchaseNum" :ignorevalidate="one.ignorevalidate" :subvalidate="subvalidate" @fail="failHandler" @success="successHandler"></tb>
+                                <tb :datas="one['sub_orders']" :srcdata="one" :recdata="one.rec_info" :type="one.type" :orderid="one.U_PurchaseNum" :station="one.station" :supnum="one.U_SupNum" :ignorevalidate="one.ignorevalidate" :subvalidate="subvalidate" @fail="failHandler" @success="successHandler"></tb>
                           </div>
                     </div>
             </div>

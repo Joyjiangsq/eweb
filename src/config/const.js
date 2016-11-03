@@ -29,12 +29,14 @@ export const packageType = [
   {name:"尊享包", id: 3}
 ]
 
-// 销售订单  订单类型
+// 销售订单   单据类型   订单类型
 export const orderType = [
-  {name:"正单", id: 1},
-  {name:"售后订单", id: 2}
+  {name:"正单", id: 14},
+  {name:"售后订单", id: 81}
+  // 82-备货
 ]
 
+//
 
 // 订单状态  TODO 暂时前端写死
 export const orderStatus = [

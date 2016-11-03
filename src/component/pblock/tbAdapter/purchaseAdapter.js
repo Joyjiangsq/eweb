@@ -22,7 +22,7 @@ export default function adapterData(d) {
                 return false
               }
               else if(this.def == 0 || this.def == "" || !this.def) {
-                  if(d.Quantity.def == 0 || d.Quantity.def == "" || !d.Quantity.def){
+                  if(d.U_Pquantity.def == 0 || d.U_Pquantity.def == "" || !d.U_Pquantity.def){
                       this.defCss = "errorHappend";
                       this.errorMsg = "采购数量与使用库存不能同时为0";
                       return false
@@ -33,7 +33,7 @@ export default function adapterData(d) {
                     return true;
                   }
               }
-              else if((this.def*1 + d.Quantity.def*0) < d.sale_counts*1) {
+              else if((this.def*1 + d.U_Pquantity.def*0) < d.sale_counts*1) {
                 this.defCss = "errorHappend";
                 this.errorMsg = "采购数量与使用库存数小于销售数量";
                 return true
@@ -48,8 +48,8 @@ export default function adapterData(d) {
       };
 
       // 设置验证参数规则
-      d.Quantity = {     //
-          def: d.Quantity || 0,
+      d.U_Pquantity = {     //
+          def: d.U_Pquantity || 0,
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
@@ -58,7 +58,8 @@ export default function adapterData(d) {
               if(d.ItmsGrpNam != "厨柜" && d.ItmsGrpNam != "门") {
                   d.SalPackUn = d.SalPackUn || 1;
                   let sy = Math.ceil(this.def/d.SalPackUn);
-                  d.U_Pquantity = d.SalPackUn*sy;
+                  d.Quantity = d.SalPackUn*sy;
+                  console.log(d.Quantity);
               }
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
@@ -95,6 +96,6 @@ export default function adapterData(d) {
 
           }
       };
-      d.U_Pquantity = ""; // 转化数量
+      d.Quantity = ""; // 转化数量
       return d;
 }
