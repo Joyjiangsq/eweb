@@ -118,7 +118,7 @@ export default {
               params.U_AddCode = "1,2,3,4"; // 分站地址编码
               params.Descript = "";  // 分站地址描述
               params.WhsCode = "09"; // 仓库
-              params.U_DeWay = "PS"; // ZT-自提  PS-配送
+              params.U_DeWay = ""; // ZT-自提  PS-配送  备货下单的时候 没有默认
               this.$dispatch("success", {project:this.curName,data:params});
           }
         })

@@ -61,7 +61,7 @@ var sorderComponent = Vue.extend({
   }
 })
 let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"component", component: orderComponent, cname:"ordercomponent"},
-                        {name:"订单状态", labelValue:"order_status",type:"data"},
+                        {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return d.U_OrderStatus == 0?"<span class='reback'>驳回</span>":"正常"}},
                         {name:"产品包", labelValue:"U_SWW",type:"data", adapterFun: function(d) {return d.base_info.U_SWW}},
                         {name:"订单类型", labelValue:"order_type",type:"data", adapterFun: function(d) {return d.base_info.order_type}},
                         {name:"客户姓名", labelValue:"CardName",type:"data", adapterFun: function(d) {return d.base_info.CardName}},
@@ -70,7 +70,8 @@ let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"compone
                         {name:"创建人", labelValue:"CardCode",type:"data"},
                         {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
-let subHeaders = [{name:"销售子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},{name:"订单状态", labelValue:"status",type:"data"}] // 0 被驳回
+let subHeaders = [{name:"销售子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},
+                  {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return d.U_OrderStatus == '分站驳回'?"<span class='reback'>分站驳回</span>":d.U_OrderStatus}}]
 export default {
   mixins:[pageBase],
   data: function () {

@@ -107,8 +107,8 @@ export default {
           //     this.baseInfo[i] = one[i];
           // }
          this.baseInfo = Object.assign(this.baseInfo, one);
-        //  if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
-        //  if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
+         if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
+         if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
         //  delete this.priceInfoU_SWWe;
          this.setOnePrice();
     },
@@ -172,7 +172,8 @@ export default {
             this.self = true;
             showTips(this.$store, {type:"success", msg:"新增成功"});
             window.onbeforeunload  = function(){}
-            this.$router.go({path:"/sale"})
+            // this.$router.go({path:"/sale"})
+            history.back();
         },(error) =>{
           console.log(error);
           showTips(this.$store, {type:"success", msg:"新增失败"});
@@ -206,8 +207,8 @@ export default {
             //     this.baseInfo[i] = one[i];
             // }
             this.baseInfo = Object.assign(this.baseInfo, one);
-            // if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
-            // if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
+            if(one.U_ToiletNum) this.priceInfo.U_ToiletNum = one.U_ToiletNum;
+            if(one.U_Acreage) this.priceInfo.U_Acreage = one.U_Acreage;
             // delete this.priceInfoU_SWWe;
             this.setOnePrice();
         }

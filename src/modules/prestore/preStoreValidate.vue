@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                    <tbsp :headercaption="headercaption" curaction="store" :totals.sync="totals" :datas="td" :params="searchParams" ></tbsp>
+                    <tbsp :headercaption="headercaption" curaction="store" :totals.sync="totals" :getchecks="getchecks" @checklist="getCheckList" :load="load" url="sales/stock" :params="searchParams" ></tbsp>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -21,6 +21,42 @@ import Utils from "common/Utils.js";
 import pageBase from "common/mixinPage.js";
 import {orderStatus} from "config/const";
 import tbsp from "component/grid/tableSpec";
+import Vue from "vue";
+// 自定义
+var orderComponent = Vue.extend({
+  data:function(){
+    return {
+      css,
+      totals:0
+    }
+  },
+  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  ready: function(){
+    this.totals = this.selfData.U_PurchaseNum;
+  },
+  methods:{
+    clickHandler: function(){
+        this.$router.go({path:"prestore/detail", query:{orderid: this.totals}})
+    }
+  }
+})
+
+var deWayComp = Vue.extend({
+  data:function(){
+    return {
+      css,
+      test:[{name:"配送", id:"PS"}, {name:"自提", id:"ZT"}],
+
+    }
+  },
+  template: '<div>aaaa</div>',
+  ready: function(){
+  },
+  methods:{
+    clickHandler: function(){
+    }
+  }
+})
 export default {
   mixins: [pageBase],
   data: function () {
@@ -29,18 +65,21 @@ export default {
       moduleName:"备货审核",
       curaction:"",
       statusData:orderStatus,
-      orderids:[],
-      finalData:[],
-      headercaption:[{checkbox: true}, {name:"配送方式", labelValue:"U_DeWay",type:"data"},{name:"备货订单号", labelValue:"U_PurchaseNum",type:"data"},
-                      {name:"SAP订单号", labelValue:"DocNum",type:"data"},{name:"订单状态", labelValue:"U_OrderStatus",type:"data"},{name:"收货人", labelValue:"U_Consignee",type:"data"},
-                    {name:"收货人电话", labelValue:"U_ConsigneePhone",type:"data"},{name:"创建人", labelValue:"createdby",type:"data"},],
-      td:[{U_DeWay:"ziti", U_PurchaseNum:"111213131313",DocNum:"xxxx",U_OrderStatus:"xxxccc",U_Consignee:"rrr",U_ConsigneePhone:"15555555555",createdby:"li"},
-          {U_DeWay:"222", U_PurchaseNum:"3333",DocNum:"xxxx",U_OrderStatus:"xxxccc",U_Consignee:"rrr",U_ConsigneePhone:"15555555555",createdby:"li"}],
+      getchecks: false,
+      headercaption:[{checkbox: true}, {name:"配送方式", labelValue:"U_DeWay", type:"component", component: deWayComp, cname:"deway"},
+                              {name:"备货订单号", labelValue:"U_PurchaseNum",  type:"component", component: orderComponent, cname:"ordercomponent2"},
+                              {name:"SAP订单号", labelValue:"DocNum",type:"data"},
+                              {name:"订单状态", labelValue:"U_OrderStatus",type:"data"},
+                              {name:"收货人", labelValue:"U_Consignee",type:"data",adapterFun: function(d){ return d.rec_info.U_Consignee}},
+                              {name:"收货人电话", labelValue:"U_ConsigneePhone",type:"data",adapterFun: function(d){return d.rec_info.U_ConsigneePhone}},
+                              {name:"创建人", labelValue:"station",type:"data"},
+                              {name:"创建时间", labelValue:"U_Date", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.U_Date), "yyyy-mm-dd");}}],
       btnsData:[{name:"导出", icon:"icon-share", action:"export"},{name:"核价并购买", icon:"icon-check", action:"buy"},{name:"驳回", icon:"icon-back", action:"back"}],
       btnEvents:{
         btnClick: function(d){
             if(d.action == "buy") {
                   this.curaction = "buy";
+                  this.getchecks = !this.getchecks;
             }
             else if(d.action == "back") {
                   this.curaction = "back";
@@ -64,10 +103,16 @@ export default {
   attached: function () {},
   methods: {
       successHandler: function(d) {
+
+      },
+      getCheckList: function(list) {
+          console.log(list);
           if(this.curaction == "buy") {
-              console.log(d); // 核价
-              this.finalData = d;
-              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
+              // 验证通过规则  如果是单个品类- 如果不是定制品 则不能过
+              // 如果是多个品类  如果只有一个是非定制品   则不能过
+              // 定制品名称为  厨柜 门  对应比对字段  ItmsGrpNam 品类
+
+              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(list)).then((res) => {
                   var d = res.json();
               },(error) =>{
                 console.log(error);

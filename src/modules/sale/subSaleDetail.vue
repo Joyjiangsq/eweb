@@ -2,7 +2,9 @@
         <div class="">
           <div :class="css.paddingType">
             <div :class="css.hrow">
-                <span><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
+                <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
+                <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "orderStatus != '分站驳回'">{{orderStatus}}</span><span class="reback" v-else>{{orderStatus}}</span></span>
+
             </div>
             <panel>
 
@@ -50,17 +52,21 @@ export default {
   data: function () {
     return {
       css,
-      detail: false,
       startvalidate: false,
       orderId:"",
       baseInfo:{},
       tabs:[],
       show: false,
       datamap:{},
-      tabType:""
+      tabType:"",
+      orderStatus:""
     }
   },
-  computed: {},
+  computed: {
+    detail: function(){
+       return this.orderStatus != "分站驳回"
+    }
+  },
   ready: function () {},
   attached: function () {},
   created: function(){
@@ -76,6 +82,7 @@ export default {
           this.datamap[d.data.type] = d.data;
           this.datamap["U_Enclosure"] = d.U_Enclosure || "";
           this.tabType = d.data.type;
+          this.orderStatus = d.data.U_OrderStatus;
       },(error) =>{
         console.log(error);
       })

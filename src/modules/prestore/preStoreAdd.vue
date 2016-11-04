@@ -89,20 +89,18 @@ export default {
         // 复制一份基础数据
         let newInfo = Utils.cloneObj(this.baseInfo);
         delete newInfo.validate;    // 删除验证字段
-        console.log(ndata);
-        console.log(newInfo);
         // 下备货单
-        // this.$http.post(this.$Api+"sales",JSON.stringify({sub_orders:d, base_info:newInfo})).then((res) => {
-        //     var d = res.json();
-        //     console.log(d);
-        //     this.self = true;
-        //     showTips(this.$store, {type:"success", msg:"新增成功"});
-        //     window.onbeforeunload  = function(){}
-        //     this.$router.go({path:"/prestore"})
-        // },(error) =>{
-        //   console.log(error);
-        //   showTips(this.$store, {type:"success", msg:"新增失败"});
-        // })
+        this.$http.post(this.$Api+"/sales/stock",JSON.stringify({sub_orders:ndata, base_info:newInfo})).then((res) => {
+            var d = res.json();
+            console.log(d);
+            // this.self = true;
+            // showTips(this.$store, {type:"success", msg:"新增成功"});
+            // window.onbeforeunload  = function(){}
+            // this.$router.go({path:"/prestore"})
+        },(error) =>{
+          console.log(error);
+          showTips(this.$store, {type:"success", msg:"新增失败"});
+        })
     },
     btnClickHandler: function() {
       this.baseInfo.validate = true;

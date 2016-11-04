@@ -12,7 +12,7 @@ export default function adapterData(d) {
     scope.errorMsg = "";
     return true;
   }
-
+  d.Quantity = d.Quantity || "";// 转化数量
   let propertyNameArray = [
     {keyName:"U_LockCodes", defValue:d.U_LockCodes || []},       // 门锁产品数组  我和node层定义的
     {keyName:"U_HingeCodes", defValue:d.U_HingeCodes || []},     // 合页产品数组  我和node层定义的

@@ -1,7 +1,8 @@
 <template lang="html">
       <div class="">
         <div  :class="css.spone" v-for="one in testdata">
-          <span>子订单号：{{one.U_PurchaseNum}}</span>
+          <span class='itemrow'>子订单号：{{one.U_PurchaseNum}}</span>
+          <span class='itemrow'>子订单状态：{{one.U_OrderStatus}}</span>
           <div :class="css.rowBox">
                 <tbbase :headercaption="header" :datas="one.sub_orders" :load="false"></tbbase>
           </div>

@@ -41,7 +41,9 @@ let tableBase = {
                       operatorRender: function(){return []}}  // 操作渲染
             }
           },
-
+          getchecks:{
+            default: false
+          },
           size: {
             type: Number,
             default: 10
@@ -60,9 +62,7 @@ let tableBase = {
               dataList: this.datas || [],
               noresult: false,
               loading:true,
-              checkeds:{},
-              stag: false,
-              smsg:"",
+              adpArry:[],
           }
         },
 
@@ -88,8 +88,19 @@ let tableBase = {
                 this.adapertDataMin(this.datas);
               }, 1)
           }
+
         },
         methods: {
+          getCheckeds: function() {
+              let newa = [];
+              for (var i = 0; i < this.dataList.length; i++) {
+                  let one = Utils.cloneObj(this.dataList[i]);
+                  delete one.checkTag;
+                  delete one.selected;
+                  if(this.dataList[i].checkTag) newa.push(one);
+              }
+              return newa;
+          },
           clickOne: function(one, index){
           },
           checkedAll: function(){
@@ -122,6 +133,8 @@ let tableBase = {
                     if(hone.type == "data") rowData[hone.labelValue] = one[hone.labelValue];
                     if(hone.adapterFun) {
                        rowData[hone.labelValue] = hone.adapterFun.call(this._context, one);
+
+                      //  if(this.adpArry.indexOf(hone.labelValue) == -1)  this.adpArry.push(hone.labelValue);
                     }
                     rowData["_id"] = one["_id"];
                     if(i == 0) rowData["selected"] = true;  // 选中行样式
@@ -190,6 +203,9 @@ let tableBase = {
                  this.adapertDataMin();   // 静态datas 渲染
                   // this.dataList = this.datas;
               }
+          },
+          "getchecks": function(){
+                this.$dispatch("checklist", this.getCheckeds());
           }
         }
  }

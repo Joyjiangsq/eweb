@@ -69,9 +69,17 @@
 .hrow {
     padding-top: 15px;
 }
+.hrow .itemone  {
+  margin-right: 20px;
+}
 .hitem {
     margin-right: 5px;
 }
 .itemone {
   margin-right:20px;
+}
+
+.inRow {
+  color: #0066cc;
+  cursor: pointer;
 }

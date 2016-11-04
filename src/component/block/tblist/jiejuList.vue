@@ -33,7 +33,6 @@ export default {
       headerCaption:[
              {type:"operator", name:"", icon: true},
              {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
-             {name:"产品包", labelValue:"SWW", type:"data"},
              {name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"三级分类", labelValue:"U_ThreeL", type:"data"},
              {name:"所属包", labelValue:"SWW", type:"data"},

@@ -110,7 +110,7 @@ export default {
                     {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"data"},
                     {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"data"},
                     {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"data"},
-                    {name:"延米线（m）/采购数量", labelValue:"U_Pquantity", type:"data"},
+                    {name:"延米线采购数量", labelValue:"U_Pquantity", type:"data", number: true},
                     {name:"转换数量", labelValue:"Quantity", type:"data"},
                     {name:"包装数量", labelValue:"SalPackUn",type:"data"},
                     {name:"包装单位", labelValue:"SalPackMsr",type:"data"},

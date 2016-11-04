@@ -68,6 +68,11 @@ export default {
           if(this.curaction == "buy") {
               console.log(d); // 核价
               this.finalData = d;
+              // 验证通过规则  如果是单个品类- 如果不是定制品 则不能过
+              // 如果是多个品类  如果只有一个是非定制品   则不能过
+              // 定制品名称为  厨柜 门  对应比对字段  ItmsGrpNam 品类
+
+
               this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
                   var d = res.json();
               },(error) =>{

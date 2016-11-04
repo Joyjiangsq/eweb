@@ -82,50 +82,50 @@ export default function adapterData(d) {
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0) return exepFun(this, "智能门锁厚度必须大于0")
         else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "此项必须填写")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁锁体挡板长度
   d.U_LBLength.validateFun = function(data, index){
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0) return exepFun(this, "挡板长度必须大于0")
         else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "此项必须填写")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁锁体挡板宽度
   d.U_LBWide.validateFun = function(data, index){
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0) return exepFun(this, "挡板宽度必须大于0")
         else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "此项必须填写")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁锁体档板左右螺丝十字中心孔距
   d.U_AbDis.validateFun = function(data, index){
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0) return exepFun(this, "此项必须大于0")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁锁体档板上下螺丝十字中心孔距
   d.U_UDDis.validateFun = function(data, index){
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0) return exepFun(this, "此项必须大于0")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁门边到锁面板右侧的距离
   d.U_LTRDis.validateFun = function(data, index){
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0)  return exepFun(this, "此项必须大于0")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁门锁面板总长度
    d.U_TLLength.validateFun = function(data, index){
         if(isNaN(this.def)) return exepFun(this, "必须填写数字")
         else if(this.def < 0) return exepFun(this, "此项必须大于0")
-        else resetFun(this);
+        else return resetFun(this);
   }
   // 智能门锁门的类别
   d.U_DType.validateFun = function(data, index){
         if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "必须填写数字")
-        else resetFun(this);
+        else return resetFun(this);
   }
 
   // 设置验证参数规则 销售数量是公用的验证
@@ -134,7 +134,7 @@ export default function adapterData(d) {
           if(isNaN(this.def)) return exepFun(this, "销售数量必须是整数")
           else if(this.def < 0) return exepFun(this, "销售数量必须大于0")
           else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "必须填写销售数量")
-          else resetFun(this);
+          else return resetFun(this);
   }
   // 验证规则根据 三级分类的名称区分走哪个验证逻辑
   // 目前三级分类有 平开门（木门）, 移门（木门）,门套（木门）,垭口（木门）,窗套,飘窗板,门扇,平开门（铝框门）,移门（铝框门）,门套（铝框门）,五金,普通门锁,智能锁,合页,门吸
@@ -152,7 +152,7 @@ export default function adapterData(d) {
                 else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "门洞深必须填写")
                 else if(this.def*1 < d.U_DWDeepMin*1) return exepFun(this, "门洞深不能小于"+d.U_DWDeepMin)
                 else if(this.def*1 > d.U_DWDeepL*1) return exepFun(this, "门洞深不能大于"+d.U_DWDeepL)
-                else resetFun(this)
+                else return resetFun(this)
               }
          // 门扇宽   最小值  U_DLWideMin  极限值 U_DLWideL
             d.U_TDWide.validateFun = function(data, index){
@@ -160,12 +160,12 @@ export default function adapterData(d) {
                     if(this.def == "" || !this.def) return exepFun(this, "门扇宽必须填写")
                     else {}
                 }
-                else if(this.def == "" || !this.def) resetFun(this)
+                else if(this.def == "" || !this.def) return resetFun(this)
                 if(isNaN(this.def))  return exepFun(this, "门扇宽必须是数字")
                 else if(this.def < 0) return exepFun(this, "此项必须大于0")
                 else if(this.def*1 < data.U_DLWideMin) return exepFun(this, "门扇宽不能小于" + data.U_DLWideMin)
                 else if(this.def*1 > data.U_DLWideL) return exepFun(this, "门扇宽不能大于" + data.U_DLWideL)
-                else resetFun(this)
+                else return resetFun(this)
               }
               // 门扇高   最小值  U_DLHighMin  极限值 U_DLHighL
             d.U_TDHigh.validateFun = function(data, index){
@@ -174,12 +174,12 @@ export default function adapterData(d) {
                     else if(this.def < 0) return exepFun(this, "此项必须大于0")
                     else {}
                 }
-                else if(this.def == "" || !this.def) resetFun(this)
+                else if(this.def == "" || !this.def) return resetFun(this)
                 if(isNaN(this.def)) return exepFun(this, "门扇高必须是数字")
                 else if(this.def < 0) return exepFun(this, "此项必须大于0")
                 else if(this.def*1 < data.U_DLHighMin) return exepFun(this, "门扇高不能小于" + data.U_DLHighMin)
                 else if(this.def*1 > data.U_DLHighL) return exepFun(this, "门扇高不能大于" + data.U_DLHighL)
-                else resetFun(this)
+                else return resetFun(this)
             }
           // 门扇厚  最小值  U_DLThickMin  极限值 U_DLThickL
           d.U_TDThick.validateFun = function(data, index){
@@ -187,12 +187,12 @@ export default function adapterData(d) {
                     if(this.def == "" || !this.def) return exepFun(this, "门扇厚必须填写")
                     else if(this.def < 0) return exepFun(this, "此项必须大于0")
                 }
-                else if(this.def == "" || !this.def) resetFun(this)
+                else if(this.def == "" || !this.def) return resetFun(this)
                 if(isNaN(this.def)) return exepFun(this, "门扇厚必须是数字")
                 else if(this.def < 0) return exepFun(this, "此项必须大于0")
                 else if(this.def*1 < data.U_DLThickMin) return exepFun(this, "门扇厚不能小于" + data.U_DLThickMin)
                 else if(this.def*1 > data.U_DLThickL)  return exepFun(this, "门扇厚不能大于" + data.U_DLThickL)
-                else resetFun(this)
+                else return resetFun(this)
           }
           // 是否开孔
           d.U_IKeyHole.validateFun = function(data, index){
@@ -207,14 +207,14 @@ export default function adapterData(d) {
                 if(this.def == 0 || this.def == "" || !this.def) {
                     if(data.U_IKeyHole.def == "是") return exepFun(this, "必须选择合页") // 是开孔的时候  此项必填
                 }
-                else resetFun(this)
+                else return resetFun(this)
           }
            // 门锁品牌/型号/规格
           d.U_LockName.validateFun = function(data, index){
                 if(this.def == 0 || this.def == "" || !this.def) {
                     if(data.U_IKeyHole.def == "是") return exepFun(this, "必须选择门锁")  // 是开孔的时候  此项必填
                 }
-                else resetFun(this)
+                else return resetFun(this)
           }
 
           d.U_DThick.tb_disabled = true;

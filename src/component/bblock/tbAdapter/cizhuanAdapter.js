@@ -34,7 +34,7 @@ export default function adapterData(d) {
 
           }
       };
-      d.Quantity = ""; // 转化数量
+      d.Quantity = d.Quantity || "";// 转化数量
       d.Freetxt = {     // 备注
           def: d.Freetxt || "",
           defCss: "default",

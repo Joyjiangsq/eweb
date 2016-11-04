@@ -34,7 +34,6 @@ export default {
              {type:"operator", name:"", icon: true},
              {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
              {name:"所属包", labelValue:"SWW", type:"data"},
-             {name:"产品包", labelValue:"SWW", type:"data"},
              {name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"品牌", labelValue:"U_Brand", type:"data"},
              {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},

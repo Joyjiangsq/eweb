@@ -12,7 +12,7 @@ export default function adapterData(d) {
         scope.errorMsg = "";
         return true;
       }
-
+      d.Quantity = d.Quantity || "";
       let propertyNameArray = [
         {keyName:"U_HandleCodes", defValue:d.U_HandleCodes || []},            // 门把手产品数组  我和node层定义的
         {keyName:"U_FModeling", defValue:d.U_FModeling || "DM-008-直边"},     // 前沿造型 DM-008-直边、  DM-002-罗马边

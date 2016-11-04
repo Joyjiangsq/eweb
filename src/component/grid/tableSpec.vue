@@ -3,7 +3,7 @@
     <table :class="classname">
         <thead>
               <tr>
-                <th v-for="tone in headercaption" :style="tone.style">{{all}}
+                <th v-for="tone in headercaption" :style="tone.style">
                       <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all">
                       {{tone.name}}
                 </th>
@@ -18,9 +18,14 @@
                             <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}</span>
                           <div v-if="sone.type == 'edit'" >
                               <div :class="tableCss.iptBox">
-                                  <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def" @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
+                                  <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
                                   <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>
+                          </div>
+                          <div v-if="sone.type == 'component'">
+                                <span v-if="done[sone.labelValue].tb_disabled">-</span>
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}" v-else></span>
+                                <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                           </div>
                           <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>

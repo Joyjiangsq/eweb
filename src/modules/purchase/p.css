@@ -3,7 +3,8 @@
     padding-bottom: 10px;
 }
 .srow {
-    margin-right: 5%;
+    margin-right: 5%;margin-left: 20px;
+
 }
 .rowhead {
     line-height: 55px;
@@ -12,7 +13,8 @@
     padding-top: 12px;
 }
 .check {
-    margin-left: 25px
+    margin-left: 25px;
+        margin-right: -25px;
 }
 .clicktarget {
     display: inline;

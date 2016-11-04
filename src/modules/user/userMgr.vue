@@ -117,7 +117,7 @@ export default {
       let q = this.$route.query;
       return [{type:"text",  value:q.username || "",  keyname:"username", labelcaption:"用户名:"},
               {type:"text",  value:q.status || "",  keyname:"status", labelcaption:"用户状态:"},
-              {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"员工姓名:"}];
+              {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     },
     getRoles: function(){
       if(Utils.isEAdmin()) return rolesE

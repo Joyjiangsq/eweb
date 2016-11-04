@@ -4,7 +4,7 @@
         <thead>
               <tr>
                 <th v-for="tone in headercaption" :style="tone.style">
-                      <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all">
+                      <!-- <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all"> -->
                       {{tone.name}}
                       <span  v-if="tone.sort">升序</span>
                       <span  v-if="tone.sort">降序</span>
@@ -15,7 +15,7 @@
               <tr v-for="(order, done)  in dataList" :class="[done.selected && needselected?tableCss.selectedRow:'',order%2 == 1? tableCss.active:'']" @click="clickRow(order, done)">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag"  @click="clickOne(done[codevalue])">
+                          <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag"  @click="clickOne(done[codevalue])"> -->
                           <span v-if="sone.type == 'data'" ><span v-if="sone.attr == 'price'">￥</span>{{{done[sone.labelValue] || '-'}}}</span>
                           <span v-if="sone.type == 'component'" >
                               <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
@@ -27,7 +27,7 @@
                           </span>
                     </td>
               </tr>
-        </tbody>
+        </tbody> 
     </table>
     <div v-show="noresult" :class='tableCss.noresult'>
           没有数据

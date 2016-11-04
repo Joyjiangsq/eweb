@@ -2,7 +2,8 @@
         <div class="">
           <div :class="css.paddingType">
             <div :class="css.hrow">
-                <span><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
+                <span class="itemrow"><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
+                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="orderStatus == '分站驳回'" class='reback'>{{orderStatus}}</span><span class='common' v-else>{{orderStatus}}</span></span>
             </div>
             <panel>
                 <div slot="panelTitle">
@@ -11,13 +12,13 @@
                 <div slot="panelContent">
                   <formtext labelname="分站名称：" :must="false"  :read="true"  :value.sync="baseInfo.CardName" formname='CardName' ></formtext>
                   <cascadeform  labelname="分站地址：" :detailneed="true" :read="true"  :value.sync= "baseInfo.Address"  formname="Address" ></cascadeform>
-                  <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                  <formtext labelname="跟单员电话：" :read="true" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :length="11" :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode'></formtext>
+                  <formtext labelname="跟单员电话：" :read="true" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :length="11" :number="true"  placeholder=""  formname='U_CntctPhone'></formtext>
                 </div>
             </panel>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
+                <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
           <div :class="css.footerBar" v-show="!detail">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
@@ -41,14 +42,15 @@ export default {
   data: function () {
     return {
       css,
-      detail: true,
+      detail: false,
       startvalidate: false,
       orderId:"",
       baseInfo:{},
       tabs:[],
       show: false,
       datamap:{},
-      tabType:""
+      tabType:"",
+      orderStatus:""
     }
   },
   computed: {},
@@ -59,7 +61,7 @@ export default {
   },
   methods: {
     getData: function(id){
-      this.$http.get(this.$Api+"sales/sub-orders/" + id,{}).then((res) => {
+      this.$http.get(this.$Api+"sales/stock/" + id,{}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
@@ -67,6 +69,7 @@ export default {
           this.datamap[d.data.type] = d.data;
           this.datamap["U_Enclosure"] = d.U_Enclosure || "";
           this.tabType = d.data.type;
+          this.orderStatus = d.data.U_OrderStatus;
       },(error) =>{
         console.log(error);
       })
@@ -90,7 +93,7 @@ export default {
         rec_info: sub.rec_info
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
-      this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify(params)).then((res) => {
+      this.$http.put(this.$Api+"sales/stock",JSON.stringify([params])).then((res) => {
           var d = res.json();
           console.log(d);
           this.showMsg("success", "提交成功");

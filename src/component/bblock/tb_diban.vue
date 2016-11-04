@@ -56,7 +56,7 @@ export default {
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
                     {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"采购数量", labelValue:"U_Pquantity", type:"edit"},
+                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"采购数量", labelValue:"U_Pquantity", type:"data"},
                     {name:"转换数量", labelValue:"Quantity", type:"data"},
                     {name:"包装数量", labelValue:"SalPackUn",type:"data"},
                     {name:"包装单位", labelValue:"SalPackMsr",type:"data"},

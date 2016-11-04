@@ -1,6 +1,7 @@
 <template lang="html">
     <div class="">
-              <tb :headercaption="pheader" curaction="purchase"   @loadsuccess="oneSuccessHandler" :load="false" :datas="vlist" ></tb>
+              <tb :headercaption="pheader" curaction="purchase"   @loadsuccess="oneSuccessHandler" :load="false" :datas="vlist" v-if="!detail"></tb>
+              <tb :headercaption="dheader" curaction="purchase"  :load="false" :datas="vlist" v-else></tb>
     </div>
 </template>
 <script>
@@ -18,21 +19,13 @@ export default {
     ignorevalidate:{   // 是否忽略验证
       default: true
     },
-    orderid:{
-      default:""  // 子订单id
-    },
+    // orderid:{
+    //   default:""  // 子订单id
+    // },
     srcdata:{  // 数据源 更改状态
 
     },
-    type:{
-      default:""
-    },
-    station:{     // 分站编码  U_ShortName
-      default:""
-    },
-    supnum:{    // 供应商编码 U_SupNum
-      default:""
-    }
+
   },
   data: function () {
     return {
@@ -43,10 +36,20 @@ export default {
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},{name:"使用库存数", labelValue:"use_stores",type:"edit"},
                     {name:"采购数量", labelValue:"U_Pquantity",type:"edit"},
-                    {name:"包装规格", labelValue:"tt",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
+                    {name:"包装规格", labelValue:"pack_spc",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
                     {name:"转化数量", labelValue:"Quantity",type:"data"},
                     {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
                     ],
+    dheader:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+                  {name:"产品包", labelValue:"SWW", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
+                  {name:"型号", labelValue:"U_Modle", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+                  {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
+                  {name:"可用库存量", labelValue:"stock",type:"data"},{name:"使用库存数", labelValue:"use_stores",type:"edit", read: true},
+                  {name:"采购数量", labelValue:"U_Pquantity",type:"edit", read: true},
+                  {name:"包装规格", labelValue:"pack_spc",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
+                  {name:"转化数量", labelValue:"Quantity",type:"data"},
+                  {name:"包装规格", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
+                  ],
     }
   },
   computed: {
@@ -69,7 +72,6 @@ export default {
     },
     // 验证列表数据
     validateFun: function(){
-        console.log(this.ignorevalidate);
         this.validateRec = true;
         if(this.ignorevalidate) return false
         for (var i = 0; i < this.vlist.length; i++) {
@@ -82,8 +84,20 @@ export default {
               }
           }
         }
+        let params = {
+            type: this.srcdata.type || "",  // 类型
+            U_PurchaseNum:this.srcdata.U_PurchaseNum || "",   // 订单id
+            U_ShortName:this.srcdata.station || "",  // 分站编码
+            U_SupNum:this.srcdata.U_SupNum || "", // 供应商编码
+            WhsCode:this.srcdata.WhsCode || "09", // 仓库
+            sub_orders:this.vlist,
+            rec_info: this.recdata,
+            U_DeWay: this.srcdata.U_DeWay || "PS", //默认配送
+            U_FZOrder:"", //主订单号
+        }
+        if(this.srcdata.U_Enclosure) params["U_Enclosure"] = this.srcdata.U_Enclosure;
         if(!this.validateRec) this.$dispatch("fail",this.srcdata);
-        else this.$dispatch("success", {data:this.vlist, rec_info: this.recdata, type: this.type,U_SupNum: this.supnum, U_ShortName:this.station, PurchaseNum: this.orderid});
+        else this.$dispatch("success", params);
     },
     addoneHandler : function(d){
         let one = this.adapterFun(d.data);

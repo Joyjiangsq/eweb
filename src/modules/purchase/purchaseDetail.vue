@@ -2,7 +2,8 @@
         <div class="">
           <div :class="css.paddingType">
             <div :class="css.hrow">
-                <span><span :class="css.hitem">采购订单号：</span> {{orderId}}</span>
+                <span class='itemrow'><span :class="css.hitem">采购订单号：</span> {{orderId}}</span>
+                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="orderStatus == 'e站驳回'" class='reback'>{{orderStatus}}</span><span class='common' v-else>{{orderStatus}}</span></span>
             </div>
             <panel>
 
@@ -28,9 +29,10 @@
           <div :class="css.dataArea">
                 <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
-          <div :class="css.footerBar" v-show="!detail">
+          <div :class="css.footerBar" v-if="orderStatus =='待采购' || orderStatus == 'e站驳回'">
+            <!--在待采购  和 e站驳回的状态   才可以放开驳回按钮-->
             <span :class="css.itemone"><btn @clickaction="backClickHandler" btnname="btn-default" iconname="icon-back">驳回</btn></span>
-              <span :class="css.itemone"><btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">核价并购买</btn></span>
+              <!-- <span :class="css.itemone"><btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">核价并购买</btn></span> -->
           </div>
         </div>
 </template>
@@ -51,14 +53,15 @@ export default {
   data: function () {
     return {
       css,
-      detail: false,
+      detail: true, // 不允许更改
       startvalidate: false,
       orderId:"",
       baseInfo:{},
       tabs:[],
       show: false,
       datamap:{},
-      tabType:""
+      tabType:"",
+      orderStatus:""
     }
   },
   computed: {},
@@ -79,6 +82,7 @@ export default {
           this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
           this.tabType = d.data.type;
+          this.orderStatus = d.data.U_OrderStatus;
       },(error) =>{
         console.log(error);
       })
