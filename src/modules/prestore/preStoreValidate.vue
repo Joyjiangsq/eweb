@@ -20,7 +20,7 @@ import css from "./pre.css";
 import Utils from "common/Utils.js";
 import pageBase from "common/mixinPage.js";
 import {orderStatus} from "config/const";
-import tbsp from "component/grid/tableSpec";
+import tbsp from "component/grid/tableBackStore";
 import Vue from "vue";
 // 自定义
 var orderComponent = Vue.extend({
@@ -40,21 +40,27 @@ var orderComponent = Vue.extend({
     }
   }
 })
-
+import radiobx from "component/radiobox/radioBox";
 var deWayComp = Vue.extend({
   data:function(){
     return {
       css,
-      test:[{name:"配送", id:"PS"}, {name:"自提", id:"ZT"}],
-
+      test:[{label:"配送", id:"PS", checked: false}, {label:"自提", id:"ZT", checked: false}],
+      value:"",
+      checkEvents:{
+        radioClick: function(d){
+          this.selfData.U_DeWay = d;
+        }
+      }
     }
   },
-  template: '<div>aaaa</div>',
+  template: '<radiobx :datas="test" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>',
   ready: function(){
+    this.value = this.selfData.U_DeWay || 'PS';
+    this.selfData.U_DeWay = this.value;
   },
+  components:{radiobx},
   methods:{
-    clickHandler: function(){
-    }
   }
 })
 export default {

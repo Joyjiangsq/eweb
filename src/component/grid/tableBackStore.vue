@@ -13,7 +13,7 @@
               <tr v-for="(order, done)  in dataList" >
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag" @click="clickOne(done,order)">
+                            <input type="checkBox" name="name" value="" v-if="!done.closeCheckTag &&sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag" @click="clickOne(done,order)">
                           <span v-if="sone.type == 'data'" >
                             <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}</span>
                           <div v-if="sone.type == 'edit'" >
@@ -32,14 +32,6 @@
                           </span>
 
                     </td>
-              </tr>
-              <tr v-if="curaction == 'add'">
-                  <td  v-for="(index, sone) in headercaption">
-                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
-                    <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
-                        <icon iconname="icon-elip"></icon>
-                    </span>
-                  </td>
               </tr>
         </tbody>
     </table>
@@ -77,31 +69,41 @@ export default {
   ready: function () {
   },
   methods:{
-    onEnterLook: function(e) {
-        // this.$http.get(this.$Api+ (this.enterUrl || ""),{params:{id: e.target.value}}).then((res) => {
-        // },(error) =>{
-        //   console.log(error);
-        // });
-        this.$dispatch("loadsuccess", {      // 默认产品规格
-            "ItemCode":Math.random(),
-            "ItemName":"这是产品名称",
-            "SWW":"这是产品包",
-            "FirmName":"这是二级分类",
-            "U_ThreeL":"这是三级分类",
-            "U_Brand":"这是品牌",
-            "U_CardName":"这是供应商",
-            "U_Modle":"这是型号",
-            "U_Series":"这是系列",
-            "U_MQuality":"这是材质",
-            "Spec":"这是规格",
-            "stock":20,
-            "SalUnitMsr":"这是单位"
-        });
+    adapertData(d){
+        if(!d.data || d.data.length == 0) {this.noresult = true; this.loading = false; return false;}
+        this.dataList = [];
+        for (var i = 0; i < d.data.length; i++) {
+            let one = d.data[i];
+            let rowData = {};
+            for (var j = 0; j < this.headercaption.length; j++) {
+              var hone = this.headercaption[j];
+              if(hone.type == "data") rowData[hone.labelValue] = one[hone.labelValue];
+              if(hone.adapterFun) {
+                 rowData[hone.labelValue] = hone.adapterFun.call(this._context, one);
+              }
+              rowData["_id"] = one["_id"];
+              if(i == 0) rowData["selected"] = true;  // 选中行样式
+              else rowData["selected"] = false;
+              if(hone.checkbox) one.checkTag = false;
+            }
+            let nd = Object.assign(one, rowData);
+            if(nd.U_OrderStatus != "待采购" && nd.U_OrderStatus != "e站驳回") nd.closeCheckTag = true;
+            this.dataList.push(nd);
+        }
+          this.$set("loading", false);
     },
-
-    moreClikHandler: function(){
-        this.$dispatch("more");
-    }
+    getCheckeds: function() {
+        let newa = [];
+        for (var i = 0; i < this.dataList.length; i++) {
+            let one = Utils.cloneObj(this.dataList[i]);
+            delete one.checkTag;
+            delete one.selected;
+            delete one.U_Consignee;
+            delete one.U_ConsigneePhone;
+            if(this.dataList[i].checkTag) newa.push(one);
+        }
+        return newa;
+    },
   },
   attached: function () {},
   components: {iconbar, icon},

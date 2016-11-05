@@ -50,6 +50,9 @@ export default {
     "validatestart":function() {
        if(this.watchIgnore) return false;
        this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
+    },
+
+    "value": function(){
     }
   }
 }

@@ -59,9 +59,10 @@ export const rolesE = [
   {name:"总部设计师", id:8},
 ]
 export const rolesS = [
-  {name:"店长", id:2},
-  {name:"精算师", id:3},
-  {name:"销售员", id:4},
-  {name:"材料员", id:5},
-  {name:"财务", id:6}
+  {name:"请选择", id:""},
+  {name:"店长", id:"店长"},
+  {name:"精算师", id:"精算师"},
+  {name:"销售员", id:"销售员"},
+  {name:"材料员", id:"材料员"},
+  {name:"财务", id:"财务"}
 ]

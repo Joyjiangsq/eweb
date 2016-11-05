@@ -21,7 +21,9 @@ export default {
       },
 
       value:{
-          default:""
+          default: function() {
+            return []
+          }
       },
 
       labelname:{
@@ -60,42 +62,50 @@ export default {
   },
   attached: function () {},
   created: function(){
-    let keys = []
-    let valueArr = this.value.split(",");
-    console.log(this.value);
-    for(var i = 0; i < this.datas.length; i++) {
-        let one = this.datas[i];
-        if(valueArr.indexOf(one[this.labelkey]) != -1) {
-          one.checked = true;
-        }
-        if(one.checked) {
-          keys.push(one[this.labelkey]);
-          continue
-        }
-        one.checked = false;
-    }
-    this.inDatas = this.datas;
-    if(keys.length != 0) this.value = keys.join(",");
+      this.setRender();
   },
   methods: {
     checkClick: function(index) {
-      this.inDatas[index].checked = !this.inDatas[index].checked;
-      this.resetValues();
-      this.events.checkClick.call(this._context, this.value);
-      this.$dispatch("checkclick", this.value);
+        this.inDatas[index].checked = !this.inDatas[index].checked;
+        this.resetValues();
+        this.events.checkClick.call(this._context, this.value);
+        this.$dispatch("checkclick", this.value);
     },
 
     resetValues: function(){
-      let vs = [];
-      for(var i = 0; i < this.inDatas.length; i++) {
-            if(this.inDatas[i]["checked"]) vs.push(this.inDatas[i][this.labelkey]);
-      }
-      this.$set("value", vs.join(","));
+        let vs = [];
+        for(var i = 0; i < this.inDatas.length; i++) {
+              if(this.inDatas[i]["checked"]) vs.push(this.inDatas[i][this.labelkey]);
+        }
+        this.$set("value", vs);
+    },
+
+    setRender: function(){
+        let keys = []
+        let chks = [];
+        let valueArr = this.value;
+        for(var i = 0; i < this.datas.length; i++) {
+            let one = Utils.cloneObj(this.datas[i]);
+            chks.push(one);
+            if(valueArr.indexOf(one[this.labelkey]) != -1) {
+              one.checked = true;
+            }
+            if(one.checked) {
+              keys.push(one[this.labelkey]);
+              continue
+            }
+            one.checked = false;
+        }
+        this.inDatas = chks;
+        // if(keys.length != 0) this.value = keys;
     }
   },
   components: {icon},
   watch:{
-
+    "value": function(){
+      console.log(this.value);
+        this.setRender();
+    }
   }
 }
 </script>

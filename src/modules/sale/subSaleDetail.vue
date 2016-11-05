@@ -3,7 +3,7 @@
           <div :class="css.paddingType">
             <div :class="css.hrow">
                 <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "orderStatus != '分站驳回'">{{orderStatus}}</span><span class="reback" v-else>{{orderStatus}}</span></span>
+                <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "orderStatus != '分站驳回' && orderStatus != 'e站驳回'">{{orderStatus}}</span><span class="reback" v-else>{{orderStatus}}</span></span>
 
             </div>
             <panel>

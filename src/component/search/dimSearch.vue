@@ -93,7 +93,6 @@ export default {
             this.datas = newDs;
       },
       oneClickHandler: function(index){
-        console.log(index);
           this.$set("value", this.tplArr[index][this.id]);
           this.$set("iptvalue", this.tplArr[index][this.labelname]);
           this.$set("showDropBox", !this.showDropBox);

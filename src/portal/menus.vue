@@ -36,8 +36,8 @@ export default {
                   url:"/prestorevalidate",name:"备货审核"}
               ]
           },
-          {name:"订制品设计申请", url:"/specapplydesignmgr", icon:"icon-tip"},
-          {name:"订制品设计管理", url:"/specdesignmgr", icon:"icon-tip"},
+          {name:"定制品设计申请", url:"/specapplydesignmgr", icon:"icon-tip"},
+          {name:"定制品设计管理", url:"/specdesignmgr", icon:"icon-tip"},
           {name:"加急卡管理", url:"/urgent", icon:"icon-tip"}
         ]
       }

@@ -8,13 +8,13 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="epCss.tBox">
-                <tb :headercaption="headercaption"  :totals.sync="totals" :size="2"  :load="load" :params="searchParams" url="employees" :events="tableEvents"></tb>
+                <tb :headercaption="headercaption"  :totals.sync="totals"  :load="load" :params="searchParams" url="employees" :events="tableEvents"></tb>
               </div>
-              <pg :totals="totals" :curpage.sync="searchParams.page" :size="2"></pg>
+              <pg :totals="totals" :curpage.sync="searchParams.page"></pg>
         </pagepanel>
         <dialog :flag="flagdep" @dialogclick="diaologClick" :title="optitle">
               <div class="" slot="containerDialog">
-                  <formtext labelname="姓名：" :value.sync="addParams.name"  placeholder="请输入姓名" :vertical="true" formname='name' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="姓名：" :value.sync="addParams.CardName"  placeholder="请输入姓名" :vertical="true" formname='CardName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="电话：" :value.sync="addParams.phone"  placeholder="请输入电话" :vertical="true" :phone="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formcb keyid="name" labelname="职位：" dropfixed="dropfixed" keyname="name" formname="roles" :vertical="true" :value.sync="addParams.roles" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
               </div>
@@ -34,11 +34,11 @@ import {rolesE, rolesS} from "config/const.js";
 import dialogtip from "component/dialog/dialogTip";
 
 import pageBase from "common/mixinPage.js";
-let tableHeaderDatas = [{name:"员工编号", labelValue:"user_code", type:"data"},
-                        {name:"员工姓名", labelValue:"name",type:"data"},
+let tableHeaderDatas = [{name:"员工编号", labelValue:"CardCode", type:"data"},
+                        {name:"员工姓名", labelValue:"CardName",type:"data"},
                         {name:"职位", labelValue:"roles",type:"data"},
                         {name:"联系方式", labelValue:"phone",type:"data"},
-                        {name:"创建人", labelValue:"createdBy",type:"data"},
+                        {name:"创建人", labelValue:"createdByName",type:"data"},
                         {name:"时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
 export default {
@@ -52,10 +52,10 @@ export default {
       curAction:"",             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
       optitle:"",               // 弹框标题
       deleteTag: false,         // 删除确认弹框显示隐藏
-      
+
       flagdep: false,           // 控制表格显示隐藏
       validate: false,          // 表单验证动作的开关
-      addParams:{name:"", roles:"", phone:""}, // 新增、编辑的参数值
+      addParams:{CardName:"", roles:"", phone:""}, // 新增、编辑的参数值
       headercaption:tableHeaderDatas, // 表格头部信息设置
       tableEvents:{
         operatorRender: function(d){
@@ -67,7 +67,7 @@ export default {
           else if (d.action == "edit") {
             this.$set("optitle", "编辑");
             this.$set("curAction", "edit");
-            this.addParams.name = d.data.name;
+            this.addParams.CardName = d.data.CardName;
             this.addParams.phone = d.data.phone;
             this.addParams.roles = d.data.roles;
             this.flagdep = !this.flagdep;
@@ -89,9 +89,9 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"combobox", keyname:"jobname", labelname:"name", keyid:"name", value:q.jobname || "", datas:this.getRoles, labelcaption:"职位："},
-              {type:"text",  value:q.empcode || "",  keyname:"empcode", labelcaption:"员工编号:"},
-              {type:"text",  value:q.empname || "",  keyname:"empname", labelcaption:"员工姓名:"}];
+      return [{type:"combobox", keyname:"roles", labelname:"name", keyid:"id", value:q.roles || "", datas:this.getRoles, labelcaption:"职位："},
+              {type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"员工编号:"},
+              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"员工姓名:"}];
 
     },
     getRoles: function(){
@@ -144,7 +144,7 @@ export default {
 
     confirmDelete: function(d){
       if(d.action == "confirm") {
-          this.$http.delete(this.$Api+"employees/"+this.curItem._id, {}).then((res)=>{
+          this.$http.delete(this.$Api+"employees", {params: {"_id": this.curItem._id}}).then((res)=>{
                this.$set("deleteTag", !this.deleteTag);
                this.loadlist()
                this.showMsg("success", "删除成功！");
