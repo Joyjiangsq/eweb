@@ -36,6 +36,9 @@ export default {
     id:{
       default: "id"
     },
+    querylabel:{
+      default: "name-or-phone"
+    },
     url:{
       default:""
     },
@@ -75,7 +78,7 @@ export default {
       },
 
       getData: function(){
-          this.params.name_or_phone = this.iptvalue;
+          this.params[this.querylabel] = this.iptvalue;
           this.$http.get(this.$Api+this.url,{params: this.params}).then((res)=>{
                 var one = res.json();
                 this.adapterDatas(one.data.docs);

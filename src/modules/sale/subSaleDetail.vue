@@ -4,7 +4,7 @@
             <div :class="css.hrow">
                 <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
                 <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "orderStatus != '分站驳回' && orderStatus != 'e站驳回'">{{orderStatus}}</span><span class="reback" v-else>{{orderStatus}}</span></span>
-
+                <span class='itemrow' v-if="backValue"><span :class="css.hitem">驳回理由：</span> {{backValue}}</span>
             </div>
             <panel>
 
@@ -59,6 +59,7 @@ export default {
       show: false,
       datamap:{},
       tabType:"",
+      backValue:"",
       orderStatus:""
     }
   },
@@ -74,7 +75,7 @@ export default {
   },
   methods: {
     getData: function(id){
-      this.$http.get(this.$Api+"sales/sub-orders/" + id,{}).then((res) => {
+      this.$http.get(this.$Api+"sales/sub-orders/detail",{params:{U_PurchaseNum: id}}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
@@ -83,6 +84,7 @@ export default {
           this.datamap["U_Enclosure"] = d.U_Enclosure || "";
           this.tabType = d.data.type;
           this.orderStatus = d.data.U_OrderStatus;
+          this.backValue = d.data.back_value;
       },(error) =>{
         console.log(error);
       })
@@ -99,16 +101,15 @@ export default {
         console.log(d);
     },
     editAction: function(sub){
-      //{ "U_PurchaseNum": "FZXS201611100132_101", "sub_orders": [{产品及数量等信息}]}
       let params = {
         U_PurchaseNum:this.orderId,
         sub_orders:sub.list || [],
-        rec_info: sub.rec_info
+        rec_info: sub.rec_info,
+        U_OrderStatus: "待采购"
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
-      this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify(params)).then((res) => {
+      this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify([params])).then((res) => {
           var d = res.json();
-          console.log(d);
           this.showMsg("success", "提交成功");
           this.getData(this.orderId);
           this.show = !this.show;

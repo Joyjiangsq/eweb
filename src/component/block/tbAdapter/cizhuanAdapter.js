@@ -37,6 +37,8 @@ export default function adapterData(d) {
           validateFun:function(data, index){ return true; }
       };
 
+
+
       if(!d.stock || d.stock == 0) d.stock = "0";
       // d.useStores = {    // 使用库存量 限制不能超过可用库存量
       //     def: 0,

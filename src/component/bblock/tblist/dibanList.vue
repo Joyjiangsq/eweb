@@ -23,6 +23,8 @@ import Utils from "common/Utils.js";
 import adapter from "../tbAdapter/dibanAdapter";
 import dialogtip from "component/dialog/dialogTip";
 import basetb from "./tbMixins";
+import mdialog from "component/blockcommon/mealDialog";
+
 export default {
   mixins:[basetb],
 
@@ -32,7 +34,8 @@ export default {
       css,
       headerCaption:[
              {type:"operator", name:"", icon: true},
-             {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+             {name:"产品编码", labelValue:"ItemCode", type:"data"},
+             {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"dianbiancc", component:mdialog},
              {name:"所属包", labelValue:"SWW", type:"data"},
              {name:"产品包", labelValue:"SWW", type:"data"},
              {name:"二级分类", labelValue:"FirmName", type:"data"},

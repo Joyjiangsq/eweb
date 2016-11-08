@@ -11,6 +11,7 @@
 </template>
 
 <script>
+// 废弃
 import tb from "component/grid/tableListBase";
 import dialog from "component/dialog/dialog";
 export default {

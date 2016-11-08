@@ -7,7 +7,7 @@ let tableBase = {
           },
           load:{
             type: Boolean,
-            default: true
+            default: false
           },
           stylein:{
             type:Object,
@@ -104,7 +104,6 @@ let tableBase = {
           clickOne: function(one, index){
           },
           checkedAll: function(){
-              console.log(this.all);
               if(this.all) {
                 for (var i = 0; i < this.dataList.length; i++) {
                     this.dataList[i].checkTag = false

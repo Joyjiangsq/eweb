@@ -24,16 +24,7 @@
 .attachrow {
     padding-top: 20px;
 }
-.upsu {
-    color: green;
-    padding: 0 10px;
-    text-align: center;
-}
-.uptip {
-    font-style: italic;
-    color: gray;
-    font-size: 12px;
-}
+
 .noattach {
   color: gray;
   font-size: 12px;

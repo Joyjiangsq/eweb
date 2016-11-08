@@ -36,7 +36,7 @@ import cascadeform from "component/form/formCascade";
 import mentb from "./tblist/menList.vue";
 import adapter from "./tbAdapter/menAdapter";
 import baseMixins from "./itemMixins";
-
+import mdialog from "component/blockcommon/mealDialog";
 export default {
   mixins:[baseMixins],
   data: function () {
@@ -46,7 +46,7 @@ export default {
       validate:false,
       headercaption:[{type:"operator", name:""},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"mencc", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},
@@ -84,7 +84,7 @@ export default {
                     {name:"备注", labelValue:"Freetxt",type:"edit"},
                     ],
       headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"mencc", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},

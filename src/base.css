@@ -89,7 +89,15 @@ table tbody td span {
 /**全局样式**/
 
 /**渐变**/
-
+:global(.tipRow) {
+  background-color: #f5d57b;
+padding: 10px;
+font-size: 13px;
+margin-bottom: 15px;
+}
+:global(.tipRowSub) {
+  margin-bottom: 10px
+}
 :global(.gradent) {
   background: -webkit-linear-gradient(white, #f2f2f2);
   /* Safari 5.1 - 6.0 */
@@ -100,6 +108,16 @@ table tbody td span {
   background: linear-gradient(white, #f2f2f2);
   FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
   /*IE 6 7 8*/
+}
+:global(.upsu) {
+    color: green;
+    padding: 0 10px;
+    text-align: center;
+}
+:global(.uptip) {
+    font-style: italic;
+    color: gray;
+    font-size: 12px;
 }
 /**渐隐**/
 :global(.reback) {

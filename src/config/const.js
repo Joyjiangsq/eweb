@@ -31,7 +31,7 @@ export const packageType = [
 
 // 销售订单   单据类型   订单类型
 export const orderType = [
-  {name:"正单", id: 14},
+  {name:"正常订单", id: 14},
   {name:"售后订单", id: 81}
   // 82-备货
 ]
@@ -48,7 +48,7 @@ export const orderStatus = [
   {name:"分站签收", id: 6},
   {name:"e站驳回", id: 7},
   {name:"工厂接单", id: 8},
-  {name:"待结单", id: 9},
+  {name:"待接单", id: 9},
   {name:"待采购", id: 10},
   {name:"店长驳回", id: 11}
 ]
@@ -59,7 +59,6 @@ export const rolesE = [
   {name:"总部设计师", id:8},
 ]
 export const rolesS = [
-  {name:"请选择", id:""},
   {name:"店长", id:"店长"},
   {name:"精算师", id:"精算师"},
   {name:"销售员", id:"销售员"},

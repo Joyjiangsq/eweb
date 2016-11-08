@@ -31,16 +31,16 @@ let tbMixin = {
                            break;
                          }
                        }
-                       if(exit) {
-                         if(!d.ProductList || d.ProductList == "") return [];
-                         else return [{action:"tip",icon:"icon-tip", data: d}]
-                       }
-                       else {
-                           if(!d.ProductList || d.ProductList == "") {
-                             return [{action:"add",icon:"icon-add", data: d}]
-                           }
-                           else return [{action:"add",icon:"icon-add", data: d}, {action:"tip",icon:"icon-tip", data: d}]
-                       }
+                       if(exit) return []
+                      //    if(!d.ProductList || d.ProductList == "") return [];
+                      //    else return [{action:"tip",icon:"icon-tip", data: d}]
+                      //  }
+                       else return [{action:"add",icon:"icon-add", data: d}]
+                      //      if(!d.ProductList || d.ProductList == "") {
+                      //        return [{action:"add",icon:"icon-add", data: d}]
+                      //      }
+                      //      else return [{action:"add",icon:"icon-add", data: d}, {action:"tip",icon:"icon-tip", data: d}]
+                      //  }
                    },
                    operatorHandler: function(d){
                        if(d.action == "add") {

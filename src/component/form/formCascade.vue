@@ -95,6 +95,7 @@ export default {
        if(this.value == "") this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
        else {
         //  this.value += "," + this.detailv;
+         if(this.value.split(",").length < 4) this.value += "," + this.detailv;
          this.$dispatch("onvalidate", {res:"success", msg: "验证成功", value:this.value, name: this.formname});
        }
     }

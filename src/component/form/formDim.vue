@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <searchdim :url="url" :labelname="dimlabel" :params="params" :adapter="adapter" :read="read" :placeholder="placeholder" :id="id" :value.sync="value" :iptvalue.sync="iptvalue" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
+            <searchdim :url="url" :labelname="dimlabel" :querylabel="querylabel" :params="params" :adapter="adapter" :read="read" :placeholder="placeholder" :id="id" :value.sync="value" :iptvalue.sync="iptvalue" @dimclick="dimClick" @valuechange="valuechange"></searchdim>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -45,6 +45,9 @@ export default {
     },
     id:{
       // 取值依据
+    },
+    querylabel:{
+      default:"name-or-phone"
     }
   },
   data: function () {

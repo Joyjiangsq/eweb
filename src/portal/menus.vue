@@ -17,29 +17,33 @@
 <script>
 import protalCss from './portal.css';
 import icon from "component/sprite/icon";
+import {getUser} from "stores/getters.js";
+import Utils from "common/Utils";
+let staticMenus = [
+  {name:"首页", url:"/index", icon:"icon-home"},
+  {name:"账户管理", url:"/accountmgr", icon:"icon-tip"},
+  {name:"员工管理", url:"/employee", icon:"icon-tip"},
+  {name:"用户管理", url:"/user", icon:"icon-tip"},
+  {name:"客户管理", url:"/custom", icon:"icon-tip"},
+  {name:"销售订单管理", url:"/sale", icon:"icon-tip"},
+  {name:"采购管理", icon:"icon-tip",show: false,subMenus:[{
+          url:"/purchase",name:"采购订单管理"
+      },{
+          url:"/prestore",name:"备货申请"
+      },{
+          url:"/prestorevalidate",name:"备货审核"}
+      ]
+  },
+  {name:"定制品设计申请", url:"/specapplydesignmgr", icon:"icon-tip"},
+  {name:"定制品设计管理", url:"/specdesignmgr", icon:"icon-tip"},
+  {name:"加急卡管理", url:"/urgent", icon:"icon-tip"}
+]
 export default {
     data(){
       return {
         protalCss,
-        datamenu:[
-          {name:"首页", url:"/index", icon:"icon-home"},
-          {name:"账户管理", url:"/accountmgr", icon:"icon-tip"},
-          {name:"员工管理", url:"/employee", icon:"icon-tip"},
-          {name:"用户管理", url:"/user", icon:"icon-tip"},
-          {name:"客户管理", url:"/custom", icon:"icon-tip"},
-          {name:"销售订单管理", url:"/sale", icon:"icon-tip"},
-          {name:"采购管理", icon:"icon-tip",show: false,subMenus:[{
-                  url:"/purchase",name:"采购订单管理"
-              },{
-                  url:"/prestore",name:"备货申请"
-              },{
-                  url:"/prestorevalidate",name:"备货审核"}
-              ]
-          },
-          {name:"定制品设计申请", url:"/specapplydesignmgr", icon:"icon-tip"},
-          {name:"定制品设计管理", url:"/specdesignmgr", icon:"icon-tip"},
-          {name:"加急卡管理", url:"/urgent", icon:"icon-tip"}
-        ]
+        oneArry:[],
+        datamenu: Utils.getUserInfo().menus || staticMenus
       }
     },
 
@@ -57,10 +61,7 @@ export default {
       }
     },
 
-    route:{
-      data: function(){
-        alert(1)
-      }
+    computed: {
     },
     created: function(){
 
@@ -77,6 +78,11 @@ export default {
     },
     components:{
       icon
+    },
+    vuex: {
+        getters: {
+           user: getUser
+         }
     }
 
 }

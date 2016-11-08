@@ -3,6 +3,7 @@ import tbbase from "component/grid/tableListBase";
 import css from "./type.css";
 import {showTips} from "actions/index";
 import adapter from "./tbAdapter/purchaseAdapter";
+import mdialog from "component/blockcommon/mealDialog";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -31,7 +32,8 @@ export default {
     return {
       css,
       vlist:[],
-      headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+      headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"shigongfucaicc", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"所属包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
@@ -42,7 +44,8 @@ export default {
                     {name:"采购数量", labelValue:"U_Pquantity",type:"edit"},{name:"转化数量", labelValue:"Quantity",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
                   ],
-      headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+      headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"shigongfucaicc", component:mdialog},
                     {name:"所属包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},

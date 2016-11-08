@@ -51,14 +51,19 @@ Vue.http.interceptors.push(function(request, next) {
     next((res) => {
         let d = res.json();
         if (!d.code) d = JSON.parse(d);
-        if (d.code == 302) {
+        if (d.code == 302) {        // 掉线重定向到登陆页
             // Utils.clearUserInfo();
-            // showTips(_self.$store, {
-            //     type: "error",
-            //     msg: d.msg
-            // });
+            showTips(_self.$store, {
+                type: "error",
+                msg: d.msg
+            });
             return d
-        } else if (d.code != 200) {
+        }
+        else if(d.code == 403) {    // 无权限页面
+           Utils.reGoNoPower()
+          //  return false
+        }
+        else if (d.code != 200) {
             showTips(_self.$store, {
                 type: "error",
                 msg: d.msg

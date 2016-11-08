@@ -6,7 +6,11 @@
           </div>
     </pagepanel>
     <pagepanel>
-          <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
+          <btnbar :buttons="btnsData" :events="btnEvents">
+              <slot>
+                <ft url="upload" :filter="['xls','xlsx']" text="导入" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
+              <slot>
+          </btnbar>
           <div class="">
             <tb :headercaption="headercaption" :load="load"  :totals.sync="totals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
@@ -17,12 +21,11 @@
           <div slot="containerDialog" :class="css.dBox">
                 <formcb keyid="name" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
-                <!-- <formdim labelname="归属分站："   :read="curAction!='add'"  :value.sync="formData.U_BTSubstation"  @fromdim="formDimClick"  formname='U_BTSubstation' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formdim> -->
-                <formtext labelname="e站客服："  :read="curAction!='add'"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <formtext labelname="e站客服："  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="手机号码：" :read="curAction!='add'"  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
 
-                <house :startvalidate="startvalidate" :houselist="formData.house_list" @errorh="errorh"></house>
+                <house :startvalidate="startvalidate" :curaction="curAction" :houselist="formData.house_list" @errorh="errorh"></house>
           </div>
     </dialog>
 
@@ -30,6 +33,7 @@
 </template>
 <script>
 import {fromConst} from "config/const";
+import ft from "component/file/filedeal.vue";
 import formcb from "component/form/fmCombobox";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
@@ -38,11 +42,10 @@ import formdim from "component/form/formDim";
 import Utils from "common/Utils";
 import house from "./houseOne";
 import pageBase from "common/mixinPage.js";
-let headerData = [{name:"客户编号", labelValue:"CardCode", type:"data"},{name:"客户名称", labelValue:"CardName",type:"data"},
-                  {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"渠道", labelValue:"qudao",type:"data",adapterFun: function(d) {if(d.U_ComeFrom ==1) return "淘宝"; else if(d.U_ComeFrom == 2) return "门店"; else return ""}},
+let headerData = [{name:"业主编号", labelValue:"CardCode", type:"data"},{name:"业主名称", labelValue:"CardName",type:"data"},
+                  {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"渠道", labelValue:"U_ComeFrom",type:"data"},
                   {name:"创建人", labelValue:"createdBy",type:"data"},  // TODO
                   {name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
-                  {name:"是否签单", labelValue:"account",type:"data"},
                   {type:"operator", name:"操作"}]
 export default {
   mixins:[pageBase],
@@ -63,6 +66,7 @@ export default {
          validate: true,
          house_list:[{}]
       },
+      statusRes:"",
       formControl:{
           validate: false,
           validateHandler: function(d){   // 表单验证
@@ -75,7 +79,7 @@ export default {
       headercaption: headerData,
       tableEvents:{
         operatorRender: function(d){
-          return [{name:"编辑", action:"edit",icon:"icon-edit", data:d},{name:"详情",action:"detail",icon:"icon-tip", id:d }];
+          return [{name:"编辑", action:"edit",icon:"icon-edit", data:d},{name:"详情",action:"detail",icon:"icon-tip", data:d}];
         },
 
         operatorHandler: function(d){
@@ -86,11 +90,12 @@ export default {
               }
               else if(d.action == "detail") {
                 this.$set("curAction", "detail");
-                this.dialogMap.showDetailDialog = !this.dialogMap.showDetailDialog;
+                this.formData = Utils.cloneObj(d.data);
+                this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
         }
       },
-      btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导入",  icon:"icon-share",action:"inport"}, {name:"导出", icon:"icon-share", action:"export"}],
+      btnsData:[{name:"新增", icon:"icon-add", action:"add"}, {name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
               if(d.action == "add") {
@@ -104,10 +109,10 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.cardCode || "",  keyname:"cardCode", labelcaption:"业主编号:"},
-              {type:"text",  value:q.customName || "",  keyname:"customName", labelcaption:"业主姓名:"},
-              {type:"text",  value:q.phone || "",  keyname:"phone", labelcaption:"业主联系方式:", property: "phone"},
-              {type:"combobox", keyid:"id", value:q.from || "", labelname:"name", keyname:"from", labelcaption:"渠道", datas:this.formArray.fromConst},
+      return [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号:"},
+              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
+              {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"},
+              {type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"渠道", datas:this.formArray.fromConst},
               {type:"dim", iptvalue: q.dimLabel || "", value:q.ename || "",  keyname:"ename", labelcaption:"分站名称:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     },
@@ -126,11 +131,19 @@ export default {
     formDimClick: function(d) {
 
     },
+    upSuccessHandler: function(){
+      this.statusRes = "导入成功";
+      this.loadlist();
+    },
     errorh: function(){
         this.formData.validate = false;
     },
     // 新增对话框 按钮回调
     dialogClickHandler: function(d) {
+        if(this.curaction == "detail") {
+          this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
+          return false;
+        }
         if(d.action == "confirm") {
           this.formControl.validate = !this.formControl.validate;  // 开始基础数据验证
           this.startvalidate = !this.startvalidate; // 开始房屋信息验证
@@ -164,6 +177,7 @@ export default {
           console.log(d);
           if(d.code == 200) {
             this.retInfo();
+            this.showMsg("success", "修改成功");
           }
       },(error) =>{
         console.log(error);
@@ -172,15 +186,15 @@ export default {
     addOne: function(){
       this.$http.post(this.$Api+"customers",JSON.stringify(this.formData)).then((res) => {
           var d = res.json();
-          console.log(d);
           if(d.code == 200) {
             this.retInfo();
+            this.showMsg("success", "新增成功");
           }
       },(error) =>{
         console.log(error);
       })
     }
   },
-  components: {formtext,cascadeform, formcb, formdim, house},
+  components: {formtext,cascadeform, formcb, formdim, house, ft},
 }
 </script>

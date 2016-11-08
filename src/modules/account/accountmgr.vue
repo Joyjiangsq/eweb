@@ -39,11 +39,28 @@
                       <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
           </div>
+            <div style="padding-bottom: 20px;">
+              <div class="tipRow">
+                <div class="tipRowSub">
+                  <icon iconname="icon-warn"></icon> <span :class="acCss.tonedesc">提现须知：</span>
+                </div>
+                <p style="margin-bottom: 5px;">
+                  <span :class="acCss.titledesc">1</span>1万以下（含1万）手续费5元；
+                  <span :class="acCss.titledesc">2</span>1-10万（含10万）手续费10元；
+                  <span :class="acCss.titledesc">3</span>10-50万（含50万）手续费15元；
+                  <span :class="acCss.titledesc">4</span>50-100万（含100万）手续费20元；
+                </p>
+                <span :class="acCss.titledesc">5</span>100-1000万（含1000万）按0.00002比率计算算；
+                <span :class="acCss.titledesc">6</span>大于1000万手续费200元；
+                例：提现10000元，扣除手续5元，实际到账银行卡金额9995元；
+              </div>
+            </div>
         </pagepanel>
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="acCss.tableIn">
-                    <tb :headercaption="headercaption" :totals.sync="totals"  :params="searchParams" url="station-account/bills" :load="load"  :datas="testData"></tb>
+                    <!--station-account/bills-->
+                    <tb :headercaption="headercaption" :totals.sync="totals"  :params="searchParams" url="" :load="load"  :datas="testData"></tb>
               </div>
               <pg :totals="totals"  :curpage.sync="searchParams.page"></pg>
         </pagepanel>
@@ -68,6 +85,7 @@ import btn from "component/sprite/button";
 import pageBase from "common/mixinPage.js";
 import propertytext from "component/form/propertyText.vue";
 import formtext from "component/form/formText";
+import icon from "component/sprite/icon";
 export default {
   mixins: [pageBase],
   data: function () {
@@ -155,7 +173,7 @@ export default {
 
   },
   // 注册查询组件， 表格组件， 面板组件， 按钮组组件，分页组件， 按钮组件， 对话框组件, 键值文本组建
-  components: {btn, propertytext,formtext}
+  components: {btn, propertytext,formtext, icon}
 }
 
 </script>

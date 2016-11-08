@@ -41,8 +41,12 @@ import storejs from "storejs";
          location.hash="login";
      },
 
+     reGoNoPower: function() {
+        location.hash="forbidden";
+     },
+
      getUserInfo: function(){
-        return storejs("userInfo") || false;
+        return storejs("userInfo") || {};
      },
      // 是不是e站管理员
      isEAdmin: function(){

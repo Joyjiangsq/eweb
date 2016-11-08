@@ -15,3 +15,8 @@
   padding-left: 39px;
   margin-top: 20px;
 }
+
+.closeone {
+  margin-left: 10%;
+cursor: pointer;
+}

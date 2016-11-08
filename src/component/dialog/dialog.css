@@ -46,7 +46,7 @@
     right: 10px;
     cursor: pointer;
 }
-.dialog .dialogContent {
+.dialogContent {
     padding: 10px;
     text-align: left;
     min-width: 335px;
@@ -55,7 +55,7 @@
     overflow-y: auto;
 }
 @media screen and (max-height: 900px) {
-  .dialog .dialogContent {
+  .dialogContent {
       max-height: 487px;
   }
 }

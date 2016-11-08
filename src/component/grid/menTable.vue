@@ -33,7 +33,9 @@
                                 <span v-widget="{widget: sone, data: done, cname: sone.cname}" v-else></span>
                                 <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                           </div>
-
+                          <div v-if="sone.type == 'componentspec'">
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
+                          </div>
                           <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
                           </span>

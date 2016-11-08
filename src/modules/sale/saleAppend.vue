@@ -110,7 +110,7 @@ export default {
       this.startvalidate = !this.startvalidate;
     },
     getData: function(id){
-        this.$http.get(this.$Api+"sales/base-info/" + id,{}).then((res) => {
+        this.$http.get(this.$Api+"sales/base-info",{params:{U_FZOrder: id}}).then((res) => {
             var d = res.json();
             console.log(d);
             this.baseInfo = d.data.base_info;

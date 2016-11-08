@@ -144,7 +144,7 @@ export default {
 
     confirmDelete: function(d){
       if(d.action == "confirm") {
-          this.$http.delete(this.$Api+"employees", {params: {"_id": this.curItem._id}}).then((res)=>{
+          this.$http.delete(this.$Api+"employees", {params: {"CardCode": this.curItem.CardCode}}).then((res)=>{
                this.$set("deleteTag", !this.deleteTag);
                this.loadlist()
                this.showMsg("success", "删除成功！");

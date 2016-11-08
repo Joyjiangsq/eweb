@@ -105,6 +105,11 @@ export function routerStart(router) {
                     component: function(resovle) {require(['modules/urgent/urgentMgr.vue'], resovle)},
                 },
 
+                // 无权限页面
+                "/forbidden" :{
+                  component: function(resovle) {require(['portal/forbidden.vue'], resovle)},
+                },
+
                 //开发文档
                 "demo":{
                   component: function(resovle) {require(['modules/demo/demo.vue'], resovle)},

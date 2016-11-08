@@ -23,6 +23,8 @@ import Utils from "common/Utils.js";
 import adapter from "../tbAdapter/jichengdiaodingAdapter";
 import dialogtip from "component/dialog/dialogTip";
 import basetb from "./tbMixins";
+import mdialog from "component/blockcommon/mealDialog";
+
 export default {
   mixins:[basetb],
 
@@ -32,7 +34,8 @@ export default {
       name:"集成吊顶",
       headerCaption:[
              {type:"operator", name:"", icon: true},
-             {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
+             {name:"产品编码", labelValue:"ItemCode", type:"data"},
+             {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"jichengdiaodingcc", component:mdialog},
              {name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"所属包", labelValue:"SWW", type:"data"},
              {name:"品牌", labelValue:"U_Brand", type:"data"},

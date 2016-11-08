@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     getData: function(id){
-      this.$http.get(this.$Api+"sales/" + id,{}).then((res) => {
+      this.$http.get(this.$Api+"sales/detail",{params:{U_FZOrder: id}}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           for (var i = 0; i < d.data.sub_orders.length; i++) {

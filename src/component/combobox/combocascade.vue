@@ -73,6 +73,10 @@ export default {
           this.$dispatch("combocase", value);
     },
     renderAreas: function(value) {
+      if(!value || value == "") {
+        this.aarry = [];
+        return false
+      }
       for (var i = 0; i < this.carry.length; i++) {
          var one = this.carry[i];
          if(one.name == value) {
@@ -81,6 +85,10 @@ export default {
       }
     },
     renderCitys: function(value) {
+      if(!value || value == "") {
+        this.carry = [];
+        return false
+      }
       for (var i = 0; i < this.datas.length; i++) {
          var one = this.datas[i];
          if(one.name == value) {

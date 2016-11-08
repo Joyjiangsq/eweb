@@ -35,13 +35,13 @@
 </template>
 
 <script>
-import formtext from "component/form/formText";
+import formcb from "component/form/fmCombobox";
+import formtext from "component/form/formDbText";
 import formck from "component/form/formCheckBox";
 import formrd from "component/form/formRadio";
 import formdt from "component/form/formDate";
 import datem from "component/form/formMonth";
 import daterg from "component/form/formRangeDate";
-import formcb from "component/form/fmCombobox";
 import cascadeform from "component/form/formCascade";
 import {setTitle} from "actions/index.js";
 import panel from "component/panel/panel";

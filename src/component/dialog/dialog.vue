@@ -6,7 +6,7 @@
                     {{title}}
                     <span :class="dCss.close" @click="hide"><icon iconname="icon-close" ></icon></span>
                 </div>
-                <div :class="[dCss.dialogContent,scroll?dCss.scrollLimit:'']">
+                <div :class="[dCss.dialogContent,scroll?dCss.scrollLimit:'',classname]">
                     <slot name='containerDialog'>这是内容</slot>
                 </div>
 
@@ -28,6 +28,9 @@ import dialogBase from "common/mixinDialog.js";
 export default {
   mixins:[dialogBase],
   props:{
+    classname:{
+      default:""
+    },
     scroll: {
       default: false
     }

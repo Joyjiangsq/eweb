@@ -2,7 +2,8 @@
     <div :class="[css.formOne,classname, vertical?css.verticalitem:'']">
         <label for=""  :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <datepicker :value="value" :formate="formate" :dropfixed="dropfixed" :stopdate="stopdate" :startdate="startdate" @dayclick="dayClick"></datepicker>
+            <input type="input" name="name" :value="value" v-if="read" disabled="disabled">
+            <datepicker :value="value" :formate="formate" :dropfixed="dropfixed" :stopdate="stopdate" :startdate="startdate" @dayclick="dayClick" v-else></datepicker>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -22,6 +23,9 @@ export default {
     },
     startdate:{     // 起始日期
 
+    },
+    read:{
+      default:false
     },
     stopdate:{    // 结束日期
       default: function(){

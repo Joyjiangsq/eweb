@@ -25,6 +25,7 @@ import css from "./type.css";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import baseMixins from "./itemMixins";
+import mdialog from "component/blockcommon/mealDialog";
 export default {
   mixins:[baseMixins],
   props:{
@@ -38,7 +39,7 @@ export default {
       curName:"chugui",
       headercaption:[{type:"operator", name:""},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"shigongfucaicc", component:mdialog},
                     {name:"所属包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
@@ -68,7 +69,7 @@ export default {
                     ],
       headerdetail:[
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"shigongfucaicc", component:mdialog},
                     {name:"所属包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},

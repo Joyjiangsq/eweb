@@ -10,7 +10,7 @@
                                     <checkbx  @checkclick="checkClick(one)"></checkbx>
                               </span>
                               <span :class="css.srow">采购订单号： <span :class="css.inrow" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span></span>
-                              <span :class="css.srow">采购订单状态： <span v-if="one.U_OrderStatus == 'e站驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
+                              <span :class="css.srow">采购订单状态： <span v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '分站驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
                               <span :class="css.srow">供应商： {{one.sub_orders[0].U_CardName || '-'}}</span>
                           </div>
                           <div :class="css.tbbox" v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '待采购'" v-show="one.show">
@@ -70,13 +70,29 @@ export default {
         if(!one.ignorevalidate) this.checkList.push(1);
         else this.checkList.pop();
 
-        this.changeIds(one.U_PurchaseNum);
+        // this.changeIds(one.U_PurchaseNum);
+        this.changeIds(one);
     },
-    changeIds: function(id){
-        let index = this.orderids.indexOf(id);
-        if(index == -1) this.orderids.push(id);
+
+    changeIds: function(one){
+        if(this.orderids.length == 0) {
+          this.orderids.push(one);
+          return false;
+        }
         else {
-            this.orderids.splice(index, 1);
+          let exist = true;
+          let index = 0;
+          for (var i = 0; i < this.orderids.length; i++) {
+            let item = this.orderids[i];
+            index = i;
+            if(item.U_PurchaseNum == one.U_PurchaseNum) {
+                exist = true;
+                break;
+            }
+            else exist = false;
+          }
+          if(exist) this.orderids.splice(index, 1);
+          else this.orderids.push(one);
         }
     },
     successHandler: function(d) {

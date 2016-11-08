@@ -3,7 +3,8 @@
           <div :class="css.paddingType">
             <div :class="css.hrow">
                 <span class='itemrow'><span :class="css.hitem">采购订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="orderStatus == 'e站驳回'" class='reback'>{{orderStatus}}</span><span class='common' v-else>{{orderStatus}}</span></span>
+                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="orderStatus == 'e站驳回' || orderStatus == '分站驳回'" class='reback'>{{orderStatus}}</span><span class='common' v-else>{{orderStatus}}</span></span>
+                <span class='itemrow' v-if="backValue"><span :class="css.hitem">驳回理由：</span> {{backValue}}</span>
             </div>
             <panel>
 
@@ -30,10 +31,15 @@
                 <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
           <div :class="css.footerBar" v-if="orderStatus =='待采购' || orderStatus == 'e站驳回'">
-            <!--在待采购  和 e站驳回的状态   才可以放开驳回按钮-->
-            <span :class="css.itemone"><btn @clickaction="backClickHandler" btnname="btn-default" iconname="icon-back">驳回</btn></span>
-              <!-- <span :class="css.itemone"><btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">核价并购买</btn></span> -->
+              <!--在待采购  和 e站驳回的状态   才可以放开驳回按钮-->
+              <span :class="css.itemone"><btn @clickaction="backClickHandler" btnname="btn-primary" iconname="icon-back">驳回</btn></span>
           </div>
+
+          <dialog :flag="showReDialog" title="请输入驳回原因" @dialogclick="dialogclick">
+                <div slot="containerDialog">
+                      <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValueipt" placeholder="请填写驳回理由" ></textarea>
+                </div>
+          </dialog>
         </div>
 </template>
 
@@ -58,10 +64,14 @@ export default {
       orderId:"",
       baseInfo:{},
       tabs:[],
+      backValue:"",
       show: false,
+      showReDialog: false,
       datamap:{},
       tabType:"",
-      orderStatus:""
+      orderStatus:"",
+      backValue:"",
+      backValueipt:""
     }
   },
   computed: {},
@@ -72,10 +82,24 @@ export default {
   },
   methods: {
     backClickHandler: function(){
-
+        this.showReDialog = !this.showReDialog;
+    },
+    dialogclick: function(d){
+        if(d.action == "confirm") {
+            this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify([{U_PurchaseNum: this.orderId, U_OrderStatus:"分站驳回", back_value: this.backValueipt}])).then((res) => {
+                var d = res.json();
+                this.showMsg("success", "驳回成功");
+                this.showReDialog = !this.showReDialog;
+                this.orderStatus = "分站驳回";
+                this.backValue = this.backValueipt;
+            },(error) =>{
+              console.log(error);
+              this.showMsg("error", error.msg);
+            })
+        }
     },
     getData: function(id){
-      this.$http.get(this.$Api+"sales/sub-orders/" + id,{}).then((res) => {
+      this.$http.get(this.$Api+"sales/sub-orders/detail",{params:{U_PurchaseNum: id}}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
@@ -83,6 +107,7 @@ export default {
           this.datamap[d.data.type] = d.data;
           this.tabType = d.data.type;
           this.orderStatus = d.data.U_OrderStatus;
+          this.backValue = d.data.back_value;
       },(error) =>{
         console.log(error);
       })

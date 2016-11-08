@@ -1,6 +1,8 @@
 <template>
     <div :class="btnCss.buttonbar">
         <btn v-for="one in buttons" :disabled="disabled" @clickaction="btnClickHandler(one)" :iconname="one.icon?one.icon:''" :btnname="one.type?one.type:'btn-default'">{{one.name}}</btn>
+
+        <slot></solt>
     </div>
 </template>
 

@@ -19,7 +19,7 @@ import css from "./type.css";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import baseMixins from "./itemMixins";
-
+import mdialog from "component/blockcommon/mealDialog";
 export default {
   mixins:[baseMixins],
   data: function () {
@@ -28,7 +28,7 @@ export default {
       curName:"men",
       headercaption:[{type:"operator", name:""},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"shigongfucaicc", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},
@@ -69,7 +69,7 @@ export default {
                     {name:"备注", labelValue:"Freetxt",type:"data"},
                     ],
       headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"shigongfucaicc", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},

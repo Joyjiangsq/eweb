@@ -2,7 +2,8 @@
       <div class="">
         <div  :class="css.spone" v-for="one in testdata">
           <span class='itemrow'>子订单号：{{one.U_PurchaseNum}}</span>
-          <span class='itemrow'>子订单状态：{{one.U_OrderStatus}}</span>
+          <span class='itemrow'>子订单状态：<span v-if = "one.U_OrderStatus != '分站驳回' && one.U_OrderStatus != 'e站驳回'">{{one.U_OrderStatus}}</span><span class="reback" v-else>{{one.U_OrderStatus}}</span></span>
+          <span class='itemrow' v-if="one.back_value">驳回理由：{{one.back_value}}</span>
           <div :class="css.rowBox">
                 <tbbase :headercaption="header" :datas="one.sub_orders" :load="false"></tbbase>
           </div>
@@ -12,7 +13,6 @@
           <formtext labelname="备注："  :read="true"  :value.sync="one.rec_info.Comments"></formtext>
           <div :class="css.attachrow">
               <a :href="one.U_Enclosure" target="_blank" v-if="one.U_Enclosure">下载附件</a>
-              <!-- <span :class='css.noattach' v-else>没有附件</span> -->
           </div>
         </div>
       </div>

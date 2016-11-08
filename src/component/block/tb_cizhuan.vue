@@ -19,8 +19,6 @@
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>
-
-          <!-- <prolist :plist="plist" :show="pshow"></prolist> -->
     </div>
 </template>
 <script>
@@ -31,7 +29,6 @@ import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import adapter from "./tbAdapter/cizhuanAdapter";
 import baseMixins from "./itemMixins";
-// import prolist from "./prolist.vue";
 export default {
   mixins:[baseMixins],
   props:{
@@ -46,26 +43,6 @@ export default {
   data: function () {
     return {
       curName:"cizhuan",
-      validate:false,
-      headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    // {name:"二级分类", labelValue:"FirmName", type:"data"},
-                    {name:"所属包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"edit"},
-                  ],
-      headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},
-                    {name:"所属包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"}]
     }
   },
   computed: {

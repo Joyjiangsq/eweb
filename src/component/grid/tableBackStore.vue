@@ -15,7 +15,7 @@
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                             <input type="checkBox" name="name" value="" v-if="!done.closeCheckTag &&sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag" @click="clickOne(done,order)">
                           <span v-if="sone.type == 'data'" >
-                            <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}</span>
+                            <span v-if="sone.attr == 'price'">￥</span>{{{done[sone.labelValue] || '-'}}}</span>
                           <div v-if="sone.type == 'edit'" >
                               <div :class="tableCss.iptBox">
                                   <input type="text" name="name" :class='tableCss[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
@@ -26,6 +26,9 @@
                                 <span v-if="done[sone.labelValue].tb_disabled">-</span>
                                 <span v-widget="{widget: sone, data: done, cname: sone.cname}" v-else></span>
                                 <div :class="tableCss.errorRow">{{done[sone.labelValue].errorMsg}}</div>
+                          </div>
+                          <div v-if="sone.type == 'componentspec'">
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </div>
                           <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
@@ -96,6 +99,7 @@ export default {
         let newa = [];
         for (var i = 0; i < this.dataList.length; i++) {
             let one = Utils.cloneObj(this.dataList[i]);
+            if(one.U_OrderStatus.indexOf("驳回") != -1) continue;
             delete one.checkTag;
             delete one.selected;
             delete one.U_Consignee;

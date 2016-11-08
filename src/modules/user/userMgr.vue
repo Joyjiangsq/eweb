@@ -16,17 +16,17 @@
         <!--新增对话框-->
         <dialog :flag="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
               <div class="" slot="containerDialog">
-                    <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
+                    <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
                     <formtext labelname="系统账号："  :value.sync="addFormData.CardCode"  :vertical="true" :read="true" :ingnore='true' ></formtext>
                     <formtext labelname="用户电话：" :value.sync="addFormData.phone" :vertical="true" :read="true" :ingnore='true' ></formtext>
                     <formrd labelname="是否启用：" :vertical="true" formname="U_Type" :value.sync="addFormData.U_Type" :datas="[{label:'是', id:'N', checked: false},{label:'否', id:'F', checked: false},]"  :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formrd>
-                    <formck labelname="角色：" :vertical="true" formname="roles" lname="name" lkey="name" :value.sync="addFormData.roles"  :datas="getFormRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                    <formck labelname="角色：" :vertical="true" formname="roles" lname="name" lkey="name" :value.sync="addFormData.roles"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
               </div>
         </dialog>
         <!--重设角色对话框-->
         <dialog :flag="showRolesDialog" title="更改角色" @dialogclick="rolesDialogClickHandler">
               <div class="" slot="containerDialog">
-                  <formck labelname="角色：" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getFormRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                  <formck labelname="角色：" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
               </div>
         </dialog>
         <!--重置密码提示-->
@@ -67,7 +67,7 @@ export default {
       newForm:{
           validate: false,
           validateHandler: function(d) {
-              if(d.fail) {
+              if(d.res == "fail") {
                   this.addTag = false;
               }
           }
@@ -107,8 +107,8 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"用户名:"},
-              {type:"text",  value:q.status || "",  keyname:"status", labelcaption:"用户状态:"},
+      return [{type:"text",  value:q.CardName || "",  keyname:"CardCode", labelcaption:"用户名:"},
+              {type:"combobox", keyname:"U_Type", labelname:"name", keyid:"id", value:q.U_Type || "", datas:[{name:"启用", id: 'N'}, {name:"禁用", id:"F"}], labelcaption:"用户状态"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     },
     getRoles: function(){
@@ -116,15 +116,6 @@ export default {
       return rolesS;
     },
 
-    getFormRoles: function(){
-      if(Utils.isEAdmin()) {
-          let one = Utils.cloneObj(rolesE);
-          return one.splice(0, 1);
-      }
-      let one = Utils.cloneObj(rolesS);
-      one.splice(0, 1);
-      return one
-    }
   },
   ready: function () {
 
@@ -137,6 +128,7 @@ export default {
           this.addTag = true;
           this.newForm.validate = !this.newForm.validate;
           setTimeout(()=>{
+              console.log(this.addTag);
               if(this.addTag) {
                   this.$http.post(this.$Api+"users",JSON.stringify(this.addFormData)).then((res) => {
                       var d = res.json();

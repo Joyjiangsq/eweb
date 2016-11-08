@@ -4,6 +4,7 @@ import css from "./type.css";
 import dialog from "component/dialog/dialog";
 import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
+import mdialog from "component/blockcommon/mealDialog";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -18,8 +19,6 @@ export default {
       default: function(){
         return {
           Address2:"安徽省,合肥市,高新区,xxx街道", // 分站地址描述
-
-
         }
       },
     },
@@ -38,10 +37,7 @@ export default {
       pshow:false,
       tableEvents:{
           operatorRender: function(d){
-            if(!d.ProductList || d.ProductList == "") {
               return [{action:"delete",icon:"icon-delete", data: d}]
-            }
-            else return [{action:"delete",icon:"icon-delete", data:d}, {action:"tip",icon:"icon-tip", data:d}]
           },
           operatorHandler: function(d){
             console.log(d);
@@ -56,20 +52,37 @@ export default {
               }
           }
       },
+      // 瓷砖，地板，洁具，集成吊顶，装修辅材，施工辅材的表格列都是一致的
+      headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:this.curName + "cc", component:mdialog},
+                    {name:"产品包", labelValue:"SWW", type:"data"},
+                    {name:"品牌", labelValue:"U_Brand", type:"data"},
+                    {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
+                    {name:"颜色", labelValue:"Color", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},
+                    {name:"可用库存量", labelValue:"stock",type:"data"},
+                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"edit"},
+                    ],
+      headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:this.curName + "cc", component:mdialog},
+                    {name:"产品包", labelValue:"SWW", type:"data"},
+                    {name:"品牌", labelValue:"U_Brand", type:"data"},
+                    {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
+                    {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
+                    {name:"可用库存量", labelValue:"stock",type:"data"},
+                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"}],
       showSelectDialog:false, // 选品对话框控制
       validateRec :true, // 验证 列表
       toload: false, // 展开选品对话框再加载
-      validateInfo: true // 验证 收件信息
+      validate:false, // 验证收件信息 开关
+      validateInfo: true // 验证 收件信息 标志
     }
   },
   computed: {
   },
   created: function () {
-    // 初始化验证(如果有第一次)
-    // for (var i = 0; i < this.testdata.length; i++) {
-    //   let one = this.testdata[i];
-    //   this.adapterFun(one);
-    // }
+
   },
   attached: function () {},
   methods: {
@@ -110,7 +123,6 @@ export default {
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
           else {
-
               this.recdata.U_DstCutm = ""; // 分站编码  配送客户
               let params = {list: this.vlist, rec_info: this.recdata};
               if(this.eclosure) params["U_Enclosure"] = this.eclosure;
@@ -123,28 +135,6 @@ export default {
           }
         })
     },
-    // 验证列表数据
-    // validateFun: function(){
-    //   console.log(111);
-    //     this.validateRec = true;
-    //     for (var i = 0; i < this.testdata.length; i++) {
-    //       let one = this.testdata[i];
-    //         for(var key in one) {
-    //           if(typeof(one[key]) == "object") {
-    //               if(!one[key].validateFun) continue;
-    //               if(one[key].tb_disabled) continue;
-    //               let res = one[key].validateFun(one, i);
-    //               if(!res) {this.validateRec = false;}
-    //           }
-    //       }
-    //     }
-    //     // 备注
-    //     this.validate = !this.validate;
-    //     setTimeout(()=>{
-    //       if(!this.validateRec) this.$dispatch("fail", {project:this.curName});
-    //       else this.$dispatch("success", {project: this.curName,data:{list: this.testdata, rec_info: this.recdata}});
-    //     });
-    // },
 
     deleteoneHandler: function(d) {
         this.vlist.split(d.index,1);
@@ -161,7 +151,6 @@ export default {
         var one = this.testdata[i];
         this.vlist.push(this.adapterFun(one));
       }
-      console.log(this.vlist);
     }
     if(this.curaction == "edit") {
       this.headercaption.splice(0,1);

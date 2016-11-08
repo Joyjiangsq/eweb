@@ -1,11 +1,11 @@
 <template>
     <div :class="[combCss.combobox, classname]" v-show="true">
           <div :class="[combCss.comboLabel, read?combCss.read:'']"  @click="changeDropAction">
-                  <span :class="[combCss.comboLabelspan]">{{defaultInfo.label}}</span>
+                  <span :class="[combCss.comboLabelspan]">{{defaultInfo[labelname]}}</span>
                   <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
           </div>
           <div :class="[combCss.dropBox, combCss[dropfixed]]" v-show="dropshow" :style="style">
-              <div :class="combCss.dropOne" v-for="item in datas" @click="dropClick(item)">
+              <div :class="combCss.dropOne" v-for="item in realData" @click="dropClick(item)">
                     {{item[labelname]}}
               </div>
           </div>
@@ -16,6 +16,7 @@
 <script>
 import combCss from "./combobox.css";
 import icon from "component/sprite/icon.vue";
+import Utils from "common/Utils";
 export default {
   props:{
       classname:{
@@ -33,7 +34,7 @@ export default {
       },
 
       value:{                     // 控件的实际值 使用者需要.sync才可以同步接收
-        default:"-1"
+        default:""
       },
 
       keyid:{                     // 控件的id 依据  默认为id
@@ -41,9 +42,11 @@ export default {
         default:"id"
       },
 
-      datas:{                    // combobox 数据集
+      datas:{                    // combobox 数据集  啊啊
         type:Array,
-        default:() => []
+        default: function(){
+          return [];
+        }
       },
 
       url:{                     // 如果combobox是需要请求后台的
@@ -62,31 +65,23 @@ export default {
     return {
       combCss,
       dropshow: false,
-      havedatas: true,
+      // havedatas: true,
       style:{},
-      defaultInfo:{label:"请选择", key:"-1"}
+      realData:[],
+      defaultInfo:{}
     }
   },
   computed: {
-    // defaultInfo: function(){
-    //   let info ={label:"请选择", key:"-1"};
-    //   if(!this.datas || this.datas.length == 0 || this.value == 0) return info;
-    //
-    //   for(var i = 0; i < this.datas.length; i++){
-    //     if(this.value == this.datas[i][this.keyid]) {
-    //       info.label = this.datas[i][this.labelname];
-    //       info.key = this.datas[i][this.keyid];
-    //     }
-    //   }
-    //   return info;
-    // }      // 展示的默认值   不管是ajax  还是datas渲染  都要重新初始化这个值
+
   },
   created: function(){
+    this.defaultInfo[this.keyid] = "";
+    this.defaultInfo[this.labelname] = "请选择";
     if(this.url) this.loadData();
   },
   ready: function () {
-    console.log(this.value+"------------------");
-    if(this.value) this.setDef();
+    this.resetList();
+    this.setDef();
   },
   attached: function () {},
   methods: {
@@ -110,10 +105,21 @@ export default {
         this.dropshow = !this.dropshow;
     },
 
+    resetList: function(){
+      if(!this.datas || this.datas.length == 0) return false;
+      let p = {};
+      p[this.keyid] ="";      // name 与 p最好不要一样
+      p[this.labelname] ="请选择";
+      this.defaultInfo = Utils.cloneObj(p);
+      this.realData = Utils.cloneObj(this.datas);
+      this.realData.unshift(p);
+    },
+
     dropClick(item) {
-      this.defaultInfo.label = item[this.labelname];
-      this.defaultInfo.key = item[this.keyid];
+      this.defaultInfo[this.keyid] = item[this.keyid];
+      this.defaultInfo[this.labelname] = item[this.labelname];
       this.value = item[this.keyid];
+      if(this.value == "请选择") this.value = "";
       this.changeDropAction();
       this.$dispatch("dropclick", this.value);
       this.$dispatch("itemclick", item);
@@ -121,18 +127,22 @@ export default {
 
     loadData(p) {
       p = p? p: this.params;
-      return this.$http.get(this.url,{params:p}).then((res) => {
-        this.datas = res.data.data;
+      return this.$http.get(this.$Api + this.url,{params:p}).then((res) => {
+        let d = res.json();
+        this.datas = this.realData = d.data;
+        this.resetList();
+        this.setDef();
       },(error) =>{
         console.log(error);
       })
     },
 
     setDef: function(){
-      for(var i = 0; i < this.datas.length; i++){
-          if(this.value == this.datas[i][this.keyid]) {
-            this.defaultInfo.label = this.datas[i][this.labelname];
-            this.defaultInfo.key = this.datas[i][this.keyid];
+      if(!this.value) return false;
+      for(var i = 0; i < this.realData.length; i++){
+          if(this.value == this.realData[i][this.keyid]) {
+            this.defaultInfo[this.labename] = this.realData[i][this.labelname];
+            this.defaultInfo[this.keyid] = this.realData[i][this.keyid];
           }
       }
     }
@@ -146,8 +156,14 @@ export default {
       deep: true
     },
     "datas": function(){
-      if(this.datas.length == 0) this.havedatas = false;
-      else this.havedatas = true
+      if(!this.datas) return false
+      if(this.datas.length == 0) {
+          this.realData = [];
+          this.defaultInfo[this.keyid] = "";
+          this.defaultInfo[this.labelname] = "请选择";
+          this.value = "";
+      }
+     else  this.resetList();
     },
     "value":function(){
         this.setDef();

@@ -8,7 +8,7 @@
     <div  :class="css.customLeft">
           <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
           <div :class="css.tBox">
-            <tb :headercaption="tableHeaderDatas"  :needselected= "true" @successload="successloadHandler" :needindex="false" :totals.sync="totals" @rowclick="rowClickHanlder"  :params="searchParams" url="sales" :events="tableEvents"></tb>
+            <tb :headercaption="tableHeaderDatas" :load="load"  :needselected= "true" @successload="successloadHandler" :needindex="false" :totals.sync="totals" @rowclick="rowClickHanlder"  :params="searchParams" url="sales" :events="tableEvents"></tb>
           </div>
           <pg :totals="totals" :pix="4" :curpage.sync="searchParams.page" ></pg>
     </div>
@@ -86,7 +86,7 @@ export default {
       // 表格回调
       tableEvents:{
         operatorRender: function(d){
-          return [{name:"补单",action:"addOrder",data: d},{name:"付款记录",action:"payHistory",data: d},{name:"二维码",action:"code",data: d}]
+          return [{name:"补单",action:"addOrder",data: d},{name:"二维码",action:"code",data: d}]
         },
         operatorHandler: function(d){
             if(d.action == "addOrder") {

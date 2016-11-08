@@ -26,6 +26,9 @@
                           <span v-if="sone.type == 'operator'" >
                                 <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
                           </span>
+                          <div v-if="sone.type == 'componentspec'">
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
+                          </div>
 
                     </td>
               </tr>

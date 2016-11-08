@@ -27,7 +27,7 @@
                           </span>
                     </td>
               </tr>
-        </tbody> 
+        </tbody>
     </table>
     <div v-show="noresult" :class='tableCss.noresult'>
           没有数据

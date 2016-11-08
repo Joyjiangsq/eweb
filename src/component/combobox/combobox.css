@@ -23,12 +23,11 @@
     height: 28px;
     line-height: 28px;
 }
-
-.combobox  .comboLabelspan {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
+.combobox .comboLabelspan {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
 }
 .combobox .comboLabel:hover {
     background-color: #eee;
@@ -38,7 +37,6 @@
     background-color: #f2f2f2;
 }
 .combobox .dropBox {
-
     position: absolute;
     line-height: 30px;
     background: white;
@@ -48,33 +46,37 @@
     margin-top: 3px;
     border: 1px solid #ddd;
     box-shadow: 0 1px 8px rgba(0, 0, 0, .13);
+    max-height: 209px;
+    overflow-y: scroll;
 }
 .combobox .dropfixed {
-  position: fixed;
-line-height: 30px;left: auto;
-background: white;
-min-width: 100px;
-z-index: 112;
-margin-top: 3px;
-border: 1px solid #ddd;
-box-shadow: 0 1px 8px rgba(0, 0, 0, .13);
+    position: fixed;
+    line-height: 30px;
+    left: auto;
+    background: white;
+    min-width: 100px;
+    z-index: 112;
+    margin-top: 3px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .13);
 }
 .combobox .dropBox .dropOne {
     padding: 0 10px;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;    text-align: left;
+    text-overflow: ellipsis;
+    text-align: left;
 }
 .combobox .dropBox .dropOne:hover {
     background-color: #eee;
     cursor: pointer;
 }
 .combobox .bticon {
-  position: absolute;
-  right: 8px;
-  top: 0;
+    position: absolute;
+    right: 8px;
+    top: 0;
 }
 .combobox .bticon span {
-  font-size: 12px;
-color: gray;
+    font-size: 12px;
+    color: gray;
 }

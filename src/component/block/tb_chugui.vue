@@ -16,7 +16,7 @@
           </div>
 
           <div :class="css.attachrow" v-if="curaction != 'alldetail' && !detail">
-                <ft url="upload" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span :class="css.upsu">{{statusRes}}</span><span :class="css.uptip">(仅允许上传zip,rar格式的文件包)</span>
+                <ft url="upload" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传zip,rar格式的文件包)</span>
           </div>
           <div v-if="curaction != 'alldetail' && !!detail">
             <div :class="css.attachrow">
@@ -46,6 +46,7 @@ import cascadeform from "component/form/formCascade";
 import adapter from "./tbAdapter/chuguiAdapter";
 import baseMixins from "./itemMixins";
 import chuguitb from "./tblist/chuguiList";
+import mdialog from "component/blockcommon/mealDialog";
 export default {
   mixins:[baseMixins],
   props:{
@@ -61,7 +62,7 @@ export default {
       statusRes:"",
       headercaption:[{type:"operator", name:""},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
                     {name:"所属包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
@@ -88,7 +89,7 @@ export default {
                     ],
       headerdetail:[
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemName", type:"data"},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"chuiguicc", component:mdialog},
                     {name:"所属包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},

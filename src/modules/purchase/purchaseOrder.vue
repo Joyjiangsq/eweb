@@ -8,10 +8,15 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                <orderlist :subvalidate="subvalidate" :load="load" :params="searchParams" :totals.sync="totals" url="sales/sub-orders" @success="successHandler" @fail="failHandler" :orderids="orderids"></orderlist>
+                <orderlist :subvalidate="subvalidate" :load="load" :params="searchParams" :totals.sync="totals" url="sales/sub-orders" @success="successHandler" @fail="failHandler" :orderids.sync="orderids"></orderlist>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
+        <dialog :flag="show" title="请输入驳回原因" @dialogclick="dialogclick">
+              <div slot="containerDialog">
+                    <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValue" placeholder="请填写驳回理由" ></textarea>
+              </div>
+        </dialog>
     </div>
 </template>
 
@@ -30,11 +35,13 @@ export default {
       css,
       totals: 0,
       subvalidate: false,
+      show: false,
       moduleName:"采购订单管理",
       curaction:"",
       statusData:orderStatus,
       orderids:[],
       finalData:[],
+      backValue:"",
       btnsData:[{name:"导出", icon:"icon-share", action:"export"},{name:"核价并购买", icon:"icon-check", action:"buy"},{name:"驳回", icon:"icon-back", action:"back"}],
       btnEvents:{
         btnClick: function(d){
@@ -44,7 +51,8 @@ export default {
             }
             else if(d.action == "back") {
                   this.curaction = "back";
-                  console.log(this.orderids);
+                  if(this.orderids.length == 0) this.showMsg("warn", "请至少选择一项")
+                  else   this.show = !this.show;
             }
         }
       }
@@ -53,9 +61,9 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.purchaseOrder || "",  keyname:"purchaseOrder", labelcaption:"采购订单号:"},
-              {type:"text",  value:q.salesOrder || "",  keyname:"salesOrder", labelcaption:"销售订单号:"},
-              {type:"combobox", keyname:"orderStatus", labelname:"name", keyid:"name", value:q.orderStatus || "", datas:this.statusData, labelcaption:"订单状态:"},
+      return [{type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"采购订单号:"},
+              {type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"销售订单号:"},
+              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:this.statusData, labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"购买时间:"}];
 
     }
@@ -83,6 +91,32 @@ export default {
       },
       failHandler: function(d){
 
+      },
+      rebackAction: function(params){
+           this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify(params)).then((res) => {
+               var d = res.json();
+               this.showMsg("success", "驳回成功");
+               this.loadlist();
+               this.show = !this.show;
+           },(error) =>{
+             console.log(error);
+             this.showMsg("error", error.msg);
+           })
+      },
+      dialogclick: function(d){
+           if(d.action == "confirm") {
+              let tpArry = [];
+              for (var i = 0; i < this.orderids.length; i++) {
+                let one = this.orderids[i];
+                tpArry.push({
+                    back_value: this.backValue,
+                    U_OrderStatus: "分站驳回",
+                    U_PurchaseNum: one.U_PurchaseNum
+                });
+              }
+              if(tpArry.length == 0) return false
+              this.rebackAction(tpArry);
+           }
       }
 
   },
