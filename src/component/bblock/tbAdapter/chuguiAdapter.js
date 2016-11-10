@@ -60,7 +60,8 @@ export default function adapterData(d) {
           else  return resetFun(this)
       }
       //U_HandleName TODO
-      let bav = ["吊柜","地柜","高柜","半高柜","柜门","板件"];
+      // let bav = ["吊柜","地柜","高柜","半高柜","柜门","板件"];
+      let bav = ["柜门"]
       // 把手型号   下拉组件 默认 、、
       d.U_HandleName.validateFun = function(data, index){
           if(bav.indexOf(d.U_ThreeL) != -1) {
@@ -152,6 +153,8 @@ export default function adapterData(d) {
           }
           else return resetFun(this)
       }
+      d.U_HandleName.tb_disabled = true // 关闭把手型号
+      if(d.U_ThreeL == "柜门") d.U_HandleName.tb_disabled = false
       //吊柜,地柜,高柜,半高柜,柜门,板件,顶线,灯线,罗马柱,木框玻璃门,上翻门,拉手,铰链,抽屉轨道,踢脚线,拉篮,台面,烟机,灶台,消毒柜,热水器,水槽,龙头
       let levelOne = ["板件","顶线","灯线","罗马柱","木框玻璃门","上翻门","拉手","铰链","抽屉轨道","踢脚线","拉篮","烟机","消毒柜","热水器","水槽","龙头"];
       let levelTwo = ["灶台", "台面"];
@@ -167,7 +170,6 @@ export default function adapterData(d) {
             d.U_ASDeep.tb_disabled = true;
             if(levelOne.indexOf(d.U_ThreeL) != -1) {
                 d.U_PSDeep.tb_disabled = true; // 关闭进深
-                d.U_HandleName.tb_disabled = true // 关闭把手型号
                 if(d.U_ThreeL != "板件") {
                     d.U_PSWide.tb_disabled = true // 关闭宽
                     d.U_PSHigh.tb_disabled = true // 关闭高

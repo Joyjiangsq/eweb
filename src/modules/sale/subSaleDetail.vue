@@ -3,8 +3,8 @@
           <div :class="css.paddingType">
             <div :class="css.hrow">
                 <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "orderStatus != '分站驳回' && orderStatus != 'e站驳回'">{{orderStatus}}</span><span class="reback" v-else>{{orderStatus}}</span></span>
-                <span class='itemrow' v-if="backValue"><span :class="css.hitem">驳回理由：</span> {{backValue}}</span>
+                <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "showStatus" class="reback">{{detailData.U_OrderStatus}}</span><span  v-else>{{detailData.U_OrderStatus}}</span></span>
+                <span class='itemrow' v-if="showStatus"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
             </div>
             <panel>
 
@@ -58,14 +58,16 @@ export default {
       tabs:[],
       show: false,
       datamap:{},
-      tabType:"",
-      backValue:"",
-      orderStatus:""
+      detailData:{}
     }
   },
   computed: {
     detail: function(){
-       return this.orderStatus != "分站驳回"
+       return this.detailData.U_OrderStatus != "分站驳回"
+    },
+
+    showStatus: function(){
+      return this.detailData.U_OrderStatus == '分站驳回' || this.detailData.U_OrderStatus == 'e站驳回'
     }
   },
   ready: function () {},
@@ -82,9 +84,7 @@ export default {
           this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
           this.datamap["U_Enclosure"] = d.U_Enclosure || "";
-          this.tabType = d.data.type;
-          this.orderStatus = d.data.U_OrderStatus;
-          this.backValue = d.data.back_value;
+          this.detailData = d.data;
       },(error) =>{
         console.log(error);
       })
@@ -95,7 +95,7 @@ export default {
     successHandler: function(d){
         let one = adapter(Utils.cloneObj(d));
         // 这里的one只可能有一项
-        if(one[this.tabType]) this.editAction(one[this.tabType]);
+        if(one[this.detailData.type]) this.editAction(one[this.detailData.type]);
     },
     failHandler: function(d){
         console.log(d);
@@ -105,7 +105,7 @@ export default {
         U_PurchaseNum:this.orderId,
         sub_orders:sub.list || [],
         rec_info: sub.rec_info,
-        U_OrderStatus: "待采购"
+        U_OrderStatus: "0"
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
       this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify([params])).then((res) => {

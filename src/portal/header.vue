@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import {showTips} from "actions/index";
 import portalCss from './portal.css';
 import logo from 'asset/img/logo.png';
 import icon from "component/sprite/icon.vue";
@@ -109,9 +110,10 @@ export default {
 
       doChange: function() {
         this.$http.put(this.$Api+"users/change-passwd", this.formData).then((res) => {
-              this.$set("msg", "密码修改成功，即将跳转到登录页面...");
-              this.$set("shouTips", !this.shouTips);
+              // this.$set("msg", "密码修改成功，即将跳转到登录页面...");
+              // this.$set("shouTips", !this.shouTips);
               this.$set("flagdep", !this.flagdep);
+              showTips(this.$store, {type:"success", msg:"密码修改成功， 请重新登录"});
               Utils.clearUserInfo();
         }, (error) => {
               this.$set("msg", error.msg);

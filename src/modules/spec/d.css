@@ -1,0 +1,46 @@
+.dbox {
+    width: 97%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+}
+.allBox {
+    background-color: rgb(230, 230, 230);
+}
+.inBox {
+    width: 95%;
+    margin: 0 auto;
+}
+.rowItem {
+    padding: 0 0 15px 23px;
+}
+.rowOne {
+    background-color: #f2f2f2;
+    padding: 0 0 15px 23px;
+    border-top: 1px dashed #ddd;
+    border-bottom: 1px dashed #ddd;
+}
+.title {
+    font-size: 15px;
+    font-weight: bold;
+    width: 75px;
+    padding-top: 20px;
+}
+.formRow {
+    width: 92%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.formitem label{
+  min-width: 210px;
+}
+
+.footer {
+  width: 100%;
+text-align: right;
+margin: 20px 0;
+}
+
+.bitem {
+  margin-left: 20px;
+}

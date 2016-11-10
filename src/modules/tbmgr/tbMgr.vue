@@ -1,0 +1,86 @@
+<template>
+    <div :class="css.BoX">
+        <pagepanel classname="needpadding" direct="bottom">
+              <div :class="css.searchBox">
+                <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
+              </div>
+        </pagepanel>
+        <pagepanel>
+              <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
+              <div class="css.tBox">
+                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="urgent" :params="searchParams" ></tb>
+              </div>
+              <pg :totals="totals" :curpage="searchParams.page"></pg>
+        </pagepanel>
+    </div>
+</template>
+
+<script>
+import css from "./tb.css";
+import btnbar from "component/sprite/buttonbar";
+import Utils from "common/Utils.js";
+import pageBase from "common/mixinPage.js";
+import Vue from "vue";
+// 自定义
+var orderurgent = Vue.extend({
+  data:function(){
+    return {
+      css,
+      totals:0
+    }
+  },
+  template: '<div :class="css.inRow" @click="clickHandler">{{totals}}</div>',
+  ready: function(){
+    this.totals = this.selfData.U_PurchaseNum;
+  },
+  methods:{
+    clickHandler: function(){
+        this.$router.go({path:"purchase/purchasedetail", query:{orderid: this.totals}})
+    }
+  }
+})
+let tableHeaderDatas = [
+                        {name:"销售订单号", labelValue:"U_FZOrder",type:"data"},
+                        {name:"业主姓名", labelValue:"CardName",type:"data"},
+                        {name:"业主地址", labelValue:"U_PurchaseNum",type:"component", component: orderurgent, cname:"orderurgent1"},
+                        {name:"销售报价", labelValue:"purchaser",type:"data"},
+                        {name:"采购完成率", labelValue:"purchaser",type:"data"},
+                        {name:"主材款（采购）", labelValue:"purchaser",type:"data"},
+                        {name:"服务费（采购）", labelValue:"purchaser",type:"data"},
+                        {name:"销售时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}}]
+export default {
+  mixins: [pageBase],
+  data: function () {
+    return {
+      css,
+      moduleName:"报表管理",
+      headercaption:tableHeaderDatas, // 表格头部信息设置
+      btnsData:[{name:"导出", icon:"icon-share", action:"apply"}],
+      btnEvents:{
+        btnClick: function(d){
+            if(d.action == "apply") {
+            }
+        }
+      }
+    }
+  },
+  computed: {
+    sdata: function(){
+      let q = this.$route.query;
+      return [{type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"销售订单号:"},
+              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
+              {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"销售时间:"}];
+
+    }
+
+  },
+  ready: function () {
+  },
+  attached: function () {},
+  methods: {
+  },
+  components: {btnbar},
+  route:{
+  }
+}
+</script>

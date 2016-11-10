@@ -109,8 +109,8 @@ export default {
               for (var i = 0; i < this.orderids.length; i++) {
                 let one = this.orderids[i];
                 tpArry.push({
-                    back_value: this.backValue,
-                    U_OrderStatus: "分站驳回",
+                    U_CloseWhy: this.backValue,
+                    U_OrderStatus: "8",
                     U_PurchaseNum: one.U_PurchaseNum
                 });
               }

@@ -17,8 +17,8 @@
         <dialog :flag="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
               <div class="" slot="containerDialog">
                     <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
-                    <formtext labelname="系统账号："  :value.sync="addFormData.CardCode"  :vertical="true" :read="true" :ingnore='true' ></formtext>
-                    <formtext labelname="用户电话：" :value.sync="addFormData.phone" :vertical="true" :read="true" :ingnore='true' ></formtext>
+                    <formtext labelname="系统账号："  :value.sync="addFormData.CardCode" :must="false"  :vertical="true" :read="true" :ingnore='true' ></formtext>
+                    <formtext labelname="用户电话：" :value.sync="addFormData.phone"  :must="false" :vertical="true" :read="true" :ingnore='true' ></formtext>
                     <formrd labelname="是否启用：" :vertical="true" formname="U_Type" :value.sync="addFormData.U_Type" :datas="[{label:'是', id:'N', checked: false},{label:'否', id:'F', checked: false},]"  :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formrd>
                     <formck labelname="角色：" :vertical="true" formname="roles" lname="name" lkey="name" :value.sync="addFormData.roles"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
               </div>
@@ -26,7 +26,7 @@
         <!--重设角色对话框-->
         <dialog :flag="showRolesDialog" title="更改角色" @dialogclick="rolesDialogClickHandler">
               <div class="" slot="containerDialog">
-                  <formck labelname="角色：" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                  <formck labelname="角色：" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getRoles" :validatestart="newForm.validate1" @onvalidate="newForm.validateHandler1"></formck>
               </div>
         </dialog>
         <!--重置密码提示-->
@@ -63,12 +63,18 @@ export default {
       resetDialog: false,     // 密码重置对话框
       showRolesDialog: false, // 角色分配对话框
       // 新增表单验证
-      addTag: true,
+      addTag: true,editTag: true,
       newForm:{
           validate: false,
+          validate1: false,
           validateHandler: function(d) {
               if(d.res == "fail") {
                   this.addTag = false;
+              }
+          },
+          validateHandler1: function(d) {
+              if(d.res == "fail") {
+                  this.editTag = false;
               }
           }
       },
@@ -146,9 +152,9 @@ export default {
     // 修改角色对话框
     rolesDialogClickHandler: function(d) {
         if(d.action == "confirm") {
-              this.addTag = true;
+              this.editTag = true;
               setTimeout(()=>{
-                  if(this.addTag) {
+                  if(this.editTag) {
                       this.changeOne({CardCode: this.curopData.CardCode, roles: this.curopData.roles}, () => {
                             this.showRolesDialog = !this.showRolesDialog;
 

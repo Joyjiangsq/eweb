@@ -19,7 +19,17 @@ export const decorateStyle =[
 ]
 
 // 渠道配置
-export const fromConst= [{name:"淘宝", id:1},{name:"门店", id:2}]
+export const fromConst= [
+  {name:"分站提供", id:"分站提供"},
+  {name:"400呼入", id:"400呼入"},
+  {name:"官网", id:"官网"},
+  {name:"天猫", id:"天猫"},
+  {name:"淘宝", id:"淘宝"},
+  {name:"微信", id:"微信"},
+  {name:"微商城", id:"微商城"},
+  {name:"转介绍", id:"转介绍"},
+  {name:"其他", id:"其他"}
+]
 // 房屋类型配置
 export const houseType= [{name:"毛坯新房", id:1},{name:"二手房", id:2}]
 // 组包类型配置
@@ -65,3 +75,19 @@ export const rolesS = [
   {name:"材料员", id:"材料员"},
   {name:"财务", id:"财务"}
 ]
+
+// 厨柜订制品参数集合
+// 系列
+export const series = [{name:"国民包", id:"国民包"},{name:"名品包", id:"名品包"},{name:"吸塑", id:"吸塑"},{name:"实木", id:"实木"},{name:"尊享包", id:"尊享包"}]
+// 形状
+export const shapeDatas = [{name:"一字型", id:"一字型"},{name:"L字型", id:"L字型"},{name:"U字型", id:"U字型"},{name:"其它", id:"其它"}]
+// 冰箱位置
+export const positionDatas=[{name:"厨房外", id:"厨房外"},{name:"厨房内", id:"厨房内"}]
+// 水槽工艺
+export const artDatas=[{name:"台上工艺", id:"台上工艺"},{name:"台下工艺", id:"台下工艺"}]
+// 五金
+export const fiveDatas = [{label:'调味篮', id:'调味篮', checked: false},{label:'碗碟篮', id:'碗碟篮', checked: false},{label:'锅篮', id:'锅篮', checked: false}]
+// 下水主管datas
+export const pipeDatas = [{name:"施工包下水主管", id:"施工包下水主管"},{name:"厨柜包下水主管", id:"厨柜包下水主管"}]
+// 燃气管 数据集
+export  const rq_pipeDatas = [{name:"厨柜包燃气管", id:"厨柜包燃气管"},{name:"台面包燃气管", id:"台面包燃气管"},{name:"不包燃气管", id:"不包燃气管"}]

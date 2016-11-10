@@ -30,7 +30,9 @@ export default {
       default:""
     },
     datas: {
-      default:[]
+      default:function(){
+        return []
+      }
     }
   },
   data: function () {

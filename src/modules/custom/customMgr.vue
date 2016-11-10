@@ -19,7 +19,7 @@
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
-                <formcb keyid="name" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formcb keyid="name" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="fromAdapter" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
                 <formtext labelname="e站客服："  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
@@ -43,7 +43,7 @@ import Utils from "common/Utils";
 import house from "./houseOne";
 import pageBase from "common/mixinPage.js";
 let headerData = [{name:"业主编号", labelValue:"CardCode", type:"data"},{name:"业主名称", labelValue:"CardName",type:"data"},
-                  {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"渠道", labelValue:"U_ComeFrom",type:"data"},
+                  {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"客户来源", labelValue:"U_ComeFrom",type:"data"},
                   {name:"创建人", labelValue:"createdBy",type:"data"},  // TODO
                   {name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                   {type:"operator", name:"操作"}]
@@ -112,11 +112,16 @@ export default {
       return [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号:"},
               {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
               {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"},
-              {type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"渠道", datas:this.formArray.fromConst},
-              {type:"dim", iptvalue: q.dimLabel || "", value:q.ename || "",  keyname:"ename", labelcaption:"分站名称:"},
+              {type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst},
+              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"分站名称:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     },
-
+    fromAdapter: function(){
+      let one = Utils.cloneObj(this.formArray.fromConst);
+      one.splice(0,1);
+      console.log(one);
+      return one
+    },
     gettName: function(){
        let m = {"add":"新增", "edit":"编辑", "detail":"详情"}
        return m[this.curAction] || "编辑"

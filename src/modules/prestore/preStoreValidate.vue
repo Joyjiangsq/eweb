@@ -36,7 +36,7 @@ var orderComponent = Vue.extend({
       totals:0
     }
   },
-  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  template: '<div :class="css.inrow" @click="clickHandler">{{totals | json}}</div>',
   ready: function(){
     this.totals = this.selfData.U_PurchaseNum;
   },
@@ -129,7 +129,7 @@ export default {
                   let one = this.checkedList[i];
                   paramsArry.push({
                     back_value: this.backValue,
-                    U_OrderStatus: "分站驳回",
+                    U_OrderStatus: "8",
                     U_PurchaseNum: one.U_PurchaseNum
                   })
               }

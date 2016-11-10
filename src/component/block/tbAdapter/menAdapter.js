@@ -197,8 +197,8 @@ export default function adapterData(d) {
           // 是否开孔
           d.U_IKeyHole.validateFun = function(data, index){
                   if(this.def == "否")  {
-                      d.U_LockCode.def = "";
-                      d.U_HingeCode.def = "";
+                      d.U_LockName.def = "";
+                      d.U_HingeName.def = "";
                   }// 如果否的时候  重置 合页与门锁的值
                   return true;
           }

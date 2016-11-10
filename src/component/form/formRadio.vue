@@ -1,7 +1,7 @@
 <template>
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
-        <div :class="css.formtarget">
+        <div :class="css.formtarget" style="min-width: 200px">
             <radiobx :datas="datas" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
@@ -29,6 +29,7 @@ export default {
         radioClick: function(c) {
           this.$set("value", c);
           this.$set("error", false);
+          this.$dispatch("itemclick", c);
         }
       }
     }

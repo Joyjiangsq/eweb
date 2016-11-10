@@ -30,7 +30,7 @@ var orderComponent = Vue.extend({
       totals:0
     }
   },
-  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  template: '<div :class="css.inrow" @click="clickHandler">{{totals | json}}</div>',
   ready: function(){
     this.totals = this.selfData.U_PurchaseNum;
   },

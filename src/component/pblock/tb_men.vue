@@ -22,6 +22,7 @@ import baseMixins from "./itemMixins";
 import mdialog from "component/blockcommon/mealDialog";
 export default {
   mixins:[baseMixins],
+
   data: function () {
     return {
       css,

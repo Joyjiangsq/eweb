@@ -78,10 +78,12 @@ export default {
     this.defaultInfo[this.keyid] = "";
     this.defaultInfo[this.labelname] = "请选择";
     if(this.url) this.loadData();
+    // alert(JSON.stringify(this.defaultInfo));
   },
   ready: function () {
     this.resetList();
     this.setDef();
+    // alert(JSON.stringify(this.defaultInfo));
   },
   attached: function () {},
   methods: {
@@ -139,9 +141,10 @@ export default {
 
     setDef: function(){
       if(!this.value) return false;
+      // if(this.realData.length == 0) this.realData = this.datas;
       for(var i = 0; i < this.realData.length; i++){
           if(this.value == this.realData[i][this.keyid]) {
-            this.defaultInfo[this.labename] = this.realData[i][this.labelname];
+            this.defaultInfo[this.labelname] = this.realData[i][this.labelname];
             this.defaultInfo[this.keyid] = this.realData[i][this.keyid];
           }
       }

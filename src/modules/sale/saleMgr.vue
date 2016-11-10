@@ -16,6 +16,24 @@
     <div  :class="css.customRight">
           <tb :headercaption="subHeaders"  :needindex="false" :load="subLoad" url="sales/all-sub-orders" :params="subSearchParams"  :events="subTableEvents"></tb>
     </div>
+    <dialog :flag="showCode" title="二维码">
+          <div slot="containerDialog">
+                  <div :class="css.inBoxCode">
+                    <propertytext key="订单号" :value="curData.U_FZOrder"></propertytext>
+                    <!-- <propertytext key="分站名称：" :value="curData.U_FZOrder"></propertytext>
+                    <propertytext key="银行账号：" :value="------"></propertytext> -->
+                    <propertytext key="业主姓名" :value="curData.base_info.CardName"></propertytext>
+                    <propertytext key="业主电话" :value="curData.base_info.Phone2"></propertytext>
+                    <propertytext key="业主地址" :value="curData.base_info.Address"></propertytext>
+                    <propertytext key="订单日期" :value="curData.createAt"></propertytext>
+                  </div>
+                  <div :class="css.codeTarget">
+
+                  </div>
+          </div>
+          <div slot="footerDialog"></div>
+    </dialog>
+
   </div>
 </template>
 <script>
@@ -25,6 +43,8 @@ import css from "./sale.css";
 import {setTitle} from "actions";
 import {packageType, orderType, orderStatus} from "config/const";
 import pageBase from "common/mixinPage.js";
+import qrcode from "vendor/jquery.qrcode.min.js";
+import propertytext from "component/form/propertyText.vue";
 // 自定义
 var orderComponent = Vue.extend({
   data:function(){
@@ -83,6 +103,8 @@ export default {
       subHeaders: subHeaders, // 子订单表格表头
       subLoad: false, // 子列表加载
       subSearchParams:{},
+      curData:{},
+      showCode: false,
       // 表格回调
       tableEvents:{
         operatorRender: function(d){
@@ -91,6 +113,16 @@ export default {
         operatorHandler: function(d){
             if(d.action == "addOrder") {
                 this.$router.go({path:"sale/append", query:{orderid:d.data.U_FZOrder}})
+            }
+            else if(d.action == "code") {
+                this.curData = d.data;
+                $("." + this.css.codeTarget).empty();
+                $("." + this.css.codeTarget).qrcode({
+                  width: 150, //宽度
+                  height:150, //高度
+                  text: d.data.U_FZOrder //任意内容
+                });
+                this.showCode = !this.showCode;
             }
         }
       },
@@ -110,12 +142,12 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.orderId || "",  keyname:"orderId", labelcaption:"销售订单号:"},
-              {type:"text",  value:q.subOrderId || "",  keyname:"subOrderId", labelcaption:"子订单号:"},
-              {type:"combobox", keyid:"id", value:q.packageType || "", labelname:"name", keyname:"packageType", labelcaption:"产品所属包:", datas:packageType},
-              {type:"combobox", keyid:"id", value:q.orderType || "", labelname:"name", keyname:"orderType", labelcaption:"订单类型:", datas:orderType},
-              {type:"combobox", keyid:"id", value:q.orderStatus || "", labelname:"name", keyname:"orderStatus", labelcaption:"订单状态:", datas:orderStatus},
-              {type:"text",  value:q.customName || "",  keyname:"customName", labelcaption:"客户姓名:"},
+      return [{type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"销售订单号:"},
+              {type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"子订单号:"},
+              {type:"combobox", keyid:"id", value:q.U_SWW || "", labelname:"name", keyname:"U_SWW", labelcaption:"产品所属包:", datas:packageType},
+              {type:"combobox", keyid:"id", value:q.Series || "", labelname:"name", keyname:"Series", labelcaption:"订单类型:", datas:orderType},
+              {type:"combobox", keyid:"name", value:q.U_OrderStatus || "", labelname:"name", keyname:"U_OrderStatus", labelcaption:"订单状态:", datas:orderStatus},
+              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"客户姓名:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     }
   },
@@ -138,7 +170,7 @@ export default {
             this.$set("subLoad", !this.subLoad);
       }
   },
-  components: {},
+  components: {propertytext},
 
 }
 </script>

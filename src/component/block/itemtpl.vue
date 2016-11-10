@@ -3,7 +3,7 @@
         <div  :class="css.spone" v-for="one in testdata">
           <span class='itemrow'>子订单号：{{one.U_PurchaseNum}}</span>
           <span class='itemrow'>子订单状态：<span v-if = "one.U_OrderStatus != '分站驳回' && one.U_OrderStatus != 'e站驳回'">{{one.U_OrderStatus}}</span><span class="reback" v-else>{{one.U_OrderStatus}}</span></span>
-          <span class='itemrow' v-if="one.back_value">驳回理由：{{one.back_value}}</span>
+          <span class='itemrow' v-if="one.U_OrderStatus == '分站驳回' || one.U_OrderStatus == 'e站驳回'">驳回理由：{{one.U_CloseWhy || '无'}}</span>
           <div :class="css.rowBox">
                 <tbbase :headercaption="header" :datas="one.sub_orders" :load="false"></tbbase>
           </div>
@@ -41,7 +41,8 @@ export default {
       css
     }
   },
-  computed: {},
+  computed: {
+  },
   ready: function () {
   },
   attached: function () {},

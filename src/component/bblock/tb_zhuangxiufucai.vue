@@ -39,7 +39,7 @@ export default {
       css,
       curName:"zhuangxiufucai",
       validate:false,
-    
+
       validateInfo: true // 验证 收件信息
     }
   },

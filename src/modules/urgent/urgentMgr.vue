@@ -26,26 +26,44 @@
 <script>
 import css from "./urgent.css";
 import btnbar from "component/sprite/buttonbar";
-import dialog from "component/dialog/dialog";
-import pg from "component/pagination/pagination";
 import Utils from "common/Utils.js";
 import pageBase from "common/mixinPage.js";
 import formcb from "component/form/fmCombobox";
 import formtext from "component/form/formText";
 import {orderStatus} from "config/const";
+import Vue from "vue";
+// 自定义
+var orderurgent = Vue.extend({
+  data:function(){
+    return {
+      css,
+      totals:0
+    }
+  },
+  template: '<div :class="css.inRow" @click="clickHandler">{{totals}}</div>',
+  ready: function(){
+    this.totals = this.selfData.U_PurchaseNum;
+  },
+  methods:{
+    clickHandler: function(){
+        this.$router.go({path:"purchase/purchasedetail", query:{orderid: this.totals}})
+    }
+  }
+})
 let tableHeaderDatas = [
                         {name:"加急订单号", labelValue:"U_SPOrder",type:"data"},
                         {name:"订单金额", labelValue:"LineTotal",type:"data"},
-                        {name:"关联采购单号", labelValue:"U_PurchaseNum",type:"data"},
+                        {name:"关联采购单号", labelValue:"U_PurchaseNum",type:"component", component: orderurgent, cname:"orderurgent1"},
                         {name:"购买人", labelValue:"purchaser",type:"data"},
                         {name:"购买时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
-                        {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return d.U_OrderStatus.indexOf("驳回") != -1?"<span class='reback'>"+d.U_OrderStatus+"</span>":d.U_OrderStatus}}]
+                        {name:"订单状态", labelValue:"U_OrderStatus",type:"data"}]
 export default {
   mixins: [pageBase],
   data: function () {
     return {
       css,
       validate: false,
+      moduleName:"加急卡管理",
       selfControl: false,
       priceArry:[{name:"500加急", value:500}, {name:"200加急", value:200}, {name:"自定义", value:"自定义"}],
       headercaption:tableHeaderDatas, // 表格头部信息设置
@@ -69,7 +87,7 @@ export default {
       let q = this.$route.query;
       return [{type:"text",  value:q.U_SPOrder || "",  keyname:"U_SPOrder", labelcaption:"加急订单号:"},
               {type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"关联订单号:"},
-              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:this.orderStatus, labelcaption:"订单状态:"},
+              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:[{name:"待扣款", id:"待扣款"},{name:"已扣款", id:"已扣款"}], labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"购买时间:"}];
 
     }

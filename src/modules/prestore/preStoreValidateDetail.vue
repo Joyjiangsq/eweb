@@ -3,8 +3,8 @@
           <div :class="css.paddingType">
             <div :class="css.hrow">
                 <span class="itemrow"><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="orderStatus == '分站驳回'" class='reback'>{{orderStatus}}</span><span class='common' v-else>{{orderStatus}}</span></span>
-                <span class='itemrow' v-if="backValue"><span :class="css.hitem">驳回理由：</span> {{backValue}}</span>
+                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '分站驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
+                <span class='itemrow' v-if="detailData.U_OrderStatus == '分站驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy}}</span>
             </div>
             <panel>
                 <div slot="panelTitle">
@@ -21,7 +21,7 @@
           <div :class="css.dataArea">
                 <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
-          <div :class="css.footerBar" v-if="this.orderStatus == '待采购' || this.orderStatus == 'e站驳回'">
+          <div :class="css.footerBar" v-if="detailData.U_OrderStatus == '待采购' || detailData.U_OrderStatus == 'e站驳回'">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">驳回</btn>
           </div>
 
@@ -56,10 +56,8 @@ export default {
       tabs:[],
       show: false,
       datamap:{},
-      tabType:"",
-      orderStatus:"",
       backValueIpt:"",
-      backValue:"",
+      detailData:{},
       showBack:false
     }
   },
@@ -77,10 +75,7 @@ export default {
           this.tabs.push(d.data.type);
           this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
-          this.datamap["U_Enclosure"] = d.U_Enclosure || "";
-          this.tabType = d.data.type;
-          this.orderStatus = d.data.U_OrderStatus;
-          this.backValue = d.data.back_value;
+          this.detailData = d.data;
       },(error) =>{
         console.log(error);
       })
@@ -88,23 +83,25 @@ export default {
     btnClickHandler: function(){
       // this.startvalidate = !this.startvalidate;
         this.showBack = !this.showBack;
+        // 如果是e站驳回  则默认显示e站的驳回理由
+        if(this.detailData.U_OrderStatus == "e站驳回") this.backValueIpt = this.detailData.U_CloseWhy || "";
     },
     successHandler: function(d){
         let one = adapter(Utils.cloneObj(d));
         // 这里的one只可能有一项
-        if(one[this.tabType]) this.editAction(one[this.tabType]);
+        if(one[this.detailData.type]) this.editAction(one[this.detailData.type]);
     },
     failHandler: function(d){
         console.log(d);
     },
     dialogclick: function(d) {
       if(d.action == "confirm") {
-        this.$http.put(this.$Api+"sales/stock",JSON.stringify([{back_value:this.backValueIpt, U_OrderStatus:"分站驳回",U_PurchaseNum: this.orderId}])).then((res) => {
+        this.$http.put(this.$Api+"sales/stock",JSON.stringify([{U_CloseWhy:this.backValueIpt, U_OrderStatus:"8",U_PurchaseNum: this.orderId}])).then((res) => {
             var d = res.json();
             this.showMsg("success", "驳回成功");
             this.showBack = !this.showBack;
-            this.backValue = this.backValueIpt;
-            this.orderStatus = "分站驳回";
+            this.detailData.U_CloseWhy = this.backValueIpt;
+            this.detailData.U_OrderStatus = "分站驳回";
         },(error) =>{
           console.log(error);
           this.showMsg("error", error.msg);
