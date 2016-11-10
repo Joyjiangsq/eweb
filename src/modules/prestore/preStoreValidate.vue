@@ -129,7 +129,7 @@ export default {
                   let one = this.checkedList[i];
                   paramsArry.push({
                     back_value: this.backValue,
-                    U_OrderStatus: "8",
+                    U_OrderStatus: 8,
                     U_PurchaseNum: one.U_PurchaseNum
                   })
               }

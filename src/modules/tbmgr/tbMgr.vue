@@ -22,7 +22,7 @@ import Utils from "common/Utils.js";
 import pageBase from "common/mixinPage.js";
 import Vue from "vue";
 // 自定义
-var orderurgent = Vue.extend({
+var orderTo = Vue.extend({
   data:function(){
     return {
       css,
@@ -31,16 +31,16 @@ var orderurgent = Vue.extend({
   },
   template: '<div :class="css.inRow" @click="clickHandler">{{totals}}</div>',
   ready: function(){
-    this.totals = this.selfData.U_PurchaseNum;
+    this.totals = this.selfData.U_FZOrder;
   },
   methods:{
     clickHandler: function(){
-        this.$router.go({path:"purchase/purchasedetail", query:{orderid: this.totals}})
+        this.$router.go({path:"sale/saleDetail", query:{orderid: this.totals}})
     }
   }
 })
 let tableHeaderDatas = [
-                        {name:"销售订单号", labelValue:"U_FZOrder",type:"data"},
+                        {name:"销售订单号", labelValue:"U_FZOrder",type:"component", component: orderTo, cname:"orderto1"},
                         {name:"业主姓名", labelValue:"CardName",type:"data",adapterFun: function(d) {return d.base_info.CardName}},
                         {name:"业主地址", labelValue:"Address",type:"data",adapterFun: function(d) {return d.base_info.Address}},
                         {name:"销售报价", labelValue:"xxx",type:"data",adapterFun: function(d) {return d.base_info.U_PaInAmount}},

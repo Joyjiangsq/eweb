@@ -20,7 +20,6 @@
                     <formtext labelname="关联采购单号：" :vertical="true" placeholder="请输入关联采购单号" :value.sync="formParams.U_PurchaseNum" formname='U_PurchaseNum'  :validatestart="validate"  @onvalidate="validateHandler"></formtext>
               </div>
         </dialog>
-        {{aa | json}}
     </div>
 </template>
 
@@ -64,7 +63,6 @@ export default {
     return {
       css,
       validate: false,
-      aa:[],
       moduleName:"加急卡管理",
       selfControl: false,
       priceArry:[{name:"500加急", value:500}, {name:"200加急", value:200}, {name:"自定义", value:"自定义"}],
@@ -96,13 +94,6 @@ export default {
 
   },
   ready: function () {
-    this.aa = [{name:1},{name:2}]
-
-    setTimeout(()=>{
-      for (var i = 0; i < this.aa.length; i++) {
-        this.aa[i].selected = true;
-      }
-    })
   },
   attached: function () {},
   methods: {
@@ -123,7 +114,6 @@ export default {
         if(this.formParams.LineTotala == "自定义") params.LineTotal = this.formParams.LineTotalb
         else params.LineTotal = this.formParams.LineTotala
         this.$http.post(this.$Api+"urgent", params).then((res) =>{
-              console.log(res);
               this.show = !this.show;
               this.loadlist();
         }, (e) =>{

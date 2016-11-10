@@ -143,10 +143,9 @@ export default {
     sdata: function(){
       let q = this.$route.query;
       return [{type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"销售订单号:"},
-              {type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"子订单号:"},
-              {type:"combobox", keyid:"id", value:q.U_SWW || "", labelname:"name", keyname:"U_SWW", labelcaption:"产品所属包:", datas:packageType},
+              {type:"combobox", keyid:"name", value:q.U_SWW || "", labelname:"name", keyname:"U_SWW", labelcaption:"产品所属包:", datas:packageType},
               {type:"combobox", keyid:"id", value:q.Series || "", labelname:"name", keyname:"Series", labelcaption:"订单类型:", datas:orderType},
-              {type:"combobox", keyid:"name", value:q.U_OrderStatus || "", labelname:"name", keyname:"U_OrderStatus", labelcaption:"订单状态:", datas:orderStatus},
+              {type:"combobox", keyid:"id", value:q.U_OrderStatus || "", labelname:"name", keyname:"U_OrderStatus", labelcaption:"订单状态:", datas:[{name:"正常", id:"1"},{name:"驳回", id:"0"}]},
               {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"客户姓名:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     }
@@ -164,7 +163,11 @@ export default {
             this.$set("subLoad", !this.subLoad);
       },
       successloadHandler: function(datas){
-            if(datas.length == 0) {return false;}
+            if(datas.length == 0) {
+                this.subSearchParams.U_FZOrder = Math.random().toString(36);
+                this.$set("subLoad", !this.subLoad);
+                return false;
+            }
             let one = datas[0];
             this.subSearchParams.U_FZOrder = one.U_FZOrder;
             this.$set("subLoad", !this.subLoad);

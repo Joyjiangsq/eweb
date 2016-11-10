@@ -85,7 +85,7 @@ export default {
     },
     dialogClickHandler: function(d){
         if(d.action == "confirm") {
-            this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify([{U_PurchaseNum: this.orderId, U_OrderStatus:"8", U_CloseWhy: this.backValueipt}])).then((res) => {
+            this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify([{U_PurchaseNum: this.orderId, U_OrderStatus:8, U_CloseWhy: this.backValueipt}])).then((res) => {
                 var d = res.json();
                 this.showMsg("success", "驳回成功");
                 this.showReDialog = !this.showReDialog;

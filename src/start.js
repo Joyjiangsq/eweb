@@ -52,7 +52,7 @@ Vue.http.interceptors.push(function(request, next) {
         let d = res.json();
         if (!d.code) d = JSON.parse(d);
         if (d.code == 302) {        // 掉线重定向到登陆页
-            // Utils.clearUserInfo();
+            Utils.clearUserInfo();
             showTips(_self.$store, {
                 type: "error",
                 msg: d.msg

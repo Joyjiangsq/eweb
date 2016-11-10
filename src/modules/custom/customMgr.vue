@@ -7,8 +7,8 @@
     </pagepanel>
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents">
-              <slot>
-                <ft url="upload" :filter="['xls','xlsx']" text="导入" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
+              <slot v-if="isE">
+                <ft  url="upload" :filter="['xls','xlsx']" text="导入" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
               <slot>
           </btnbar>
           <div class="">
@@ -19,9 +19,9 @@
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
-                <formcb keyid="name" labelname="客户来源：" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="fromAdapter" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formcb keyid="name" labelname="客户来源：" v-if="isE" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="fromAdapter" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
-                <formtext labelname="e站客服："  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
+                <formtext labelname="e站客服：" v-if="isE"  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="手机号码：" :read="curAction!='add'"  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
 
@@ -42,12 +42,7 @@ import formdim from "component/form/formDim";
 import Utils from "common/Utils";
 import house from "./houseOne";
 import pageBase from "common/mixinPage.js";
-let headerData = [{name:"业主编号", labelValue:"CardCode", type:"data"},{name:"业主名称", labelValue:"CardName",type:"data"},
-                  {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"客户来源", labelValue:"U_ComeFrom",type:"data"},
-                  {name:"分站名称", labelValue:"station_name",type:"data"},
-                  {name:"创建人", labelValue:"createdBy",type:"data"},  // TODO
-                  {name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
-                  {type:"operator", name:"操作"}]
+
 export default {
   mixins:[pageBase],
   data: function () {
@@ -77,7 +72,6 @@ export default {
                else   this.formData.validate = true
           }
       },
-      headercaption: headerData,
       tableEvents:{
         operatorRender: function(d){
           return [{name:"编辑", action:"edit",icon:"icon-edit", data:d},{name:"详情",action:"detail",icon:"icon-tip", data:d}];
@@ -108,14 +102,29 @@ export default {
     }
   },
   computed: {
+    headercaption:function(){
+        let headerData = [{name:"业主编号", labelValue:"CardCode", type:"data"},{name:"业主名称", labelValue:"CardName",type:"data"},
+                          {name:"业主联系方式", labelValue:"Phone2",type:"data"}]
+        if(this.isE) {
+            headerData.push({name:"客户来源", labelValue:"U_ComeFrom",type:"data"});
+            headerData.push({name:"分站名称", labelValue:"station_name",type:"data"});
+        }
+        headerData.push({name:"创建人", labelValue:"createdBy",type:"data"});
+        headerData.push({name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}});
+        headerData.push({type:"operator", name:"操作"});
+        return headerData
+    },
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号:"},
-              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
-              {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"},
-              {type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst},
-              {type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"},
-              {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
+      let sArr = [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号:"},
+                  {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
+                  {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"}]
+      if(this.isE) {
+        sArr.push({type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst});
+        sArr.push({type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"});
+      }
+      sArr.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"});
+      return sArr
     },
     fromAdapter: function(){
       let one = Utils.cloneObj(this.formArray.fromConst);
@@ -125,6 +134,9 @@ export default {
     gettName: function(){
        let m = {"add":"新增", "edit":"编辑", "detail":"详情"}
        return m[this.curAction] || "编辑"
+    },
+    isE: function() {
+      return Utils.isEAdmin();
     }
   },
   ready: function () {
@@ -190,6 +202,8 @@ export default {
       })
     },
     addOne: function(){
+      // 适配分站的客户数据  的客户来源字段查询
+      if(!this.isE) this.formData.U_ComeFrom = "分站提供";
       this.$http.post(this.$Api+"customers",JSON.stringify(this.formData)).then((res) => {
           var d = res.json();
           if(d.code == 200) {

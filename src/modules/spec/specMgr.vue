@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="css.tBox">
-                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="urgent" :params="searchParams" ></tb>
+                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="custom_products" :params="searchParams" ></tb>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -31,20 +31,20 @@ var orderurgent = Vue.extend({
   },
   template: '<div :class="css.inRow" @click="clickHandler">{{totals}}</div>',
   ready: function(){
-    this.totals = this.selfData.U_PurchaseNum;
+    this.totals = this.selfData.design_serial;
   },
   methods:{
     clickHandler: function(){
-        this.$router.go({path:"purchase/purchasedetail", query:{orderid: this.totals}})
+        this.$router.go({path:"specmgr/apply", query:{orderid: this.totals}})
     }
   }
 })
 let tableHeaderDatas = [
-                        {name:"设计申请单号", labelValue:"U_FZOrder",type:"component", component: orderurgent, cname:"orderurgent2"},
-                        {name:"品类", labelValue:"CardName",type:"data"},
-                        {name:"测量员", labelValue:"U_PurchaseNum",type:"data"},
-                        {name:"测量员电话", labelValue:"purchaser",type:"data"},
-                        {name:"订单状态", labelValue:"purchaser",type:"data"},
+                        {name:"设计申请单号", labelValue:"design_serial",type:"component", component: orderurgent, cname:"orderurgent2"},
+                        {name:"品类", labelValue:"series",type:"data"},
+                        {name:"测量员", labelValue:"ce_people",type:"data"},
+                        {name:"测量员电话", labelValue:"ce_phone",type:"data"},
+                        {name:"订单状态", labelValue:"status",type:"data"},
                         {name:"申请时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}}]
 export default {
   mixins: [pageBase],
@@ -66,8 +66,8 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"设计申请单号:"},
-              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:[{name:"待交付", id:"待交付"},{name:"待确认", id:"待确认"},{name:"退回修改", id:"退回修改"},{name:"已完成", id:"已完成"}], labelcaption:"订单状态:"},
+      return [{type:"text",  value:q.design_serial || "",  keyname:"design_serial", labelcaption:"设计申请单号:"},
+              {type:"combobox", keyname:"status", labelname:"name", keyid:"id", value:q.status || "", datas:[{name:"待交付", id:1},{name:"待确认", id:2},{name:"退回修改", id:4},{name:"已完成", id:3}], labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"申请时间:"}];
 
     }

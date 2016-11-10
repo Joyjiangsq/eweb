@@ -38,6 +38,12 @@
               </tr>
         </tbody>
     </table>
+    <div v-show="noresult" :class='tableCss.noresult'>
+          没有数据
+    </div>
+    <div v-show="loading"  :class='tableCss.loading'>
+          加载中...
+    </div>
   </div>
 </template>
 

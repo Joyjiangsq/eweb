@@ -62,7 +62,6 @@ export default {
     sdata: function(){
       let q = this.$route.query;
       return [{type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"采购订单号:"},
-              {type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"销售订单号:"},
               {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:this.statusData, labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"购买时间:"}];
 
@@ -110,7 +109,7 @@ export default {
                 let one = this.orderids[i];
                 tpArry.push({
                     U_CloseWhy: this.backValue,
-                    U_OrderStatus: "8",
+                    U_OrderStatus: 8,
                     U_PurchaseNum: one.U_PurchaseNum
                 });
               }

@@ -1,10 +1,10 @@
 <template lang="html">
     <div :class="css.allBox">
       <div :class="css.dbox">
-        <div :class="css.hrow">
-            <span class='itemrow'><span :class="css.hitem">子订单号：</span> xxx</span>
-            <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "showStatus" class="reback">{{detailData.U_OrderStatus}}</span><span  v-else>{{detailData.U_OrderStatus}}</span></span>
-            <span class='itemrow'><span :class="css.hitem">回退理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
+        <div :class="css.hrow" v-if="orderId">
+            <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{baseInfo.design_serial}}</span>
+            <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "baseInfo.status == 4" class="reback">{{statusCaption}}</span><span  v-else>{{statusCaption}}</span></span>
+            <span class='itemrow' v-if="baseInfo.status == 4"><span :class="css.hitem" >回退理由：</span> {{baseInfo.backValueipt || '无'}}</span>
         </div>
         <panel>
           <div slot="panelTitle">
@@ -52,7 +52,7 @@
                     <div :class="css.rowItem">
                           <span :class="css.title">烟机灶具</span>
                           <div :class="css.formRow">
-                                <formrd :class='css.formitem' :read ="detail"  labelname="厨柜包烟机：" formname="chugui_byj" :value="baseInfo.chugui_byj" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="厨柜包烟机：" formname="chugui_byj" :value.sync="baseInfo.chugui_byj" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
                                 <formtext :class='css.formitem' :read ="detail"  labelname="烟机品牌：" :value.sync="baseInfo.yj_brand" placeholder=""  formname='yj_brand' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                                 <formtext :class='css.formitem' :read ="detail"  labelname="烟机型号：" :value.sync="baseInfo.yj_series" placeholder=""  formname='yj_series' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                                 <formtext :class='css.formitem' :read ="detail"  labelname="灶具品牌：" :value.sync="baseInfo.zj_brand" placeholder=""  formname='zj_brand' :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -78,9 +78,9 @@
                     <div :class="css.rowOne">
                           <span :class="css.title">五金</span>
                           <div :class="css.formRow">
-                                <formck :class='css.formitem' :read ="detail"  labelname="五金选择：" :must="false" formname="fivek" value="baseInfo.fivek" :datas="comData.fivekDatas" :validatestart="validate" @onvalidate="validateHandler"></formck>
+                                <formck :class='css.formitem' :read ="detail"  labelname="五金选择：" :must="false" formname="fivek" :value.sync="baseInfo.fivek" :datas="comData.fivekDatas" :validatestart="validate" @onvalidate="validateHandler"></formck>
                                 <formtext :class='css.formitem' :read ="detail"  labelname="其它：" :must="false" :value.sync="baseInfo.fivek_other" placeholder=""  formname='fivek_other' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                                <formrd :class='css.formitem' :read ="detail"  labelname="客户是否自备：" formname="fivek_self" :value="baseInfo.fivek_self" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="客户是否自备：" formname="fivek_self" :value.sync="baseInfo.fivek_self" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
                           </div>
                     </div>
                     <div :class="css.rowItem">
@@ -110,8 +110,8 @@
                     <div :class="css.rowItem">
                           <span :class="css.title">燃气</span>
                           <div :class="css.formRow">
-                                <formrd :class='css.formitem' :read ="detail"  labelname="燃气是否改造：" formname="rq_has_change" :value="baseInfo.rq_has_change" :datas="[{label:'是（在布局简图中说明）', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
-                                <formck :class='css.formitem' :read ="detail"  labelname="" formname="chugui_bao" @itemclick="rqClickHandler" :value="baseInfo.chugui_bao" :datas="[{label:'橱柜包燃气表', id:'橱柜包燃气表', checked: false},{label:'橱柜包燃气热水器', id:'橱柜包燃气热水器', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formck>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="燃气是否改造：" formname="rq_has_change" :value.sync="baseInfo.rq_has_change" :datas="[{label:'是（在布局简图中说明）', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formck :class='css.formitem' :read ="detail"  labelname="" formname="chugui_bao" @itemclick="rqClickHandler" :value.sync="baseInfo.chugui_bao" :datas="[{label:'橱柜包燃气表', id:'橱柜包燃气表', checked: false},{label:'橱柜包燃气热水器', id:'橱柜包燃气热水器', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formck>
                                 <br/><formtext :class='css.formitem' :must="rqControl" :read ="detail"  labelname="燃气热水器品牌：" :value.sync="baseInfo.rr_brand" placeholder=""  formname='rr_brand' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                                 <formtext :class='css.formitem' :must="rqControl" :read ="detail"  labelname="燃气热水器型号：" :value.sync="baseInfo.rr_series" placeholder=""  formname='rr_series' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                           </div>
@@ -119,21 +119,21 @@
                     <div :class="css.rowOne">
                           <span :class="css.title">暖气</span>
                           <div :class="css.formRow">
-                                <formrd :class='css.formitem' :read ="detail"  labelname="是否有暖气：" formname="nq_has" :value="baseInfo.nq_has" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
-                                <formrd :class='css.formitem' :read ="detail"  labelname="暖气是否改造：" :must="false" formname="nq_has_change" :value="baseInfo.nq_has_change" :datas="[{label:'是', id:'是', checked: false},{label:'否（在布局简图中说明）', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="是否有暖气：" formname="nq_has" :value.sync="baseInfo.nq_has" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="暖气是否改造：" :must="false" formname="nq_has_change" :value.sync="baseInfo.nq_has_change" :datas="[{label:'是', id:'是', checked: false},{label:'否（在布局简图中说明）', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
                           </div>
                     </div>
                     <div :class="css.rowItem">
                           <span :class="css.title">厨房高度</span>
                           <div :class="css.formRow">
                                 <formtext :class='css.formitem' :read ="detail"  labelname="厨房吊顶完成面到地砖面高度：" unit="mm" :value.sync="baseInfo.height1" placeholder=""  formname='height1' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                                <formrd :class='css.formitem' :read ="detail"  labelname="吊顶与顶之间是否加封板：" :must="false" formname="hase_ban" :value="baseInfo.hase_ban" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="吊顶与顶之间是否加封板：" :must="false" formname="hase_ban" :value.sync="baseInfo.hase_ban" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
                           </div>
                     </div>
                     <div :class="css.rowOne">
                           <span :class="css.title">腰线</span>
                           <div :class="css.formRow">
-                                <formrd :class='css.formitem' :read ="detail"  labelname="墙面是否有腰线：" @itemclick="yClickHandler" formname="yao_has" :value="baseInfo.yao_has" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                                <formrd :class='css.formitem' :read ="detail"  labelname="墙面是否有腰线：" @itemclick="yClickHandler" formname="yao_has" :value.sync="baseInfo.yao_has" :datas="[{label:'是', id:'是', checked: false},{label:'否', id:'否', checked: false}]" :validatestart="validate" @onvalidate="validateHandler"></formrd>
                                 <formtext :class='css.formitem' :read ="detail"  labelname="腰线下沿距离地面完成面高度：" :must="yControl" unit="mm" :value.sync="baseInfo.height2" placeholder=""  formname='height2' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                           </div>
                     </div>
@@ -143,7 +143,7 @@
                                 <formtext :class='css.formitem' :read ="detail"  labelname="" :must="false" :value.sync="baseInfo.remark" placeholder=""  formname='remark' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                           </div>
                     </div>
-                    <div :class="css.rowOne">
+                    <div :class="css.rowOne"  v-if="isE && baseInfo.status == 1">
                           <span :class="css.title">附件上传</span>
                           <div :class="css.formRow">
                               <div :class="css.upBox">
@@ -155,27 +155,29 @@
                               </div>
                           </div>
                     </div>
-                    <div :class="css.rowItem">
+                    <div :class="css.rowItem" v-if="baseInfo.status == 2 || baseInfo.status == 3">
                           <span :class="css.title">附件下载</span>
                           <div :class="css.formRow">
                                 <div :class="css.upBox">
-                                  <a href="#aa">下载</a>
+                                  <a :href="baseInfo.attach_url">下载</a>
                                 </div>
                           </div>
                     </div>
                 </div>
           </div>
         </panel>
-        <div :class='css.footer'>
+        <div :class='css.footer' v-if="!isE && !baseInfo.status">
           <span><btn btnname="btn-primary" iconname="icon-check" @clickaction="subOrder">提交订单</btn></span>
         </div>
-        <div :class='css.footer'>
-          <span :class="css.bitem"><btn btnname="btn-primary" iconname="icon-check">设计交付</btn></span>
+        <div :class='css.footer' v-if="isE && baseInfo.status==1">
+          <span :class="css.bitem"><btn btnname="btn-primary" iconname="icon-check" @clickaction="okHandler">设计交付</btn></span>
           <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back" @clickaction="reback">退回</btn></span>
         </div>
-        <div :class='css.footer'>
-          <span :class="css.bitem"><btn btnname="btn-primary" iconname="icon-check">确认</btn></span>
-          <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back">重新提交</btn></span>
+        <div :class='css.footer' v-if="!isE && baseInfo.status == 4">
+          <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back"  @clickaction="resub">重新提交</btn></span>
+        </div>
+        <div :class='css.footer' v-if="!isE && baseInfo.status == 2">
+          <span :class="css.bitem"><btn btnname="btn-primary" iconname="icon-check"  @clickaction="finishHandler">确认</btn></span>
         </div>
 
         <dialog :flag="showReDialog" title="请输入回退原因" @dialogclick="rebackDialog">
@@ -198,14 +200,17 @@ import comboxform from "component/form/fmCombobox";
 import formck from "component/form/formCheckBox";
 import formrd from "component/form/formRadio";
 import btn from "component/sprite/button";
+import {showTips} from "actions/index";
+import Utils from "common/Utils";
 import ft from "component/file/filedeal";
 import {series,shapeDatas,positionDatas,artDatas, fiveDatas, pipeDatas,rq_pipeDatas} from "config/const";
 import css from "./d.css";
+// 待交付 1， 待确认 2，已完成 3， 退回修改 4，
 export default {
   data: function () {
     return {
         css,
-        detail: true,
+        orderId:"",
         comData:{
           seriesDatas: series, //系列数据
           shapeDatas: shapeDatas, // 形状数据
@@ -230,13 +235,37 @@ export default {
     }
   },
   computed: {
+    detail: function(){
+      if(this.baseInfo.status == 1) return true
+      if(this.baseInfo.status == 2 ) return true
+      if(this.baseInfo.status == 3 ) return true
+    },
     dname: function(){
       return "定制品申请"
+    },
+    isE: function() {
+      return Utils.isEAdmin();
+    },
+    statusCaption: function(){
+        let mp = {
+           "1":"待交付","2":"待确认", "3":"已完成", "4":"退回修改"
+        }
+        return mp[this.baseInfo.status]
     }
   },
-  ready: function () {},
+  ready: function () {
+  },
   attached: function () {},
   methods: {
+    getData: function(){
+      if(!this.orderId || this.orderId == "") return false;
+      this.$http.get(this.$Api + "custom_products/detail", {params:{design_serial: this.orderId}}).then((res) =>{
+            let d = res.json().data;
+            this.baseInfo = d;
+      }, (e)=>{
+
+      })
+    },
     bxClickHandler: function(d) {
         if(d.name == "厨房内") {
             this.bxControl = true;
@@ -262,7 +291,7 @@ export default {
         if(d.res == "fail") this.validateRes = false;
     },
     upSuccessHandler: function(d){
-        this.baseInfo.attach_url = "";
+        this.baseInfo.attach_url = d.url;
     },
     // 退回
     reback: function(){
@@ -270,15 +299,66 @@ export default {
     },
     // 退回确认
     rebackDialog: function(){
+        this.baseInfo.backValueipt = this.backValueipt;
+        this.baseInfo.status =  4;
+        this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+              let d = res.json();
+              console.log(d);
+        }, (e)=>{
 
+        })
+    },
+    // 设计交互
+    okHandler: function(){
+        // 验证附件是否填写
+        if(!this.baseInfo.attach_url) {
+            showTips(this.$store, {type:"warn", msg:"请上传附件"});
+            return false
+        }
+
+        this.baseInfo.status =  2;
+        this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+              let d = res.json();
+              console.log(d);
+        }, (e)=>{
+
+        })
     },
     subOrder: function(){
       this.validate = !this.validate
       this.validateRes = true;
       setTimeout(()=>{
           if(this.validateRes) {
+              this.baseInfo.status = 1;
+              this.$http.post(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+                    console.log(res);
+              }, (e)=>{
 
+              })
           }
+      })
+    },
+
+    resub: function() {
+      this.baseInfo.backValueipt = ""
+      this.baseInfo.status =  1;
+
+      this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+            let d = res.json();
+            console.log(d);
+      }, (e)=>{
+
+      })
+    },
+
+    finishHandler: function(){
+      this.baseInfo.status =  3;
+
+      this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+            let d = res.json();
+            console.log(d);
+      }, (e)=>{
+
       })
     }
   },
@@ -286,6 +366,8 @@ export default {
   route:{
     data: function(){
       setTitle(this.$store, [{name:"定制品设计管理", type:"back"}, {name:this.dname}]);
+      this.orderId = this.$route.query.orderid || "";
+      if(this.orderId != "") this.getData(this.orderId);
     }
   }
 }

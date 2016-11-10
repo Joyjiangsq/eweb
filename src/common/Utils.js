@@ -48,9 +48,10 @@ import storejs from "storejs";
      getUserInfo: function(){
         return storejs("userInfo") || {};
      },
-     // 是不是e站管理员
+     // 是不是e站
      isEAdmin: function(){
-        return false
+        if(this.getUserInfo().is_jzez) return true
+        else return false
      },
 
      // 品类对应的编码

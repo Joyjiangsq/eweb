@@ -96,7 +96,7 @@ export default {
     },
     dialogclick: function(d) {
       if(d.action == "confirm") {
-        this.$http.put(this.$Api+"sales/stock",JSON.stringify([{U_CloseWhy:this.backValueIpt, U_OrderStatus:"8",U_PurchaseNum: this.orderId}])).then((res) => {
+        this.$http.put(this.$Api+"sales/stock",JSON.stringify([{U_CloseWhy:this.backValueIpt, U_OrderStatus:8,U_PurchaseNum: this.orderId}])).then((res) => {
             var d = res.json();
             this.showMsg("success", "驳回成功");
             this.showBack = !this.showBack;

@@ -85,6 +85,8 @@ let tableBase = {
           if(this.load) this.loadData();
           if(this.datas.length != 0) {
               setTimeout(()=>{
+                this.noresult = false;
+                this.loading = false;
                 this.adapertDataMin(this.datas);
               }, 1)
           }

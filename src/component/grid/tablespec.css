@@ -47,3 +47,24 @@ table tbody td {
 word-break: break-all;
 word-wrap: break-word;
 }
+
+.noresult {
+    background-color: white;
+    border-top: 0;
+    text-align: center;
+    color: #ccc;
+    padding: 50px 0;
+    font-size: 12px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;    border-right: 1px solid #ddd;
+}
+.loading {
+    background-color: white;
+    border-top: 0;
+    text-align: center;
+    color: #ccc;
+    padding: 50px 0;
+    font-size: 12px;    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
