@@ -50,7 +50,6 @@ export default {
              {name:"门套线边数", labelValue:"U_DCLNum", type:"data"},
              {name:"单位", labelValue:"SalUnitMsr",type:"data"}
       ],
-      searchParams: {ItmsGrpNam:"厨柜"} // 初始查询依据
     }
   },
 

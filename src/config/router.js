@@ -6,30 +6,36 @@ export function routerStart(router) {
               subRoutes:{
                 // 首页
                 "index": {
+                    name:"index",
                     component: function(resovle) {require(['modules/index/index.vue'], resovle)},
                 },
                 // 分站账户管理
                 "accountmgr": {
+                    name:"accountmgr",
                     component: function(resovle) {require(['modules/account/accountmgr.vue'], resovle)},
                 },
 
                 // 分站员工管理
                 "employee":{
+                    name:"employee",
                     component: function(resovle) {require(['modules/employee/employeemgr.vue'], resovle)},
                 },
 
                 // 用户管理
                 "user":{
+                    name:"user",
                     component: function(resovle) {require(['modules/user/userMgr.vue'], resovle)},
                 },
 
                 // 客户管理
                 "custom":{
+                    name:"custom",
                     component: function(resovle) {require(['modules/custom/customMgr.vue'], resovle)},
                 },
 
                 // 销售下单管理
                 "sale":{
+                    name:"sale",
                     component: function(resovle) {require(['modules/sale/sale.vue'], resovle)},
                     subRoutes: {
                       "/":{
@@ -52,6 +58,7 @@ export function routerStart(router) {
 
                 // 采购订单管理
                 "purchase":{
+                    name:"purchase",
                     component: function(resovle) {require(['modules/purchase/purchase.vue'], resovle)},
                     subRoutes:{
                       "/":{
@@ -65,6 +72,7 @@ export function routerStart(router) {
 
                 // 备货申请
                 "prestore":{
+                    name:"prestore",
                     component: function(resovle) {require(['modules/prestore/preStore.vue'], resovle)},
                     subRoutes:{
                       "/":{
@@ -80,6 +88,7 @@ export function routerStart(router) {
                 },
                 // 备货审核
                 "/prestorevalidate":{
+                    name:"prestorevalidate",
                     component: function(resovle) {require(['modules/prestore/preValidate.vue'], resovle)},
                     subRoutes:{
                       "/":{
@@ -91,22 +100,28 @@ export function routerStart(router) {
                     }
                 },
                 // 订制品设计申请管理
-                "specapplydesignmgr":{
-                    component: function(resovle) {require(['modules/spec/specApply.vue'], resovle)},
-                },
-
-                // 订制品设计管理
-                "specdesignmgr":{
-                    component: function(resovle) {require(['modules/spec/specMgr.vue'], resovle)},
+                "specmgr":{
+                    name:"specmgr",
+                    component: function(resovle) {require(['modules/spec/specBase.vue'], resovle)},
+                    subRoutes:{
+                      "/":{
+                          component: function(resovle) {require(['modules/spec/specMgr.vue'], resovle)},
+                      },
+                      "apply":{
+                          component: function(resovle) {require(['modules/spec/specApply.vue'], resovle)},
+                      }
+                    }
                 },
 
                 // 加急卡管理
                 "urgent":{
+                    name:"urgent",
                     component: function(resovle) {require(['modules/urgent/urgentMgr.vue'], resovle)},
                 },
 
                 // 报表管理
                 "tbmgr":{
+                    name:"tbmgr",
                     component: function(resovle) {require(['modules/tbmgr/tbMgr.vue'], resovle)},
                 },
 

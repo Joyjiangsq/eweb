@@ -123,3 +123,13 @@
     bottom: 0;
     z-index: 20;
 }
+.pickerBox:hover .close {
+  display: block;
+}
+.close {
+  position: absolute;
+top: 16%;
+right: 35px;
+cursor: pointer;
+display:none;
+}

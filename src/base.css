@@ -90,10 +90,13 @@ table tbody td span {
 
 /**渐变**/
 :global(.tipRow) {
-  background-color: #f5d57b;
-padding: 10px;
-font-size: 13px;
-margin-bottom: 15px;
+  padding: 10px;
+    color: red;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+:global(.tipRow *) {
+  color: red;
 }
 :global(.tipRowSub) {
   margin-bottom: 10px

@@ -1,5 +1,4 @@
 <template>
-
     <datepicker :class="rangeCss.startTime" :value.sync="start" :formate="formate" :stopdate.sync="startstopdate" :startdate="startstartdate" ></datepicker>
     <span :class="rangeCss.nul">-</span>
     <datepicker :class="rangeCss.endTime" :value.sync="end" :formate="formate" :stopdate="endstopdate" :startdate.sync="endstartdate" ></datepicker>
@@ -59,6 +58,7 @@ export default {
     "start": function(v){
         this.endstartdate = new Date(this.start);
         this.$dispatch("rangechange", {name:"start", value:v});
+        this.end = ""; //
     },
     "end": function(v) {
         this.startstopdate = new Date(this.end);

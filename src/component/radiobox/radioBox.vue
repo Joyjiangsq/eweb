@@ -22,6 +22,9 @@ export default {
       value:{
 
       },
+      read:{
+        default: false
+      },
       labelkey:{
         type:String,
         default:"id"
@@ -56,7 +59,7 @@ export default {
   },
   methods: {
     radioClick: function(index) {
-
+      if(this.read) return false
       for(var i = 0; i < this.datas.length; i++) {
           this.datas[i]["checked"] = false;
       }

@@ -44,6 +44,7 @@ import house from "./houseOne";
 import pageBase from "common/mixinPage.js";
 let headerData = [{name:"业主编号", labelValue:"CardCode", type:"data"},{name:"业主名称", labelValue:"CardName",type:"data"},
                   {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"客户来源", labelValue:"U_ComeFrom",type:"data"},
+                  {name:"分站名称", labelValue:"station_name",type:"data"},
                   {name:"创建人", labelValue:"createdBy",type:"data"},  // TODO
                   {name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                   {type:"operator", name:"操作"}]
@@ -113,13 +114,12 @@ export default {
               {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
               {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"},
               {type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst},
-              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"分站名称:"},
+              {type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"}];
     },
     fromAdapter: function(){
       let one = Utils.cloneObj(this.formArray.fromConst);
       one.splice(0,1);
-      console.log(one);
       return one
     },
     gettName: function(){
@@ -171,6 +171,7 @@ export default {
     retInfo: function(){
       this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
       this.formData = {   // 重置数据
+        U_ComeFrom:"",
         validate: true,
         house_list:[{}]
       }

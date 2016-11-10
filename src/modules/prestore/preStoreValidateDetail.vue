@@ -3,8 +3,8 @@
           <div :class="css.paddingType">
             <div :class="css.hrow">
                 <span class="itemrow"><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '分站驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
-                <span class='itemrow' v-if="detailData.U_OrderStatus == '分站驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy}}</span>
+                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
+                <span class='itemrow' v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy}}</span>
             </div>
             <panel>
                 <div slot="panelTitle">
@@ -101,7 +101,7 @@ export default {
             this.showMsg("success", "驳回成功");
             this.showBack = !this.showBack;
             this.detailData.U_CloseWhy = this.backValueIpt;
-            this.detailData.U_OrderStatus = "分站驳回";
+            this.detailData.U_OrderStatus = "店长驳回";
         },(error) =>{
           console.log(error);
           this.showMsg("error", error.msg);

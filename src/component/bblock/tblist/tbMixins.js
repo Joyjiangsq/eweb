@@ -12,6 +12,8 @@ let tbMixin = {
     data: function() {
         return {
           products:"products",
+          twoLevelData:[],   // 二级分类
+          threeLevelData:[], // 三级分类
            totals:0,                 // 表格load结束之后 传递给分页的页数
            searchParams: {page: 1}, // 初始查询依据
            load: this.toload,                 // 表格是否加载开关
@@ -90,15 +92,33 @@ let tbMixin = {
     computed: {
       sdata: function(){
         //,
-        console.log(this.load);
         return this.sDatas;
 
       }
+    },
+    created: function(){
+        this.searchParams.ItmsGrpCod = Utils.getCateryCode(this.name);
     },
     ready: function() {
     },
     attached: function() {},
     methods: {
+      getLevelData: function(){
+          this.$http.get(this.$Api + "products/firms", {params:{ItmsGrpCod: Utils.getCateryCode(this.name)}}).then((res)=>{
+                let d = res.json().data[0];
+                this.twoLevelData = d.firms;
+                for (var i = 0; i < d.firms.length; i++) {
+                  let one = d.firms[i];
+                  this.threeLevelData = one.next_firms.concat(this.threeLevelData);
+                }
+                if(this.dtArray.indexOf(this.name) != -1) {
+                      this.sDatas.unshift({type:"combobox", keyname:"xx", labelname:"name", keyid:"code", datas: this.threeLevelData, labelcaption:"三级分类："});
+                }
+                this.sDatas.unshift({type:"combobox", keyname:"xxx", labelname:"name", datas: this.twoLevelData, keyid:"code", value:"", labelcaption:"二级分类："});
+          }, (e)=>{
+
+          });
+      },
       loadlist: function(){
         this.$set("load", !this.load);
       },
@@ -115,11 +135,10 @@ let tbMixin = {
     },
     watch: {
       "toload": function(){
-          if(this.dtArray.indexOf(this.name) != -1) {
-                this.sDatas.unshift({type:"combobox", keyname:"U_ThreeL", labelname:"U_ThreeL", keyid:"FirmCode", value:"", params:{U_ThreeL:this.name}, url:"products/firms", labelcaption:"三级分类："});
-          }
-          this.sDatas.unshift({type:"combobox", keyname:"FirmName", labelname:"FirmName",params:{ItmsGrpNam: this.name}, url:"products/firms", keyid:"FirmCode", value:"", labelcaption:"二级分类："});
-          this.loadlist();
+        this.loadlist();
+        if(this.twoLevelData.length == 0) {
+            this.getLevelData();
+        }
       }
     },
 }

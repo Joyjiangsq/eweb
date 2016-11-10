@@ -3,8 +3,8 @@
           <div :class="css.paddingType">
             <div :class="css.hrow">
                 <span class="itemrow"><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '分站驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
-                <span class='itemrow' v-if="detailData.U_OrderStatus == '分站驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
+                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
+                <span class='itemrow' v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
             </div>
             <panel>
                 <div slot="panelTitle">
@@ -19,9 +19,9 @@
             </panel>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detailData.U_OrderStatus!='分站驳回'"></tblab>
+                <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detailData.U_OrderStatus!='店长驳回'"></tblab>
           </div>
-          <div :class="css.footerBar" v-show="detailData.U_OrderStatus =='分站驳回'">
+          <div :class="css.footerBar" v-show="detailData.U_OrderStatus =='店长驳回'">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>
         </div>

@@ -63,11 +63,11 @@ export default {
   },
   computed: {
     detail: function(){
-       return this.detailData.U_OrderStatus != "分站驳回"
+       return this.detailData.U_OrderStatus != "店长驳回"
     },
 
     showStatus: function(){
-      return this.detailData.U_OrderStatus == '分站驳回' || this.detailData.U_OrderStatus == 'e站驳回'
+      return this.detailData.U_OrderStatus == '店长驳回' || this.detailData.U_OrderStatus == 'e站驳回'
     }
   },
   ready: function () {},

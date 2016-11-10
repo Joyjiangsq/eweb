@@ -41,9 +41,9 @@ export default {
              {name:"品牌", labelValue:"U_Brand", type:"data"},
              {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
              {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
+              {name:"颜色", labelValue:"U_Colour", type:"data"},
              {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}
       ],
-      searchParams: {ItmsGrpNam:"集成吊顶"}, // 初始查询依据
     }
   },
   computed: {

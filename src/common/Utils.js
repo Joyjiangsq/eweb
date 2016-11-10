@@ -40,17 +40,33 @@ import storejs from "storejs";
          this.delCookie("token");
          location.hash="login";
      },
-
+     // 没有权限页面
      reGoNoPower: function() {
         location.hash="forbidden";
      },
-
+     // 获取登录信息
      getUserInfo: function(){
         return storejs("userInfo") || {};
      },
      // 是不是e站管理员
      isEAdmin: function(){
         return false
+     },
+
+     // 品类对应的编码
+     getCateryCode: function(name){
+          var CateDatas = {
+              "瓷砖": 111,
+              "地板": 115,
+              "洁具": 117,
+              "集成吊顶": 118,
+              "门": 116,
+              "厨柜": 121,
+              "施工辅材": 119,
+              "装修辅材": 120
+          }
+          if(CateDatas[name]) return CateDatas[name]
+          else return "";
      },
 
      cloneObj: function(obj){

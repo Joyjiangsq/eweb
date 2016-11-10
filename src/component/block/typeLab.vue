@@ -114,7 +114,6 @@ export default {
 
   ready: function () {
     // 控制品类的开放和关闭
-    console.log(this.datamap);
     this.renderTabs();
   },
   attached: function () {

@@ -94,9 +94,9 @@ export default {
             var d = res.json();
             console.log(d);
             // this.self = true;
-            // showTips(this.$store, {type:"success", msg:"新增成功"});
-            // window.onbeforeunload  = function(){}
-            // this.$router.go({path:"/prestore"})
+            showTips(this.$store, {type:"success", msg:"新增成功"});
+            window.onbeforeunload  = function(){}
+            this.$router.go({path:"/prestore"})
         },(error) =>{
           console.log(error);
           showTips(this.$store, {type:"success", msg:"新增失败"});

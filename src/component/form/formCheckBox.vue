@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label v-if="labelname" for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget" style="min-width: 200px">
-            <checkbx :datas="datas" checkname="name" :events="checkEvents" :labelname="lname" :labelkey="lkey" :value="value"></checkbx>
+            <checkbx :datas="datas" checkname="name" :read="read" :events="checkEvents" :labelname="lname" :labelkey="lkey" :value="value"></checkbx>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -26,6 +26,9 @@ export default {
       },
       lkey:{
         default: "id"
+      },
+      read:{
+        default: false
       }
   },
   data: function () {

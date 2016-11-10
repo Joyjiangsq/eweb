@@ -42,7 +42,7 @@
             <div style="padding-bottom: 20px;">
               <div class="tipRow">
                 <div class="tipRowSub">
-                  <icon iconname="icon-warn"></icon> <span :class="acCss.tonedesc">提现须知：</span>
+                  <span :class="acCss.tonedesc">提现须知：</span>
                 </div>
                 <p style="margin-bottom: 5px;">
                   <span :class="acCss.titledesc">1</span>1万以下（含1万）手续费5元；
@@ -168,7 +168,9 @@ export default {
             console.log(this.backCashParams.validate);
             if(this.backCashParams.validate) {
                   if(this.backCashParams.DocTotal> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可回款金额");
+                  if(this.backCashParams.DocTotal*1 <= 0) this.showMsg("warn", "请填写正确的回款金额");
                   else {
+                    delete this.backCashParams.validate;
                     this.$http.post(this.$Api+ "station-account",this.backCashParams).then((res) => {
                           let r = res.json();
                           this.$set("showBackCashDialog", !this.showBackCashDialog);

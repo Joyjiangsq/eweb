@@ -56,7 +56,6 @@ export default {
   watch:{
     "detailv":function(){
         // console.log(this.detailv);
-        console.log(this.value);
         if(this.value != "") {
           var sp = this.value.split(",");
           if(sp.length > 3) {

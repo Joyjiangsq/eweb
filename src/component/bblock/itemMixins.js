@@ -153,7 +153,6 @@ export default {
         var one = this.testdata[i];
         this.vlist.push(this.adapterFun(one));
       }
-      console.log(this.vlist);
     }
     if(this.curaction == "edit") {
       this.headercaption.splice(0,1);

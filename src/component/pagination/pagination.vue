@@ -62,44 +62,37 @@ export default {
       nextBtn:pageCss.defTheme,
       lastBtn:pageCss.defTheme,
       gotoBtn:pageCss.defTheme,
-      targetpage:""
+      targetpage:"",
+      pageArry:[]
     }
   },
   created: function(){
       this.validateBtn();
   },
   computed: {
-      pageArry() {
-          let ay = [];
-          let pp = [];
-          console.log(this.tPages);  // 这个可以触发pageArry执行
-          this.curpage = isNaN(this.curpage*1)? 1: this.curpage*1;
-          //
-          for(var i = this.pix; i >0; i--) {
-              if(this.curpage - i <= 0) continue;
-              ay.push(this.curpage - i);
-          }
-
-          ay.push(this.curpage);
-          for(var i = 1; i <= this.pix; i++) {
-              if(this.curpage + i > this.tPages) break;
-              ay.push(this.curpage + i);
-          }
-          return ay
-      }
-
   },
   ready: function () {},
   attached: function () {},
   methods: {
-
-
+    renderPages() {
+        let ay = [];
+        this.curpage = isNaN(this.curpage*1)? 1: this.curpage*1;
+        for(var i = this.pix; i >0; i--) {
+            if(this.curpage - i <= 0) continue;
+            ay.push(this.curpage - i);
+        }
+        ay.push(this.curpage);
+        for(var i = 1; i <= this.pix; i++) {
+            if(this.curpage + i > this.tPages) break;
+            ay.push(this.curpage + i);
+        }
+        this.pageArry = ay;
+    },
     validateBtn() {
       this.indexBtn = this.prevBtn = this.lastBtn = this.nextBtn = this.pageCss.defTheme;
       if(this.curpage == 1) {this.indexBtn = this.prevBtn = this.pageCss.closeBtn;return false}
       if(this.curpage == this.tPages) {this.lastBtn = this.nextBtn = this.pageCss.closeBtn; return false}
     },
-
     clickPage(page) {
         if(!page || isNaN(page*1) || page < 1 || page > this.tPages) return false;
         let q = this.$route.query;
@@ -109,11 +102,16 @@ export default {
         if(this.hash) this.$router.go({path:path, query: q});  // 路由驱动
         else this.$dispatch("pagechange", {page:this.curpage});      // 事件驱动
         this.validateBtn();
+
+        this.renderPages();
     }
   },
   watch:{
     "totals": function(){
         this.tPages = Math.ceil(this.totals/this.size);
+    },
+    "tPages": function(){
+      this.renderPages();
     }
   },
   components: {}

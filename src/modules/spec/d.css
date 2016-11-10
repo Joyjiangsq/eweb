@@ -34,6 +34,10 @@
 .formitem label{
   min-width: 210px;
 }
+.inRow {
+  color: #0066cc;
+  cursor: pointer;
+}
 
 .footer {
   width: 100%;
@@ -43,4 +47,15 @@ margin: 20px 0;
 
 .bitem {
   margin-left: 20px;
+}
+.upBox {
+      padding-top: 21px;
+}
+
+.hrow {
+      padding-top: 15px;
+}
+
+.hitem {
+  margin-right: 5px;
 }

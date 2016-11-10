@@ -140,7 +140,11 @@ export default {
     },
 
     setDef: function(){
-      if(!this.value) return false;
+      if(!this.value) {
+        this.defaultInfo[this.keyid] = "";
+        this.defaultInfo[this.labelname] = "请选择";
+        return false;
+      }
       // if(this.realData.length == 0) this.realData = this.datas;
       for(var i = 0; i < this.realData.length; i++){
           if(this.value == this.realData[i][this.keyid]) {

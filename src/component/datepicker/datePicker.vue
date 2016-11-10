@@ -1,6 +1,9 @@
 <template>
     <div :class="datepCss.pickerBox">
         <input type="text"  :class="[classname,datepCss.datePickerInput]"  :value="value" readonly="true">
+        <div :class="datepCss.close" @click="clickHandler">
+            <icon iconname="icon-close"></icon>
+        </div>
         <span @click="changePickerMain" :class="datepCss.showBtn"><icon iconname="icon-date"></icon></span>
         <div :class="datepCss.coverPicker"  v-show="showDatePicker" @click="changePickerMain" ></div>
         <div :class="datepCss.pickerMain" v-show="showDatePicker" :style="style">
@@ -111,7 +114,7 @@ export default {
           let beiginTimes = this.startdate.getTime();
           for(var i=startDate; i <= endDate; i++) {
             var times = new Date(year, month, i).getTime();
-            if(times > stopTimes || times < beiginTimes) dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.closeDay});
+            if(times > stopTimes || times < (beiginTimes - 3600*24*1000)) dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.closeDay});
             else if(i == curDay) {
               if(year == new Date(this.value).getFullYear() && month == new Date(this.value).getMonth())   dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay, active: this.datepCss.active});
 
@@ -203,6 +206,10 @@ export default {
     checkDateRange(tplDate) {
           this.tplDate = tplDate;
           // this.monthData = Utils.formate(tplDate, this.formate);
+    },
+
+    clickHandler: function(){
+      this.value = "";
     }
   },
 

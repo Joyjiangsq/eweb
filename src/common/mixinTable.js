@@ -60,8 +60,8 @@ let tableBase = {
         data: function () {
           return {
               dataList: this.datas || [],
-              noresult: false,
-              loading:true,
+              noresult: true,
+              loading:false,
               adpArry:[],
           }
         },

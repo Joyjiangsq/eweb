@@ -57,7 +57,6 @@ export default {
   },
   computed: {},
   ready: function () {
-    console.log(this.dimlabel);
   },
   attached: function () {},
   methods: {

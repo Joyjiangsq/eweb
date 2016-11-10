@@ -19,7 +19,9 @@ export default {
           return [{checked: false}]
         } // [{label:"足球", id: 1, checked: true}]
       },
-
+      read:{
+        default: false
+      },
       value:{
           default: function() {
             return []
@@ -66,6 +68,7 @@ export default {
   },
   methods: {
     checkClick: function(index) {
+        if(this.read) return false;
         this.inDatas[index].checked = !this.inDatas[index].checked;
         this.resetValues();
         this.events.checkClick.call(this._context, this.value);

@@ -56,7 +56,6 @@ export default {
   },
   computed: {},
   ready: function () {
-    console.log(this.labename);
   },
   attached: function () {},
   methods: {

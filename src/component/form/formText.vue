@@ -1,6 +1,6 @@
 <template>
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
-        <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
+        <label for="" v-if="labelname" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
             <input :type="inputtype" :class="unit?css.unitStay:''" @blur="blurHandler" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" @focus="focusHandler">
             <span :class="css.unit" v-if="!!unit">{{unit}}</span>

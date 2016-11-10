@@ -36,8 +36,7 @@ let staticMenus = [
           name:"加急卡管理", url:"/urgent"
       }]
   },
-  {name:"定制品设计申请", url:"/specapplydesignmgr", icon:"icon-tip"},
-  {name:"定制品设计管理", url:"/specdesignmgr", icon:"icon-tip"},
+  {name:"定制品设计管理", url:"/specmgr", icon:"icon-tip"},
 
   {name:"报表管理", url:"/tbmgr", icon:"icon-tip"}
 ]
@@ -51,13 +50,12 @@ export default {
     },
 
     ready: function(){
-      let path = this.$route.path;
+      let path = this.$route.name;
       for (let i = 0; i < this.datamenu.length; i++) {
             let one = this.datamenu[i];
             if(!one.subMenus || one.subMenus.length == 0) continue;
             let subStr = JSON.stringify(one.subMenus);
             if(subStr.indexOf(path) != -1) {
-              console.log(one);
               one.show = true;
               break;
             }

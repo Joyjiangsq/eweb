@@ -43,7 +43,6 @@ export default {
 
   },
   ready: function () {
-    console.log(this.selfData);
     this.value = this.selfData.ItemName;
     if(!!this.selfData.ProductList && this.selfData.ProductList.length != 0) {
       this.showTip = true;

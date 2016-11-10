@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="css.tBox">
-                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="urgent" :params="searchParams" ></tb>
+                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="cost-account"" :params="searchParams" ></tb>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -41,12 +41,12 @@ var orderurgent = Vue.extend({
 })
 let tableHeaderDatas = [
                         {name:"销售订单号", labelValue:"U_FZOrder",type:"data"},
-                        {name:"业主姓名", labelValue:"CardName",type:"data"},
-                        {name:"业主地址", labelValue:"U_PurchaseNum",type:"component", component: orderurgent, cname:"orderurgent1"},
-                        {name:"销售报价", labelValue:"purchaser",type:"data"},
-                        {name:"采购完成率", labelValue:"purchaser",type:"data"},
-                        {name:"主材款（采购）", labelValue:"purchaser",type:"data"},
-                        {name:"服务费（采购）", labelValue:"purchaser",type:"data"},
+                        {name:"业主姓名", labelValue:"CardName",type:"data",adapterFun: function(d) {return d.base_info.CardName}},
+                        {name:"业主地址", labelValue:"Address",type:"data",adapterFun: function(d) {return d.base_info.Address}},
+                        {name:"销售报价", labelValue:"xxx",type:"data",adapterFun: function(d) {return d.base_info.U_PaInAmount}},
+                        {name:"采购完成率", labelValue:"completion_rate",type:"data"},
+                        {name:"主材款（采购）", labelValue:"DocTotal",type:"data"},
+                        {name:"服务费（采购）", labelValue:"U_SerCharge",type:"data"},
                         {name:"销售时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}}]
 export default {
   mixins: [pageBase],

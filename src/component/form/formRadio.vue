@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget" style="min-width: 200px">
-            <radiobx :datas="datas" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>
+            <radiobx :datas="datas" checkname="name" :events="checkEvents" :read="read" :defaultkey="value"></radiobx>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
             </div>
@@ -20,6 +20,9 @@ export default {
       datas:{
         type:Array,
         default: () => []
+      },
+      read:{
+        default: false
       }
   },
   data: function () {
