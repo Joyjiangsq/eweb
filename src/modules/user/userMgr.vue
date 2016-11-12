@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="">
-                <tb :headercaption="headercaption" url="users" :params="searchParams" totals.sync = "totals" :load="load"  :events="tableEvents"></tb>
+                <tb :headercaption="headercaption" url="users" :params="searchParams" :totals.sync = "totals" :load="load"  :events="tableEvents"></tb>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -193,6 +193,10 @@ export default {
     }
   },
   components: {formdim,formtext,formck,formrd, dialogtip},
-
+  watch:{
+    "totals": function(){
+      console.log(this.totals);
+    }
+  }
 }
 </script>

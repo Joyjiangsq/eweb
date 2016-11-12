@@ -103,7 +103,7 @@ export default {
       subHeaders: subHeaders, // 子订单表格表头
       subLoad: false, // 子列表加载
       subSearchParams:{},
-      curData:{},
+      curData:{base_info:{}},
       showCode: false,
       // 表格回调
       tableEvents:{

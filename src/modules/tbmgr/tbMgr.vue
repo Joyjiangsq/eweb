@@ -35,7 +35,7 @@ var orderTo = Vue.extend({
   },
   methods:{
     clickHandler: function(){
-        this.$router.go({path:"sale/saleDetail", query:{orderid: this.totals}})
+        this.$router.go({path:"sale/detail", query:{orderid: this.totals}})
     }
   }
 })

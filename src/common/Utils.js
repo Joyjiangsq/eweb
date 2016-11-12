@@ -46,7 +46,7 @@ import storejs from "storejs";
      },
      // 获取登录信息
      getUserInfo: function(){
-        return storejs("userInfo") || {};
+        return storejs("userInfo") || "";
      },
      // 是不是e站
      isEAdmin: function(){

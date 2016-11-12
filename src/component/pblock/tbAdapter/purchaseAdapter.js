@@ -59,6 +59,7 @@ export default function adapterData(d) {
                   d.SalPackUn = d.SalPackUn || 1;
                   let sy = Math.ceil(this.def/d.SalPackUn);
                   d.Quantity = d.SalPackUn*sy;
+                  d.Quantity = d.Quantity.toFixed(3);
                   console.log(d.Quantity);
               }
               if(isNaN(this.def)) {

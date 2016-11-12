@@ -17,6 +17,12 @@
                     <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValue" placeholder="请填写驳回理由" ></textarea>
               </div>
         </dialog>
+        <dialog :flag="priceShow" title="核价结果" @dialogclick="priceClick">
+              <div slot="containerDialog">
+                    <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
+                    <propertytext key="服务费" :value="priceInfo.sprice"></propertytext>
+              </div>
+        </dialog>
     </div>
 </template>
 
@@ -26,6 +32,7 @@ import Utils from "common/Utils.js";
 import formcb from "component/form/fmCombobox";
 import dialogtip from "component/dialog/dialogTip";
 import pageBase from "common/mixinPage.js";
+import propertytext from "component/form/propertyText.vue";
 import orderlist from "./purchaseList";
 import {orderStatus} from "config/const";
 export default {
@@ -39,6 +46,9 @@ export default {
       moduleName:"采购订单管理",
       curaction:"",
       statusData:orderStatus,
+      priceShow: false,
+      priceInfo:{sprice:"",sprice:""},
+      priceArray:[],
       orderids:[],
       finalData:[],
       backValue:"",
@@ -78,15 +88,59 @@ export default {
               // 验证通过规则  如果是单个品类- 如果不是定制品 则不能过
               // 如果是多个品类  如果只有一个是非定制品   则不能过
               // 定制品名称为  厨柜 门  对应比对字段  ItmsGrpNam 品类
+              let canContinue = true;
+              let pMap = [];
+              for (var i = 0; i < d.length; i++) {
+                let one = d[i];
+                pMap.push({type:one.type, value:one.sub_orders.length})
+              }
+              // 如果只有单个品类  判断是订制品还是标品
+              if(pMap.length == 1) {
+                  let justone = pMap[0];
+                  // 当既不是厨柜也不是门 且产品数量为1
+                  if(justone.type != "chugui" && justone.type !="men" && justone.value == 1) {
+                    this.showMsg("warn", "单个标品不允许核价");
+                    return false;
+                  }
+              }
+              // 反向条件 只需要判断有大于一个单品的数据  既可以过
+                  // 大于一个单品的条件可能有
+                        // 两个单品各有一条 || 一个单品有两条
+              else {
+                  var successCount = 0; // 计算最终 如果successCount 数值大于1  则通过
+                  for (var i = 0; i < pMap.length; i++) {
+                    let pone = pMap[i];
+                    if(pone.name != "chugui" && pone.name !="men") successCount += pone.value*1;
+                  }
+              }
+              if(successCount <=1) {
+                this.showMsg("warn", "存在单个标品不允许核价");
+                return false;
+              }
 
-
-              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
+              // 核价
+              // this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
+              //     var d = res.json();
+              // },(error) =>{
+              //     console.log(error);
+              // })
+              this.$http.post("http://172.20.249.35:8080/sap-web/order/calculate",JSON.stringify(d)).then((res) => {
                   var d = res.json();
+                  this.priceArray = d.data;
+                  this.priceShow = !this.priceShow;
+                  this.adapterPriceInfo();
               },(error) =>{
                 console.log(error);
               })
           }
 
+      },
+      adapterPriceInfo: function(){
+          for (var i = 0; i < this.priceArray.length; i++) {
+            let one = this.priceArray[i];
+            this.priceInfo.sprice += one.U_SerCharge*1;
+            this.priceInfo.zprice += one.docTotal*1;
+          }
       },
       failHandler: function(d){
 
@@ -116,9 +170,22 @@ export default {
               if(tpArry.length == 0) return false
               this.rebackAction(tpArry);
            }
+      },
+
+      priceClick: function(d){
+          // 购买
+          if(d.action == "confirm") {
+              console.log(this.finalData);
+              this.$http.post("http://172.20.249.35:8080/sap-web/order",JSON.stringify(this.finalData)).then((res) => {
+                  var d = res.json();
+                  console.log(d);
+              },(error) =>{
+                console.log(error);
+              })
+          }
       }
 
   },
-  components: {formcb,dialogtip, orderlist},
+  components: {formcb,dialogtip, orderlist,propertytext},
 }
 </script>

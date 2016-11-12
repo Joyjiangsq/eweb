@@ -93,7 +93,7 @@ export default {
         this.$http.post(this.$Api+"/sales/stock",JSON.stringify({sub_orders:ndata, base_info:newInfo})).then((res) => {
             var d = res.json();
             console.log(d);
-            // this.self = true;
+            this.self = true;
             showTips(this.$store, {type:"success", msg:"新增成功"});
             window.onbeforeunload  = function(){}
             this.$router.go({path:"/prestore"})

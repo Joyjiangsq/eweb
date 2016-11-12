@@ -111,6 +111,7 @@ export default {
         this.tPages = Math.ceil(this.totals/this.size);
     },
     "tPages": function(){
+      console.log(this.tPages);
       this.renderPages();
     }
   },

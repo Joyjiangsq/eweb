@@ -45,7 +45,7 @@ export default {
       return {
         protalCss,
         oneArry:[],
-        datamenu: staticMenus//Utils.getUserInfo().menus || staticMenus
+        datamenu: Utils.getUserInfo().menus || staticMenus
       }
     },
 

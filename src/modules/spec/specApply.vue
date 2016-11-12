@@ -178,6 +178,7 @@
         </div>
         <div :class='css.footer' v-if="!isE && baseInfo.status == 2">
           <span :class="css.bitem"><btn btnname="btn-primary" iconname="icon-check"  @clickaction="finishHandler">确认</btn></span>
+          <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back"  @clickaction="resub">重新提交</btn></span>
         </div>
 
         <dialog :flag="showReDialog" title="请输入回退原因" @dialogclick="rebackDialog">
@@ -237,8 +238,9 @@ export default {
   computed: {
     detail: function(){
       if(this.baseInfo.status == 1) return true
-      if(this.baseInfo.status == 2 ) return true
+      if(this.baseInfo.status == 2 && this.isE) return true
       if(this.baseInfo.status == 3 ) return true
+      if(this.baseInfo.status == 4 && this.isE ) return true
     },
     dname: function(){
       return "定制品申请"
@@ -291,6 +293,7 @@ export default {
         if(d.res == "fail") this.validateRes = false;
     },
     upSuccessHandler: function(d){
+        this.upRes = "上传成功("+d.name+")";
         this.baseInfo.attach_url = d.url;
     },
     // 退回
@@ -303,6 +306,8 @@ export default {
         this.baseInfo.status =  4;
         this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
               let d = res.json();
+              showTips(this.$store, {type:"success", msg:"退回成功"});
+              history.back();
               console.log(d);
         }, (e)=>{
 
@@ -319,6 +324,8 @@ export default {
         this.baseInfo.status =  2;
         this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
               let d = res.json();
+              showTips(this.$store, {type:"success", msg:"交付成功"});
+              history.back();
               console.log(d);
         }, (e)=>{
 
@@ -332,6 +339,8 @@ export default {
               this.baseInfo.status = 1;
               this.$http.post(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
                     console.log(res);
+                    showTips(this.$store, {type:"success", msg:"提交成功"});
+                    history.back();
               }, (e)=>{
 
               })
@@ -345,6 +354,8 @@ export default {
 
       this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
             let d = res.json();
+            showTips(this.$store, {type:"success", msg:"重新提交成功"});
+            history.back();
             console.log(d);
       }, (e)=>{
 
@@ -356,6 +367,8 @@ export default {
 
       this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
             let d = res.json();
+            showTips(this.$store, {type:"success", msg:"确认成功"});
+            history.back();
             console.log(d);
       }, (e)=>{
 
