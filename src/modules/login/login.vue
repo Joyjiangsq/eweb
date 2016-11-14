@@ -49,7 +49,7 @@ export default {
   data: function () {
     return {
       lCss,
-      codeSrc: this.$SpecApi + "check-code",
+      codeSrc: this.$CodeApi + "check-code",
       logo1: logo1,
       ckData:[{label:"记住密码", checked: false}],
       checkedEevents: {

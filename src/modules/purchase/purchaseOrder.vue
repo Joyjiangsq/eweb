@@ -119,18 +119,13 @@ export default {
               }
 
               // 核价
-              // this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
-              //     var d = res.json();
-              // },(error) =>{
-              //     console.log(error);
-              // })
-              this.$http.post("http://172.20.249.35:8080/sap-web/order/calculate",JSON.stringify(d)).then((res) => {
+              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
                   var d = res.json();
                   this.priceArray = d.data;
                   this.priceShow = !this.priceShow;
                   this.adapterPriceInfo();
               },(error) =>{
-                console.log(error);
+                  console.log(error);
               })
           }
 
