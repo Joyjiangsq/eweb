@@ -42,7 +42,6 @@ export default {
   components: {dialog},
   watch:{
     "show": function(){
-      console.log(11);
         this.contr = !this.contr
       }
   }

@@ -104,9 +104,9 @@ let tbMixin = {
                   this.threeLevelData = one.next_firms.concat(this.threeLevelData);
                 }
                 if(this.dtArray.indexOf(this.name) != -1) {
-                      this.sDatas.unshift({type:"combobox", keyname:"xx", labelname:"name", keyid:"code", datas: this.threeLevelData, labelcaption:"三级分类："});
+                      this.sDatas.unshift({type:"combobox", keyname:"Code", labelname:"name", keyid:"code", datas: this.threeLevelData, labelcaption:"三级分类："});
                 }
-                this.sDatas.unshift({type:"combobox", keyname:"xxx", labelname:"name", datas: this.twoLevelData, keyid:"code", value:"", labelcaption:"二级分类："});
+                this.sDatas.unshift({type:"combobox", keyname:"FirmCode", labelname:"name", datas: this.twoLevelData, keyid:"code", value:"", labelcaption:"二级分类："});
           }, (e)=>{
 
           });
@@ -127,7 +127,6 @@ let tbMixin = {
     },
     watch: {
       "toload": function(){
-
           this.loadlist();
           if(this.twoLevelData.length == 0) {
               this.getLevelData();
