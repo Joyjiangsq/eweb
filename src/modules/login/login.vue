@@ -87,7 +87,7 @@ export default {
   attached: function () {},
   methods: {
     changeImg: function(){
-       this.$set("codeSrc", this.$codeSrc + "check-code?v="+Math.random());
+       this.$set("codeSrc", this.$CodeApi + "check-code?v="+Math.random());
     },
     clickAction: function(){
         if(!this.userName || this.userName == "") {

@@ -110,7 +110,7 @@ export default {
                   var successCount = 0; // 计算最终 如果successCount 数值大于1  则通过
                   for (var i = 0; i < pMap.length; i++) {
                     let pone = pMap[i];
-                    if(pone.name != "chugui" && pone.name !="men") successCount += pone.value*1;
+                    if(pone.type != "chugui" && pone.type !="men") successCount += pone.value*1;
                   }
               }
               if(successCount <=1) {
@@ -121,7 +121,7 @@ export default {
               // 核价
               this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
                   var d = res.json();
-                  this.priceArray = d.data;
+                  this.priceArray = d.data.datas;
                   this.priceShow = !this.priceShow;
                   this.adapterPriceInfo();
               },(error) =>{
@@ -131,6 +131,7 @@ export default {
 
       },
       adapterPriceInfo: function(){
+          this.priceInfo = {sprice:0, zprice:0}
           for (var i = 0; i < this.priceArray.length; i++) {
             let one = this.priceArray[i];
             this.priceInfo.sprice += one.U_SerCharge*1;
@@ -171,9 +172,10 @@ export default {
           // 购买
           if(d.action == "confirm") {
               console.log(this.finalData);
-              this.$http.post("http://172.20.249.35:8080/sap-web/order",JSON.stringify(this.finalData)).then((res) => {
+              this.$http.post(this.$Api+"sales/sub-orders",JSON.stringify(this.finalData)).then((res) => {
                   var d = res.json();
                   console.log(d);
+                  alert("ok");
               },(error) =>{
                 console.log(error);
               })
