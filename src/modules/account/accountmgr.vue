@@ -75,8 +75,8 @@
                   <propertytext key="账户余额" :value="accountBaseInfo.Balance"></propertytext>
                   <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount"></propertytext>
                   <propertytext key="可回款金额" :value="accountBaseInfo.AvailableBalance"></propertytext>
-                  <formtext labelname="回款金额：" :value.sync="backCashParams.DocTotal" placeholder="请输入回款金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                  <formtext labelname="备注：" :value.sync="backCashParams.Comments" placeholder="备注" :vertical="true" formname='backCash'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="回款金额：" :value.sync="backCashParams.U_TraAmount" placeholder="请输入回款金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="备注：" :value.sync="backCashParams.Memo" placeholder="备注" :vertical="true" formname='backCash'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>
         </dialog>
 
@@ -123,7 +123,7 @@ export default {
                   {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"}],
       // 显示回款对话框
       showBackCashDialog: true,
-      backCashParams: {validate: true, CardCode: Utils.getUserInfo().CardCode,U_Type:"AL"},  // 回款参数
+      backCashParams: {validate: true},  // 回款参数
       btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
@@ -170,12 +170,12 @@ export default {
          this.backCashParams.validate = true;
          setTimeout(()=>{
             if(this.backCashParams.validate) {
-                  if(this.backCashParams.DocTotal> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可回款金额");
-                  if(this.backCashParams.DocTotal*1 <= 0) this.showMsg("warn", "请填写正确的回款金额");
+                  if(this.backCashParams.U_TraAmount> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可回款金额");
+                  if(this.backCashParams.U_TraAmount*1 < 6) this.showMsg("warn", "体现金额不得小于6元");
                   else {
                     delete this.backCashParams.validate;
                     let nobj = Utils.cloneObj(this.backCashParams);
-                    nobj.DocTotal = (1*nobj.DocTotal).toFixed(2)
+                    nobj.U_TraAmount = (1*nobj.U_TraAmount).toFixed(2)
                     this.$http.post(this.$Api+ "station-account",nobj).then((res) => {
                           let r = res.json();
                           this.$set("showBackCashDialog", !this.showBackCashDialog);

@@ -86,6 +86,7 @@ export default {
       statusData:orderStatus,
       getchecks: false,
       priceInfo:{},
+      priceShow: false,
       priceArray:[],
       show: false,
       backValue:"",
@@ -158,11 +159,11 @@ export default {
       },
       adapterPriceInfo: function(){
           this.priceInfo = {sprice:0, zprice:0}
-        for (var i = 0; i < this.priceArray.length; i++) {
-          let one = this.priceArray[i];
-          this.priceInfo.sprice += one.U_SerCharge*1;
-          this.priceInfo.zprice += one.docTotal*1;
-        }
+          for (var i = 0; i < this.priceArray.length; i++) {
+            let one = this.priceArray[i];
+            this.priceInfo.sprice += one.U_SerCharge*1;
+            this.priceInfo.zprice += one.docTotal*1;
+          }
       },
       getCheckList: function(list) {
           if(list.length == 0) {
@@ -177,7 +178,7 @@ export default {
               let canContinue = true;
               let pMap = [];
               for (var i = 0; i < list.length; i++) {
-                let one = d[i];
+                let one = list[i];
                 pMap.push({type:one.type, value:one.sub_orders.length})
               }
               // 如果只有单个品类  判断是订制品还是标品
@@ -205,7 +206,7 @@ export default {
               }
 
               // 核价
-              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
+              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(list)).then((res) => {
                   var d = res.json();
                   this.priceArray = d.data.datas;
                   this.priceShow = !this.priceShow;

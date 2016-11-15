@@ -22,6 +22,7 @@ export default {
         }
       },
     },
+
     curaction:{
       default: "add"
     },
@@ -110,8 +111,8 @@ export default {
         for (var i = 0; i < this.vlist.length; i++) {
           let one = this.vlist[i];
             for(var key in one) {
+              if(!one[key]) continue;
               if(typeof(one[key]) == "object") {
-                console.log(key);
                   if(one[key].tb_disabled) continue;
                   let res = one[key].validateFun(one, i);
                   if(!res) {this.validateRec = false;}
@@ -120,6 +121,7 @@ export default {
         }
         // 收件信息验证
         if(this.vlist.length != 0)  this.validate = !this.validate;
+        // else this.validateInfo = false;
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
           else {

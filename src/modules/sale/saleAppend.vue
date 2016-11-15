@@ -92,9 +92,8 @@ export default {
           showTips(this.$store, {type:"warn", msg:"没有选择任何项目"});
           return false;
         }
-        this.$http.post(this.$Api+"sales/append",JSON.stringify({sub_orders:d, U_FZOrder:this.orderid})).then((res) => {
+        this.$http.post(this.$Api+"sales/append",JSON.stringify({sub_orders:d, U_FZOrder:this.orderid, base_info: this.baseInfo})).then((res) => {
             var d = res.json();
-            console.log(d);
             this.self = true;
             showTips(this.$store, {type:"success", msg:"补单成功"});
             window.onbeforeunload  = function(){}
