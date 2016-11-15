@@ -78,6 +78,7 @@ export default {
         for (var i = 0; i < this.vlist.length; i++) {
           let one = this.vlist[i];
             for(var key in one) {
+              if(!one[key]) continue;
               if(typeof(one[key]) == "object") {
                   if(!one[key].validateFun) continue;
                   let res = one[key].validateFun(one, i);
