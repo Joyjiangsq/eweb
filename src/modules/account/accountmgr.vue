@@ -13,11 +13,11 @@
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>账户余额 : </span>
-                         <span>{{accountBaseInfo.Balance}}元</span>
+                         <span>{{accountBaseInfo.Balance | decimal}}元</span>
                       </div>
                       <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>冻结金额 : </span>
-                         <span>{{accountBaseInfo.FrozenMount}}元</span>
+                         <span>{{accountBaseInfo.FrozenMount | decimal}}元</span>
                       </div>
                       <!-- <div :class="acCss.itemBox">
                             <span :class='acCss.cash'>{{accountBaseInfo.Balance}}</span>
@@ -29,11 +29,11 @@
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>授信余额 : </span>
-                         <span>{{accountBaseInfo.CreditLineBalance}}元</span>
+                         <span>{{accountBaseInfo.CreditLineBalance | decimal}}元</span>
                       </div>
                       <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>授信额度 : </span>
-                         <span>{{accountBaseInfo.CreditLine}}元</span>
+                         <span>{{accountBaseInfo.CreditLine | decimal}}元</span>
                       </div>
                 </span>
 
@@ -169,13 +169,14 @@ export default {
          this.validate = !this.validate;
          this.backCashParams.validate = true;
          setTimeout(()=>{
-            console.log(this.backCashParams.validate);
             if(this.backCashParams.validate) {
                   if(this.backCashParams.DocTotal> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可回款金额");
                   if(this.backCashParams.DocTotal*1 <= 0) this.showMsg("warn", "请填写正确的回款金额");
                   else {
                     delete this.backCashParams.validate;
-                    this.$http.post(this.$Api+ "station-account",this.backCashParams).then((res) => {
+                    let nobj = Utils.cloneObj(this.backCashParams);
+                    nobj.DocTotal = (1*nobj.DocTotal).toFixed(2)
+                    this.$http.post(this.$Api+ "station-account",nobj).then((res) => {
                           let r = res.json();
                           this.$set("showBackCashDialog", !this.showBackCashDialog);
                           this.showMsg("success", "回款申请成功");

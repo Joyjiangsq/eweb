@@ -24,6 +24,12 @@ export default class filter {
              else if(val*1 < 0) return oldVal
              else return Math.ceil(val)
          }
-    })
+    }),
+
+    Vue.filter("decimal", (val, N) => {
+        val = val * 1;
+        return val.toFixed(N || 2);
+      }
+    )
   }
 }
