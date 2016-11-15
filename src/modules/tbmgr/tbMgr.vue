@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="css.tBox">
-                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="cost-account"" :params="searchParams" ></tb>
+                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="cost-account" :params="searchParams" ></tb>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -55,10 +55,11 @@ export default {
       css,
       moduleName:"报表管理",
       headercaption:tableHeaderDatas, // 表格头部信息设置
-      btnsData:[{name:"导出", icon:"icon-share", action:"apply"}],
+      btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
-            if(d.action == "apply") {
+            if(d.action == "export") {
+                window.open(this.$Api + "cost-account/download?"+$.param(this.searchParams));
             }
         }
       }

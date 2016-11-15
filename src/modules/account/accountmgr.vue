@@ -13,23 +13,27 @@
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>账户余额 : </span>
-                        <span> 冻结金额 : <span :class='acCss.cashText'>{{accountBaseInfo.FrozenMount}}</span>元 </span>
+                         <span>{{accountBaseInfo.Balance}}元</span>
                       </div>
-                      <div :class="acCss.itemBox">
+                      <div :class="acCss.itemTitle">
+                         <span :class='acCss.mintitle'>冻结金额 : </span>
+                         <span>{{accountBaseInfo.FrozenMount}}元</span>
+                      </div>
+                      <!-- <div :class="acCss.itemBox">
                             <span :class='acCss.cash'>{{accountBaseInfo.Balance}}</span>
                             <span :class='acCss.unit'>元</span>
-                      </div>
+                      </div> -->
                       <span :class="acCss.backCash"><btn  @clickaction="backCashHandler">回款</btn></span>
                 </span>
 
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
-                        <span :class='acCss.mintitle'>授信余额 : </span>
-                        <span> 授信额度 : <span :class='acCss.cashText'>{{accountBaseInfo.CreditLine}}</span>元 </span>
+                         <span :class='acCss.mintitle'>授信余额 : </span>
+                         <span>{{accountBaseInfo.CreditLineBalance}}元</span>
                       </div>
-                      <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>{{accountBaseInfo.CreditLineBalance}}</span>
-                            <span :class='acCss.unit'>元</span>
+                      <div :class="acCss.itemTitle">
+                         <span :class='acCss.mintitle'>授信额度 : </span>
+                         <span>{{accountBaseInfo.CreditLine}}元</span>
                       </div>
                 </span>
 
