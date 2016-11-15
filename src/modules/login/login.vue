@@ -10,15 +10,15 @@
                             </div>
                             <div :class="lCss.loginFormRow">
                                   <icon iconname="icon-user" :classname="lCss.iconinfo"></icon>
-                                  <input type="text" placeholder="请输入用户名" name="name" :value="userName" v-model="userName">
+                                  <input type="text" placeholder="请输入用户名" name="name" :value="userName" v-model="userName"  @keyup.enter="clickAction">
                             </div>
                             <div :class="lCss.loginFormRow">
                                   <icon iconname="icon-key"  :classname="lCss.iconinfo"></icon>
-                                  <input type="password" placeholder="请输入密码" name="name" :value="passwd" v-model="passwd">
+                                  <input type="password" placeholder="请输入密码" name="name" :value="passwd" v-model="passwd"  @keyup.enter="clickAction">
                             </div>
                             <div :class="lCss.loginFormRow">
                                   <icon iconname="icon-validate"  :classname="lCss.iconinfo"></icon>
-                                  <input type="text" name="code" :class="lCss.codeInput" :value="code" v-model="code">
+                                  <input type="text" name="code" :class="lCss.codeInput" :value="code" v-model="code" @keyup.enter="clickAction">
                                   <img :src="codeSrc" alt="点击更换验证验证码" title="点击更换验证验证码" @click="changeImg" :class='lCss.codeimg' />
                             </div>
                             <div :class="lCss.errorTip" v-show="error">
