@@ -26,9 +26,10 @@ export default class filter {
          }
     }),
 
-    Vue.filter("decimal", (val, N) => {
-        val = val * 1;
-        return val.toFixed(N || 2);
+    Vue.filter("mondec", (val, N, U) => {
+        U = U || "";
+        val = (val * 1)/100;
+        return val.toFixed(N || 2) + U;
       }
     )
   }
