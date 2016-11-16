@@ -134,6 +134,7 @@ export default {
 
     eidtEmp: function(){
        this.addParams._id = this.curItem._id;
+       this.addParams.station = this.curItem.station;
        this.$http.put(this.$Api+"employees", this.addParams).then((res)=>{
             this.$set("flagdep", !this.flagdep);
             this.loadlist()

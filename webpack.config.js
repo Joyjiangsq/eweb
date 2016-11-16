@@ -9,14 +9,14 @@ var webconfig = {
   entry: {
       app: './src/start.js',
       vendor:["jquery"],  // 第三方只引入jq
-      common:[
-          path.resolve(__dirname, './src/component/combobox/combocascade.vue'), // 城市级联
-          path.resolve(__dirname, './src/component/sprite/button.vue'),         // 按钮
-          path.resolve(__dirname, './src/component/sprite/buttonbar.vue'),      // 按钮组
-          path.resolve(__dirname, './src/component/sprite/icon.vue'),           // 图标
-          path.resolve(__dirname, './src/component/sprite/iconbar.vue'),        // 图标组
-          path.resolve(__dirname, './src/component/search/search.vue')          // 查询
-      ]
+      // common:[
+      //     path.resolve(__dirname, './src/component/combobox/combocascade.vue'), // 城市级联
+      //     path.resolve(__dirname, './src/component/sprite/button.vue'),         // 按钮
+      //     path.resolve(__dirname, './src/component/sprite/buttonbar.vue'),      // 按钮组
+      //     path.resolve(__dirname, './src/component/sprite/icon.vue'),           // 图标
+      //     path.resolve(__dirname, './src/component/sprite/iconbar.vue'),        // 图标组
+      //     path.resolve(__dirname, './src/component/search/search.vue')          // 查询
+      // ]
   },
 
   output: {
@@ -109,7 +109,7 @@ var webconfig = {
     }),
 
     new webpack.optimize.CommonsChunkPlugin({              // 提取依赖的jQuery通用插件
-        name : ["vendor","common"],
+        name : ["vendor"],
         minChunks : Infinity
     }),
 	  //压缩代码

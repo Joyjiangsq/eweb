@@ -4,7 +4,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import {
     routerStart
-} from 'config/router';
+} from 'config/router2';
 import {
     config
 } from 'config/config';

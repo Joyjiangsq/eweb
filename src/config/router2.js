@@ -4,41 +4,72 @@ import  indexView from 'modules/index/index.vue';
 import accountView from 'modules/account/accountmgr.vue';
 import  empView from 'modules/employee/employeemgr.vue';
 import userView from 'modules/user/userMgr.vue';
-
 import customView from 'modules/custom/customMgr.vue';
+import saleAppend from "modules/sale/saleAppend.vue";
+
 import saleMgr from 'modules/sale/saleMgr.vue';
 import addSale from 'modules/sale/saleAdd.vue';
 import saleView from 'modules/sale/sale.vue';
 import saleDetail from "modules/sale/saleDetail.vue";
+import subSaleDetail from "modules/sale/subSaleDetail.vue";
 
+import purchase from 'modules/purchase/purchase.vue';
 import purchaseOrder from 'modules/purchase/purchaseOrder.vue';
-import spViewA from 'modules/spec/specApply.vue';
-import spViewb from 'modules/spec/specMgr.vue'
-import loginView from 'modules/login/login.vue'
+import purchaseDetail from 'modules/purchase/purchaseDetail.vue';
+
+import prestore from 'modules/prestore/preStore.vue';
+import prestoreView from 'modules/prestore/preStoreMgr.vue';
+import prestoreDetail  from 'modules/prestore/preStoreDetail.vue';
+import prestoreAdd from 'modules/prestore/preStoreAdd.vue';
+
+import preValidate from 'modules/prestore/preValidate.vue';
+import preValidateView from 'modules/prestore/prestoreValidate.vue';
+import preValidateDetail from 'modules/prestore/prestoreValidateDetail.vue';
+
+import spec from 'modules/spec/specBase.vue';
+import specView from 'modules/spec/specMgr.vue';
+import specApply from 'modules/spec/specApply.vue';
+
+import tbView from 'modules/tbmgr/tbMgr.vue';
 import urView from 'modules/urgent/urgentMgr.vue'
+
+import loginView from 'modules/login/login.vue'
 import fView from 'portalview/404.vue';
+import fbView from 'portal/forbidden.vue';
 export function routerStart(router) {
   router.map({
       '/': {
           component: index,
           // 在/foo下设置一个子路由
           subRoutes: {
+                // 首页
                 '/index': {
+                  name:"index",
                   component: indexView
                 },
+                // 分站账户管理
                 '/accountmgr': {
+                  name:"accountmgr",
                   component: accountView
                 },
+                // 分站员工管理
                 '/employee': {
+                  name:"employee",
                   component: empView
                 },
+                // 客户管理
                 '/custom': {
+                  name:"custom",
                   component: customView
                 },
+                // 用户管理
                 "/user":{
+                  name:"user",
                   component:userView
                 },
+                // 销售下单管理
                 '/sale': {
+                  name:"sale",
                   component: saleView,
                   subRoutes:{
                     "/":{
@@ -49,21 +80,86 @@ export function routerStart(router) {
                     },
                     "detail":{
                       component: saleDetail
+                    },
+                    "subdetail":{
+                      component: subSaleDetail
+                    },
+                    "append":{
+                      component: saleAppend
                     }
                   }
                 },
+                // 采购订单管理
                 '/purchase': {
-                  component: purchaseOrder
+                  name:"purchase",
+                  component: purchase,
+                  subRoutes: {
+                    "/":{
+                      component: purchaseOrder
+                    },
+                    "purchasedetail":{
+                      component: purchaseDetail
+                    }
+                  }
                 },
-                '/specapplydesignmgr': {
-                  component: spViewA
+                // 备货申请
+                '/prestore': {
+                  name:"prestore",
+                  component: prestore,
+                  subRoutes: {
+                    "/":{
+                      component: prestoreView
+                    },
+                    "detail":{
+                      component: prestoreDetail
+                    },
+                    "add":{
+                      component: prestoreAdd
+                    }
+                  }
                 },
-                '/specdesignmgr': {
-                  component: spViewb
+                // 备货审核
+                '/prestorevalidate': {
+                  name:"prestorevalidate",
+                  component: preValidate,
+                  subRoutes: {
+                    "/":{
+                      component: preValidateView
+                    },
+                    "detail":{
+                      component: preValidateDetail
+                    }
+                  }
                 },
-                'urgent':{
+
+                // 订制品设计申请管理
+                '/specmgr': {
+                  name:"specmgr",
+                  component: spec,
+                  subRoutes: {
+                    "/":{
+                      component: specView
+                    },
+                    "apply":{
+                      component: specApply
+                    }
+                  }
+                },
+
+                '/urgent': {
+                  name:"urgent",
                   component: urView
-                }
+                },
+
+                '/tbmgr': {
+                  name:"tbmgr",
+                  component: tbView
+                },
+
+                '/forbidden': {
+                  name:"tbmgr",
+                  component: fbView
+                },
           }
       },
 
