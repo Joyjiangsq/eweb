@@ -163,9 +163,9 @@ export function routerStart(router) {
           "/": "/index"
       })
 
-      router.beforeEach(function ({ to, next }) {next()
-        //  if(Utils.getUserInfo() != "" || !!Utils.getUserInfo()) next()
-        //  else if(to.path == "/login") next()
-        //  else router.go({path:"/login"})
+      router.beforeEach(function ({ to, next }) {
+         if(Utils.getUserInfo() != "" || !!Utils.getUserInfo()) next()
+         else if(to.path == "/login") next()
+         else router.go({path:"/login"})
       })
 }
