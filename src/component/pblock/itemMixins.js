@@ -4,6 +4,8 @@ import css from "./type.css";
 import {showTips} from "actions/index";
 import adapter from "./tbAdapter/purchaseAdapter";
 import mdialog from "component/blockcommon/mealDialog";
+import formtext from "component/form/formText";
+import formtextadd from "component/form/formTextAdd";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -103,7 +105,7 @@ export default {
       this.headercaption.splice(0,1);
     }
   },
-  components: {tb, tbbase},
+  components: {tb, tbbase,formtextadd,formtext},
   watch:{
     "subvalidate": function() {
         // 执行验证

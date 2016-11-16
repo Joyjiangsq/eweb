@@ -27,7 +27,6 @@
 // 瓷砖分类
 
 import cizhuanlist from "./tblist/cizhuanList";
-import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import adapter from "./tbAdapter/cizhuanAdapter";
 import baseMixins from "./itemMixins";
@@ -62,6 +61,6 @@ export default {
   ready: function(){
 
   },
-  components: { formtext, cascadeform, cizhuanlist},
+  components: { cascadeform, cizhuanlist},
 }
 </script>

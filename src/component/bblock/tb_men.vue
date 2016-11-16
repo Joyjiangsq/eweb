@@ -8,7 +8,8 @@
               <!-- <tb :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :datas="vlist" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb> -->
               <formtext labelname="收货人："  :read="detail" :value.sync="recdata.U_Consignee" placeholder=""  formname='U_Consignee' :validatestart="validate" @onvalidate="validateHandler"></formtext>
               <formtext labelname="收货人电话：" :read="detail" :phone="true"  :length="11" :number="true" :value.sync="recdata.U_ConsigneePhone" placeholder=""  formname='U_ConsigneePhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-              <cascadeform  labelname="收货地址：" :must="false"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
+              <formtextadd  labelname="收货地址：" :must="true"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  ></formtextadd>
+              <!-- <cascadeform  labelname="收货地址：" :must="false"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform> -->
               <formtext labelname="备注：" :read="detail" :must="false" :value.sync="recdata.Freetxt"  placeholder=""  formname='Freetxt' :validatestart="validate" @onvalidate="validateHandler"></formtext>
           </div>
           <div v-else>
@@ -30,9 +31,6 @@
 import Vue from "vue";
 import tb from "component/grid/menTable";
 import css from "./type.css";
-import dialog from "component/dialog/dialog";
-import formtext from "component/form/formText";
-import cascadeform from "component/form/formCascade";
 import mentb from "./tblist/menList.vue";
 import adapter from "./tbAdapter/menAdapter";
 import baseMixins from "./itemMixins";
@@ -138,7 +136,7 @@ export default {
       return adapter(d);
     }
   },
-  components: {tb, formtext, cascadeform, dialog,mentb},
+  components: {tb, mentb},
 }
 // 木门表格 内的自定义合页组建
 import combobox from "component/combobox/combobox";

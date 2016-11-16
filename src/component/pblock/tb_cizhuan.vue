@@ -15,7 +15,6 @@
 <script>
 // 瓷砖分类
 
-import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import baseMixins from "./itemMixins";
 // import prolist from "./prolist.vue";
@@ -44,6 +43,6 @@ export default {
   ready: function(){
 
   },
-  components: { formtext, cascadeform},
+  components: {cascadeform},
 }
 </script>

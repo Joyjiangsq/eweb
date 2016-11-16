@@ -6,7 +6,8 @@
               <!-- <tb :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :datas="testdata" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb> -->
               <formtext labelname="收货人："  :read="detail" :value.sync="recdata.U_Consignee" placeholder=""  formname='U_Consignee' :validatestart="validate" @onvalidate="validateHandler"></formtext>
               <formtext labelname="收货人电话：" :read="detail"  :phone="true"  :length="11" :number="true" :value.sync="recdata.U_ConsigneePhone" placeholder=""  formname='U_ConsigneePhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-              <cascadeform  labelname="收货地址："  :must="false"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
+              <formtextadd  labelname="收货地址：" :must="true"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  ></formtextadd>
+              <!-- <cascadeform  labelname="收货地址："  :must="false"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform> -->
               <formtext labelname="备注：" :read="detail"  :must="false" :value.sync="recdata.Comments"  placeholder=""  formname='Comments' :validatestart="validate" @onvalidate="validateHandler"></formtext>
           </div>
           <div v-else>
@@ -27,9 +28,6 @@
 import tb from "component/grid/tableSpec";
 import css from "./type.css";
 import dibanlist from "./tblist/dibanList";
-import dialog from "component/dialog/dialog";
-import formtext from "component/form/formText";
-import cascadeform from "component/form/formCascade";
 import adapter from "./tbAdapter/dibanAdapter";
 import baseMixins from "./itemMixins";
 export default {
@@ -51,6 +49,6 @@ export default {
       return adapter(d);
     }
   },
-  components: {tb, formtext, cascadeform, dialog, dibanlist},
+  components: {tb, dibanlist},
 }
 </script>

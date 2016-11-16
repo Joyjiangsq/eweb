@@ -7,7 +7,8 @@
             </div>
             <formtext labelname="收货人："  :read="true" :value.sync="recdata.U_Consignee" placeholder=""  formname='U_Consignee' ></formtext>
             <formtext labelname="收货人电话：" :read="true"  :phone="true"  :length="11" :number="true" :value.sync="recdata.U_ConsigneePhone" placeholder=""  formname='U_ConsigneePhone' ></formtext>
-            <cascadeform  labelname="收货地址：" :must="true"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" ></cascadeform>
+            <formtextadd  labelname="收货地址：" :must="true"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  ></formtextadd>
+            <!-- <cascadeform  labelname="收货地址：" :must="true"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" ></cascadeform> -->
             <formtext labelname="备注：" :read="true" :must="false" :value.sync="recdata.Comments"  placeholder=""  formname='Comments' ></formtext>
           </div>
     </div>
@@ -15,8 +16,6 @@
 <script>
 // 瓷砖分类
 import css from "./type.css";
-import formtext from "component/form/formText";
-import cascadeform from "component/form/formCascade";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
@@ -33,6 +32,6 @@ export default {
   methods: {
 
   },
-  components: {formtext, cascadeform},
+  components: {},
 }
 </script>

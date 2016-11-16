@@ -2,6 +2,8 @@ import tb from "component/grid/tableSpec";
 import tbbase from "component/grid/tableListBase";
 import css from "./type.css";
 import dialog from "component/dialog/dialog";
+import formtext from "component/form/formText";
+import formtextadd from "component/form/formTextAdd";
 import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
 import mdialog from "component/blockcommon/mealDialog";
@@ -158,7 +160,7 @@ export default {
       this.headercaption.splice(0,1);
     }
   },
-  components: {tb, dialog, tbbase, itemtpl},
+  components: {tb, dialog, tbbase, itemtpl, formtextadd, formtext},
   watch:{
     "subvalidate": function() {
         // 执行验证
