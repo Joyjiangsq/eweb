@@ -28,7 +28,9 @@
 
 /**silderBox**/
 
-.silderBox {}
+.silderBox {
+      overflow-y: auto;
+}
 .silderBox .menuItem {}
 .silderBox .menuItem .menuTitle {
     color: #a0b0c1;

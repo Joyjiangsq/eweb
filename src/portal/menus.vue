@@ -60,6 +60,10 @@ export default {
               break;
             }
       }
+      var self = this;
+      this.$nextTick(function () {
+        $("." + self.protalCss.silderBox).css("height",  window.innerHeight- 90);
+      })
     },
 
     computed: {

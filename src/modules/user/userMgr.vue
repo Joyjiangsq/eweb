@@ -167,6 +167,7 @@ export default {
         this.changeOne({CardCode: this.curopData.CardCode, ValidFor:type})
     },
     changeOne: function(params, cb){
+      params.station = this.curopData.station;
       this.$http.put(this.$Api+"users",JSON.stringify(params)).then((res) => {
           var d = res.json();
           if(cb) cb()
@@ -184,7 +185,7 @@ export default {
     // 重置密码
     confirmReset: function(d){
         console.log(this.curopData);
-        this.$http.put(this.$Api+"/users/reset-passwd",{CardCode: this.curopData.CardCode}).then((res) => {
+        this.$http.put(this.$Api+"/users/reset-passwd",{CardCode: this.curopData.CardCode, station: this.curopData.station}).then((res) => {
             this.showMsg("success", "重置成功");
             this.$set("resetDialog", !this.resetDialog);
         },(error) =>{
