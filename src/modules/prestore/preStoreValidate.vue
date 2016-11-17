@@ -236,8 +236,8 @@ export default {
               console.log(this.checkedList);
               this.$http.post(this.$Api+"stockpiles/buy",JSON.stringify(this.checkedList)).then((res) => {
                   var d = res.json();
-                  console.log(d);
-                  alert("ok");
+                  this.showMsg("success", "购买成功");
+                  this.loadlist();
               },(error) =>{
                 console.log(error);
               })

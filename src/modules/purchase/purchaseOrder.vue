@@ -184,8 +184,9 @@ export default {
               console.log(this.finalData);
               this.$http.post(this.$Api+"purchases",JSON.stringify(this.finalData)).then((res) => {
                   var d = res.json();
-                  console.log(d);
-                  alert("ok");
+                  this.priceShow = !this.priceShow;
+                  this.showMsg("success", "购买成功");
+                  this.loadlist();
               },(error) =>{
                 console.log(error);
               })
