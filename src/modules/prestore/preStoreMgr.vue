@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="css.tBox">
-                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="stockpiles" :params="searchParams" ></tb>
+                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="stockpiles" :params="searchParams" :events="tableEvents"></tb>
               </div>
               <pg :totals="totals" :curpage="searchParams.page" ></pg>
         </pagepanel>
@@ -48,7 +48,8 @@ let tableHeaderDatas = [{name:"备货订单号", labelValue:"U_PurchaseNum", typ
                         {name:"收货人", labelValue:"U_Consignee",type:"data",adapterFun: function(d){ return d.rec_info.U_Consignee}},
                         {name:"收货人电话", labelValue:"U_ConsigneePhone",type:"data",adapterFun: function(d){return d.rec_info.U_ConsigneePhone}},
                         {name:"创建人", labelValue:"station",type:"data"},
-                        {name:"创建时间", labelValue:"U_Date", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.U_Date), "yyyy-mm-dd");}}]
+                        {name:"创建时间", labelValue:"U_Date", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.U_Date), "yyyy-mm-dd");}},
+                        {type:"operator", name:"操作"}]
 export default {
   mixins: [pageBase],
   data: function () {
@@ -64,7 +65,18 @@ export default {
                 this.$router.go({path:"prestore/add"});
             }
         }
-      }
+      },
+      tableEvents:{
+        operatorRender: function(d){
+          if(!d.U_PageLink) return []
+          return [{name:"查看物流",action:"look",icon:"icon-edit", data: d}]
+        },
+        operatorHandler: function(d){
+          if(d.action == "look") {
+            window.open(d.U_PageLink);
+          }
+        }
+      },
     }
   },
   computed: {

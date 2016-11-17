@@ -31,7 +31,10 @@
                                 <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </div>
                           <span v-if="sone.type == 'operator'" >
-                                <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
+                                <!-- <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar> -->
+
+                                <iconbar v-if="sone.icon"  :buttons="btnData(done,order)"  @btnclick="btnEventHandler"></iconbar>
+                                <btnbar :buttons="btnData(done,order)"  @btnclick="btnEventHandler" v-else></btnbar>
                           </span>
 
                     </td>
@@ -52,6 +55,7 @@ import Utils from "common/Utils";
 import tableCss from "./tablespec.css";
 import icon from "component/sprite/icon";
 import iconbar from "component/sprite/iconbar";
+import btnbar from "component/sprite/buttonbar";
 import tableBase from "common/mixinTable.js";
 export default {
   mixins:[tableBase],
@@ -116,6 +120,6 @@ export default {
     },
   },
   attached: function () {},
-  components: {iconbar, icon},
+  components: {iconbar, icon, btnbar},
 }
 </script>

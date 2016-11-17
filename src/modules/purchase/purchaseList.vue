@@ -13,6 +13,7 @@
                               <span :class="css.srow">采购订单状态： <span v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '店长驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
                               <span :class="css.srow">供应商： {{one.sub_orders[0].U_CardName || '-'}}</span>
                               <span :class="css.srow">创建时间：{{one.U_Date | dateformate}}</span>
+                              <span :class="css.inrow" v-if="one.U_PageLink"><a href="one.U_PageLink" target="_blank" >查看物流</a></span>
                           </div>
                           <div :class="css.tbbox" v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '待采购'" v-show="one.show">
                                 <tb :datas="one['sub_orders']" :srcdata="one" :recdata="one.rec_info" :ignorevalidate="one.ignorevalidate" :subvalidate="subvalidate" @fail="failHandler" @success="successHandler"></tb>

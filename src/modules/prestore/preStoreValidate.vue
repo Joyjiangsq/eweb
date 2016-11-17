@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                    <tbsp :headercaption="headercaption" curaction="store" :totals.sync="totals" :getchecks="getchecks" @checklist="getCheckList" :load="load" url="stockpiles" :params="searchParams" ></tbsp>
+                    <tbsp :headercaption="headercaption" curaction="store" :totals.sync="totals" :getchecks="getchecks" @checklist="getCheckList" :load="load" url="stockpiles" :params="searchParams" :events="tableEvents"></tbsp>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -103,7 +103,8 @@ export default {
                               {name:"收货人", labelValue:"U_Consignee",type:"data",adapterFun: function(d){ return d.rec_info.U_Consignee}},
                               {name:"收货人电话", labelValue:"U_ConsigneePhone",type:"data",adapterFun: function(d){return d.rec_info.U_ConsigneePhone}},
                               {name:"创建人", labelValue:"station",type:"data"},
-                              {name:"创建时间", labelValue:"U_Date", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.U_Date), "yyyy-mm-dd");}}],
+                              {name:"创建时间", labelValue:"U_Date", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.U_Date), "yyyy-mm-dd");}},
+                            {type:"operator", name:"操作"}],
       btnsData:[{name:"导出", icon:"icon-share", action:"export"},{name:"核价并购买", icon:"icon-check", action:"buy"},{name:"驳回", icon:"icon-back", action:"back"}],
       btnEvents:{
         btnClick: function(d){
@@ -115,6 +116,17 @@ export default {
                   this.curaction = "back";
                   this.getchecks = !this.getchecks;
             }
+        }
+      },
+      tableEvents:{
+        operatorRender: function(d){
+          // if(!d.U_PageLink) return []
+          return [{name:"查看物流",action:"look",icon:"icon-edit", data: d}]
+        },
+        operatorHandler: function(d){
+          if(d.action == "look") {
+            window.open(d.U_PageLink);
+          }
         }
       },
       footerClick: {

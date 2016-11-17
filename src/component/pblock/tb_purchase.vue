@@ -97,7 +97,7 @@ export default {
             GroupName:this.srcdata.GroupName,
             base_info: this.srcdata.base_info || {},
             U_DeWay: this.srcdata.U_DeWay || "PS", //默认配送
-            U_FZOrder:"", //主订单号
+            U_FZOrder:this.srcdata.U_FZOrder, //主订单号
         }
         if(this.srcdata.U_Enclosure) params["U_Enclosure"] = this.srcdata.U_Enclosure;
         if(!this.validateRec) this.$dispatch("fail",this.srcdata);
