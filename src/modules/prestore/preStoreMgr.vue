@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="css.tBox">
-                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="sales/stock" :params="searchParams" ></tb>
+                <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="stockpiles" :params="searchParams" ></tb>
               </div>
               <pg :totals="totals" :curpage="searchParams.page" ></pg>
         </pagepanel>

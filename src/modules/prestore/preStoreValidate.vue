@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                    <tbsp :headercaption="headercaption" curaction="store" :totals.sync="totals" :getchecks="getchecks" @checklist="getCheckList" :load="load" url="sales/stock" :params="searchParams" ></tbsp>
+                    <tbsp :headercaption="headercaption" curaction="store" :totals.sync="totals" :getchecks="getchecks" @checklist="getCheckList" :load="load" url="stockpiles" :params="searchParams" ></tbsp>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -157,7 +157,7 @@ export default {
           }
       },
       rebackAction: function(params){
-           this.$http.put(this.$Api+"sales/stock",JSON.stringify(params)).then((res) => {
+           this.$http.put(this.$Api+"stockpiles",JSON.stringify(params)).then((res) => {
                var d = res.json();
                this.showMsg("success", "驳回成功");
                this.loadlist();
@@ -216,7 +216,7 @@ export default {
               }
 
               // 核价
-              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(list)).then((res) => {
+              this.$http.post(this.$Api+"stockpiles/calculate",JSON.stringify(list)).then((res) => {
                   var d = res.json();
                   this.priceArray = d.data.datas;
                   this.priceShow = !this.priceShow;
@@ -234,7 +234,7 @@ export default {
           // 购买
           if(d.action == "confirm") {
               console.log(this.checkedList);
-              this.$http.post(this.$Api+"sales/sub-orders",JSON.stringify(this.checkedList)).then((res) => {
+              this.$http.post(this.$Api+"stockpiles/buy",JSON.stringify(this.checkedList)).then((res) => {
                   var d = res.json();
                   console.log(d);
                   alert("ok");

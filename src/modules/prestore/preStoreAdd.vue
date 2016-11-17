@@ -91,7 +91,7 @@ export default {
         let newInfo = Utils.cloneObj(this.baseInfo);
         delete newInfo.validate;    // 删除验证字段
         // 下备货单
-        this.$http.post(this.$Api+"/sales/stock",JSON.stringify({sub_orders:ndata, base_info:newInfo})).then((res) => {
+        this.$http.post(this.$Api+"/stockpiles",JSON.stringify({sub_orders:ndata, base_info:newInfo})).then((res) => {
             var d = res.json();
             console.log(d);
             this.self = true;

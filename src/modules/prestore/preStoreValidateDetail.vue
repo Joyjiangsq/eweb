@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     getData: function(id){
-      this.$http.get(this.$Api+"sales/stock/detail", {params:{U_PurchaseNum: id}}).then((res) => {
+      this.$http.get(this.$Api+"stockpiles/detail", {params:{U_PurchaseNum: id}}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
@@ -96,7 +96,7 @@ export default {
     },
     dialogclick: function(d) {
       if(d.action == "confirm") {
-        this.$http.put(this.$Api+"sales/stock",JSON.stringify([{U_CloseWhy:this.backValueIpt, U_OrderStatus:8,U_PurchaseNum: this.orderId}])).then((res) => {
+        this.$http.put(this.$Api+"stockpiles",JSON.stringify([{U_CloseWhy:this.backValueIpt, U_OrderStatus:8,U_PurchaseNum: this.orderId}])).then((res) => {
             var d = res.json();
             this.showMsg("success", "驳回成功");
             this.showBack = !this.showBack;
@@ -116,7 +116,7 @@ export default {
         rec_info: sub.rec_info
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
-      this.$http.put(this.$Api+"sales/stock",JSON.stringify([params])).then((res) => {
+      this.$http.put(this.$Api+"stockpiles",JSON.stringify([params])).then((res) => {
           var d = res.json();
           console.log(d);
           this.showMsg("success", "提交成功");

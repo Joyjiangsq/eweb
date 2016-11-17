@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div :class="css.tBox">
-                <orderlist :subvalidate="subvalidate" :load="load" :params="searchParams" :totals.sync="totals" url="sales/sub-orders" @success="successHandler" @fail="failHandler" :orderids.sync="orderids"></orderlist>
+                <orderlist :subvalidate="subvalidate" :load="load" :params="searchParams" :totals.sync="totals" url="purchases" @success="successHandler" @fail="failHandler" :orderids.sync="orderids"></orderlist>
               </div>
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
@@ -129,7 +129,7 @@ export default {
               }
 
               // 核价
-              this.$http.post(this.$Api+"sales/sub-orders/calculate",JSON.stringify(d)).then((res) => {
+              this.$http.post(this.$Api+"purchases/calculate",JSON.stringify(d)).then((res) => {
                   var d = res.json();
                   this.priceArray = d.data.datas;
                   this.priceShow = !this.priceShow;
@@ -152,7 +152,7 @@ export default {
 
       },
       rebackAction: function(params){
-           this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify(params)).then((res) => {
+           this.$http.put(this.$Api+"purchases",JSON.stringify(params)).then((res) => {
                var d = res.json();
                this.showMsg("success", "驳回成功");
                this.loadlist();
@@ -179,10 +179,10 @@ export default {
       },
 
       priceClick: function(d){
-          // 购买
+          // 购买 TODO
           if(d.action == "confirm") {
               console.log(this.finalData);
-              this.$http.post(this.$Api+"sales/sub-orders",JSON.stringify(this.finalData)).then((res) => {
+              this.$http.post(this.$Api+"purchases",JSON.stringify(this.finalData)).then((res) => {
                   var d = res.json();
                   console.log(d);
                   alert("ok");

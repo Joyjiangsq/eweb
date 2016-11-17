@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     getData: function(id){
-      this.$http.get(this.$Api+"sales/stock/detail", {params:{U_PurchaseNum: id}}).then((res) => {
+      this.$http.get(this.$Api+"stockpiles/detail", {params:{U_PurchaseNum: id}}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
@@ -92,7 +92,7 @@ export default {
         U_OrderStatus: 0
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
-      this.$http.put(this.$Api+"sales/stock",JSON.stringify([params])).then((res) => {
+      this.$http.put(this.$Api+"stockpiles",JSON.stringify([params])).then((res) => {
           var d = res.json();
           this.showMsg("success", "提交成功");
           this.getData(this.orderId);

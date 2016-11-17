@@ -85,7 +85,7 @@ export default {
     },
     dialogClickHandler: function(d){
         if(d.action == "confirm") {
-            this.$http.put(this.$Api+"sales/sub-orders",JSON.stringify([{U_PurchaseNum: this.orderId, U_OrderStatus:8, U_CloseWhy: this.backValueipt}])).then((res) => {
+            this.$http.put(this.$Api+"purchases",JSON.stringify([{U_PurchaseNum: this.orderId, U_OrderStatus:8, U_CloseWhy: this.backValueipt}])).then((res) => {
                 var d = res.json();
                 this.showMsg("success", "驳回成功");
                 this.showReDialog = !this.showReDialog;
@@ -99,7 +99,7 @@ export default {
         }
     },
     getData: function(id){
-      this.$http.get(this.$Api+"sales/sub-orders/detail",{params:{U_PurchaseNum: id}}).then((res) => {
+      this.$http.get(this.$Api+"purchases/detail",{params:{U_PurchaseNum: id}}).then((res) => {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
@@ -121,24 +121,7 @@ export default {
     failHandler: function(d){
         console.log(d);
     },
-    // 废弃
-    // editAction: function(one){
-    //   one.U_PurchaseNum = this.orderId;
-    //   one.type = this.detailData.type;
-    //   let arr = [];
-    //   arr.push(one);
-    //   this.$http.put(this.$Api+"sales/sub-orders/calculate",JSON.stringify(arr)).then((res) => {
-    //       var d = res.json();
-    //       console.log(d);
-    //       // this.showMsg("success", "提交成功");
-    //       // this.getData(this.orderId);
-    //       // this.show = !this.show;
-    //       // this.detail = true;
-    //   },(error) =>{
-    //     console.log(error);
-    //     this.showMsg("error", error.msg);
-    //   })
-    // }
+
   },
   components: {tblab, panel,formtext,cascadeform,btn},
   route:{

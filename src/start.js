@@ -62,7 +62,7 @@ Vue.http.interceptors.push(function(request, next) {
         }
         else if(d.code == 403) {    // 无权限页面
            Utils.reGoNoPower()
-          //  return false
+           return {}
         }
         else if (d.code != 200) {
             showTips(_self.$store, {
