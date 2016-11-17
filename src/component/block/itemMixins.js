@@ -55,7 +55,7 @@ export default {
               }
           }
       },
-      // 瓷砖，地板，洁具，集成吊顶，装修辅材，施工辅材的表格列都是一致的
+      // 瓷砖，地板，洁具，集成吊顶，装修辅料，施工辅材的表格列都是一致的
       headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},
                     {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:this.curName + "cc", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},

@@ -27,7 +27,7 @@ export default function adapterData(d) {
         {keyName:"U_ASWide", defValue:d.U_ASWide || ""},                     // 包管展开宽
         {keyName:"U_ASDeep", defValue:d.U_ASDeep || ""},                     // 包管展开深
         {keyName:"Freetxt", defValue:d.Freetxt || ""},                       // 备注
-        {keyName:"buyCounts", defValue:d.sale_counts || 0}                   // 延米线（m）/销售数量
+        {keyName:"buyCounts", defValue:d.sale_counts || 0}                   // 延米（m）/销售数量
       ]
 
       // 初始化参数属性
@@ -144,7 +144,7 @@ export default function adapterData(d) {
           else return resetFun(this)
       }
       // 设置验证参数规则
-     // 延米线（m）/销售数量
+     // 延米（m）/销售数量
       d.buyCounts.validateFun = function(data, index){
           if(isNaN(this.def)) return exepFun(this, "此项填写错误")
           else if(this.def < 0) return exepFun(this, "此项必须大于0")

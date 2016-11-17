@@ -15,7 +15,7 @@ let tbMixin = {
            twoLevelData:[],   // 二级分类
            threeLevelData:[], // 三级分类
            totals:0,                 // 表格load结束之后 传递给分页的页数
-           searchParams: {page: 1}, // 初始查询依据  searchParams: {ItmsGrpNam:"装修辅材"}, // 初始查询依据
+           searchParams: {page: 1}, // 初始查询依据  searchParams: {ItmsGrpNam:"装修辅料"}, // 初始查询依据
            load: this.toload,                 // 表格是否加载开关
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
@@ -70,7 +70,7 @@ let tbMixin = {
                   this.loadlist();
               }
             },
-            dtArray:["厨柜", "集成吊顶","洁具","施工辅材", "装修辅材", '门'],
+            dtArray:["厨柜", "集成吊顶","洁具","施工辅材", "装修辅料", '门'],
             sDatas: [
               {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
               {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},

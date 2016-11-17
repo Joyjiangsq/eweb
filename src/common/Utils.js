@@ -64,7 +64,7 @@ import storejs from "storejs";
               "门": 116,
               "厨柜": 121,
               "施工辅材": 119,
-              "装修辅材": 120
+              "装修辅料": 120
           }
           if(CateDatas[name]) return CateDatas[name]
           else return "";

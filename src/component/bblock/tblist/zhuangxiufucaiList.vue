@@ -32,7 +32,7 @@ export default {
   data: function () {
     return {
       css,
-      name:"装修辅材",
+      name:"装修辅料",
       headerCaption:[
              {type:"operator", name:"", icon: true},
              {name:"产品编码", labelValue:"ItemCode", type:"data"},

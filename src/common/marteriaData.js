@@ -31,7 +31,7 @@ export const barData = {
     },
     "zhuangxiufucai": {
         show: false,
-        labelName: "装修辅材",
+        labelName: "装修辅料",
         id: 7
     },
     "shigongfucai": {

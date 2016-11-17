@@ -62,7 +62,7 @@ export default {
       headercaption:[{type:"operator", name:""},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
                     {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"所属包", labelValue:"SWW", type:"data"},
+                    {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
                     {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
@@ -81,7 +81,7 @@ export default {
                     {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"edit"},
                     {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"edit"},
                     {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"edit"},
-                    {name:"延米线（m）/销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
+                    {name:"延米（m）/销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
                     {name:"备注", labelValue:"Freetxt",type:"edit"}
@@ -89,7 +89,7 @@ export default {
       headerdetail:[
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},
                     {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"chuiguicc", component:mdialog},
-                    {name:"所属包", labelValue:"SWW", type:"data"},
+                    {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
                     {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
@@ -108,7 +108,7 @@ export default {
                     {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"data"},
                     {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"data"},
                     {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"data"},
-                    {name:"延米线（m）/销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
+                    {name:"延米（m）/销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
                     {name:"可用库存量", labelValue:"stock",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},
                     {name:"备注", labelValue:"Freetxt",type:"data"}

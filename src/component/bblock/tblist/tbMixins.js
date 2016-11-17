@@ -78,7 +78,7 @@ let tbMixin = {
                   this.loadlist();
               }
             },
-            dtArray:["厨柜", "集成吊顶","洁具","施工辅材", "装修辅材", '门'],
+            dtArray:["厨柜", "集成吊顶","洁具","施工辅材", "装修辅料", '门'],
             sDatas: [
               {type:"text",  value:"",  keyname:"ItemName", labelcaption:"产品名称:"},
               {type:"text",  value:"",  keyname:"U_Modle", labelcaption:"型号:"},

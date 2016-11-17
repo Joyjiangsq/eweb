@@ -86,7 +86,6 @@ export default {
   methods: {
   },
   components: {btnbar},
-  route:{
-  }
+
 }
 </script>

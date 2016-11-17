@@ -46,7 +46,7 @@
                     <div :class="css.rowOne">
                           <span :class="css.title">形状</span>
                           <div :class="css.formRow">
-                                <formtext :class='css.formitem' :read ="detail"  labelname="形状：" :value.sync="baseInfo.shape" placeholder="" :datas="comData.shapeDatas"  formname='shape' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                                <comboxform :class='css.formitem' :read ="detail"  labelname="形状：" :value.sync="baseInfo.shape" placeholder="" :datas="comData.shapeDatas"  formname='shape' :validatestart="validate" @onvalidate="validateHandler"></comboxform>
                           </div>
                     </div>
                     <div :class="css.rowItem">
@@ -143,20 +143,37 @@
                                 <formtext :class='css.formitem' :read ="detail"  labelname="" :must="false" :value.sync="baseInfo.remark" placeholder=""  formname='remark' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                           </div>
                     </div>
+                    <div :class="css.rowOne"  v-if="!isE && (!baseInfo.status || baseInfo.status == 2 || baseInfo.status == 4)">
+                          <span :class="css.title">参考附件</span>
+                          <div :class="css.formRow">
+                              <div :class="css.upBox">
+                                <ft url="upload" :filter="['zip', 'rar']" text="上传附件" @upsuccess="cupSuccessHandler"></ft><span class="upsu">{{cupRes}}</span>
+                                <span class="reback">备注：请打包上传（平面布局简图，测量数据，户型照片，拍照标注，电器详细尺寸及图片），格式zip,rar</span>
+                              </div>
+                          </div>
+                    </div>
                     <div :class="css.rowOne"  v-if="isE && baseInfo.status == 1">
-                          <span :class="css.title">附件上传</span>
+                          <span :class="css.title">设计附件上传</span>
                           <div :class="css.formRow">
                               <div :class="css.upBox">
                                 <ft url="upload" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{upRes}}</span>
-                                <span class="reback">备注：请打包上传（平面布局简图，测量数据，户型照片，拍照标注，电器详细尺寸及图片），格式zip,rar</span>
+                                <!-- <span class="reback">备注：请打包上传（平面布局简图，测量数据，户型照片，拍照标注，电器详细尺寸及图片），格式zip,rar</span> -->
                               </div>
                               <div class="">
                                   平面布局图要求：表明燃气管道，燃气热水器位置，水槽位置，煤气灶位置，冰箱位置，吊柜，地柜，高柜位置。
                               </div>
                           </div>
                     </div>
+                    <div :class="css.rowItem" v-if="baseInfo.status == 1 || baseInfo.status == 3">
+                          <span :class="css.title">参考附件</span>
+                          <div :class="css.formRow">
+                                <div :class="css.upBox">
+                                  <a :href="baseInfo.cattach_url">下载</a>
+                                </div>
+                          </div>
+                    </div>
                     <div :class="css.rowItem" v-if="baseInfo.status == 2 || baseInfo.status == 3">
-                          <span :class="css.title">附件下载</span>
+                          <span :class="css.title">设计附件</span>
                           <div :class="css.formRow">
                                 <div :class="css.upBox">
                                   <a :href="baseInfo.attach_url">下载</a>
@@ -229,6 +246,7 @@ export default {
         validate:false,
         validateRes: true,
         upRes:"",
+        cupRes:"",
         baseInfo:{
             minMoney: 100, // 扣款金额
         },
@@ -261,7 +279,7 @@ export default {
   methods: {
     getData: function(){
       if(!this.orderId || this.orderId == "") return false;
-      this.$http.get(this.$Api + "custom_products/detail", {params:{design_serial: this.orderId}}).then((res) =>{
+      this.$http.get(this.$Api + "custom-products/detail", {params:{design_serial: this.orderId}}).then((res) =>{
             let d = res.json().data;
             this.baseInfo = d;
       }, (e)=>{
@@ -296,6 +314,10 @@ export default {
         this.upRes = "上传成功("+d.name+")";
         this.baseInfo.attach_url = d.url;
     },
+    cupSuccessHandler: function(d) {
+      this.cupRes = "上传成功("+d.name+")";
+      this.baseInfo.cattach_url = d.url;
+    },
     // 退回
     reback: function(){
         this.showReDialog = !this.showReDialog
@@ -304,7 +326,7 @@ export default {
     rebackDialog: function(){
         this.baseInfo.backValueipt = this.backValueipt;
         this.baseInfo.status =  4;
-        this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+        this.$http.put(this.$Api + "custom-products", JSON.stringify(this.baseInfo)).then((res) =>{
               let d = res.json();
               showTips(this.$store, {type:"success", msg:"退回成功"});
               history.back();
@@ -322,7 +344,7 @@ export default {
         }
 
         this.baseInfo.status =  2;
-        this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+        this.$http.put(this.$Api + "custom-products", JSON.stringify(this.baseInfo)).then((res) =>{
               let d = res.json();
               showTips(this.$store, {type:"success", msg:"交付成功"});
               history.back();
@@ -337,7 +359,7 @@ export default {
       setTimeout(()=>{
           if(this.validateRes) {
               this.baseInfo.status = 1;
-              this.$http.post(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+              this.$http.post(this.$Api + "custom-products", JSON.stringify(this.baseInfo)).then((res) =>{
                     console.log(res);
                     showTips(this.$store, {type:"success", msg:"提交成功"});
                     history.back();
@@ -352,7 +374,7 @@ export default {
       this.baseInfo.backValueipt = ""
       this.baseInfo.status =  1;
 
-      this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+      this.$http.put(this.$Api + "custom-products", JSON.stringify(this.baseInfo)).then((res) =>{
             let d = res.json();
             showTips(this.$store, {type:"success", msg:"重新提交成功"});
             history.back();
@@ -365,7 +387,7 @@ export default {
     finishHandler: function(){
       this.baseInfo.status =  3;
 
-      this.$http.put(this.$Api + "custom_products", JSON.stringify(this.baseInfo)).then((res) =>{
+      this.$http.put(this.$Api + "custom-products", JSON.stringify(this.baseInfo)).then((res) =>{
             let d = res.json();
             showTips(this.$store, {type:"success", msg:"确认成功"});
             history.back();
