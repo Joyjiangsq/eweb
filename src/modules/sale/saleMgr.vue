@@ -87,7 +87,7 @@ let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"compone
                         {name:"客户姓名", labelValue:"CardName",type:"data", adapterFun: function(d) {return d.base_info.CardName}},
                         {name:"电话", labelValue:"Phone2",type:"data", adapterFun: function(d) {return d.base_info.Phone2}},
                         {name:"业主地址", labelValue:"Address",type:"data", adapterFun: function(d) {return d.base_info.Address}},
-                        {name:"创建人", labelValue:"CreateByName",type:"data"},
+                        {name:"创建人", labelValue:"createdByName",type:"data"},
                         {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
 let subHeaders = [{name:"销售子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},

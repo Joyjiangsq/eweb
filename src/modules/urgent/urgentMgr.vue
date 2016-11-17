@@ -131,7 +131,6 @@ export default {
     }
   },
   components: {btnbar,formcb,formtext},
-  route:{
-  }
+
 }
 </script>
