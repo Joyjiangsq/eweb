@@ -18,10 +18,13 @@
                     <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValue" placeholder="请填写驳回理由" ></textarea>
               </div>
         </dialog>
-        <dialog :flag="priceShow" title="核价结果" @dialogclick="priceClick">
+        <dialog :flag="priceShow" title="核价结果">
               <div slot="containerDialog">
                 <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
                 <propertytext key="服务费" :value="priceInfo.sprice"></propertytext>
+              </div>
+              <div slot="footerDialog">
+                  <btnbar :buttons="buttons" :events="footerClick"></btnbar>
               </div>
         </dialog>
     </div>
@@ -32,6 +35,7 @@ import css from "./pre.css";
 import Utils from "common/Utils.js";
 import pageBase from "common/mixinPage.js";
 import propertytext from "component/form/propertyText.vue";
+import btnbar from "component/sprite/buttonbar";
 import {orderStatus} from "config/const";
 import tbsp from "component/grid/tableBackStore";
 import Vue from "vue";
@@ -89,6 +93,7 @@ export default {
       priceShow: false,
       priceArray:[],
       show: false,
+      buttons:[{name:"取消", icon:"icon-close1", action:"close"},{name:"购买", icon:"icon-check", action:"confirm", type:"btn-primary"}],
       backValue:"",
       checkedList:[],
       headercaption:[{checkbox: true}, {name:"配送方式", labelValue:"U_DeWay", type:"component", component: deWayComp, cname:"deway"},
@@ -110,6 +115,11 @@ export default {
                   this.curaction = "back";
                   this.getchecks = !this.getchecks;
             }
+        }
+      },
+      footerClick: {
+        btnClick: function(d) {
+          this.priceClick(d);
         }
       }
     }
@@ -232,12 +242,13 @@ export default {
                 console.log(error);
               })
           }
+          else this.priceShow = !this.priceShow;
       },
       failHandler: function(d){
 
       }
 
   },
-  components: {tbsp,propertytext},
+  components: {tbsp,propertytext, btnbar},
 }
 </script>

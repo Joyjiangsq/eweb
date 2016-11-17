@@ -109,7 +109,7 @@ export default {
             headerData.push({name:"客户来源", labelValue:"U_ComeFrom",type:"data"});
             headerData.push({name:"分站名称", labelValue:"station_name",type:"data"});
         }
-        headerData.push({name:"创建人", labelValue:"createdBy",type:"data"});
+        headerData.push({name:"创建人", labelValue:"createdByName",type:"data"});
         headerData.push({name:"创建时间", labelValue:"U_DateRgst", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}});
         headerData.push({type:"operator", name:"操作"});
         return headerData

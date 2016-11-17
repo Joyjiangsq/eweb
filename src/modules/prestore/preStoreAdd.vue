@@ -9,7 +9,8 @@
 
                 <div slot="panelContent">
                       <formtext labelname="分站名称：" :must="false"  :read="true"  :value.sync="baseInfo.CardName" formname='CardName' ></formtext>
-                      <cascadeform  labelname="分站地址：" :detailneed="true" :read="true"  :value.sync= "baseInfo.Address"  formname="Address" ></cascadeform>
+                      <!-- <cascadeform  labelname="分站地址：" :detailneed="true" :read="true"  :value.sync= "baseInfo.Address"  formname="Address" ></cascadeform> -->
+                      <formtextadd  labelname="收货地址：" :must="false"  :read="true" formname="Address2" :value.sync="baseInfo.Address"  ></formtextadd>
                       <formtext labelname="跟单员：" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="跟单员电话：" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                 </div>
@@ -29,7 +30,7 @@
 import {setTitle} from "actions";
 import panel from "component/panel/panel";
 import formtext from "component/form/formText";
-import cascadeform from "component/form/formCascade";
+import formtextadd from "component/form/formTextAdd";
 import css from "./pre.css";
 import btn from "component/sprite/button.vue";
 import tblab from "component/bblock/typeLab";
@@ -48,7 +49,7 @@ export default {
       self: false,
       baseInfo:{
         CardCode:"", //分站编码
-        CardName:"分站名称",
+        CardName:utils.getUserInfo().CardName,
         Address:"安徽省,合肥市,高新区,xxx街道",// 客户地址  这里的客户就是分站
         U_Phone : "分站联系人电话", //TODO  分站地址
         CntctCode: "分站联系人姓名",
@@ -108,7 +109,7 @@ export default {
       this.validate = !this.validate; // 表单
     },
   },
-  components: {panel, formtext, cascadeform, tblab, btn},
+  components: {panel, formtext, formtextadd, tblab, btn},
   route:{
     data: function(){
       setTitle(this.$store, [{name:"备货管理", type:"back"}, {name:"备货申请"}]);

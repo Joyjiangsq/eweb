@@ -137,7 +137,7 @@ export default {
     // 查询参数初始化
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"交易日期："}];
+      return [{type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"凭证日期："}];
     }
   },
   ready: function () {

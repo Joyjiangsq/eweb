@@ -6,7 +6,7 @@
               </div>
         </pagepanel>
         <pagepanel>
-              <btnbar :buttons="btnsData" :events="btnEvents" v-if="isE"></btnbar>
+              <btnbar :buttons="btnsData" :events="btnEvents" v-if="!isE"></btnbar>
               <div class="css.tBox">
                 <tb :headercaption="headercaption" :totals.sync="totals" :load="load" url="custom-products" :params="searchParams" ></tb>
               </div>

@@ -22,6 +22,9 @@
                     <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
                     <propertytext key="服务费" :value="priceInfo.sprice"></propertytext>
               </div>
+              <div slot="footerDialog">
+                  <btnbar :buttons="buttons" :events="footerClick"></btnbar>
+              </div>
         </dialog>
     </div>
 </template>
@@ -33,6 +36,7 @@ import formcb from "component/form/fmCombobox";
 import dialogtip from "component/dialog/dialogTip";
 import pageBase from "common/mixinPage.js";
 import propertytext from "component/form/propertyText.vue";
+import btnbar from "component/sprite/buttonbar";
 import orderlist from "./purchaseList";
 import {orderStatus} from "config/const";
 export default {
@@ -46,6 +50,7 @@ export default {
       moduleName:"采购订单管理",
       curaction:"",
       statusData:orderStatus,
+      buttons:[{name:"取消", icon:"icon-close1", action:"close"},{name:"购买", icon:"icon-check", action:"confirm", type:"btn-primary"}],
       priceShow: false,
       priceInfo:{sprice:"",sprice:""},
       priceArray:[],
@@ -65,6 +70,11 @@ export default {
                   else   this.show = !this.show;
             }
         }
+      },
+      footerClick: {
+        btnClick: function(d) {
+          this.priceClick(d);
+        }
       }
     }
   },
@@ -72,7 +82,7 @@ export default {
     sdata: function(){
       let q = this.$route.query;
       return [{type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"采购订单号:"},
-              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:this.statusData, labelcaption:"订单状态:"},
+              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"id", value:q.U_OrderStatus || "", datas:this.statusData, labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"购买时间:"}];
 
     }
@@ -180,9 +190,10 @@ export default {
                 console.log(error);
               })
           }
+          else this.priceShow = !this.priceShow;
       }
 
   },
-  components: {formcb,dialogtip, orderlist,propertytext},
+  components: {formcb,dialogtip, orderlist,propertytext, btnbar},
 }
 </script>

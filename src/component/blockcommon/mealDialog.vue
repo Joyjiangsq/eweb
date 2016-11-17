@@ -56,7 +56,8 @@ export default {
 
     },
     getData: function(){
-        this.$http.post(this.$Api+"products/package",this.selfData.ProductList).then((res)=>{
+        console.log(this.selfData.ProductList);
+        this.$http.post(this.$Api+"products/package",JSON.stringify(this.selfData.ProductList)).then((res)=>{
               let d = res.json();
               this.listDatas = d.data;
          }, (e)=>{

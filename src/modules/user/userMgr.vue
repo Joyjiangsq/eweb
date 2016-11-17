@@ -184,6 +184,7 @@ export default {
     },
     // 重置密码
     confirmReset: function(d){
+        if(d.action != "confirm") return false
         console.log(this.curopData);
         this.$http.put(this.$Api+"/users/reset-passwd",{CardCode: this.curopData.CardCode, station: this.curopData.station}).then((res) => {
             this.showMsg("success", "重置成功");

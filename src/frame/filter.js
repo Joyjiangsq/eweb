@@ -2,6 +2,7 @@ export default class filter {
   init(Vue) {
     Vue.filter('dateformate',  (d, pattern) => {
       if(!d || d=="") return "";
+      if(typeof(d) == "string") d= new Date(d);
       pattern = pattern || "yyyy-mm-dd HH:MM";
       let str = "";
       str = pattern.replace("yyyy", d.getFullYear());

@@ -13,17 +13,17 @@
                 </div>
 
                 <div slot="panelContent">
-                      <formtext labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
-                      <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
-                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
-                      <formtext labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
-                      <formtext labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
-                      <formtext labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
-                      <formtext :read="true"  labelname="一口价：" unit="元" :value.sync="baseInfo.one_price" ></formtext>
-                      <formtext labelname="实收金额：" :read="true" unit="元"  :value.sync="baseInfo.U_PaInAmount"></formtext>
-                      <formtext labelname="订单类型：" :read="true" unit="元" :value.sync="baseInfo.order_type"></formtext>
-                      <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" ></formtext>
-                      <formtext labelname="跟单员电话：" :read="true" :value.sync="baseInfo.U_CntctPhone"></formtext>
+                      <formtext :must="false" labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
+                      <cascadeform  :must="false" labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
+                      <formtext :must="false" labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
+                      <formtext :must="false" labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
+                      <formtext :must="false" labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
+                      <formtext :must="false" labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
+                      <formtext :read="true"  :must="false" labelname="一口价：" unit="元" :value.sync="baseInfo.one_price" ></formtext>
+                      <formtext :must="false" labelname="实收金额：" :read="true" unit="元"  :value.sync="baseInfo.U_PaInAmount"></formtext>
+                      <formtext :must="false" labelname="订单类型：" :read="true" unit="元" :value.sync="baseInfo.order_type"></formtext>
+                      <formtext :must="false" labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" ></formtext>
+                      <formtext :must="false" labelname="跟单员电话：" :read="true" :value.sync="baseInfo.U_CntctPhone"></formtext>
                 </div>
             </panel>
           </div>
