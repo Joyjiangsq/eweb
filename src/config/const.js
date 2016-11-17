@@ -50,7 +50,8 @@ export const orderType = [
 
 // 订单状态  TODO 暂时前端写死
 export const orderStatus = [
-  {name:"待采购", id: "0"},
+  {name:"待接单", id:"0"},
+  {name:"待采购", id: "-1"},
   {name:"工厂提货", id: 1},
   {name:"D仓收货", id: 2},
   {name:"S仓提货", id: 3},
