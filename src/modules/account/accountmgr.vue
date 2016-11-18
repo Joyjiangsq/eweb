@@ -110,9 +110,8 @@ export default {
       },
       acCss,
       // 表格头
-      headercaption:[{name:"凭证日期", labelValue:"TaxDate", type:"data"},{name:"借方金额", labelValue:"Debit",type:"data"}, {name:"贷方金额", labelValue:"Credit",type:"data", attr:"price"},
-                    {name:"科目名称", labelValue:"AcctName",type:"data"},{name:"科目代码", labelValue:"AcctCode",type:"data"}, {name:"分站代码", labelValue:"Cardcode", type:"data"},
-                    {name:"分站名称", labelValue:"CardName",type:"data"},{name:"类型", labelValue:"U_Type",type:"data"}],
+      headercaption:[{name:"类型", labelValue:"U_Type",type:"data"},{name:"凭证日期", labelValue:"TaxDate", type:"data"},{name:"借方金额", labelValue:"Debit",type:"data"}, {name:"贷方金额", labelValue:"Credit",type:"data", attr:"price"},
+                    {name:"科目名称", labelValue:"AcctName",type:"data"},{name:"备注", labelValue:"xx",type:"data", adapterFun: function(d){return ((d.Memo || '') + "," + (d.LineMemo || ''))}}],
       // 验证回款表单参数
       validate: false,
       // 测试数据

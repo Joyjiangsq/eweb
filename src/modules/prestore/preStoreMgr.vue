@@ -47,7 +47,7 @@ let tableHeaderDatas = [{name:"备货订单号", labelValue:"U_PurchaseNum", typ
                         {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d){return d.U_OrderStatus =="店长驳回"?"<span class='reback'>店长驳回</span>":d.U_OrderStatus}},
                         {name:"收货人", labelValue:"U_Consignee",type:"data",adapterFun: function(d){ return d.rec_info.U_Consignee}},
                         {name:"收货人电话", labelValue:"U_ConsigneePhone",type:"data",adapterFun: function(d){return d.rec_info.U_ConsigneePhone}},
-                        {name:"创建人", labelValue:"station",type:"data"},
+                        {name:"创建人", labelValue:"createdByName",type:"data"},
                         {name:"创建时间", labelValue:"U_Date", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.U_Date), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
 export default {
