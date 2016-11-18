@@ -15,7 +15,7 @@
                 <cascadeform  :read ="detail"  labelname="业主地址：" :detailneed="true" :must="false" :value.sync= "baseInfo.user_address" :detailv.sync="baseInfo.detail" formname="user_address"  :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
                 <formtext :read ="detail"  labelname="测量员：" :value.sync="baseInfo.ce_people" placeholder=""  formname='ce_people' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                 <formtext :read ="detail"  labelname="联系电话：" :phone="true"  :value.sync="baseInfo.ce_phone"  :number="true"  placeholder=""  formname='ce_phone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                <formtext  labelname="扣款金额：" :value.sync="baseInfo.minMoney" placeholder="" :read="true" formname='minMoney' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                <formtext  labelname="扣款金额：" :value.sync="baseInfo.LineTotal" placeholder="" :read="true" formname='LineTotal' :validatestart="validate" @onvalidate="validateHandler"></formtext>
           </div>
         </panel>
         <panel>
@@ -248,7 +248,7 @@ export default {
         upRes:"",
         cupRes:"",
         baseInfo:{
-            minMoney: 100, // 扣款金额
+            LineTotal: 100, // 扣款金额
         },
 
     }
