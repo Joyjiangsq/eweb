@@ -120,7 +120,7 @@ export default {
       },
       tableEvents:{
         operatorRender: function(d){
-          // if(!d.U_PageLink) return []
+          if(!d.U_PageLink) return []
           return [{name:"查看物流",action:"look",icon:"icon-edit", data: d}]
         },
         operatorHandler: function(d){

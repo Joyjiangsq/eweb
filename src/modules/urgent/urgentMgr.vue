@@ -111,8 +111,8 @@ export default {
     setUrgent: function(){
         let params = {};
         params.U_PurchaseNum = this.formParams.U_PurchaseNum;
-        if(this.formParams.LineTotala == "自定义") params.LineTotal = this.formParams.LineTotalb
-        else params.LineTotal = this.formParams.LineTotala
+        if(this.formParams.LineTotala == "自定义") params.LineTotal = this.formParams.LineTotalb*1
+        else params.LineTotal = this.formParams.LineTotala*1
         this.$http.post(this.$Api+"urgent", params).then((res) =>{
               this.show = !this.show;
               this.loadlist();
