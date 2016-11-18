@@ -16,7 +16,7 @@
         <dialog :flag="show" title="加急" @dialogclick="dialogclick">
               <div slot="containerDialog">
                     <formcb keyid="value" labelname="加急金额：" @itemclick="itemclick" :value.sync="formParams.LineTotala" :vertical="true" keyname="name" dropfixed="dropfixed" formname="LineTotala" :datas="priceArry" :validatestart="validate" @onvalidate="validateHandler"></formcb>
-                    <formtext labelname="自定义金额："  :vertical="true" placeholder="请输入自定义金额" :must="selfControl" :value.sync="formParams.LineTotalb" formname='LineTotalb' v-show="selfControl"  :number="true" :validatestart="validate"  @onvalidate="validateHandler"></formtext>
+                    <formtext labelname="自定义金额："  :vertical="true" placeholder="请输入自定义金额" :must="selfControl" :value.sync="formParams.LineTotalb" formname='LineTotalb' v-show="selfControl"   :validatestart="validate"  @onvalidate="validateHandler"></formtext>
                     <formtext labelname="关联采购单号：" :vertical="true" placeholder="请输入关联采购单号" :value.sync="formParams.U_PurchaseNum" formname='U_PurchaseNum'  :validatestart="validate"  @onvalidate="validateHandler"></formtext>
               </div>
         </dialog>
@@ -46,7 +46,10 @@ var orderurgent = Vue.extend({
   },
   methods:{
     clickHandler: function(){
-        this.$router.go({path:"purchase/purchasedetail", query:{orderid: this.totals}})
+        if(this.totals.indexOf("BH") != -1) {
+            this.$router.go({path:"prestore/detail", query:{orderid: this.totals}})
+        }
+        else this.$router.go({path:"purchase/purchasedetail", query:{orderid: this.totals}})
     }
   }
 })
