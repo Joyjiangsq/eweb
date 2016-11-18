@@ -87,7 +87,7 @@ export default {
       let q = this.$route.query;
       return [{type:"text",  value:q.U_SPOrder || "",  keyname:"U_SPOrder", labelcaption:"加急订单号:"},
               {type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"关联订单号:"},
-              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"name", value:q.U_OrderStatus || "", datas:[{name:"待扣款", id:"待扣款"},{name:"已扣款", id:"已扣款"}], labelcaption:"订单状态:"},
+              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"id", value:q.U_OrderStatus || "", datas:[{name:"待扣款", id:"-1"},{name:"已扣款", id:"0"}], labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"购买时间:"}];
 
     }
