@@ -55,7 +55,7 @@ export default {
         CntctCode: "分站联系人姓名",
         U_CntctCode:"", // 跟单员
         U_CntctPhone:"", // 跟单员电话
-        Series:"82", //代表备货
+        Series:82, //代表备货
         validate: true // 验证依据
       }
     }
