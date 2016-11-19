@@ -39,8 +39,8 @@ let pageBase = {
             this.$set("load", !this.load);
           },
 
-          showMsg: function(type, msg){
-              showTips(this.$store, {type:type, msg:msg});
+          showMsg: function(type, msg, time){
+              showTips(this.$store, {type:type, msg:msg, time: time});
           }
         },
 

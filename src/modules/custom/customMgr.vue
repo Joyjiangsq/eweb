@@ -28,7 +28,12 @@
                 <house :startvalidate="startvalidate" :curaction="curAction" :houselist="formData.house_list" @errorh="errorh"></house>
           </div>
     </dialog>
-
+    <dialog :flag="showRepeat">
+          <div class="" slot="containerDialog">
+          </div>
+          <div class="" slot="footerDialog">
+          </div>
+    </dialog>
   </div>
 </template>
 <script>
@@ -51,7 +56,16 @@ export default {
       moduleName:"客户管理",
       tipvalidate: function(d){
            alert(JSON.stringify(d))
+           if(d.code == 500 || d.code == "500") {
+                if(d.data.length < 10) {
+                  this.descTip = d.data.join(",") + "手机号重复";
+                  this.showRepeat = !this.showRepeat;
+                }
+                else this.showMsg("warn", "发现十条以上重复手机号，请检查文件重新上传！", 4000);
+           }
+           else this.showMsg("warn", d.msg, 2000);
       },
+      showRepeat: false,
       // 类型列表
       formArray:{
         fromConst: fromConst
