@@ -49,7 +49,7 @@ let fileMixins = {
                       self.$dispatch("upsuccess", {url: data.url, name:self.file.name});
                     }
                     else {
-                      if(self.tipvalidate) self.tipvalidate(data);
+                      if(self.tipvalidate) self.tipvalidate.call(self.context,data);
                       else showTips(self.$store, {type:"warn", msg:data.msg});
                     }
                 },
