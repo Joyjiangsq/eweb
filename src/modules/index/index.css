@@ -55,3 +55,19 @@
 .indexIn {
     padding: 0 20px;
 }
+
+.listOne:first-child {
+  padding-top: 0;
+}
+.listOne:last-child {
+  border-bottom: 0;
+}
+.listOne {
+  margin-bottom: 11px;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  width: 90%;
+  margin: 0 auto;
+  padding-left: 10px;
+  color: #333;
+}

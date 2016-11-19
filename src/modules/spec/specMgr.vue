@@ -72,7 +72,7 @@ export default {
       let q = this.$route.query;
       let sd = [{type:"text",  value:q.design_serial || "",  keyname:"design_serial", labelcaption:"设计申请单号:"},
               {type:"combobox", keyname:"status", labelname:"name", keyid:"id", value:q.status || "", datas:[{name:"待交付", id:1},{name:"待确认", id:2},{name:"退回修改", id:4},{name:"已完成", id:3}], labelcaption:"订单状态:"}];
-      if(this.isE) sd.push({type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"分站名称:"});
+      if(this.isE) sd.push({type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"});
       sd.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"申请时间:"});
       return sd
 
@@ -83,7 +83,7 @@ export default {
   },
   ready: function () {
     if(this.isE) {
-        this.headercaption.push({name:"分站名称", labelValue:"CardName",type:"data"});
+        this.headercaption.push({name:"分站名称", labelValue:"station_name",type:"data"});
     }
     this.headercaption.push({name:"申请时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}});
   },

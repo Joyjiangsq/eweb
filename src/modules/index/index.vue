@@ -6,7 +6,7 @@
                       <div :class="inCss.spcpanelhalf">
                             <tabbar :datas="tabArray"  @tabclick="tabClickHandler" :small="true">
                                   <div :class="inCss.tabone" v-for="(index, one) in tabArray" v-show="one.show">
-                                          <span v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></span>
+                                          <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>
                                   </div>
                             </tabbar>
                       </div>

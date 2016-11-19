@@ -1,13 +1,26 @@
 <template lang="html">
       <div class="">
-          订制品
+            <div :class="css.listOne" v-for="one in datas">
+                  {{one}}
+            </div>
       </div>
 </template>
 
 <script>
+import  baselist from "common/mixinList";
+import css from "./index.css";
 export default {
+  mixins:[baselist],
+  props:{
+    datas:{
+      default: function(){
+        return ["dingzhipin","dingzhipin11111","dingzhipin"]
+      }
+    }
+  },
   data: function () {
     return {
+      css
     }
   },
   computed: {},

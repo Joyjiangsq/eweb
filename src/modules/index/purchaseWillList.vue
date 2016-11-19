@@ -1,13 +1,26 @@
 <template lang="html">
       <div class="">
-          采购
+            <div :class="css.listOne" v-for="one in datas">
+                  {{one}}
+            </div>
       </div>
 </template>
 
 <script>
+import  baselist from "common/mixinList";
+import css from "./index.css";
 export default {
+  mixins:[baselist],
+  props:{
+    datas:{
+      default: function(){
+        return ["caigou--01011","caigou","caigou----"]
+      }
+    }
+  },
   data: function () {
     return {
+      css
     }
   },
   computed: {},
