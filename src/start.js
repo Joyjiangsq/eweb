@@ -65,6 +65,7 @@ Vue.http.interceptors.push(function(request, next) {
            return {}
         }
         else if (d.code != 200) {
+            alert(JSON.stringify(d));
             showTips(_self.$store, {
                 type: "error",
                 msg: d.msg

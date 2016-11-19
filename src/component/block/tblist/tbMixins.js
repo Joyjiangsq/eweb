@@ -20,6 +20,7 @@ let tbMixin = {
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
                    operatorRender: function(d){
+                       if(this.name == "厨柜" || this.name =="门") return [{action:"add",icon:"icon-add", data: d}]
                        let exit = false;
                        let index = 0;
                        for (var i = 0; i < this.listdata.length; i++) {
@@ -121,6 +122,7 @@ let tbMixin = {
       },
       putOne: function(data){
         let one = Utils.cloneObj(data);
+        if(this.name == "厨柜" || this.name =="门") one.randomTag = Math.random().toString(16)
         one = this.adapterFun(one);
         this.listdata.push(one);
       }
