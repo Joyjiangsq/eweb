@@ -13,6 +13,14 @@
     height: 400px;
 }
 
+.spcpanelhalf {
+  height: 400px;
+  padding: 20px 0;
+}
+.tabone {
+      height: 365px;
+}
+
 .indexBox .panelall {
     height: 822px;
 }

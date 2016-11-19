@@ -23,3 +23,9 @@
 .tabArea {
   padding-top: 20px;
 }
+
+.smStyle {
+  font-size: 12px;
+padding: 10px;
+color: #333;
+}

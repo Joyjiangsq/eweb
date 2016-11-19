@@ -1,7 +1,7 @@
 <template>
     <div :class="css.tabBox">
         <div :class="css.tabBar">
-              <span v-for="(index, one) in datas" @click="oneClickHandler(index,one)" :class="['gradent', css.tabOne, one.show?css.active:'']">
+              <span v-for="(index, one) in datas" @click="oneClickHandler(index,one)" :class="['gradent', css.tabOne, one.show?css.active:'',small?css.smStyle:'']">
                   {{one[labelDep]}}
               </span>
         </div>
@@ -25,7 +25,9 @@ export default {
       type:String,
       default: "labelName"
     },
-
+    small: {
+      default: false
+    },
     idDep:{
       type:String,
       default: "id"
