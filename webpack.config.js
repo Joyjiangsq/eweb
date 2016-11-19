@@ -6,6 +6,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");     // css 合�
 var webpack  = require("webpack");
 
 var webconfig = {
+  devtool: '#eval-source-map',
   entry: {
       app: './src/start.js',
       vendor:["jquery"],  // 第三方只引入jq
@@ -113,15 +114,15 @@ var webconfig = {
         minChunks : Infinity
     }),
 	  //压缩代码
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-          warnings: false
-      },
-      output: {
-        comments: false,                                  // remove all comments
-      },
-      except: ['$super', '$', 'exports', 'require']	      //排除关键字
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //       warnings: false
+    //   },
+    //   output: {
+    //     comments: false,                                  // remove all comments
+    //   },
+    //   except: ['$super', '$', 'exports', 'require']	      //排除关键字
+    // }),
 
     new webpack.DefinePlugin({
       'process.env': {
