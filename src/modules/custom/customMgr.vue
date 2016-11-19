@@ -55,7 +55,6 @@ export default {
       css,
       moduleName:"客户管理",
       tipvalidate: function(d){
-           alert(JSON.stringify(d))
            if(d.code == 500 || d.code == "500") {
                 if(d.data.length < 10) {
                   this.descTip = d.data.join(",") + "手机号重复";
