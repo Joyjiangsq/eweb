@@ -39,6 +39,7 @@ let fileMixins = {
                 // params: nf,
                 url: this.$CodeApi + "v1/api/" + this.url, //默认是form action
                 success: function(data) {
+                    if(typeof(data) == "string") data = json.parse(data);
                     self.$set("loading", !self.loading);
                     if(data.code == 200) {
                       showTips(self.$store, {type:"success", msg:"上传成功！"});
