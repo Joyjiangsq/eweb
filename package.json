@@ -8,7 +8,7 @@
     "build": "set NODE_ENV=production && webpack --color --progress",
     "start": "set NODE_ENV=pp && node production.js",
     "dev": "set NODE_ENV=dev && node development.js",
-    "deploy":"npm run build && git add . && git commit -m '--' && git push origin master && ./run.sh dev"
+    "deploy":"npm run build && git add . && git commit -m '--' && git push origin master"
   },
   "author": "",
   "license": "ISC",
