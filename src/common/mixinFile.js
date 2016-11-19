@@ -19,6 +19,9 @@ let fileMixins = {
           default: function() {
             return [];
           }
+        },
+        tipvalidate:{
+
         }
     },
     data: function() {
@@ -46,7 +49,8 @@ let fileMixins = {
                       self.$dispatch("upsuccess", {url: data.url, name:self.file.name});
                     }
                     else {
-                      showTips(self.$store, {type:"warn", msg:data.msg});
+                      if(this.tipvalidate) this.tipvalidate(data);
+                      else showTips(self.$store, {type:"warn", msg:data.msg});
                     }
                 },
                 error: function(d) {
