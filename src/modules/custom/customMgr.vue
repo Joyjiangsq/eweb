@@ -8,7 +8,7 @@
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents">
               <slot v-if="isE">
-                <ft  url="upload-customers" :filter="['xls','xlsx']" text="导入" @tipvalidate="tipvalidate" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
+                <ft  url="upload-customers" :filter="['xls','xlsx']" text="导入" :tipvalidate="tipvalidate" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
               <slot>
           </btnbar>
           <div class="">
@@ -98,6 +98,9 @@ export default {
                   this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
         }
+      },
+      tipvalidate: function(d){
+           alert(JSON.stringify(d))
       }
     }
   },
@@ -155,9 +158,7 @@ export default {
     errorh: function(){
         this.formData.validate = false;
     },
-    tipvalidate: function(d){
-        alert(JSON.stringify(d))
-    },
+
     // 新增对话框 按钮回调
     dialogClickHandler: function(d) {
         if(this.curaction == "detail") {
