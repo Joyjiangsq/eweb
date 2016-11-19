@@ -49,6 +49,9 @@ export default {
     return {
       css,
       moduleName:"客户管理",
+      tipvalidate: function(d){
+           alert(JSON.stringify(d))
+      },
       // 类型列表
       formArray:{
         fromConst: fromConst
@@ -98,10 +101,8 @@ export default {
                   this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
         }
-      },
-      tipvalidate: function(d){
-           alert(JSON.stringify(d))
       }
+
     }
   },
   computed: {
