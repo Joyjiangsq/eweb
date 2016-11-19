@@ -30,6 +30,7 @@
     </dialog>
     <dialog :flag="showRepeat">
           <div class="" slot="containerDialog">
+              {{descTip}}
           </div>
           <div class="" slot="footerDialog">
           </div>
@@ -53,6 +54,7 @@ export default {
   data: function () {
     return {
       css,
+      descTip:"",
       moduleName:"客户管理",
       tipvalidate: function(d){
            if(d.code == 500 || d.code == "500") {
