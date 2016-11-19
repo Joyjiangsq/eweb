@@ -19,7 +19,7 @@
     <!--新增对话框-->
     <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
-                <formcb keyid="name" labelname="客户来源：" v-if="isE" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="fromAdapter" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
+                <formcb keyid="name" labelname="客户来源：" v-if="isE" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
                 <formtext labelname="e站客服：" v-if="isE"  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
@@ -28,7 +28,7 @@
                 <house :startvalidate="startvalidate" :curaction="curAction" :houselist="formData.house_list" @errorh="errorh"></house>
           </div>
     </dialog>
-    <dialog :flag="showRepeat">
+    <dialog :flag="showRepeat" title="提示">
           <div class="" slot="containerDialog">
               {{descTip}}
           </div>
@@ -145,11 +145,11 @@ export default {
       sArr.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"});
       return sArr
     },
-    fromAdapter: function(){
-      let one = Utils.cloneObj(this.formArray.fromConst);
-      one.splice(0,1);
-      return one
-    },
+    // fromAdapter: function(){
+    //   let one = Utils.cloneObj(this.formArray.fromConst);
+    //   // one.splice(0,1);
+    //   return one
+    // },
     gettName: function(){
        let m = {"add":"新增", "edit":"编辑", "detail":"详情"}
        return m[this.curAction] || "编辑"

@@ -21,7 +21,7 @@ export const decorateStyle =[
 // 渠道配置
 export const fromConst= [
   {name:"分站提供", id:"分站提供"},
-  {name:"400呼入", id:"400呼入"},
+  {name:"400", id:"400"},
   {name:"官网", id:"官网"},
   {name:"天猫", id:"天猫"},
   {name:"淘宝", id:"淘宝"},
