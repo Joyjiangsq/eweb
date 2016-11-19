@@ -14,7 +14,7 @@ export default {
   props:{
     datas:{
       default: function(){
-        return ["dingzhipin","dingzhipin11111","dingzhipin"]
+        return ["dingzhipin","dingzhipin11111","dingzhipi--n"]
       }
     }
   },

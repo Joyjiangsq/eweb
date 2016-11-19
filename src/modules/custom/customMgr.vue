@@ -8,7 +8,7 @@
     <pagepanel>
           <btnbar :buttons="btnsData" :events="btnEvents">
               <slot v-if="isE">
-                <ft  url="upload" :filter="['xls','xlsx']" text="导入" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
+                <ft  url="upload-customers" :filter="['xls','xlsx']" text="导入" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传xls,xlsx格式的文件包)</span>
               <slot>
           </btnbar>
           <div class="">
