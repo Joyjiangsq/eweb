@@ -109,7 +109,7 @@ export default {
         let newa = [];
         for (var i = 0; i < this.dataList.length; i++) {
             let one = Utils.cloneObj(this.dataList[i]);
-            if(one.U_OrderStatus != "待采购" || one.U_OrderStatus != "e站驳回") continue;
+            if(one.U_OrderStatus != "待采购" && one.U_OrderStatus != "e站驳回") continue;
             delete one.checkTag;
             delete one.selected;
             delete one.U_Consignee;
