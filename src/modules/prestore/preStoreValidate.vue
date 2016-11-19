@@ -254,6 +254,7 @@ export default {
                   var d = res.json();
                   this.showMsg("success", "购买成功");
                   this.loadlist();
+                  this.priceShow = !this.priceShow;
               },(error) =>{
                 console.log(error);
               })

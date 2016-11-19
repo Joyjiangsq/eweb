@@ -6,8 +6,7 @@
                       <div :class="inCss.spcpanelhalf">
                             <tabbar :datas="tabArray"  @tabclick="tabClickHandler" :small="true">
                                   <div :class="inCss.tabone" v-for="(index, one) in tabArray" v-show="one.show">
-                                          {{one | json}}
-                                          <!-- <span v-widget="{widget: one.component, data: one, cname: one.id}"></span> -->
+                                          <span v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></span>
                                   </div>
                             </tabbar>
                       </div>
@@ -53,15 +52,20 @@ import icon from "component/sprite/icon.vue";
 import tabbar from "component/tab/tabBar.vue";
 
 import saleList from "./saleWillList";
-
+import purchaseList from "./purchaseWillList";
+import backWillList from "./backWillStore";
+import specWillList from "./specWillList";
+import customWillList from "./customWillList";
 export default {
   data: function () {
     return {
       inCss,
       curTabIndex:0,
-      tabArray:[{labelName:"销售订单", id: "xiaoshoucom", show:false, component: saleList},{labelName:"采购订单", id: "caigou", show:false},
-                {labelName:"备货订单", id: "beihuo", show:false},{labelName:"订制品", id: "dingzhipin", show:false},
-                {labelName:"客户数据", id: "kehu", show:false}]
+      tabArray:[{labelName:"销售订单", id: "xiaoshoucom", show:false, component: saleList},
+                {labelName:"采购订单", id: "caigou", show:false, component: purchaseList},
+                {labelName:"备货订单", id: "beihuo", show:false, component: backWillList},
+                {labelName:"订制品", id: "dingzhipin", show:false, component: specWillList},
+                {labelName:"客户数据", id: "kehu", show:false, component: customWillList}]
     }
   },
   computed: {},
@@ -97,6 +101,6 @@ export default {
        this.tabArray[0].show = true
     }
   },
-  components: {panel,icon,tabbar, saleList}
+  components: {panel,icon,tabbar}
 }
 </script>

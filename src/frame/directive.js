@@ -11,7 +11,6 @@ export default class directive {
                var dtpl =  value.data;   // 对应数据 只能是字符串去传递  不知道怎么穿对象
                var widget = value.widget.component;
                var widgetName = value.cname;
-               console.log(Vue.component(widgetName));
                if(!Vue.component(widgetName)) {
                  Vue.component(widgetName, widget);
                }
