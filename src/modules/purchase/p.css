@@ -12,6 +12,11 @@
 .tBox {
     padding-top: 12px;
 }
+.tipstext {
+  color: gray;
+  font-size: 12px;
+  font-style: italic;
+}
 .check {
     margin-left: 25px;
         margin-right: -25px;

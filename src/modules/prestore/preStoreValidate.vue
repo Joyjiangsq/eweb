@@ -18,7 +18,7 @@
                     <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValue" placeholder="请填写驳回理由" ></textarea>
               </div>
         </dialog>
-        <dialog :flag="priceShow" title="核价结果">
+        <dialog :flag="priceShow" title="核价结果"  @dialogclick="closeAction">
               <div slot="containerDialog">
                 <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
                 <propertytext key="服务费" :value="priceInfo.sprice"></propertytext>
@@ -131,7 +131,8 @@ export default {
       },
       footerClick: {
         btnClick: function(d) {
-          this.priceClick(d);
+          if(d.action == "close") this.priceShow = !this.priceShow;
+          else this.priceClick(d);
         }
       }
     }
@@ -167,6 +168,9 @@ export default {
               }
               this.rebackAction(paramsArry);
           }
+      },
+      closeAction: function(){
+
       },
       rebackAction: function(params){
            this.$http.put(this.$Api+"stockpiles",JSON.stringify(params)).then((res) => {

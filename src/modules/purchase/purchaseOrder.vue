@@ -17,7 +17,7 @@
                     <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValue" placeholder="请填写驳回理由" ></textarea>
               </div>
         </dialog>
-        <dialog :flag="priceShow" title="核价结果" @dialogclick="priceClick">
+        <dialog :flag="priceShow" title="核价结果" @dialogclick="closeAction">
               <div slot="containerDialog">
                     <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
                     <propertytext key="服务费" :value="priceInfo.sprice"></propertytext>
@@ -73,7 +73,8 @@ export default {
       },
       footerClick: {
         btnClick: function(d) {
-          this.priceClick(d);
+          if(d.action == "close") this.priceShow = !this.priceShow
+          else this.priceClick(d);
         }
       }
     }
@@ -94,6 +95,7 @@ export default {
       successHandler: function(d) {
           if(this.curaction == "buy") {
               console.log(d); // 核价
+
               this.finalData = d;
               // 验证通过规则  如果是单个品类- 如果不是定制品 则不能过
               // 如果是多个品类  如果只有一个是非定制品   则不能过
@@ -102,6 +104,7 @@ export default {
               let pMap = [];
               for (var i = 0; i < d.length; i++) {
                 let one = d[i];
+                if(one.base_info.Series == 81) continue
                 pMap.push({type:one.type, value:one.sub_orders.length})
               }
               // 如果只有单个品类  判断是订制品还是标品
@@ -123,22 +126,23 @@ export default {
                     if(pone.type != "chugui" && pone.type !="men") successCount += pone.value*1;
                   }
               }
-              if(successCount <=1) {
+              if(successCount <=1 && pMap.length != 0) {
                 this.showMsg("warn", "存在单个标品不允许核价");
                 return false;
               }
-
-              // 核价
-              this.$http.post(this.$Api+"purchases/calculate",JSON.stringify(d)).then((res) => {
-                  var d = res.json();
-                  this.priceArray = d.data.datas;
-                  this.priceShow = !this.priceShow;
-                  this.adapterPriceInfo();
-              },(error) =>{
-                  console.log(error);
-              })
+              this.doGetPrice(d);
           }
-
+      },
+      doGetPrice: function(d) {
+        // 核价
+        this.$http.post(this.$Api+"purchases/calculate",JSON.stringify(d)).then((res) => {
+            var d = res.json();
+            this.priceArray = d.data.datas;
+            this.priceShow = !this.priceShow;
+            this.adapterPriceInfo();
+        },(error) =>{
+            console.log(error);
+        })
       },
       adapterPriceInfo: function(){
           this.priceInfo = {sprice:0, zprice:0}
@@ -161,6 +165,8 @@ export default {
              console.log(error);
              this.showMsg("error", error.msg);
            })
+      },
+      closeAction: function(d) {
       },
       dialogclick: function(d){
            if(d.action == "confirm") {

@@ -9,7 +9,7 @@
                               <span :class="css.check" v-if="one.U_OrderStatus == '待采购' || one.U_OrderStatus == 'e站驳回'">
                                     <checkbx  @checkclick="checkClick(one)"></checkbx>
                               </span>
-                              <span :class="css.srow">采购订单号： <span :class="css.inrow" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span></span>
+                              <span :class="css.srow">采购订单号： <span :class="css.inrow" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span><span :class='css.tipstext'>({{one.base_info.order_type}})</span></span>
                               <span :class="css.srow">采购订单状态： <span v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '店长驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
                               <span :class="css.srow">供应商： {{one.sub_orders[0].U_CardName || '-'}}</span>
                               <span :class="css.srow">创建时间：{{one.U_Date | dateformate}}</span>
