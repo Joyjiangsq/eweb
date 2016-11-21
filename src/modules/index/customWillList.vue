@@ -1,7 +1,8 @@
 <template lang="html">
       <div class="">
             <div :class="css.listOne" v-for="one in datas">
-                  {{one}}
+              最新客户 《拿铁11》
+              <span :class='css.date'>2016.06.29</span>
             </div>
       </div>
 </template>

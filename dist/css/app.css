@@ -442,7 +442,12 @@
   letter-spacing: 5px;
   color: gray;
 }
-
+._1OTpm {
+  color: #0066cc;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 0 4px;
+}
 .aBBfh ._3QOHF span {
   cursor: pointer;
 }
@@ -465,21 +470,22 @@
 .eRReu {
     padding: 0 20px;
 }
+._23LUU {
+  font-size: 13px;
+color: gray;
+position: absolute;
+right: 13px;
+}
 
-._3feXL:first-child {
-  padding-top: 0;
-}
-._3feXL:last-child {
-  border-bottom: 0;
-}
 ._3feXL {
-  margin-bottom: 11px;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
   padding: 10px 0;
   width: 90%;
   margin: 0 auto;
   padding-left: 10px;
   color: #333;
+  margin-bottom: 6px;
+  font-size: 13px;
 }
 ._1br7V {
   border: 1px solid #ddd;

@@ -1,7 +1,8 @@
 <template lang="html">
       <div class="">
             <div :class="css.listOne" v-for="one in datas">
-                  {{one}}
+              订制品订单 <span :class='css.inrow' @click="goTo">SJ2016100008</span> 暂未处理
+              <span :class='css.date'>2016.06.29</span>
             </div>
       </div>
 </template>
@@ -26,7 +27,11 @@ export default {
   computed: {},
   ready: function () {},
   attached: function () {},
-  methods: {},
+  methods: {
+    goTo: function(){
+        this.$router.go({path:"specmgr/apply", query:{orderid:"SJ2016100008"}});
+    }
+  },
   components: {}
 }
 </script>

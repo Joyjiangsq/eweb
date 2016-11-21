@@ -1,7 +1,8 @@
 <template lang="html">
       <div class="">
             <div :class="css.listOne" v-for="one in datas">
-                  {{one}}
+              备货订单 <span :class='css.inrow' @click="goTo">FZBH2016100026_101</span> 暂未处理
+              <span :class='css.date'>2016.06.29</span>
             </div>
       </div>
 </template>
@@ -14,7 +15,7 @@ export default {
   props:{
     datas:{
       default: function(){
-        return ["beihuo 1dfoiuoiswjfosoif12122","beihudfoiuoiswjfosoifo","beihuodfoiuoiswjfosoif-dfoiuoiswjfosoif---"]
+        return [1,2,3,4,5,6,7]
       }
     }
   },
@@ -26,7 +27,11 @@ export default {
   computed: {},
   ready: function () {},
   attached: function () {},
-  methods: {},
+  methods: {
+    goTo: function(){
+        this.$router.go({path:"prestore/detail", query:{orderid:"FZBH2016100026_101"}});
+    }
+  },
   components: {}
 }
 </script>

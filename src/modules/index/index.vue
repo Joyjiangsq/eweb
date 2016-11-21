@@ -19,7 +19,10 @@
                                  </div>
                           </div>
                           <div slot="panelContent">
-                            xxxx
+                            <div :class='inCss.listOne'>
+                                  <span :class='inCss.inrow'>销售管理操作手册.ppt</span>
+                                  <span :class='inCss.date'>2016.06.29</span>
+                            </div>
                           </div>
                       </panel>
                 </div>
@@ -35,7 +38,10 @@
                              </div>
                       </div>
                       <div slot="panelContent">
-                        xxxx
+                        <div :class='inCss.listOne'>
+                              <span :class='inCss.inrow'>分站下单.doc</span>
+                              <span :class='inCss.date'>2016.06.29</span>
+                        </div>
                       </div>
                   </panel>
                 </div>

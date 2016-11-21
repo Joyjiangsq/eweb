@@ -1,7 +1,8 @@
 <template lang="html">
       <div class="">
             <div :class="css.listOne" v-for="one in datas">
-                  {{one}}
+                  采购订单 <span :class='css.inrow' @click="goTo">FZCG201611100184_101</span> 暂未处理
+                  <span :class='css.date'>2016.06.29</span>
             </div>
       </div>
 </template>
@@ -14,7 +15,7 @@ export default {
   props:{
     datas:{
       default: function(){
-        return ["caigou--01011","caigou","caigou----"]
+        return [1,2,3,4,5,6,7]
       }
     }
   },
@@ -26,7 +27,11 @@ export default {
   computed: {},
   ready: function () {},
   attached: function () {},
-  methods: {},
+  methods: {
+    goTo: function(){
+        this.$router.go({path:"purchase/purchasedetail", query:{orderid:"FZCG201611100184_101"}});
+    }
+  },
   components: {}
 }
 </script>
