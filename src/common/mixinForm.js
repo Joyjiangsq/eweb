@@ -51,6 +51,7 @@ let  formBase = {
           },
           watch: {
             "validatestart": function(){
+               this.value = this.value.trim(); // 去除空格
               if(this.must) {
                 if(!this.value || this.value == "") {
                   this.$dispatch("onvalidate", {res:"fail", msg: "该项必须填写"});

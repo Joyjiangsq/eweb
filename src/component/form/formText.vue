@@ -101,6 +101,7 @@ export default {
          this.$dispatch("onvalidate", {res:"success", msg: "被忽略的项目"});
          return false;
        }
+      
         // 判断验证邮件格式
         if(this.email) {
             if(!/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(this.value)) {
