@@ -25,7 +25,7 @@
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">驳回</btn>
           </div>
 
-          <dialog :flag="showBack" title="请输入驳回原因" @dialogclick="dialogclick">
+          <dialog :flag.sync="showBack" title="请输入驳回原因" @dialogclick="dialogclick">
                 <div slot="containerDialog">
                       <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValueIpt" placeholder="请填写驳回理由" ></textarea>
                 </div>

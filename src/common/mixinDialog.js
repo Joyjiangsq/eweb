@@ -44,7 +44,8 @@ let dialogBase = {
     attached: function () {},
     methods: {
       hide() {
-          this.modalshow = false;
+          // this.modalshow = false;
+          this.flag = !this.flag;
           this.$dispatch("dialogclick", {action: "close"});
       }
     },

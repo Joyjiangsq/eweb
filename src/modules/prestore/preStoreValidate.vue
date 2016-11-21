@@ -13,12 +13,12 @@
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
 
-        <dialog :flag="show" title="请输入驳回原因" @dialogclick="dialogclick">
+        <dialog :flag.sync="show" title="请输入驳回原因" @dialogclick="dialogclick">
               <div slot="containerDialog">
                     <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValue" placeholder="请填写驳回理由" ></textarea>
               </div>
         </dialog>
-        <dialog :flag="priceShow" title="核价结果"  @dialogclick="closeAction">
+        <dialog :flag.sync="priceShow" title="核价结果"  @dialogclick="closeAction">
               <div slot="containerDialog">
                 <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
                 <propertytext key="服务费" :value="priceInfo.sprice"></propertytext>

@@ -1,5 +1,5 @@
 <template lang="html">
-  <dialog :flag="contr" title="选择客户地址">
+  <dialog :flag.sync="contr" title="选择客户地址">
         <div class="" slot="containerDialog">
               <div :class="css.rowItem" v-for="one in datas">
                     <div @click="oneClickHandler(one)">{{one.Address}}</div>

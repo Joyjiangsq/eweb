@@ -198,7 +198,7 @@
           <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back"  @clickaction="resub">重新提交</btn></span>
         </div>
 
-        <dialog :flag="showReDialog" title="请输入回退原因" @dialogclick="rebackDialog">
+        <dialog :flag.sync="showReDialog" title="请输入回退原因" @dialogclick="rebackDialog">
               <div slot="containerDialog">
                     <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValueipt" placeholder="请填写回退理由" ></textarea>
               </div>

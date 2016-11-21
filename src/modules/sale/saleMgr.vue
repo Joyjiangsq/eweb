@@ -16,7 +16,7 @@
     <div  :class="css.customRight">
           <tb :headercaption="subHeaders"  :needindex="false" :load="subLoad" url="sales/all-sub-orders" :params="subSearchParams"  :events="subTableEvents"></tb>
     </div>
-    <dialog :flag="showCode" title="二维码">
+    <dialog :flag.sync="showCode" title="二维码">
           <div slot="containerDialog">
                   <div :class="css.inBoxCode">
                     <propertytext key="订单号" :value="curData.U_FZOrder"></propertytext>

@@ -70,7 +70,7 @@
         </pagepanel>
 
         <!--回款对话框-->
-        <dialog :flag="!showBackCashDialog" @dialogclick="dialogClickHandler" title="回款">
+        <dialog :flag.sync="!showBackCashDialog" @dialogclick="dialogClickHandler" title="回款">
               <div  slot="containerDialog">
                   <propertytext key="账户余额" :value="accountBaseInfo.Balance | mondec '2' '元'"></propertytext>
                   <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount | mondec '2' '元'"></propertytext>

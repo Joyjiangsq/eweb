@@ -35,7 +35,7 @@
               <span :class="css.itemone"><btn @clickaction="backClickHandler" btnname="btn-primary" iconname="icon-back">驳回</btn></span>
           </div>
 
-          <dialog :flag="showReDialog" title="请输入驳回原因" @dialogclick="dialogClickHandler">
+          <dialog :flag.sync="showReDialog" title="请输入驳回原因" @dialogclick="dialogClickHandler">
                 <div slot="containerDialog">
                       <textarea name="name" style="width: 100%" rows="8" cols="40" v-model="backValueipt" placeholder="请填写驳回理由" ></textarea>
                 </div>

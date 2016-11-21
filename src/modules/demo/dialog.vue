@@ -17,7 +17,7 @@
           </div>
           <div slot="panelContent">
                 <button type="button" name="button" @click="smallHandler">点击</button>
-                <smalltip :flag="stag"  :msg="msg"></smalltip>
+                <smalltip :flag.sync="stag"  :msg="msg"></smalltip>
           </div>
           <div slot="panelFooter">
 
@@ -46,7 +46,7 @@
           </div>
       </panel>
 
-      <dialog :flag="flagdep">
+      <dialog :flag.sync="flagdep">
             <div class="" slot="containerDialog">
                 这是内容区域
             </div>

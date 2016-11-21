@@ -17,8 +17,9 @@
             <pg :totals="totals" :curpage.sync="searchParams.page"></pg>
     </pagepanel>
     <!--新增对话框-->
-    <dialog :flag="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
+    <dialog :flag.sync="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
+              <div class="" v-if="dialogMap.showFormDialog">
                 <formcb keyid="name" labelname="客户来源：" v-if="isE" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
                 <formtext labelname="e站客服：" v-if="isE"  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
@@ -26,9 +27,10 @@
                 <formtext labelname="手机号码：" :read="curAction!='add'"  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
 
                 <house :startvalidate="startvalidate" :curaction="curAction" :houselist="formData.house_list" @errorh="errorh"></house>
+              </div>
           </div>
     </dialog>
-    <dialog :flag="showRepeat" title="提示">
+    <dialog :flag.sync="showRepeat" title="提示">
           <div class="" slot="containerDialog">
               {{descTip}}
           </div>

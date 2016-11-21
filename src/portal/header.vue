@@ -11,11 +11,11 @@
         </div>
 
         <!--退出提示-->
-        <dialogtip :flag="exitTag" @dialogclick="confirmLogout" msg="你确定退出吗？">
+        <dialogtip :flag.sync="exitTag" @dialogclick="confirmLogout" msg="你确定退出吗？">
 
         </dialogtip>
         <!--修改密码-->
-        <dialog :flag="flagdep" @dialogclick="dialogclick">
+        <dialog :flag.sync="flagdep" @dialogclick="dialogclick">
               <div class="" slot="containerDialog">
                       <formtext labelname="原密码：" inputtype="password" formname='old_passwd' :vertical="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="新密码：" inputtype="password" formname='new_passwd' :vertical="true" :validatestart="validate" @onvalidate="validateHandler" :value.sync="passwd1"></formtext>
@@ -23,7 +23,7 @@
               </div>
         </dialog>
 
-        <stip type="error" :msg = "msg"  :flag = "shouTips"></stip>
+        <stip type="error" :msg = "msg"  :flag.sync = "shouTips"></stip>
   </div>
 
 

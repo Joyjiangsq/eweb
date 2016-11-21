@@ -12,15 +12,17 @@
               </div>
               <pg :totals="totals" :curpage.sync="searchParams.page"></pg>
         </pagepanel>
-        <dialog :flag="flagdep" @dialogclick="diaologClick" :title="optitle">
+        <dialog :flag.sync="flagdep" @dialogclick="diaologClick" :title="optitle">
               <div class="" slot="containerDialog">
+                <div class="" v-if="flagdep">
                   <formtext labelname="姓名：" :value.sync="addParams.CardName"  placeholder="请输入姓名" :vertical="true" formname='CardName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="电话：" :value.sync="addParams.phone"  placeholder="请输入电话" :vertical="true" :phone="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formcb keyid="name" labelname="职位：" dropfixed="dropfixed" keyname="name" formname="roles" :vertical="true" :value.sync="addParams.roles" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+                </div>
               </div>
         </dialog>
         <!--删除提示-->
-        <dialogtip :flag="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
+        <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
     </div>
 </template>
 

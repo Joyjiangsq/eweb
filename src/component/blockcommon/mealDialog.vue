@@ -6,7 +6,7 @@
         </span>
 
         <!--选品对话框-->
-        <dialog :flag="showd" title="套餐商品" :classname="css.dcontent">
+        <dialog :flag.sync="showd" title="套餐商品" :classname="css.dcontent">
               <div slot="containerDialog">
                     <tb :headercaption="headercaption"  :datas="listDatas"></tb>
               </div>

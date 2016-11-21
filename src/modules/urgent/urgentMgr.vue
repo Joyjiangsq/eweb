@@ -13,7 +13,7 @@
               <pg :totals="totals" :curpage="searchParams.page"></pg>
         </pagepanel>
 
-        <dialog :flag="show" title="加急" @dialogclick="dialogclick">
+        <dialog :flag.sync="show" title="加急" @dialogclick="dialogclick">
               <div slot="containerDialog">
                     <formcb keyid="value" labelname="加急金额：" @itemclick="itemclick" :value.sync="formParams.LineTotala" :vertical="true" keyname="name" dropfixed="dropfixed" formname="LineTotala" :datas="priceArry" :validatestart="validate" @onvalidate="validateHandler"></formcb>
                     <formtext labelname="自定义金额："  :vertical="true" placeholder="请输入自定义金额" :must="selfControl" :value.sync="formParams.LineTotalb" formname='LineTotalb' v-show="selfControl"   :validatestart="validate"  @onvalidate="validateHandler"></formtext>

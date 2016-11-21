@@ -1,7 +1,7 @@
 <template>
     <div class="">
       <!--产品集合-->
-      <dialog :flag="show" title="产品集" >
+      <dialog :flag.sync="show" title="产品集" >
             <div slot="containerDialog">
                 <tb  :load="load" url="" :params="searchParams" :headercaption="headerCaption"></tb>
             </div>

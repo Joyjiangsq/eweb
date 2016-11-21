@@ -14,23 +14,25 @@
         </pagepanel>
 
         <!--新增对话框-->
-        <dialog :flag="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
+        <dialog :flag.sync="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
               <div class="" slot="containerDialog">
-                    <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
-                    <formtext labelname="系统账号："  :value.sync="addFormData.CardCode" :must="false"  :vertical="true" :read="true" :ingnore='true' ></formtext>
-                    <formtext labelname="用户电话：" :value.sync="addFormData.phone"  :must="false" :vertical="true" :read="true" :ingnore='true' ></formtext>
-                    <formrd labelname="是否启用：" :vertical="true" formname="ValidFor" :value.sync="addFormData.ValidFor" :datas="[{label:'是', id:'Y', checked: false},{label:'否', id:'N', checked: false},]"  :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formrd>
-                    <formck labelname="角色：" :vertical="true" formname="roles" lname="name" lkey="name" :value.sync="addFormData.roles"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                    <div class="" v-if="showFormDialog">
+                      <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
+                      <formtext labelname="系统账号："  :value.sync="addFormData.CardCode" :must="false"  :vertical="true" :read="true" :ingnore='true' ></formtext>
+                      <formtext labelname="用户电话：" :value.sync="addFormData.phone"  :must="false" :vertical="true" :read="true" :ingnore='true' ></formtext>
+                      <formrd labelname="是否启用：" :vertical="true" formname="ValidFor" :value.sync="addFormData.ValidFor" :datas="[{label:'是', id:'Y', checked: false},{label:'否', id:'N', checked: false},]"  :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formrd>
+                      <formck labelname="角色：" :vertical="true" formname="roles" lname="name" lkey="name" :value.sync="addFormData.roles"  :datas="getRoles" :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formck>
+                    </div>
               </div>
         </dialog>
         <!--重设角色对话框-->
-        <dialog :flag="showRolesDialog" title="更改角色" @dialogclick="rolesDialogClickHandler">
+        <dialog :flag.sync="showRolesDialog" title="更改角色" @dialogclick="rolesDialogClickHandler">
               <div class="" slot="containerDialog">
                   <formck labelname="角色：" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getRoles" :validatestart="newForm.validate1" @onvalidate="newForm.validateHandler1"></formck>
               </div>
         </dialog>
         <!--重置密码提示-->
-        <dialogtip :flag="resetDialog" @dialogclick="confirmReset" msg="你确定重置密码吗？">
+        <dialogtip :flag.sync="resetDialog" @dialogclick="confirmReset" msg="你确定重置密码吗？">
     </div>
 </template>
 
