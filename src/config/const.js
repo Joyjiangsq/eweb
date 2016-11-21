@@ -76,6 +76,17 @@ export const rolesS = [
   {name:"财务", id:"财务"}
 ]
 
+// 提现烈性
+export const accountTypes = [
+  {name:"Pos刷入", id:""},
+  {name:"打款", id:""},
+  {name:"支付宝收入", id:""},
+  {name:"支付宝佣金", id:""},
+  {name:"银行手续费", id:""},
+  {name:"分站提现", id:""},
+  {name:"扣款", id:""}
+]
+
 // 厨柜订制品参数集合
 // 系列
 export const series = [{name:"国民包", id:"国民包"},{name:"名品包", id:"名品包"},{name:"吸塑", id:"吸塑"},{name:"实木", id:"实木"},{name:"尊享包", id:"尊享包"}]

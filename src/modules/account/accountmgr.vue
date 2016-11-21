@@ -3,8 +3,9 @@
         <pagepanel classname="needpadding" direct="bottom">
 
           <div class="">
+            <propertytext key="账户名称" :horizontal="true" :value="accountBaseInfo.U_AccountName"></propertytext>
             <propertytext key="邮箱" :horizontal="true" :value="accountBaseInfo.U_Email"></propertytext>
-            <propertytext key="账号" :horizontal="true" :value="accountBaseInfo.U_AccountName"></propertytext>
+            <propertytext key="提现账号" :horizontal="true" :value="accountBaseInfo.U_BankName"></propertytext>
             <propertytext key="所属银行" :horizontal="true" :value="accountBaseInfo.U_BBank"></propertytext>
             <propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_BAddress"></propertytext>
           </div>
@@ -23,7 +24,7 @@
                             <span :class='acCss.cash'>{{accountBaseInfo.Balance}}</span>
                             <span :class='acCss.unit'>元</span>
                       </div> -->
-                      <span :class="acCss.backCash"><btn  @clickaction="backCashHandler">回款</btn></span>
+                      <span :class="acCss.backCash"><btn  @clickaction="backCashHandler">提现</btn></span>
                 </span>
 
                 <span :class='acCss.itemone'>
@@ -69,17 +70,26 @@
               <pg :totals="totals"  :curpage.sync="searchParams.page"></pg>
         </pagepanel>
 
-        <!--回款对话框-->
-        <dialog :flag.sync="showBackCashDialog" @dialogclick="dialogClickHandler" title="回款">
+        <!--提现对话框-->
+        <dialog :flag.sync="showBackCashDialog" @dialogclick="dialogClickHandler" title="提现">
               <div  slot="containerDialog">
                   <propertytext key="账户余额" :value="accountBaseInfo.Balance | mondec '2' '元'"></propertytext>
                   <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount | mondec '2' '元'"></propertytext>
-                  <propertytext key="可回款金额" :value="accountBaseInfo.AvailableBalance | mondec '2' '元'"></propertytext>
-                  <formtext labelname="回款金额：" :value.sync="backCashParams.U_TraAmount" placeholder="请输入回款金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <propertytext key="可提现金额" :value="accountBaseInfo.AvailableBalance | mondec '2' '元'"></propertytext>
+                  <formtext labelname="提现金额：" :value.sync="backCashParams.U_TraAmount" placeholder="请输入提现金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="备注：" :value.sync="backCashParams.Memo" placeholder="备注" :vertical="true" formname='backCash'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>
         </dialog>
+        <!--提示对话框-->
+        <dialog :flag.sync="showtips" title="注意">
+              <div  slot="containerDialog">
+                  <propertytext key="到账金额" :value="finalData.U_TraAmount | mondec '2' '元'"></propertytext>
+                  <propertytext key="手续费" :value="finalData.U_Poundage | mondec '2' '元'"></propertytext>
+              </div>
+              <div class="" slot="footerDialog">
 
+              </div>
+        </dialog>
     </div>
 </template>
 
@@ -90,6 +100,7 @@ import pageBase from "common/mixinPage.js";
 import propertytext from "component/form/propertyText.vue";
 import formtext from "component/form/formText";
 import icon from "component/sprite/icon";
+import {accountTypes} from "config/const";
 import Utils from "common/Utils";
 console.log(Utils.getUserInfo());
 export default {
@@ -105,18 +116,20 @@ export default {
           U_AccountName:"", // 账号
           U_BAddress:"", // 开户行地址
           CreditlineBalance:"", // 授信余额
-          AvailableBalance:"", //可回款金额
+          AvailableBalance:"", //可提现金额
           U_BBank: "" // 所属银行
       },
       acCss,
+      showtips: false,
+      finalData:{U_Poundage:0, U_TraAmount:0},
       // 表格头
       headercaption:[{name:"类型", labelValue:"U_Type",type:"data"},{name:"凭证日期", labelValue:"TaxDate", type:"data"},{name:"借方金额", labelValue:"Debit",type:"data"}, {name:"贷方金额", labelValue:"Credit",type:"data"},
                     {name:"科目名称", labelValue:"AcctName",type:"data"},{name:"备注", labelValue:"xx",type:"data", adapterFun: function(d){return this.remarkText(d)}}],
-      // 验证回款表单参数
+      // 验证提现表单参数
       validate: false,
-      // 显示回款对话框
+      // 显示提现对话框
       showBackCashDialog: false,
-      backCashParams: {validate: true},  // 回款参数
+      backCashParams: {validate: true},  // 提现参数
       btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
@@ -132,7 +145,8 @@ export default {
     // 查询参数初始化
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"凭证日期："}];
+      return [{type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"凭证日期："},
+              {type:"combobox", keyid:"id", value:q.typeCode || "", labelname:"name", keyname:"typeCode", labelcaption:"类型", datas:accountTypes} ];
     }
   },
   ready: function () {
@@ -169,7 +183,7 @@ export default {
          this.backCashParams.validate = true;
          setTimeout(()=>{
             if(this.backCashParams.validate) {
-                  if(this.backCashParams.U_TraAmount> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可回款金额");
+                  if(this.backCashParams.U_TraAmount> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可提现金额");
                   if(this.backCashParams.U_TraAmount*1 < 6) this.showMsg("warn", "体现金额不得小于6元");
                   else {
                     delete this.backCashParams.validate;
@@ -178,7 +192,9 @@ export default {
                     this.$http.post(this.$Api+ "station-account",nobj).then((res) => {
                           let r = res.json();
                           this.$set("showBackCashDialog", !this.showBackCashDialog);
-                          this.showMsg("success", "回款申请成功");
+                          this.showMsg("success", "提现申请成功");
+                          this.finalData = Object.assign({},this.finalData, r.data);
+                          this.showtips = !this.showtips;
                           this.loadInfo();
                     })
                   }
