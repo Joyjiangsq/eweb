@@ -70,7 +70,7 @@
         </pagepanel>
 
         <!--回款对话框-->
-        <dialog :flag.sync="!showBackCashDialog" @dialogclick="dialogClickHandler" title="回款">
+        <dialog :flag.sync="showBackCashDialog" @dialogclick="dialogClickHandler" title="回款">
               <div  slot="containerDialog">
                   <propertytext key="账户余额" :value="accountBaseInfo.Balance | mondec '2' '元'"></propertytext>
                   <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount | mondec '2' '元'"></propertytext>
@@ -114,19 +114,15 @@ export default {
                     {name:"科目名称", labelValue:"AcctName",type:"data"},{name:"备注", labelValue:"xx",type:"data", adapterFun: function(d){return this.remarkText(d)}}],
       // 验证回款表单参数
       validate: false,
-      // 测试数据
-      testData: [{"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
-                  {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
-                  {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"},
-                  {"orderid":"xxx","name":"家装e站啦啦啦","date":"xxx","type":"xxx","contact":"xxx","phone":"xxx","account":"xxx","cash":"12"}],
       // 显示回款对话框
-      showBackCashDialog: true,
+      showBackCashDialog: false,
       backCashParams: {validate: true},  // 回款参数
       btnsData:[{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
             if(d.action == "export") {
                   //  TODO
+                  window.open(this.$Api + "station-account/bills/download?" + $.param(this.searchParams));
             }
         }
       }
