@@ -20,7 +20,7 @@
                           <span v-if="sone.type == 'component'" >
                               <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </span>
-                          <span v-if="sone.type == 'index'" >{{order + 1}}</span>
+                          <span v-if="sone.type == 'index'" >{{getIndex(order)}}</span>
                           <span v-if="sone.type == 'operator'" >
                                 <iconbar v-if="sone.icon"  :buttons="btnData(done,order)"  @btnclick="btnEventHandler"></iconbar>
                                 <btnbar :buttons="btnData(done,order)"  @btnclick="btnEventHandler" v-else></btnbar>
@@ -80,6 +80,12 @@ export default {
       if(one == "") return "-"
       if(one == "undefined" || !one) return ""
       return one;
+    },
+
+    getIndex: function(index) {
+        let p = this.params.page || 1;
+        p = p*1;
+        return (index*1+1 + (p-1)*10)
     }
   },
   ready: function () {

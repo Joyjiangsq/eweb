@@ -7,7 +7,7 @@ var webconfig = {
   devtool: '#eval-source-map',
   entry: {
       app: ['webpack-hot-middleware/client?noInfo=true&reload=true','./src/start.js'],
-      // vendor:["jquery"]
+      vendor:["jquery"]
   },
 
   output: {
