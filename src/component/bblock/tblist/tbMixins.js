@@ -15,7 +15,7 @@ let tbMixin = {
           twoLevelData:[],   // 二级分类
           threeLevelData:[], // 三级分类
            totals:0,                 // 表格load结束之后 传递给分页的页数
-           searchParams: {page: 1}, // 初始查询依据
+           searchParams: {page: 1, type:"bh"}, // 初始查询依据   备货查询与下单查询区分  剔除库存
            load: this.toload,                 // 表格是否加载开关
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
