@@ -5,9 +5,9 @@
           <div class="">
             <propertytext key="账户名称" :horizontal="true" :value="accountBaseInfo.U_AccountName"></propertytext>
             <propertytext key="邮箱" :horizontal="true" :value="accountBaseInfo.U_Email"></propertytext>
-            <propertytext key="提现账号" :horizontal="true" :value="accountBaseInfo.U_BankName"></propertytext>
+            <propertytext key="提现账号" :horizontal="true" :value="accountBaseInfo.U_BankName"></propertytext></br>
             <propertytext key="所属银行" :horizontal="true" :value="accountBaseInfo.U_BBank"></propertytext>
-            <propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_BAddress"></propertytext>
+            <span :class='acCss.badd'><propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_BAddress"></propertytext></span>
           </div>
           <div :class="acCss.accountTitleBox">
               <div :class="acCss.accountTitleIn">
@@ -81,7 +81,7 @@
               </div>
         </dialog>
         <!--提示对话框-->
-        <dialog :flag.sync="showtips" title="注意">
+        <dialog :flag.sync="showtips" title="友情提示">
               <div  slot="containerDialog">
                   <propertytext key="到账金额" :value="finalData.U_TraAmount | mondec '2' '元'"></propertytext>
                   <propertytext key="手续费" :value="finalData.U_Poundage | mondec '2' '元'"></propertytext>
@@ -102,7 +102,6 @@ import formtext from "component/form/formText";
 import icon from "component/sprite/icon";
 import {accountTypes} from "config/const";
 import Utils from "common/Utils";
-console.log(Utils.getUserInfo());
 export default {
   mixins: [pageBase],
   data: function () {
@@ -145,8 +144,8 @@ export default {
     // 查询参数初始化
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"凭证日期："},
-              {type:"combobox", keyid:"id", value:q.typeCode || "", labelname:"name", keyname:"typeCode", labelcaption:"类型", datas:accountTypes} ];
+      return [{type:"combobox", keyid:"id", value:q.typeCode || "", labelname:"name", keyname:"typeCode", labelcaption:"类型", datas:accountTypes},
+              {type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"凭证日期："}];
     }
   },
   ready: function () {

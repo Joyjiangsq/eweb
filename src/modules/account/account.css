@@ -38,27 +38,28 @@
     bottom: 0;
 }
 .mintitle {
-  font-weight: bold;
-  font-size: 15px;
-  margin-right: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 5px;
 }
-
 .cashText {
-  color: #e7551e;
-margin-left: 5px;
-margin-right: 5px;
+    color: #e7551e;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 .tonedesc {
-      margin: 0 10px;
+    margin: 0 10px;
 }
 .titledesc {
-  border: 1px solid red;
-  width: 16px;
-  height: 16px;
-  text-align: center;
-  border-radius: 10px;
-  margin-right: 5px;
-  font-size: 12px;
-  line-height: 16px;
-
+    border: 1px solid red;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 5px;
+    font-size: 12px;
+    line-height: 16px;
+}
+.badd {
+    margin-left: 65px;
 }
