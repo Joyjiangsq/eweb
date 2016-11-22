@@ -116,6 +116,9 @@ export default {
                   this.curaction = "back";
                   this.getchecks = !this.getchecks;
             }
+            else if(d.action == "export") {
+              window.open(this.$Api+"stockpiles/download?" + $.param(this.searchParams));
+            }
         }
       },
       tableEvents:{

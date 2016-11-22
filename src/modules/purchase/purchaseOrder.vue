@@ -69,6 +69,9 @@ export default {
                   if(this.orderids.length == 0) this.showMsg("warn", "请至少选择一项")
                   else   this.show = !this.show;
             }
+            else if(d.action == "export") {
+              window.open(this.$Api+"purchases/download?" + $.param(this.searchParams));
+            }
         }
       },
       footerClick: {

@@ -28,15 +28,15 @@
       "pre-deploy-local": "echo '    ○ 准备部署开发环境 …'",
       "post-deploy" : "echo 'start web pages.'"
     },
-    "staging":{
-      "user": "node",
+    "test":{
+      "user": "root",
       "host": "172.20.8.110",
       "ref": "origin/master",
-      "repo": "git@git.coding.net:brainqi/substation-admin-sys-api.git",
-      "path": "/var/www/node/substation-admin-sys-api",
+      "repo": "git@git.coding.net:davych/substation.git",
+      "path": "/var/www/nodejs/web_substation",
       "ssh_options": "StrictHostKeyChecking=no",
-      "pre-deploy-local": "echo '    ○ 准备部署预生产环境 …'",
-      "post-deploy" : "npm install && NODE_ENV=staging pm2 startOrRestart start-app.json"
+      "pre-deploy-local": "echo '    ○ 准备部署测试环境 …'",
+      "post-deploy" : "echo 'start web pages.'"
     }
   }
 }

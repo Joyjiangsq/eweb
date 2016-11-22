@@ -1,7 +1,7 @@
 #!/bin/bash
 e=$1
 echo "$e"
-if [[ $e != 'pro' && $e != 'dev' && $e != 'staging' ]]
+if [[ $e != 'pro' && $e != 'dev' && $e != 'staging' && $e != 'test' ]]
  then
   e='dev'
 fi

@@ -1,7 +1,7 @@
 <template lang="html">
       <div class="">
             <div :class="css.listOne" v-for="one in datas">
-              订制品订单 <span :class='css.inrow' @click="goTo">SJ2016100008</span> 暂未处理
+              定制品订单 <span :class='css.inrow' @click="goTo">SJ2016100008</span> 暂未处理
               <span :class='css.date'>2016.06.29</span>
             </div>
       </div>

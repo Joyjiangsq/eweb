@@ -61,6 +61,13 @@ export default {
 
   },
   ready: function () {
+    // if(typeof(this.value) == "string") {
+    //   this.value = [this.value];
+    //   setTimeout(()=>{
+    //     this.events.checkClick.call(this._context, this.value);
+    //     this.$dispatch("checkclick", this.value);
+    //   })
+    // }
   },
   attached: function () {},
   created: function(){
@@ -107,7 +114,8 @@ export default {
   watch:{
     "value": function(){
       console.log(this.value);
-        this.setRender();
+      if(typeof(this.value) == "string")  this.value = [this.value];
+      else this.setRender();
     }
   }
 }

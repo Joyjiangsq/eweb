@@ -70,7 +70,7 @@ export default {
       tabArray:[{labelName:"销售订单", id: "xiaoshoucom", show:false, component: saleList},
                 {labelName:"采购订单", id: "caigou", show:false, component: purchaseList},
                 {labelName:"备货订单", id: "beihuo", show:false, component: backWillList},
-                {labelName:"订制品", id: "dingzhipin", show:false, component: specWillList},
+                {labelName:"定制品", id: "dingzhipin", show:false, component: specWillList},
                 {labelName:"客户数据", id: "kehu", show:false, component: customWillList}]
     }
   },

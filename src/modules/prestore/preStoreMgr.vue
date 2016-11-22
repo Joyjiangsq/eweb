@@ -64,6 +64,9 @@ export default {
             if(d.action == "add") {
                 this.$router.go({path:"prestore/add"});
             }
+            else if(d.action == "export") {
+              window.open(this.$Api+"stockpiles/download?" + $.param(this.searchParams));
+            }
         }
       },
       tableEvents:{

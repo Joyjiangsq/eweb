@@ -17,6 +17,7 @@
         <dialog :flag.sync="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
               <div class="" slot="containerDialog">
                     <div class="" v-if="showFormDialog">
+                      {{addFormData | json}}
                       <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
                       <formtext labelname="系统账号："  :value.sync="addFormData.CardCode" :must="false"  :vertical="true" :read="true" :ingnore='true' ></formtext>
                       <formtext labelname="用户电话：" :value.sync="addFormData.phone"  :must="false" :vertical="true" :read="true" :ingnore='true' ></formtext>
@@ -108,6 +109,9 @@ export default {
       btnEvents:{
         btnClick: function(d){
             if(d.action == "add") this.$set("showFormDialog", !this.showFormDialog);
+            else if(d.action == "export") {
+              window.open(this.$Api+"users/download?" + $.param(this.searchParams));
+            }
         }
       }
     }

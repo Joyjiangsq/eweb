@@ -117,6 +117,9 @@ export default {
                   this.$set("curAction", "add");
                   this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
+              else if(d.action == "export") {
+                window.open(this.$Api+"customers/download?" + $.param(this.searchParams));
+              }
         }
       }
 
@@ -125,9 +128,9 @@ export default {
   computed: {
     headercaption:function(){
         let headerData = [{name:"业主编号", labelValue:"CardCode", type:"data"},{name:"业主名称", labelValue:"CardName",type:"data"},
-                          {name:"业主联系方式", labelValue:"Phone2",type:"data"}]
+                          {name:"业主联系方式", labelValue:"Phone2",type:"data"},{name:"客户来源", labelValue:"U_ComeFrom",type:"data"}]
         if(this.isE) {
-            headerData.push({name:"客户来源", labelValue:"U_ComeFrom",type:"data"});
+            // headerData.push({name:"客户来源", labelValue:"U_ComeFrom",type:"data"});
             headerData.push({name:"分站名称", labelValue:"station_name",type:"data"});
         }
         headerData.push({name:"创建人", labelValue:"createdByName",type:"data"});
@@ -140,8 +143,8 @@ export default {
       let sArr = [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号:"},
                   {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
                   {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"}]
+      sArr.push({type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst});
       if(this.isE) {
-        sArr.push({type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst});
         sArr.push({type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"});
       }
       sArr.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"});

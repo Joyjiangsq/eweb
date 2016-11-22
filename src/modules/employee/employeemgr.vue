@@ -84,6 +84,9 @@ export default {
               this.$set("curAction", "new");
               this.flagdep = !this.flagdep;
             }
+            else if(d.action="export") {
+              window.open(this.$Api+"employees/download?" + $.param(this.searchParams));
+            }
         }
       }
     }
