@@ -33,7 +33,7 @@ export default function adapterData(d) {
                     return true;
                   }
               }
-              else if((this.def*1 + d.U_Pquantity.def*0) < d.sale_counts*1) {
+              else if((this.def*1 + d.U_Pquantity.def*1) < d.sale_counts*1) {
                 this.defCss = "errorHappend";
                 this.errorMsg = "采购数量与使用库存数小于销售数量";
                 return true
