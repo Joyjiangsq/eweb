@@ -10,7 +10,7 @@
 
 }
 .horizontal .key {
-    min-width: auto;
+    min-width: 1px;
     font-weight: bold;
 }
 .form {
