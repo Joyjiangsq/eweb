@@ -17,7 +17,6 @@
         <dialog :flag.sync="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
               <div class="" slot="containerDialog">
                     <div class="" v-if="showFormDialog">
-                      {{addFormData | json}}
                       <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
                       <formtext labelname="系统账号："  :value.sync="addFormData.CardCode" :must="false"  :vertical="true" :read="true" :ingnore='true' ></formtext>
                       <formtext labelname="用户电话：" :value.sync="addFormData.phone"  :must="false" :vertical="true" :read="true" :ingnore='true' ></formtext>
@@ -48,7 +47,7 @@ import pageBase from "common/mixinPage.js";
 import dialogtip from "component/dialog/dialogTip";
 import Utils from "common/Utils";
 let headerData = [{name:"用户名", labelValue:"CardCode", type:"data"},{name:"姓名", labelValue:"CardName", type:"data"},{name:"角色", labelValue:"roles",type:"data"},
-                  {name:"状态", labelValue:"ValidFor_desc",type:"data",adapterFun: function(d) {return d.ValidFor =="Y"?"启用":"禁用"}},{name:"创建人", labelValue:"createdByName",type:"data"},
+                  {name:"状态", labelValue:"ValidFor_desc",type:"data",adapterFun: function(d) {return d.ValidFor =="Y"?"启用":"禁用"}},//{name:"创建人", labelValue:"createdByName",type:"data"},
                   {name:"创建时间", labelValue:"createAt_desc", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},{type:"operator", name:"操作"}]
 export default {
   mixins:[pageBase],
