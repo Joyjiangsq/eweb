@@ -5,7 +5,7 @@
           <span class='itemrow'>子订单状态：<span v-if = "one.U_OrderStatus != '店长驳回' && one.U_OrderStatus != 'e站驳回'">{{one.U_OrderStatus}}</span><span class="reback" v-else>{{one.U_OrderStatus}}</span></span>
           <span class='itemrow' v-if="one.U_OrderStatus == '店长驳回' || one.U_OrderStatus == 'e站驳回'">驳回理由：{{one.U_CloseWhy || '无'}}</span>
           <div :class="css.rowBox">
-                <tbbase :headercaption="header" :datas="one.sub_orders" :load="false"></tbbase>
+                <tplitem :item="one"></tplitem>
           </div>
           <formtext labelname="收货人："  :read="true" :value="one.rec_info.U_Consignee" ></formtext>
           <formtext labelname="收货人电话："  :read="true" :value="one.rec_info.U_ConsigneePhone"></formtext>
@@ -21,7 +21,7 @@
 
 <script>
 import formtextadd from "component/form/formTextAdd";
-import tbbase from "component/grid/tableListBase";
+import tplitem from "./tplitem";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
 import css from "./type.css"
@@ -40,16 +40,18 @@ export default {
   },
   data: function () {
     return {
-      css
+      css,
+
     }
   },
   computed: {
   },
   ready: function () {
+
   },
   attached: function () {},
   methods: {},
-  components: {tbbase, formtext, cascadeform, formtextadd}
+  components: {formtext, cascadeform, formtextadd, tplitem}
 }
 </script>
 

@@ -37,19 +37,19 @@
                                 <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </div>
                           <span v-if="sone.type == 'operator'" >
-                                <iconbar  :buttons="btnData(done, order)"  @btnclick="btnEventHandler"></iconbar>
+                                <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
                           </span>
 
                     </td>
               </tr>
-              <!-- <tr v-if="curaction == 'add'">
+              <tr v-if="curaction == 'add'">
                   <td  v-for="(index, sone) in headercaption">
                     <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
                     <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
                         <icon iconname="icon-elip"></icon>
                     </span>
                   </td>
-              </tr> -->
+              </tr>
         </tbody>
     </table>
   </div>
@@ -67,14 +67,17 @@ import tableBase from "common/mixinTable.js";
 export default {
   mixins:[tableBase],
   props:{
+    enterdep: {
+      type: String,
+      default:"id"
+    },
     curaction:{       // 身份不同 逻辑不同
       default:"add"
     },
     enterUrl: {
       type: String,
       default:""
-    },
-
+    }
   },
   data: function () {
     return {

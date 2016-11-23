@@ -79,6 +79,8 @@ export default {
         for (var i = 0; i < this.vlist.length; i++) {
           let one = this.vlist[i];
             for(var key in one) {
+              if(!one[key]) continue;
+              if(one[key] instanceof Array) continue;
               if(typeof(one[key]) == "object") {
                   if(one[key].tb_disabled) continue;
                   let res = one[key].validateFun(one, i);

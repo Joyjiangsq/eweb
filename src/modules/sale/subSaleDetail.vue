@@ -105,7 +105,7 @@ export default {
         U_PurchaseNum:this.orderId,
         sub_orders:sub.list || [],
         rec_info: sub.rec_info,
-        U_OrderStatus: 0
+        U_OrderStatus: -1 // 待采购
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
       this.$http.put(this.$Api+"purchases",JSON.stringify([params])).then((res) => {

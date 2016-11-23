@@ -31,7 +31,7 @@
                                 <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </div>
                           <span v-if="sone.type == 'operator'" >
-                                <iconbar  :buttons="btnData(done)"  @btnclick="btnEventHandler"></iconbar>
+                                <iconbar  :buttons="btnData(done, order)"  @btnclick="btnEventHandler"></iconbar>
                           </span>
                     </td>
               </tr>

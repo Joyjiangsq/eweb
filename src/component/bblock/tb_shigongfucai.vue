@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="">
-          <div v-if="curaction != 'alldetail'">
+          <div >
             <tb v-if="!detail" :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :curaction="curaction" :datas="vlist" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb>
             <tbbase :headercaption="headerdetail" :datas="testdata"  :load="false" v-else></tbbase>
               <!-- <tb :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :datas="testdata" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb> -->
@@ -9,9 +9,6 @@
               <formtextadd  labelname="收货地址：" :must="true"  :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  ></formtextadd>
               <!-- <cascadeform  labelname="收货地址："  :must="false" :detailneed="true" :read="true" formname="Address2" :value.sync="recdata.Address2"  :detailv.sync="recdata.detail" :validatestart="validate" @onvalidate="validateHandler"></cascadeform> -->
               <formtext labelname="备注：" :read="detail" :must="false" :value.sync="recdata.Comments"  placeholder=""  formname='Comments' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-          </div>
-          <div class="">
-              <itemtpl :testdata="testdata" :header="headerdetail"></itemtpl>
           </div>
 
           <!--选品对话框-->

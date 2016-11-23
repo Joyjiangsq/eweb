@@ -19,7 +19,7 @@
             </panel>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detailData.U_OrderStatus!='店长驳回'"></tblab>
+                <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail="detailData.U_OrderStatus!='店长驳回'"></tblab>
           </div>
           <div :class="css.footerBar" v-show="detailData.U_OrderStatus =='店长驳回'">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
@@ -89,7 +89,7 @@ export default {
         U_PurchaseNum:this.orderId,
         sub_orders:sub.list || [],
         rec_info: sub.rec_info,
-        U_OrderStatus: 0
+        U_OrderStatus: -1 // 待采购
       }
       if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
       this.$http.put(this.$Api+"stockpiles",JSON.stringify([params])).then((res) => {

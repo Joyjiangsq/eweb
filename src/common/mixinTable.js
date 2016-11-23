@@ -13,10 +13,6 @@ let tableBase = {
             type:Object,
             default: () => {}
           },
-          codevalue:{
-            type:String,
-            default:"id"
-          },
           // 头信息
           headercaption:{             // [{name:"姓名", labelValue:"name", checkBox: true, type:"data", sort: true, attr:""}, {type:"operator", name:"操作"}]
             type:Array,
@@ -144,7 +140,6 @@ let tableBase = {
                   }
                   let nd = Object.assign(one, rowData);
                   this.dataList.push(nd);
-                  // this.tpIds.push(one[this.codevalue]);
               }
                 this.$set("loading", false);
           },

@@ -2,12 +2,11 @@ import tb from "component/grid/tableSpec";
 import tbbase from "component/grid/tableListBase";
 import css from "./type.css";
 import dialog from "component/dialog/dialog";
-import itemtpl from "./itemtpl.vue";
-import {showTips} from "actions/index";
-import mdialog from "component/blockcommon/mealDialog";
-
 import formtext from "component/form/formText";
 import formtextadd from "component/form/formTextAdd";
+import {showTips} from "actions/index";
+import mdialog from "component/blockcommon/mealDialog";
+import Utils from "common/Utils";
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -25,6 +24,7 @@ export default {
         }
       },
     },
+
     curaction:{
       default: "add"
     },
@@ -54,20 +54,22 @@ export default {
               }
           }
       },
+      // 瓷砖，地板，洁具，集成吊顶，装修辅料，施工辅材的表格列都是一致的
       headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:this.curName + "cc", component:mdialog},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"dmw", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},
                     {name:"颜色", labelValue:"Color", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"采购数量", labelValue:"U_Pquantity", type:"edit", number: true},
+                    {name:"产品规格", labelValue:"Spec", type:"data"},
+                    {name:"采购数量", labelValue:"U_Pquantity", type:"edit", number: true},
                     {name:"转换数量", labelValue:"Quantity", type:"data"},
                     {name:"包装数量", labelValue:"SalPackUn",type:"data"},
                     {name:"包装单位", labelValue:"SalPackMsr",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"edit"},
                     ],
       headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:this.curName + "cc", component:mdialog},
+                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"dop", component:mdialog},
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"型号", labelValue:"U_Modle", type:"data"},
@@ -80,7 +82,8 @@ export default {
       showSelectDialog:false, // 选品对话框控制
       validateRec :true, // 验证 列表
       toload: false, // 展开选品对话框再加载
-      validateInfo: true // 验证 收件信息
+      validate:false, // 验证收件信息 开关
+      validateInfo: true // 验证 收件信息 标志
     }
   },
   computed: {
@@ -109,14 +112,16 @@ export default {
     },
     // 验证列表数据
     validateFun: function(){
+        if(this.concatFunc) this.concatFunc();
         this.validateRec = true;
         this.validateInfo = true;
         for (var i = 0; i < this.vlist.length; i++) {
           let one = this.vlist[i];
             for(var key in one) {
-                if(!one[key]) continue;
+              console.log(key);
+              if(!one[key]) continue;
+              if(one[key] instanceof Array) continue;
               if(typeof(one[key]) == "object") {
-                console.log(key);
                   if(one[key].tb_disabled) continue;
                   let res = one[key].validateFun(one, i);
                   if(!res) {this.validateRec = false;}
@@ -125,10 +130,10 @@ export default {
         }
         // 收件信息验证
         if(this.vlist.length != 0)  this.validate = !this.validate;
+        // else this.validateInfo = false;
         setTimeout(()=>{
           if(!this.validateRec || !this.validateInfo) this.$dispatch("fail", {project: this.curName});
           else {
-
               this.recdata.U_DstCutm = ""; // 分站编码  配送客户
               let params = {list: this.vlist, rec_info: this.recdata};
               if(this.eclosure) params["U_Enclosure"] = this.eclosure;
@@ -136,7 +141,7 @@ export default {
               params.U_AddCode = "1,2,3,4"; // 分站地址编码
               params.Descript = "";  // 分站地址描述
               params.WhsCode = "09"; // 仓库
-              params.U_DeWay = ""; // ZT-自提  PS-配送  备货下单的时候 没有默认
+              params.U_DeWay = "PS"; // ZT-自提  PS-配送
               this.$dispatch("success", {project:this.curName,data:params});
           }
         })
@@ -147,7 +152,7 @@ export default {
     },
 
     addoneHandler : function(d){
-        let one = this.adapterFun(d.data);
+        let one = this.adapterFun(d);
         this.vlist.push(one);
     }
   },
@@ -155,14 +160,15 @@ export default {
     if(!this.detail) {
       for (var i = 0; i < this.testdata.length; i++) {
         var one = this.testdata[i];
-        this.vlist.push(this.adapterFun(one));
+        let no = Utils.cloneObj(one);
+        this.vlist.push(this.adapterFun(no));
       }
     }
     if(this.curaction == "edit") {
       this.headercaption.splice(0,1);
     }
   },
-  components: {tb, dialog, tbbase, itemtpl,formtextadd,formtext},
+  components: {tb, dialog, tbbase, formtextadd, formtext},
   watch:{
     "subvalidate": function() {
         // 执行验证

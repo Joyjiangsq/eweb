@@ -9,6 +9,7 @@ export default function adapterData(d) {
            let one = item.list[i]; // 单条数据
            for (var k in one) {
               if(!one[k]) continue;
+              if(one[key] instanceof Array) continue;
               if(typeof(one[k]) == "object") {
                   if(one[k].def == "" || one[k].def == 0) {  one[k] = one[k].def || ""}
                   else if(!one[k].def) {}
