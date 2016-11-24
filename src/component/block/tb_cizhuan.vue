@@ -27,7 +27,8 @@
 import cizhuanlist from "./tblist/cizhuanList";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
-import adapter from "./tbAdapter/cizhuanAdapter";
+import saleAdapter from "./saleadapter/cizhuanAdapter.js";
+import backAdapter from "./backadapter/cizhuanAdapter.js";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
@@ -49,10 +50,9 @@ export default {
   },
   attached: function () {},
   methods: {
-
-
     adapterFun: function(d) {
-      return adapter(d);
+      if(this.scene == "sale") return saleAdapter(d)
+      else return backAdapter(d);
     },
   },
   ready: function(){

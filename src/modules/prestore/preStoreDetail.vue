@@ -19,7 +19,7 @@
             </panel>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail="detailData.U_OrderStatus!='店长驳回'"></tblab>
+                <tblab  v-if="show" :tabs="tabs"  scene="back"   :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail="detailData.U_OrderStatus!='店长驳回'"></tblab>
           </div>
           <div :class="css.footerBar" v-show="detailData.U_OrderStatus =='店长驳回'">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
@@ -35,7 +35,7 @@ import css from "./pre.css";
 import cascadeform from "component/form/formCascade";
 import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
-import tblab from "component/bblock/typeLab";
+import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
 import adapter from "./itemAdapter";
 export default {

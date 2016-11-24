@@ -27,7 +27,8 @@
 // 瓷砖分类
 import css from "./type.css";
 import jiejulist from "./tblist/jiejulist";
-import adapter from "./tbAdapter/jiejuAdapter";
+import saleAdapter from "./saleadapter/jiejuAdapter.js";
+import backAdapter from "./backadapter/jiejuAdapter.js";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
@@ -43,8 +44,9 @@ export default {
   attached: function () {},
   methods: {
     adapterFun: function(d) {
-      return adapter(d);
-    }
+      if(this.scene == "sale") return saleAdapter(d)
+      else return backAdapter(d);
+    },
   },
   components: {jiejulist},
 }

@@ -18,7 +18,7 @@
 
           </div>
           <div :class="css.dataArea">
-                <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
+                <tblab @fail="failHandler" scene="back" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
           </div>
           <div :class="css.footerBar">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
@@ -33,7 +33,7 @@ import formtext from "component/form/formText";
 import formtextadd from "component/form/formTextAdd";
 import css from "./pre.css";
 import btn from "component/sprite/button.vue";
-import tblab from "component/bblock/typeLab";
+import tblab from "component/block/typeLab";
 import preAdapter from "./itemAdapter.js";
 import formdim from "component/form/formDim";
 import Utils from "common/Utils";

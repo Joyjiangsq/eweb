@@ -16,10 +16,10 @@ export default function adapterData(d) {
   let propertyNameArray = [
     {keyName:"U_LockCodes", defValue:d.U_LockCodes || []},       // 门锁产品数组  我和node层定义的
     {keyName:"U_HingeCodes", defValue:d.U_HingeCodes || []},     // 合页产品数组  我和node层定义的
-    {keyName:"U_CutAMe", defValue:d.U_CutAMe || ""},             // 切角方式
-    {keyName:"U_GType", defValue:d.U_GType || ""},               // 玻璃类型
-    {keyName:"U_DLType", defValue:d.U_DLType || ""},             // 门套线类型
-    {keyName:"U_DCLNum", defValue:d.U_DCLNum || ""},             // 门套线边数
+    // {keyName:"U_CutAMe", defValue:d.U_CutAMe || ""},             // 切角方式
+    // {keyName:"U_GType", defValue:d.U_GType || ""},               // 玻璃类型
+    // {keyName:"U_DLType", defValue:d.U_DLType || ""},             // 门套线类型
+    // {keyName:"U_DCLNum", defValue:d.U_DCLNum || ""},             // 门套线边数
     {keyName:"U_DSWide", defValue:d.U_DSWide || ""},             // 门洞宽
     {keyName:"U_DSHigh", defValue:d.U_DSHigh || ""},             // 门洞高
     {keyName:"U_DSThick", defValue:d.U_DSThick || ""},           // 门洞深

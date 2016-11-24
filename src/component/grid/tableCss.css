@@ -24,6 +24,11 @@
     margin: 8px;
     vertical-align: middle;
 }
+.inoneitem {
+  word-break: break-all;
+word-wrap: break-word;
+white-space: initial;
+}
 .noresult {
     background-color: white;
     border-top: 0;

@@ -9,7 +9,6 @@
       </dialog>
     </div>
 </template>
-
 <script>
 // 废弃
 import tb from "component/grid/tableListBase";

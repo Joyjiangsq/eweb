@@ -80,11 +80,18 @@ import Vue from "vue";
 import tb from "component/grid/menTable";
 import css from "./type.css";
 import btn from "component/sprite/button";
-import adapter from "./tbAdapter/chuguiAdapter";
+import saleAdapter from "./saleadapter/chuguiAdapter.js";
+import backAdapter from "./backadapter/chuguiAdapter.js";
 import baseMixins from "./itemMixins";
 import chuguitb from "./tblist/chuguiList";
 import mdialog from "component/blockcommon/mealDialog";
 import Utils from "common/Utils";
+import {sale_chu_g_header,
+        sale_chu_g_header_d,
+        sale_chu_tm_header,
+        sale_chu_tm_header_d,
+        sale_chu_f_header,
+        sale_chu_f_header_d} from "config/headerConst";
 export default {
   mixins:[baseMixins],
   props:{
@@ -101,163 +108,12 @@ export default {
       g_array:[],
       t_array:[],
       w_array:[],
-      g_header: [{type:"operator", name:""},
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"门型", labelValue:"U_DType", type:"data"},
-                    {name:"把手型号", labelValue:"U_HandleName", type:"component", cname:"bashou", component:bashouComponent},
-                    {name:"宽度（mm）", labelValue:"U_PSWide", type:"edit"},
-                    {name:"高度（mm）", labelValue:"U_PSHigh", type:"edit"},
-                    {name:"进深（mm）", labelValue:"U_PSDeep", type:"edit"},
-                    {name:"延米（m）/销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"edit"}],
-      t_header:[{type:"operator", name:""},
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"前沿造型", labelValue:"U_FModeling", type:"component", cname:"qianyan", component:qianyanComponent},
-                    {name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent},
-                    {name:"台盆工艺", labelValue:"U_BasinT",  type:"component", cname:"taiyi", component:taiyiComponent},
-                    {name:"台面进深（mm）", labelValue:"U_TableB", type:"edit"},
-                    {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"edit"},
-                    {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"edit"},
-                    {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"edit"},
-                    {name:"延米（m）/销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"edit"}],
-      w_header:[{type:"operator", name:""},
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"edit"}],
-      g_header_d: [
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"门型", labelValue:"U_DType", type:"data"},
-                    {name:"把手型号", labelValue:"U_HandleName", type:"data"},
-                    {name:"宽度（mm）", labelValue:"U_PSWide", type:"data"},
-                    {name:"高度（mm）", labelValue:"U_PSHigh", type:"data"},
-                    {name:"进深（mm）", labelValue:"U_PSDeep", type:"data"},
-                    {name:"延米（m）/销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"data"}],
-      t_header_d:[
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"前沿造型", labelValue:"U_FModeling", type:"data"},
-                    {name:"气源方式", labelValue:"U_GSMe",  type:"data"},
-                    {name:"台盆工艺", labelValue:"U_BasinT",  type:"data"},
-                    {name:"台面进深（mm）", labelValue:"U_TableB", type:"data"},
-                    {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"data"},
-                    {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"data"},
-                    {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"data"},
-                    {name:"延米（m）/销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"data"}],
-      w_header_d:[
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-                  
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"edit"}],
-      headercaption:[{type:"operator", name:""},
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"门型", labelValue:"U_DType", type:"data"},
-                    {name:"把手型号", labelValue:"U_HandleName", type:"component", cname:"bashou", component:bashouComponent},
-                    {name:"前沿造型", labelValue:"U_FModeling", type:"component", cname:"qianyan", component:qianyanComponent},
-                    {name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent},
-                    {name:"台盆工艺", labelValue:"U_BasinT",  type:"component", cname:"taiyi", component:taiyiComponent},
-                    {name:"宽度（mm）", labelValue:"U_PSWide", type:"edit"},
-                    {name:"高度（mm）", labelValue:"U_PSHigh", type:"edit"},
-                    {name:"进深（mm）", labelValue:"U_PSDeep", type:"edit"},
-                    {name:"台面进深（mm）", labelValue:"U_TableB", type:"edit"},
-                    {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"edit"},
-                    {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"edit"},
-                    {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"edit"},
-                    {name:"延米（m）/销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"edit"}
-                    ],
-      headerdetail:[
-                    {name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"chuiguicc", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},
-                    {name:"颜色", labelValue:"U_Colour", type:"data"},
-                    {name:"门型", labelValue:"U_DType", type:"data"},
-                    {name:"把手型号", labelValue:"U_HandleCode", type:"data"},
-                    {name:"前沿造型", labelValue:"U_FModeling", type:"data"},
-                    {name:"气源方式", labelValue:"U_GSMe",  type:"data"},
-                    {name:"台盆工艺", labelValue:"U_BasinT",  type:"data"},
-                    {name:"宽度（mm）", labelValue:"U_PSWide", type:"data"},
-                    {name:"高度（mm）", labelValue:"U_PSHigh", type:"data"},
-                    {name:"进深（mm）", labelValue:"U_PSDeep", type:"data"},
-                    {name:"台面进深（mm）", labelValue:"U_TableB", type:"data"},
-                    {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:"data"},
-                    {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:"data"},
-                    {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:"data"},
-                    {name:"延米（m）/销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},
-                    {name:"备注", labelValue:"Freetxt",type:"data"}
-                    ],
+      g_header: sale_chu_g_header(this.scene),
+      t_header:sale_chu_tm_header(this.scene),
+      w_header:sale_chu_f_header(this.scene),
+      g_header_d: sale_chu_g_header_d(this.scene),
+      t_header_d:sale_chu_tm_header_d(this.scene),
+      w_header_d:sale_chu_f_header_d(this.scene),
       validateInfo: true, // 验证 收件信息
       tableEvents:{
           operatorRender: function(d, index){
@@ -304,7 +160,8 @@ export default {
   attached: function () {},
   methods: {
     adapterFun: function(d) {
-      return adapter(d);
+      if(this.scene == "sale") return saleAdapter(d)
+      else return backAdapter(d);
     },
     toSelect: function(){
         this.$set("toload", true);
@@ -333,108 +190,5 @@ export default {
   components: {tb,chuguitb, ft,btn},
 }
 import combobox from "component/combobox/combobox";
-//  U_FModeling  前沿造型   下拉组件 默认 、、  DM-008-直边、  DM-002-罗马边
-var qianyanComponent = Vue.extend({
-  data:function(){
-    return {
-      test:[{name:"请选择", id:""}, {name:"DM-008-直边", id:"DM-008-直边"}, {name:"DM-002-罗马边", id:"DM-002-罗马边"}],
-      value: ""
-    }
-  },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
-  ready: function(){
-    this.value = this.selfData.U_FModeling.def || "DM-008-直边"
-  },
-  methods:{
-      dropclick: function(d){
-          // 变更对应的值
-            console.log(d);
-            this.selfData.U_FModeling.def = d;
-            this.selfData.U_FModeling.tb_disabled= false;
-            this.selfData.U_FModeling.defCss= "default";
-            this.selfData.U_FModeling.errorMsg= "";
-      }
-  },
-  components: {combobox},
-  computed: {}
-})
-
-// U_BasinT  // 台盆工艺   下拉组件 默认  台上工艺、台下工艺
-var taiyiComponent = Vue.extend({
-  data:function(){
-    return {
-      test:[{name:"请选择", id:""}, {name:"台上工艺", id:"台上工艺"}, {name:"台下工艺", id:"台下工艺"}],
-      value:""
-    }
-  },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
-  ready: function(){
-        this.value = this.selfData.U_BasinT.def || "台上工艺"
-  },
-  methods:{
-      dropclick: function(d){
-          // 变更对应的值
-            console.log(d);
-            this.selfData.U_BasinT.def = d;
-            this.selfData.U_BasinT.tb_disabled= false;
-            this.selfData.U_BasinT.defCss= "default";
-            this.selfData.U_BasinT.errorMsg= "";
-      }
-  },
-  components: {combobox},
-  computed: {}
-})
-//  d.U_GSMe  // 气源方式   下拉组件 默认 、、     液化气  天燃气
-var qiyuanComponent = Vue.extend({
-  data:function(){
-    return {
-      test:[{name:"液化气"}, {name:"天燃气"}],
-      value: "天燃气"
-    }
-  },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value"  keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
-  ready: function(){
-    this.value = this.selfData.U_GSMe.def || "天燃气";
-  },
-  methods:{
-      dropclick: function(d){
-          // 变更对应的值
-            console.log(d);
-            this.selfData.U_GSMe.def = d;
-            this.selfData.U_GSMe.tb_disabled= false;
-            this.selfData.U_GSMe.defCss= "default";
-            this.selfData.U_GSMe.errorMsg= "";
-      }
-  },
-  components: {combobox},
-  computed: {}
-})
-//    // U_HandleCode  U_HandleName
-var bashouComponent = Vue.extend({
-  data:function(){
-    return {
-      test:[],
-      value: ""
-    }
-  },
-  template: '<div><combobox labelname="ItemName" @dropclick="dropclick" :value="value"  keyid="ItemName" dropfixed="dropfixed" :datas="test"></combobox></div>',
-  ready: function(){
-    this.test = this.selfData.U_HandleCodes.def;
-    this.value = this.selfData.U_HandleName.def || "";
-  },
-  methods:{
-      dropclick: function(d){
-          // 变更对应的值
-            console.log(d);
-            this.selfData.U_HandleName.def = d;
-            this.selfData.U_HandleCode = d;
-            this.selfData.U_HandleName.tb_disabled= false;
-            this.selfData.U_HandleName.defCss= "default";
-            this.selfData.U_HandleName.errorMsg= "";
-      }
-  },
-  components: {combobox},
-  computed: {}
-})
 
 </script>

@@ -37,8 +37,8 @@
               </tr>
               <tr v-if="curaction == 'add'">
                   <td  v-for="(index, sone) in headercaption">
-                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
-                    <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
+                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 0">
+                    <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 0">
                         <icon iconname="icon-elip"></icon>
                     </span>
                   </td>

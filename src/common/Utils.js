@@ -69,7 +69,33 @@ import storejs from "storejs";
           if(CateDatas[name]) return CateDatas[name]
           else return "";
      },
-
+     // 获取品类对应中文名
+     getCateryCname: function(pinyin){
+          var CateDatas = {
+              'cizhuan': "瓷砖",
+              'diban':"地板",
+              'jieju':"洁具",
+              'jichengdiaoding': "集成吊顶",
+              'men':"门",
+              'chugui': "厨柜",
+              'shigongfuliao':"施工辅材",
+              'zhuangxiufuliao': "装修辅料"
+          }
+          if(CateDatas[pinyin]) return CateDatas[pinyin]
+          else return "";
+     },
+     //； 不会深拷贝
+     insertArray: function(arr, one ,index) {
+        return arr.splice(index, 0, one);
+     },
+     getStringCase: function(index){
+        let res = "";
+        for (var i = 0; i < index; i++) {
+            let one = String.fromCharCode(97+Math.ceil(Math.random() * 25));
+            res+= one;
+        }
+        return res;
+     },
      cloneObj: function(obj){
           var str, newobj = obj.constructor === Array ? [] : {};
           if(typeof obj !== 'object'){

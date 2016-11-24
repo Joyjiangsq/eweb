@@ -25,7 +25,8 @@
 // 瓷砖分类
 import css from "./type.css";
 import dibanlist from "./tblist/dibanList";
-import adapter from "./tbAdapter/dibanAdapter";
+import saleAdapter from "./saleadapter/dibanAdapter.js";
+import backAdapter from "./backadapter/dibanAdapter.js";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
@@ -41,7 +42,8 @@ export default {
   attached: function () {},
   methods: {
     adapterFun: function(d) {
-      return adapter(d);
+      if(this.scene == "sale") return saleAdapter(d)
+      else return backAdapter(d);
     }
   },
   components: {dibanlist},

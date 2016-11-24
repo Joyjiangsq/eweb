@@ -52,7 +52,7 @@ import css from "./p.css";
 import cascadeform from "component/form/formCascade";
 import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
-import tblab from "component/pblock/typeLab";
+import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
 import adapter from "./itemAdapter";
 export default {

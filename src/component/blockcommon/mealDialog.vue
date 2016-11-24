@@ -1,6 +1,6 @@
 <template lang="html">
     <div>
-        {{value}}
+      {{value}}
         <span  :class="css.iconl" v-if="showTip" @click = "showDialog">
             <icon iconname="icon-tip"></icon>
         </span>
@@ -20,6 +20,7 @@ import icon from "component/sprite/icon";
 import tb from "component/grid/tableListBase";
 import css from "./md.css";
 import dialog from "component/dialog/dialog"
+console.log(tb);
 export default {
   data: function () {
     return {

@@ -20,7 +20,6 @@ import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import pg from "component/pagination/pagination";
 import Utils from "common/Utils.js";
-import adapter from "../tbAdapter/jichengdiaodingAdapter";
 import dialogtip from "component/dialog/dialogTip";
 import basetb from "./tbMixins";
 import mdialog from "component/blockcommon/mealDialog";
@@ -52,17 +51,7 @@ export default {
   },
   attached: function () {},
   methods: {
-    adapterFun: function(d) {
-      return adapter(d);
-    },
-
   },
-  components: {search,tb,pagepanel, pg, dialogtip},
-  // watch: {
-  //   "toload": function(){
-  //       this.sDatas.unshift(  );
-  //       this.sDatas.unshift({type:"combobox", keyname:"FirmName", labelname:"FirmName",params:{ItmsGrpNam: this.name}, url:"products/firms", keyid:"FirmCode", value:"", labelcaption:"二级分类："});
-  //   }
-  // },
+  components: {search,tb,pagepanel, pg, dialogtip}
 }
 </script>

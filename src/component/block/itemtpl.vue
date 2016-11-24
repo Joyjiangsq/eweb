@@ -54,6 +54,3 @@ export default {
   components: {formtext, cascadeform, formtextadd, tplitem}
 }
 </script>
-
-<style lang="css">
-</style>

@@ -27,7 +27,8 @@
 // 瓷砖分类
 import css from "./type.css";
 import shigongfucailist from "./tblist/shigongfucailist";
-import adapter from "./tbAdapter/shigongfucaiAdapter";
+import saleAdapter from "./saleadapter/shigongfucaiAdapter.js";
+import backAdapter from "./backadapter/shigongfucaiAdapter.js";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
@@ -44,8 +45,9 @@ export default {
   attached: function () {},
   methods: {
     adapterFun: function(d) {
-      return adapter(d);
-    }
+      if(this.scene == "sale") return saleAdapter(d)
+      else return backAdapter(d);
+    },
   },
   components: {shigongfucailist},
 }

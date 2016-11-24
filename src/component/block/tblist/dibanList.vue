@@ -20,7 +20,6 @@ import tb from "component/grid/tableListBase";
 import pagepanel from "component/panel/pagepanel";
 import pg from "component/pagination/pagination";
 import Utils from "common/Utils.js";
-import adapter from "../tbAdapter/dibanAdapter";
 import dialogtip from "component/dialog/dialogTip";
 import basetb from "./tbMixins";
 import mdialog from "component/blockcommon/mealDialog";
@@ -51,10 +50,6 @@ export default {
   },
   attached: function () {},
   methods: {
-    adapterFun: function(d) {
-      return adapter(d);
-    },
-
   },
   components: {search,tb,pagepanel, pg, dialogtip},
 }

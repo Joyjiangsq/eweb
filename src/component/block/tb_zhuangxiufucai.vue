@@ -27,7 +27,8 @@
 // 瓷砖分类
 import css from "./type.css";
 import zhuangxiufucailist from "./tblist/zhuangxiufucailist";
-import adapter from "./tbAdapter/zhuangxiufucaiAdapter";
+import saleAdapter from "./saleadapter/zhuangxiufucaiAdapter.js";
+import backAdapter from "./backadapter/zhuangxiufucaiAdapter.js";
 import baseMixins from "./itemMixins";
 export default {
   mixins:[baseMixins],
@@ -49,8 +50,9 @@ export default {
   },
   methods: {
     adapterFun: function(d) {
-      return adapter(d);
-    }
+      if(this.scene == "sale") return saleAdapter(d)
+      else return backAdapter(d);
+    },
   },
   components: {zhuangxiufucailist},
 }

@@ -1,3 +1,4 @@
+import Utils from "common/Utils";
 export default class directive {
     init(Vue) {
         // 该指令用于接收组建作为的参数
@@ -10,7 +11,9 @@ export default class directive {
                var el = this.el;
                var dtpl =  value.data;   // 对应数据 只能是字符串去传递  不知道怎么穿对象
                var widget = value.widget.component;
-               var widgetName = value.cname;
+               var widgetName = "";
+               if(value.cname)  widgetName = value.cname
+               else widgetName = Utils.getStringCase(4)
                if(!Vue.component(widgetName)) {
                  Vue.component(widgetName, widget);
                }

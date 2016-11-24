@@ -7,6 +7,7 @@ import formtextadd from "component/form/formTextAdd";
 import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
 import mdialog from "component/blockcommon/mealDialog";
+import {sale_standard_header, sale_standard_header_d} from "config/headerConst";
 import Utils from "common/Utils";
 export default {
   props :{
@@ -17,6 +18,9 @@ export default {
       default: function(){
         return []
       },
+    },
+    scene: {
+      default:"sale"
     },
     recdata:{
       default: function(){
@@ -56,25 +60,8 @@ export default {
           }
       },
       // 瓷砖，地板，洁具，集成吊顶，装修辅料，施工辅材的表格列都是一致的
-      headercaption:[{type:"operator", name:""},{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"componentspec", cname:"dmw", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"型号", labelValue:"U_Modle", type:"data"},
-                    {name:"颜色", labelValue:"Color", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"buyCounts", type:"edit", number: true},
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"edit"},
-                    ],
-      headerdetail:[{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                    {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"dop", component:mdialog},
-                    {name:"产品包", labelValue:"SWW", type:"data"},
-                    {name:"品牌", labelValue:"U_Brand", type:"data"},
-                    {name:"型号", labelValue:"U_Modle", type:"data"},
-                    {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                    {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
-                    {name:"可用库存量", labelValue:"stock",type:"data"},
-                    {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"}],
+      headercaption:sale_standard_header(this.scene),
+      headerdetail:sale_standard_header_d(this.scene),
       showSelectDialog:false, // 选品对话框控制
       validateRec :true, // 验证 列表
       toload: false, // 展开选品对话框再加载
@@ -146,7 +133,7 @@ export default {
     deleteoneHandler: function(d) {
         this.vlist.split(d.index,1);
     },
-
+    // 预留
     addoneHandler : function(d){
         let one = this.adapterFun(d);
         this.vlist.push(one);

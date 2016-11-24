@@ -123,8 +123,6 @@ let tbMixin = {
       putOne: function(data){
         let one = Utils.cloneObj(data);
         if(this.name == "厨柜" || this.name =="门") one.randomTag = Math.random().toString(16)
-        // one = this.adapterFun(one);
-        // this.listdata.push(one);
         this.$dispatch("addone", one)
       }
     },

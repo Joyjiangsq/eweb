@@ -70,7 +70,7 @@ export default function adapterData(d) {
                     d.Quantity = d.Quantity.toFixed(3);
                   }
                   else {
-                    d.Quantity = (d.U_Pquantity/d.U_PMeasure*1).toFixed(3);
+                    d.Quantity = ((d.U_Pquantity/d.U_PMeasure*1)*d.U_PMeasure*1).toFixed(3);
                   }
                 }
               }
