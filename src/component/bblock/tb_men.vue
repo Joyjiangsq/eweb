@@ -16,7 +16,7 @@
                     </div>
                     <div :class="css.typeitem" v-if="m_lock_array.length !=0">
                           <p :class="css.ptitle">智能门锁</p>
-                          <tb :headercaption="m_lock_header" :datas="m_lock_header"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                          <tb :headercaption="m_lock_header" :datas="m_lock_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                     </div>
                   </div>
               </div>
@@ -36,7 +36,7 @@
                 <div :class="css.typeitem" v-if="m_lock_array.length !=0">
                       <p :class="css.ptitle">智能门锁</p>
                       <div :class="css.rowBox">
-                        <tb :headercaption="m_lock_header_d" :datas="m_lock_header"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
+                        <tb :headercaption="m_lock_header_d" :datas="m_lock_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
                       </div>
                 </div>
               </div>

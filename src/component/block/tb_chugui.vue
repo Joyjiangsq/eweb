@@ -10,7 +10,6 @@
                   <btn @click="toSelect">选品</btn>
                 </div>
                 <div :class="css.rowBox">
-                  {{g_array | json}}
                   <div :class="css.typeitem" v-if="g_array.length !=0">
                         <p :class="css.ptitle">柜体/门板/配件</p>
                         <tb :headercaption="g_header" :datas="g_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
@@ -127,8 +126,6 @@ export default {
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
                     {name:"系列", labelValue:"U_Series", type:"data"},
                     {name:"颜色", labelValue:"U_Colour", type:"data"},
                     {name:"前沿造型", labelValue:"U_FModeling", type:"component", cname:"qianyan", component:qianyanComponent},
@@ -148,8 +145,7 @@ export default {
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
+
                     {name:"系列", labelValue:"U_Series", type:"data"},
                     {name:"颜色", labelValue:"U_Colour", type:"data"},
                     {name:"销售数量", labelValue:"buyCounts", type:"edit"},   // 不需要验证不填的状态
@@ -181,8 +177,7 @@ export default {
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
+
                     {name:"系列", labelValue:"U_Series", type:"data"},
                     {name:"颜色", labelValue:"U_Colour", type:"data"},
                     {name:"前沿造型", labelValue:"U_FModeling", type:"data"},
@@ -202,8 +197,7 @@ export default {
                     {name:"产品包", labelValue:"SWW", type:"data"},
                     {name:"品牌", labelValue:"U_Brand", type:"data"},
                     {name:"规格", labelValue:"Spec", type:"data"},
-                    {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
-                    {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
+                  
                     {name:"系列", labelValue:"U_Series", type:"data"},
                     {name:"颜色", labelValue:"U_Colour", type:"data"},
                     {name:"销售数量", labelValue:"sale_counts", type:"data"},   // 不需要验证不填的状态
