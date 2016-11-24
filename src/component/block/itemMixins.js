@@ -6,7 +6,6 @@ import formtext from "component/form/formText";
 import formtextadd from "component/form/formTextAdd";
 import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
-import mdialog from "component/blockcommon/mealDialog";
 import {sale_standard_header, sale_standard_header_d} from "config/headerConst";
 import Utils from "common/Utils";
 export default {

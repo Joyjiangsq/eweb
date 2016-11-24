@@ -42,11 +42,7 @@ export default {
   },
 
   attached: function () {
-    // 默认datas初始化
-    // for (var i = 0; i < this.testdata.length; i++) {
-    //   var one = this.testdata[i];
-    //   adapter(one);
-    // }
+
   },
   methods: {
     adapterFun: function(d) {

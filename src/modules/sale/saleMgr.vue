@@ -91,7 +91,7 @@ let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"compone
                         {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
 let subHeaders = [{name:"销售子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},
-                  {name:"品类", labelValue:"type", type:"data", style:{width: '30px'}, adapterFun: function(d) {return Utils.getCateryCname(d.type)}},
+                  {name:"品类", labelValue:"type", type:"data", style:{width: '30px',  "word-break": "break-all","word-wrap": "break-word","white-space": "initial"}, adapterFun: function(d) {return Utils.getCateryCname(d.type)}},
                   {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return (d.U_OrderStatus == '店长驳回' || d.U_OrderStatus == 'e站驳回')?"<span class='reback'>"+d.U_OrderStatus+"</span>":d.U_OrderStatus}}]
 export default {
   mixins:[pageBase],
