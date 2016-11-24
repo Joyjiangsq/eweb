@@ -25,7 +25,7 @@ export default function adapterData(d) {
     {keyName:"U_DSThick", defValue:d.U_DSThick || ""},           // 门洞深
     {keyName:"U_TDWide", defValue:d.U_TDWide || ""},             // 门扇宽
     {keyName:"U_TDHigh", defValue:d.U_TDHigh || ""},             // 门扇高
-    {keyName:"U_TDThick", defValue:d.U_TDThick || ""},           // 门扇厚
+    {keyName:"U_TDThick", defValue:d.U_DLThickMin || ""},           // 门扇厚  取产品里门扇厚最小值
     {keyName:"U_DLNum", defValue:d.U_DLNum || ""},               // 门扇数
     {keyName:"U_IKeyHole", defValue:d.U_IKeyHole || "是"},       // 是否开孔
     {keyName:"U_HingeName", defValue:d.U_HingeName || ""},       // 合页品牌/型号/规格 我和node层定义的
@@ -182,18 +182,19 @@ export default function adapterData(d) {
                 else return resetFun(this)
             }
           // 门扇厚  最小值  U_DLThickMin  极限值 U_DLThickL
-          d.U_TDThick.validateFun = function(data, index){
-                if(d.U_ThreeL == "门扇") {
-                    if(this.def == "" || !this.def) return exepFun(this, "门扇厚必须填写")
-                    else if(this.def < 0) return exepFun(this, "此项必须大于0")
-                }
-                else if(this.def == "" || !this.def) return resetFun(this)
-                if(isNaN(this.def)) return exepFun(this, "门扇厚必须是数字")
-                else if(this.def < 0) return exepFun(this, "此项必须大于0")
-                else if(this.def*1 < data.U_DLThickMin) return exepFun(this, "门扇厚不能小于" + data.U_DLThickMin)
-                else if(this.def*1 > data.U_DLThickL)  return exepFun(this, "门扇厚不能大于" + data.U_DLThickL)
-                else return resetFun(this)
-          }
+          // 去除
+          // d.U_TDThick.validateFun = function(data, index){
+          //       if(d.U_ThreeL == "门扇") {
+          //           if(this.def == "" || !this.def) return exepFun(this, "门扇厚必须填写")
+          //           else if(this.def < 0) return exepFun(this, "此项必须大于0")
+          //       }
+          //       else if(this.def == "" || !this.def) return resetFun(this)
+          //       if(isNaN(this.def)) return exepFun(this, "门扇厚必须是数字")
+          //       else if(this.def < 0) return exepFun(this, "此项必须大于0")
+          //       else if(this.def*1 < data.U_DLThickMin) return exepFun(this, "门扇厚不能小于" + data.U_DLThickMin)
+          //       else if(this.def*1 > data.U_DLThickL)  return exepFun(this, "门扇厚不能大于" + data.U_DLThickL)
+          //       else return resetFun(this)
+          // }
           // 是否开孔
           d.U_IKeyHole.validateFun = function(data, index){
                   if(this.def == "否")  {
@@ -230,7 +231,7 @@ export default function adapterData(d) {
 
           var levelOneArray = ["移门（木门）", "移门（铝框门）","门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
           var levelTwoArray = ["门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
-          var levelThreeArray = ["垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
+          var levelThreeArray = ["垭口（木门）","五金","普通门锁","合页","门吸"];
           if(levelOneArray.indexOf(d.U_ThreeL) != -1) {
               // 移门的时候 去除 开启方式， 是否开孔 门锁，合页
               d.U_IKeyHole.tb_disabled = true; // 是否开孔
