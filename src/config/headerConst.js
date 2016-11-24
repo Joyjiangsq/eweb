@@ -37,7 +37,6 @@ let addLast = function(arr, type = 'edit') {
 // 追加销售数量列
 // scene 分为 sale下单 和 back备货
 let addByScene = function(arr, type, scene = 'sale', name=scene=='sale'?'销售数量':'采购数量') {
-    console.log(scene);
     if(scene == "sale") {
       arr.push({name:name, labelValue:"buyCounts",type:type, number: true});
       arr.push({name:"可用库存量", labelValue:"stock",type: "data"});
@@ -68,6 +67,19 @@ export const sale_standard_header_d = function(scene) {
 
 // 门类别
 let addMenCols = function(arr, type = 'edit') {
+    let tp;
+    if(type == 'edit') {
+      tp = [{name:"是否开孔", labelValue:"U_IKeyHole", type:"component", component: holeComponent},     // 下拉组件  TODO
+            {name:"合页品牌/型号/规格", labelValue:"U_HingeName", type:"component", component: heyeComponent},   // 下拉组件
+            {name:"门锁品牌/型号/规格", labelValue:"U_LockName", type:"component",  component:mensuoComponent},        // 下拉组件
+            {name:"开启方式", labelValue:"U_OpenWay", type:"component", component:kaiqiComponent}]        // 下拉组件 TODO
+    }
+    else {
+      tp = [{name:"是否开孔", labelValue:"U_IKeyHole", type:"data"},     // 下拉组件  TODO
+            {name:"合页品牌/型号/规格", labelValue:"U_HingeName", type:"data"},   // 下拉组件
+            {name:"门锁品牌/型号/规格", labelValue:"U_LockName", type:"data"},        // 下拉组件
+            {name:"开启方式", labelValue:"U_OpenWay", type:"data"}]        // 下拉组件 TODO
+    }
     return arr.concat([
       {name:"切角方式", labelValue:"U_CutAMe", type:"data"},
       {name:"玻璃类型", labelValue:"U_GType", type:"data"},
@@ -80,11 +92,7 @@ let addMenCols = function(arr, type = 'edit') {
       {name:"门扇宽（mm）", labelValue:"U_TDWide", type:type},
       {name:"门扇高（mm）", labelValue:"U_TDHigh", type:type},
       {name:"门扇厚（mm）", labelValue:"U_TDThick", type:type},
-      {name:"是否开孔", labelValue:"U_IKeyHole", type:"component", component: holeComponent},     // 下拉组件  TODO
-      {name:"合页品牌/型号/规格", labelValue:"U_HingeName", type:"component", component: heyeComponent},   // 下拉组件
-      {name:"门锁品牌/型号/规格", labelValue:"U_LockName", type:"component",  component:mensuoComponent},        // 下拉组件
-      {name:"开启方式", labelValue:"U_OpenWay", type:"component", component:kaiqiComponent},        // 下拉组件 TODO
-    ]);
+    ],tp);
 }
 // 门 类别的 列 可编辑属性
 export const sale_men_header = function(scene) {
@@ -120,6 +128,17 @@ export const sale_men_five_header_d = function(scene) {
 }
 // 智能门锁类别
 let addMenZLockCols = function(arr, type = 'edit') {
+    let tp;
+    if(type == 'edit') {
+      tp = [{name:"智能门锁门的类别", labelValue:"U_DType",  type:"component",component: zhiComponent, style:{width: '100px'}},
+            {name:"智能门锁门开向", labelValue:"U_DoorO", type:"component", component:zhinengDirComponent, style:{width: '100px'}},
+            {name:"智能门锁是否有天地钩", labelValue:"U_IHEH", type:"component", component:tdComponent, style:{width: '100px'}}]  //TODO
+    }
+    else {
+      tp = [{name:"智能门锁门的类别", labelValue:"U_DType",  type:"data", style:{width: '100px'}},
+            {name:"智能门锁门开向", labelValue:"U_DoorO", type:"data", style:{width: '100px'}},
+            {name:"智能门锁是否有天地钩", labelValue:"U_IHEH", type:"data", style:{width: '100px'}}]  //TODO
+    }
     return arr.concat([
       {name:"智能门锁厚度", labelValue:"U_DThick", type:type, style:{width: '100px'}},
       {name:"智能门锁锁体挡板长度（mm）", labelValue:"U_LBLength", type:type, style:{width: '100px'}},
@@ -128,10 +147,7 @@ let addMenZLockCols = function(arr, type = 'edit') {
       {name:"智能门锁锁体档板上下螺丝十字中心孔距（mm）", labelValue:"U_UDDis", type:type, style:{width: '195px'}},
       {name:"智能门锁门边到锁面板右侧的距离（mm）", labelValue:"U_LTRDis", type:type, style:{width: '185px'}},
       {name:"智能门锁门锁面板总长度（mm）", labelValue:"U_TLLength", type:type, style:{width: '130px'}},
-      {name:"智能门锁门的类别", labelValue:"U_DType",  type:"component",component: zhiComponent, style:{width: '100px'}},
-      {name:"智能门锁门开向", labelValue:"U_DoorO", type:"component", component:zhinengDirComponent, style:{width: '100px'}},
-      {name:"智能门锁是否有天地钩", labelValue:"U_IHEH", type:"component", component:tdComponent, style:{width: '100px'}},  //TODO
-    ]);
+    ], tp);
 }
 // 智能门锁类别
 export const sale_men_z_header = function(scene) {
@@ -153,12 +169,19 @@ export const sale_men_z_header_d = function(scene) {
 // 厨柜类别
 // 柜体 门板 配件
 let addGCols = function(arr, type = 'edit') {
+    let tp;
+    if(type == 'edit') {
+      tp = [{name:"把手型号", labelValue:"U_HandleName", type:"component", component:bashouComponent}]
+    }
+    else {
+      tp = [{name:"把手型号", labelValue:"U_HandleName", type:"data"}]
+    }
     return arr.concat([
       {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
       {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
-      {name:"门型", labelValue:"U_DType", type:"data"},
-      {name:"把手型号", labelValue:"U_HandleName", type:"component", component:bashouComponent},
-      {name:"宽度（mm）", labelValue:"U_PSWide", type:type},
+      {name:"门型", labelValue:"U_DType", type:"data"}],
+      tp,
+      [{name:"宽度（mm）", labelValue:"U_PSWide", type:type},
       {name:"高度（mm）", labelValue:"U_PSHigh", type:type},
       {name:"进深（mm）", labelValue:"U_PSDeep", type:type}
     ]);
@@ -185,10 +208,18 @@ export const sale_chu_g_header_d = function(scene) {
 
 // 台面
 let addTMCols = function(arr, type = 'edit') {
-    return arr.concat([
-      {name:"前沿造型", labelValue:"U_FModeling", type:"component", cname:"qianyan", component:qianyanComponent},
-      {name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent},
-      {name:"台盆工艺", labelValue:"U_BasinT",  type:"component", cname:"taiyi", component:taiyiComponent},
+    let tp;
+    if(type == 'edit') {
+      tp = [{name:"前沿造型", labelValue:"U_FModeling", type:"component", cname:"qianyan", component:qianyanComponent},
+            {name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent},
+            {name:"台盆工艺", labelValue:"U_BasinT",  type:"component", cname:"taiyi", component:taiyiComponent}]
+    }
+    else {
+      tp = [{name:"前沿造型", labelValue:"U_FModeling", type:"data"},
+            {name:"气源方式", labelValue:"U_GSMe",  type:"data"},
+            {name:"台盆工艺", labelValue:"U_BasinT",  type:"data"}]
+    }
+    return arr.concat(tp, [
       {name:"台面进深（mm）", labelValue:"U_TableB", type:type},
       {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:type},
       {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:type},

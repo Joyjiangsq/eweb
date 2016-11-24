@@ -1,25 +1,10 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
-            <div :class="css.hrow">
-                <span class="itemrow"><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
-                <span class='itemrow' v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy}}</span>
-            </div>
-            <panel>
-                <div slot="panelTitle">
-                       基础信息
-                </div>
-                <div slot="panelContent">
-                  <formtext labelname="分站名称：" :must="false"  :read="true"  :value.sync="baseInfo.CardName" formname='CardName' ></formtext>
-                  <cascadeform  labelname="分站地址：" :detailneed="true" :read="true"  :value.sync= "baseInfo.Address"  formname="Address" ></cascadeform>
-                  <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode'></formtext>
-                  <formtext labelname="跟单员电话：" :read="true" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :length="11" :number="true"  placeholder=""  formname='U_CntctPhone'></formtext>
-                </div>
-            </panel>
+                <detail :data="detailData"></detail>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs"  scene="back"  :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
+                <tblab  v-if="show" :tabs="tabs"  scene="back"  :startvalidate="startvalidate"  :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
           <div :class="css.footerBar" v-if="detailData.U_OrderStatus == '待采购' || detailData.U_OrderStatus == 'e站驳回'">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">驳回</btn>
@@ -36,10 +21,8 @@
 <script>
 import Utils from "common/Utils";
 import {setTitle} from "actions";
-import panel from "component/panel/panel";
 import css from "./pre.css";
-import cascadeform from "component/form/formCascade";
-import formtext from "component/form/formText";
+import detail from "modules/common/detailInfo";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
@@ -52,7 +35,6 @@ export default {
       detail: true,
       startvalidate: false,
       orderId:"",
-      baseInfo:{},
       tabs:[],
       show: false,
       datamap:{},
@@ -73,7 +55,6 @@ export default {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
-          this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
           this.detailData = d.data;
       },(error) =>{
@@ -86,14 +67,7 @@ export default {
         // 如果是e站驳回  则默认显示e站的驳回理由
         if(this.detailData.U_OrderStatus == "e站驳回") this.backValueIpt = this.detailData.U_CloseWhy || "";
     },
-    successHandler: function(d){
-        let one = adapter(Utils.cloneObj(d));
-        // 这里的one只可能有一项
-        if(one[this.detailData.type]) this.editAction(one[this.detailData.type]);
-    },
-    failHandler: function(d){
-        console.log(d);
-    },
+
     dialogclick: function(d) {
       if(d.action == "confirm") {
         this.$http.put(this.$Api+"stockpiles",JSON.stringify([{U_CloseWhy:this.backValueIpt, U_OrderStatus:8,U_PurchaseNum: this.orderId}])).then((res) => {
@@ -108,28 +82,8 @@ export default {
         })
       }
     },
-    editAction: function(sub){
-      //{ "U_PurchaseNum": "FZXS201611100132_101", "sub_orders": [{产品及数量等信息}]}
-      let params = {
-        U_PurchaseNum:this.orderId,
-        sub_orders:sub.list || [],
-        rec_info: sub.rec_info
-      }
-      if(sub.U_Enclosure) params.U_Enclosure = sub.U_Enclosure;
-      this.$http.put(this.$Api+"stockpiles",JSON.stringify([params])).then((res) => {
-          var d = res.json();
-          console.log(d);
-          this.showMsg("success", "提交成功");
-          this.getData(this.orderId);
-          this.show = !this.show;
-          this.detail = true;
-      },(error) =>{
-        console.log(error);
-        this.showMsg("error", error.msg);
-      })
-    }
   },
-  components: {tblab, panel,formtext,cascadeform,btn},
+  components: {tblab, detail, btn},
   route:{
     data: function(){
       if(!this.$route.query.orderid) history.back();

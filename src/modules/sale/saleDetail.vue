@@ -1,29 +1,7 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
-            <div :class="css.hrow">
-                <span><span :class="css.hitem">主订单号：</span> {{orderId}}</span>
-            </div>
-            <panel>
-
-                <div slot="panelTitle">
-                       基础信息
-                </div>
-
-                <div slot="panelContent">
-                      <formtext labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
-                      <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
-                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
-                      <formtext labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
-                      <formtext labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
-                      <formtext labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
-                      <formtext :read="true"  labelname="一口价：" unit="元" :value.sync="baseInfo.one_price" ></formtext>
-                      <formtext labelname="实收金额：" :read="true" unit="元"  :value.sync="baseInfo.U_PaInAmount"></formtext>
-                      <formtext labelname="订单类型：" :read="true" unit="元" :value.sync="baseInfo.order_type"></formtext>
-                      <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" ></formtext>
-                      <formtext labelname="跟单员电话：" :read="true" :value.sync="baseInfo.U_CntctPhone"></formtext>
-                </div>
-            </panel>
+                <detail :data="baseInfo"></detail>
           </div>
           <div :class="css.dataArea">
                 <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" :datamap="datamap" ></tblab>
@@ -33,12 +11,10 @@
 
 <script>
 import {setTitle} from "actions";
-import panel from "component/panel/panel";
 import css from "./sale.css";
-import cascadeform from "component/form/formCascade";
-import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLabDetail";
+import detail from "modules/common/detailInfo";
 export default {
   mixins:[basePage],
   data: function () {
@@ -74,7 +50,7 @@ export default {
               }
           }
           this.tabs = Object.keys(this.datamap);
-          this.baseInfo = d.data.base_info;
+          this.baseInfo = d.data;
       },(error) =>{
         console.log(error);
       })
@@ -83,7 +59,7 @@ export default {
       this.startvalidate = !this.startvalidate;
     }
   },
-  components: {tblab, panel,formtext,cascadeform},
+  components: {tblab, detail},
   route:{
     data: function(){
       if(!this.$route.query.orderid) history.back();

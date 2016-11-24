@@ -83,7 +83,7 @@ var sorderComponent = Vue.extend({
 let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"component", component: orderComponent, cname:"ordercomponent"},
                         {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return d.U_OrderStatus == 0?"<span class='reback'>驳回</span>":"正常"}},
                         {name:"产品包", labelValue:"U_SWW",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.U_SWW:'-'}},
-                        {name:"订单类型", labelValue:"order_type",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.order_type:'-'}},
+                        // {name:"订单类型", labelValue:"order_type",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.order_type:'-'}},
                         {name:"客户姓名", labelValue:"CardName",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.CardName:'-'}},
                         {name:"电话", labelValue:"Phone2",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.Phone2:'-'}},
                         {name:"业主地址", labelValue:"Address",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.Address:'-'}},

@@ -19,7 +19,8 @@
                       <formtext labelname="是否有电梯：" :read="true"  :value.sync="baseInfo.U_IsElevator" ></formtext>
                       <formtext :read="true"  labelname="一口价：" unit="元" :value.sync="baseInfo.one_price"></formtext>
                       <formtext labelname="实收金额：" :read="true"  unit="元" :value.sync="baseInfo.U_PaInAmount" ></formtext>
-                      <formtext labelname="订单类型：" :read="true"  :value.sync="baseInfo.order_type" ></formtext>
+                      <!-- <formtext labelname="订单类型："  :value.sync="baseInfo.order_type" ></formtext> -->
+                      <comboxform keyid="name" labelname="订单类型：" @itemclick="itemclick" :value.sync="baseInfo.order_type" dropfixed="dropfixed" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
                       <formtext labelname="跟单员：" :read="true"  :value.sync="baseInfo.U_CntctCode" ></formtext>
                       <formtext labelname="跟单员电话：" :read="true"  :value.sync="baseInfo.U_CntctPhone" ></formtext>
                 </div>
@@ -40,11 +41,13 @@ import {setTitle} from "actions";
 import panel from "component/panel/panel";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
+import comboxform from "component/form/fmCombobox";
 import css from "./sale.css";
 import btn from "component/sprite/button.vue";
 import tblab from "component/block/typeLab";
 import saleAdapter from "./adapter.js";
 import Utils from "common/Utils";
+import {orderType} from "config/const";
 import {showTips} from "actions/index";
 export default {
   data: function () {
@@ -54,6 +57,7 @@ export default {
       startvalidate: false, // 这参数作为大类 数据验证开始的依据  只要改变就开始验证
       show: false,
       self: true,
+      orderDatas:orderType,
       baseInfo:{
         mult:"", // 客户信息的手机号 加姓名
         Address:"",// 客户地址
@@ -79,6 +83,9 @@ export default {
   },
   attached: function () {},
   methods: {
+    itemclick: function(item) {
+      this.baseInfo.Series = item.id;  // 订单类型需要传递id
+    },
     // 失败回调
     failHandler: function(d) {
         // console.log(d);
@@ -118,7 +125,7 @@ export default {
         })
     }
   },
-  components: {panel, formtext, cascadeform, tblab, btn},
+  components: {panel, formtext, cascadeform, tblab, btn,comboxform},
   route:{
     data: function(){
       setTitle(this.$store, [{name:"销售订单管理", type:"back"}, {name:"补单"}]);

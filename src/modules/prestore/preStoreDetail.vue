@@ -1,22 +1,7 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
-            <div :class="css.hrow">
-                <span class="itemrow"><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
-                <span class='itemrow' v-if="detailData.U_OrderStatus == '店长驳回' || detailData.U_OrderStatus == 'e站驳回'"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
-            </div>
-            <panel>
-                <div slot="panelTitle">
-                       基础信息
-                </div>
-                <div slot="panelContent">
-                  <formtext labelname="分站名称：" :must="false"  :read="true"  :value.sync="baseInfo.CardName" formname='CardName' ></formtext>
-                  <cascadeform  labelname="分站地址：" :detailneed="true" :read="true"  :value.sync= "baseInfo.Address"  formname="Address" ></cascadeform>
-                  <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode'></formtext>
-                  <formtext labelname="跟单员电话：" :read="true" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :length="11" :number="true"  placeholder=""  formname='U_CntctPhone'></formtext>
-                </div>
-            </panel>
+              <detail :data="detailData"></detail>
           </div>
           <div :class="css.dataArea">
                 <tblab  v-if="show" :tabs="tabs"  scene="back"   :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail="detailData.U_OrderStatus!='店长驳回'"></tblab>
@@ -30,14 +15,12 @@
 <script>
 import Utils from "common/Utils";
 import {setTitle} from "actions";
-import panel from "component/panel/panel";
 import css from "./pre.css";
-import cascadeform from "component/form/formCascade";
-import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
 import adapter from "./itemAdapter";
+import detail from "modules/common/detailInfo";
 export default {
   mixins:[basePage],
   data: function () {
@@ -46,7 +29,6 @@ export default {
       detail: false,
       startvalidate: false,
       orderId:"",
-      baseInfo:{},
       tabs:[],
       show: false,
       datamap:{},
@@ -65,7 +47,6 @@ export default {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
-          this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
           this.detailData = d.data;
       },(error) =>{
@@ -104,7 +85,7 @@ export default {
       })
     }
   },
-  components: {tblab, panel,formtext,cascadeform,btn},
+  components: {tblab,btn,detail},
   route:{
     data: function(){
       if(!this.$route.query.orderid) history.back();

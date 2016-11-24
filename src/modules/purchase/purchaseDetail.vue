@@ -1,35 +1,10 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
-            <div :class="css.hrow">
-                <span class='itemrow'><span :class="css.hitem">采购订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">SAP订单号：</span> {{detailData.DocNum || ''}}</span>
-                <span class='itemrow'><span :class="css.hitem">订单状态：</span> <span v-if="detailData.U_OrderStatus == 'e站驳回' || detailData.U_OrderStatus == '店长驳回'" class='reback'>{{detailData.U_OrderStatus}}</span><span class='common' v-else>{{detailData.U_OrderStatus}}</span></span>
-                <span class='itemrow' v-if="detailData.U_OrderStatus == 'e站驳回' || detailData.U_OrderStatus == '店长驳回'" ><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
-            </div>
-            <panel>
-
-                <div slot="panelTitle">
-                       基础信息
-                </div>
-
-                <div slot="panelContent">
-                      <formtext labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
-                      <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
-                      <formtext labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
-                      <formtext labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
-                      <formtext labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
-                      <formtext labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
-                      <formtext :read="true"  labelname="一口价：" unit="元" :value.sync="baseInfo.one_price" ></formtext>
-                      <formtext labelname="实收金额：" :read="true" unit="元"  :value.sync="baseInfo.U_PaInAmount"></formtext>
-                      <formtext labelname="订单类型：" :read="true" unit="元" :value.sync="baseInfo.order_type"></formtext>
-                      <formtext labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" ></formtext>
-                      <formtext labelname="跟单员电话：" :read="true" :value.sync="baseInfo.U_CntctPhone"></formtext>
-                </div>
-            </panel>
+              <detail :data="detailData" type="back"></detail>
           </div>
           <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
+                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate"  :datamap="datamap" :detail.sync="detail"></tblab>
           </div>
           <div :class="css.footerBar" v-if="detailData.U_OrderStatus =='待采购' || detailData.U_OrderStatus == 'e站驳回'">
               <!--在待采购  和 e站驳回的状态   才可以放开驳回按钮-->
@@ -47,14 +22,11 @@
 <script>
 import Utils from "common/Utils";
 import {setTitle} from "actions";
-import panel from "component/panel/panel";
 import css from "./p.css";
-import cascadeform from "component/form/formCascade";
-import formtext from "component/form/formText";
+import detail from "modules/common/detailInfo";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
-import adapter from "./itemAdapter";
 export default {
   mixins:[basePage],
   data: function () {
@@ -63,11 +35,10 @@ export default {
       detail: true, // 不允许更改
       startvalidate: false,
       orderId:"",
-      baseInfo:{},
       tabs:[],
       show: false,
       showReDialog: false,
-      datamap:{},
+      datamap:{}, //
       backValueipt:"",
       detailData:{}
     }
@@ -76,7 +47,6 @@ export default {
   ready: function () {},
   attached: function () {},
   created: function(){
-
   },
   methods: {
     backClickHandler: function(){
@@ -104,27 +74,14 @@ export default {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
-          this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
           this.detailData = d.data;
       },(error) =>{
         console.log(error);
       })
     },
-    btnClickHandler: function(){
-      this.startvalidate = !this.startvalidate;
-    },
-    successHandler: function(d){
-      let one = adapter(Utils.cloneObj(d));
-      adapter(one.sub_orders);
-      this.editAction(one);
-    },
-    failHandler: function(d){
-        console.log(d);
-    },
-
   },
-  components: {tblab, panel,formtext,cascadeform,btn},
+  components: {tblab,btn,detail},
   route:{
     data: function(){
       if(!this.$route.query.orderid) history.back();

@@ -9,7 +9,6 @@
 
                 <div slot="panelContent">
                       <formtext labelname="分站名称：" :must="false"  :read="true"  :value.sync="baseInfo.CardName" formname='CardName' ></formtext>
-                      <!-- <cascadeform  labelname="分站地址：" :detailneed="true" :read="true"  :value.sync= "baseInfo.Address"  formname="Address" ></cascadeform> -->
                       <formtextadd  labelname="收货地址：" :must="false"  :read="true" formname="Address2" :value.sync="baseInfo.Address"  ></formtextadd>
                       <formtext labelname="跟单员：" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="跟单员电话：" :phone="true"  :value.sync="baseInfo.U_CntctPhone" :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -56,6 +55,7 @@ export default {
         U_CntctCode:"", // 跟单员
         U_CntctPhone:"", // 跟单员电话
         Series:82, //代表备货
+        order_type:"备货订单",
         validate: true // 验证依据
       }
     }

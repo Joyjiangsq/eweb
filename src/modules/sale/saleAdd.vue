@@ -165,7 +165,6 @@ export default {
 
         delete newInfo.detail;      // 删除多余详情字段
         delete newInfo.validate;    // 删除验证字段
-
         this.$http.post(this.$Api+"sales",JSON.stringify({sub_orders:d, base_info:newInfo})).then((res) => {
             var d = res.json();
             console.log(d);

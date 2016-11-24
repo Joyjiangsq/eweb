@@ -1,31 +1,7 @@
 <template>
         <div class="">
           <div :class="css.paddingType">
-            <div :class="css.hrow">
-                <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{orderId}}</span>
-                <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "showStatus" class="reback">{{detailData.U_OrderStatus}}</span><span  v-else>{{detailData.U_OrderStatus}}</span></span>
-                <span class='itemrow' v-if="showStatus"><span :class="css.hitem">驳回理由：</span> {{detailData.U_CloseWhy || '无'}}</span>
-            </div>
-            <panel>
-
-                <div slot="panelTitle">
-                       基础信息
-                </div>
-
-                <div slot="panelContent">
-                      <formtext :must="false" labelname="客户信息："  :read="true" :value="baseInfo.CardName"></formtext>
-                      <cascadeform  :must="false" labelname="业主地址：" :detailneed="true" :read="true" :value.sync= "baseInfo.Address" ></cascadeform>
-                      <formtext :must="false" labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
-                      <formtext :must="false" labelname="房本面积：" :read="true"   unit="平米"  :value.sync="baseInfo.U_Acreage" ></formtext>
-                      <formtext :must="false" labelname="卫生间数量：" :read="true" unit="个" :value.sync="baseInfo.U_ToiletNum" ></formtext>
-                      <formtext :must="false" labelname="是否有电梯：" :read="true"   unit="平米"  :value.sync="baseInfo.U_IsElevator" ></formtext>
-                      <formtext :read="true"  :must="false" labelname="一口价：" unit="元" :value.sync="baseInfo.one_price" ></formtext>
-                      <formtext :must="false" labelname="实收金额：" :read="true" unit="元"  :value.sync="baseInfo.U_PaInAmount"></formtext>
-                      <formtext :must="false" labelname="订单类型：" :read="true" unit="元" :value.sync="baseInfo.order_type"></formtext>
-                      <formtext :must="false" labelname="跟单员：" :read="true" :value.sync="baseInfo.U_CntctCode" ></formtext>
-                      <formtext :must="false" labelname="跟单员电话：" :read="true" :value.sync="baseInfo.U_CntctPhone"></formtext>
-                </div>
-            </panel>
+              <detail :data="detailData"></detail>
           </div>
           <div :class="css.dataArea">
                 <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
@@ -39,13 +15,11 @@
 <script>
 import Utils from "common/Utils";
 import {setTitle} from "actions";
-import panel from "component/panel/panel";
 import css from "./sale.css";
-import cascadeform from "component/form/formCascade";
-import formtext from "component/form/formText";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLab";
 import btn from "component/sprite/button";
+import detail from "modules/common/detailInfo";
 import adapter from "./adapter";
 export default {
   mixins:[basePage],
@@ -54,7 +28,6 @@ export default {
       css,
       startvalidate: false,
       orderId:"",
-      baseInfo:{},
       tabs:[],
       show: false,
       datamap:{},
@@ -64,10 +37,6 @@ export default {
   computed: {
     detail: function(){
        return this.detailData.U_OrderStatus != "店长驳回"
-    },
-
-    showStatus: function(){
-      return this.detailData.U_OrderStatus == '店长驳回' || this.detailData.U_OrderStatus == 'e站驳回'
     }
   },
   ready: function () {},
@@ -81,7 +50,6 @@ export default {
           var d = res.json();
           this.show = !this.show;
           this.tabs.push(d.data.type);
-          this.baseInfo = d.data.base_info;
           this.datamap[d.data.type] = d.data;
           this.datamap["U_Enclosure"] = d.U_Enclosure || "";
           this.detailData = d.data;
@@ -120,7 +88,7 @@ export default {
       })
     }
   },
-  components: {tblab, panel,formtext,cascadeform,btn},
+  components: {tblab,btn,detail},
   route:{
     data: function(){
       if(!this.$route.query.orderid) history.back();
