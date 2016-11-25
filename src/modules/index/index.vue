@@ -3,25 +3,35 @@
       <div :class="inCss.indexIn">
         <div :class="inCss.indexLeft">
                 <div :class="inCss.levelBox">
-                      <div :class="inCss.spcpanelhalf">
-                            <tabbar :datas="tabArray"  @tabclick="tabClickHandler" :small="true">
-                                  <div :class="inCss.tabone" v-for="(index, one) in tabArray" v-show="one.show">
-                                          <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>
-                                  </div>
-                            </tabbar>
-                      </div>
-                      <panel  :classname='inCss.panelhalf'>
+                      <panel>
                           <div slot="panelTitle">
-                                 培训附件
+                                 <span :class='inCss.indexTile'><icon iconname="icon-edit" iconlabel="待办事项"></icon></span>
+
+                          </div>
+                          <div slot="panelContent">
+                                <div :class="inCss.oneBox">
+                                  <tabbar :datas="tabArray"  @tabclick="tabClickHandler" theme="indexTab">
+                                        <div :class="inCss.tabone" v-for="(index, one) in tabArray" v-show="one.show">
+                                                <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>
+                                        </div>
+                                  </tabbar>
+                                </div>
+                          </div>
+                      </panel>
+                      <panel>
+                          <div slot="panelTitle">
+                                  <span :class='inCss.indexTile'><icon iconname="icon-enclosure" iconlabel="培训附件"></icon></span>
                                  <div :class='inCss.operator'>
                                       <icon iconname="icon-left3"></icon>
                                       <icon iconname="icon-right3"></icon>
                                  </div>
                           </div>
                           <div slot="panelContent">
-                            <div :class='inCss.listOne'>
-                                  <span :class='inCss.inrow'>销售管理操作手册.ppt</span>
-                                  <span :class='inCss.date'>2016.06.29</span>
+                            <div :class='inCss.twoBox'>
+                                  <div :class="inCss.rowOne">
+                                      <span :class='inCss.inrow'>销售管理操作手册.ppt</span>
+                                      <span :class='inCss.date'>2016/06/29</span>
+                                  </div>
                             </div>
                           </div>
                       </panel>
@@ -29,18 +39,20 @@
         </div>
         <div :class="inCss.indexRight">
                 <div :class="inCss.levelBox">
-                  <panel :classname='inCss.panelall'>
+                  <panel>
                       <div slot="panelTitle">
-                             公告栏
+                             <span :class='inCss.indexTile'><icon iconname="icon-notice" iconlabel="通知公告"></icon></span>
                              <div :class='inCss.operator'>
                                   <icon iconname="icon-left3"></icon>
                                   <icon iconname="icon-right3"></icon>
                              </div>
                       </div>
                       <div slot="panelContent">
-                        <div :class='inCss.listOne'>
+                        <div :class='inCss.threeBox'>
+                            <div :class="inCss.rowOne">
                               <span :class='inCss.inrow'>分站下单.doc</span>
-                              <span :class='inCss.date'>2016.06.29</span>
+                              <span :class='inCss.date'>2016/06/29</span>
+                            </div>
                         </div>
                       </div>
                   </panel>
@@ -53,7 +65,7 @@
 <script>
 import {setTitle} from "actions/index.js";
 import inCss from "./index.css";
-import panel from "component/panel/panel";
+import panel from "./indexPanel";
 import icon from "component/sprite/icon.vue";
 import tabbar from "component/tab/tabBar.vue";
 
@@ -67,7 +79,7 @@ export default {
     return {
       inCss,
       curTabIndex:0,
-      tabArray:[{labelName:"销售订单", id: "xiaoshoucom", show:false, component: saleList},
+      tabArray:[{labelName:"子订单", id: "xiaoshoucom", show:false, component: saleList},
                 {labelName:"采购订单", id: "caigou", show:false, component: purchaseList},
                 {labelName:"备货订单", id: "beihuo", show:false, component: backWillList},
                 {labelName:"定制品", id: "dingzhipin", show:false, component: specWillList},
@@ -76,18 +88,12 @@ export default {
   },
   computed: {},
   ready: function () {
-    this.$nextTick(function () {
-      // console.log(this.$el);
-      $("body").css("background-color", "#e6e6e6");
+    this.$nextTick( () => {
+       $("."+this.inCss.oneBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
+       $("."+this.inCss.twoBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
+       $("."+this.inCss.threeBox).css("height",(document.body.clientHeight- 125 - 101) +"px");
     })
     this.setFirstTab();
-  },
-
-  detached(){
-      $("body").css("background-color", "white");
-  },
-  created: function () {
-
   },
 
   route:{

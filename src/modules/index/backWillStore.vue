@@ -1,40 +1,46 @@
 <template lang="html">
       <div class="">
-            <div :class="css.listOne" v-for="one in datas">
-              备货订单 <span :class='css.inrow' @click="goTo">FZBH2016100026_101</span> 暂未处理
-              <span :class='css.date'>2016.06.29</span>
+            <div :class='[css.operator, css.opSpec]'>
+                 <icon iconname="icon-left3" @click ="prevAction"></icon>
+                 <icon iconname="icon-right3" @click ="nextAction"></icon>
             </div>
+            <div :class="css.rowOne" v-for="one in datas" @click="goTo(one.U_PurchaseNum)">
+              备货订单 {{one.U_PurchaseNum}} {{one.U_OrderStatus}}
+              <span :class='css.date'>{{one.U_Date | dateformate 'yyyy/mm/dd'}}</span>
+            </div>
+            <span v-if="curStatus == 'no-result'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">没有数据</span>
+            <span v-if="curStatus =='loading'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">加载中</span>
       </div>
 </template>
 
 <script>
 import  baselist from "common/mixinList";
 import css from "./index.css";
+import  basedb from "./baseDB.js";
 export default {
-  mixins:[baselist],
+  mixins:[baselist,basedb],
   props:{
-    datas:{
-      default: function(){
-        return [1,2,3,4,5,6,7]
-      }
+    url: {
+      default:"todo/stockpiles"
     }
   },
   data: function () {
     return {
-      css
+      css,
+      name:"备货订单",
+      routerUrl:"prestore/detail"
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    setTimeout(()=>{
+        this.load = !this.load;
+    })
+  },
   attached: function () {},
   methods: {
-    goTo: function(){
-        this.$router.go({path:"prestore/detail", query:{orderid:"FZBH2016100026_101"}});
-    }
+
   },
   components: {}
 }
 </script>
-
-<style lang="css">
-</style>

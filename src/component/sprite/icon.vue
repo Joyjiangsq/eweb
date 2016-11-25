@@ -1,7 +1,8 @@
 <template>
     <span :class='[classname, iconlabel?"":iconCss.iconfont, iconlabel?"":iconCss[iconname],iconlabel?"": iconCss[attach]]'>
-        <span :class='[iconCss.iconfont, iconCss[iconname], iconCss[attach]]'  v-if="iconlabel"></span>
-        <span :class='iconCss.iconlabel' v-if="iconlabel">{{iconlabel}}</span>
+        <span :class='[iconCss.iconfont, iconCss[iconname], iconCss[attach]]'  v-if="iconlabel">
+            <span :class='iconCss.iconlabel' v-if="iconlabel">{{iconlabel}}</span>
+        </span>
     </span>
 </template>
 

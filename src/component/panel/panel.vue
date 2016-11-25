@@ -2,10 +2,10 @@
 <div :class="panelCss.panelIn">
   <div :class="[classname, panelCss.panelBox]">
     <div :class="[panelCss.panelTitle,'gradent']">
-      <slot name="panelTitle">这是标题</slot>
+      <slot name="panelTitle"></slot>
     </div>
     <div :class="panelCss.panelContainer">
-      <slot  name="panelContent">这是panel</slot>
+      <slot  name="panelContent"></slot>
     </div>
 
     <div :class="panelCss.panelFooter">

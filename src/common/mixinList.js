@@ -52,15 +52,16 @@ let list = {
           // 如果有数据 就渲染
          //  如果没有数据就显示没有数据
           let datas = res.json();
+          this.$set("totals", datas.data.count);
           if(datas.data.docs.length == 0) {
             this.$set("curStatus", "no-result");
           }
           else {
-            this.adapter(datas.data.docs);
+            if(this.adapter) this.adapter(datas.data.docs);
             // 回调totals
             this.$set("curStatus", "renderData");
           }
-          this.$set("totals", datas.data.count);
+          if(this.loadSuccess) this.loadSuccess(datas);
       },(error) => {this.$set("curStatus", "no-result");})
     }
   },

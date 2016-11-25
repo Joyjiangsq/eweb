@@ -1,36 +1,46 @@
 <template lang="html">
       <div class="">
-            <div :class="css.listOne" v-for="one in datas">
-              最新客户 《拿铁11》
-              <span :class='css.date'>2016.06.29</span>
+            <div :class='[css.operator, css.opSpec]'>
+                 <icon iconname="icon-left3" @click ="prevAction"></icon>
+                 <icon iconname="icon-right3" @click ="nextAction"></icon>
             </div>
+            <div :class="css.rowOne" v-for="one in datas">
+               {{one.CardName}} - {{one.Phone2}}
+              <span :class='css.date'>{{one.createAt | dateformate 'yyyy/mm/dd'}}</span>
+            </div>
+            <span v-if="curStatus == 'no-result'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">没有数据</span>
+            <span v-if="curStatus =='loading'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">加载中</span>
       </div>
 </template>
 
 <script>
 import  baselist from "common/mixinList";
 import css from "./index.css";
+import  basedb from "./baseDB.js";
 export default {
-  mixins:[baselist],
+  mixins:[baselist,basedb],
   props:{
-    datas:{
-      default: function(){
-        return ["kehu112212 112122","kehu112212","kehu32323----"]
-      }
+    url: {
+      default:"todo/customers"
     }
   },
   data: function () {
     return {
-      css
+      css,
+      name:"客户数据",
+      routerUrl:""
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    setTimeout(()=>{
+        this.load = !this.load;
+    })
+  },
   attached: function () {},
-  methods: {},
+  methods: {
+
+  },
   components: {}
 }
 </script>
-
-<style lang="css">
-</style>

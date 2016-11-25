@@ -1,40 +1,46 @@
 <template lang="html">
       <div class="">
-            <div :class="css.listOne" v-for="one in datas">
-              定制品订单 <span :class='css.inrow' @click="goTo">SJ2016100008</span> 暂未处理
-              <span :class='css.date'>2016.06.29</span>
+            <div :class='[css.operator, css.opSpec]'>
+                 <icon iconname="icon-left3" @click ="prevAction"></icon>
+                 <icon iconname="icon-right3" @click ="nextAction"></icon>
             </div>
+            <div :class="css.rowOne" v-for="one in datas" @click="goTo(one.U_PurchaseNum)">
+              定制品 {{one.U_PurchaseNum}} {{one.U_OrderStatus}}
+              <span :class='css.date'>{{one.U_Date | dateformate 'yyyy/mm/dd'}}</span>
+            </div>
+            <span v-if="curStatus == 'no-result'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">没有数据</span>
+            <span v-if="curStatus =='loading'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">加载中</span>
       </div>
 </template>
 
 <script>
 import  baselist from "common/mixinList";
 import css from "./index.css";
+import  basedb from "./baseDB.js";
 export default {
-  mixins:[baselist],
+  mixins:[baselist,basedb],
   props:{
-    datas:{
-      default: function(){
-        return ["dingzhipin","dingzhipin11111","dingzhipi--n"]
-      }
+    url: {
+      default:"todo/custom-products"
     }
   },
   data: function () {
     return {
-      css
+      css,
+      name:"定制品",
+      routerUrl:"specmgr/apply"
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    setTimeout(()=>{
+        this.load = !this.load;
+    })
+  },
   attached: function () {},
   methods: {
-    goTo: function(){
-        this.$router.go({path:"specmgr/apply", query:{orderid:"SJ2016100008"}});
-    }
+
   },
   components: {}
 }
 </script>
-
-<style lang="css">
-</style>

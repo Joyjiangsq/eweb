@@ -1,79 +1,79 @@
 .indexBox {
-  width: 100%;
-  overflow: hidden;
-  padding-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 20px;
 }
-.indexBox .levelBox {
-  /*float: left;
-  margin-left: 20px;
-  width: 47%;*/
+.rowOne {
+    margin-bottom: 8px;
+    padding: 0 15px;
+    cursor: pointer;
 }
-
-.indexBox .panelhalf {
-    height: 400px;
-}
-
-.spcpanelhalf {
-  height: 400px;
-  padding: 20px 0;
-}
-.tabone {
-      height: 365px;
-}
-
-.indexBox .panelall {
-    height: 822px;
-}
-
+.tabone {}
 .indexBox .operator {
-  position: absolute;
-  right: 0;
-  top: 0px;
-  letter-spacing: 5px;
-  color: gray;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    letter-spacing: 15px;
+    color: #c9e2f1;
+}
+.indexBox .opSpec {
+    top: -53px;
+    z-index: 1;
 }
 .inrow {
-  color: #0066cc;
-  cursor: pointer;
-  font-size: 13px;
-  margin: 0 4px;
+    cursor: pointer;
+    margin: 0 4px;
+    width: 60%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .indexBox .operator span {
-  cursor: pointer;
+    cursor: pointer;
+    color: #c9e2f1;
 }
 .indexBox .operator span:hover {
-  color: #333;
+    color: #fe8f00;
 }
-
 .indexRight {
-  float: left;
-  width: 50%;
+    float: left;
+    width: 30%;
 }
 .indexLeft .levelBox {
-  width: 97%;
+    width: 97%;
 }
 .indexLeft {
-  float: left;
-  width: 50%;
+    float: left;
+    width: 70%;
 }
-
 .indexIn {
     padding: 0 20px;
 }
 .date {
-  font-size: 13px;
-color: gray;
-position: absolute;
-right: 13px;
+    color: gray;
+    position: absolute;
+    right: 13px;
 }
-
-.listOne {
-  border: 1px solid #ddd;
-  padding: 10px 0;
-  width: 90%;
-  margin: 0 auto;
-  padding-left: 10px;
-  color: #333;
-  margin-bottom: 6px;
-  font-size: 13px;
+.indexTile *{
+    font-size: 16px;
+    color: #fe8f00!important;
+    font-weight: bold;
+}
+.indexPanel {
+    background-color: white;
+    margin-top: 20px;
+    border: 1px solid #c9e2f1;
+}
+.pheader {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    border-bottom: 2px solid #fe8f00;
+}
+.pcontent {}
+.oneBox {}
+.twoBox {padding-top: 20px;}
+.threeBox {padding-top: 20px;}
+.titleIn {
+  margin-left: 10px;
 }

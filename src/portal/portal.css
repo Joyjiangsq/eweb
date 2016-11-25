@@ -3,12 +3,13 @@
 .headerView {
     background-color: white;
     border-bottom: 1px solid #ddd;
-    margin-bottom: -1px;
-    /*box-shadow: 0 20px 10px -24px rgba(0, 0, 0, .5);*/
-    z-index: 1111;
     height: 80px;
 }
-.headerView .logoBox {}
+.headerView .logoBox {
+    margin-left: 200px;
+    margin-top: 10px;
+    position: absolute;
+}
 .headerView .logoBox img {
     margin: 11px 25px;
 }
@@ -21,25 +22,25 @@
 .headerView .headerBars .operator {
     color: gray;
 }
-.headerView .headerBars .operator> span {
+.headerView .headerBars .operator>span {
     cursor: pointer;
     margin-left: 10px;
 }
 
 /**silderBox**/
 
-.silderBox {
-      overflow-y: auto;
-}
+.silderBox {}
 .silderBox .menuItem {}
 .silderBox .menuItem .menuTitle {
-    color: #a0b0c1;
-    padding: 13px 0;
+    color: #cad9ec;
+    height: 45px;
+    line-height: 45px;
     padding-left: 45px;
     cursor: pointer;
+    border-left: 3px solid #3e4652;
 }
 .silderBox .menuItem .menuTitle * {
-    color: #a0b0c1;
+    color: #cad9ec;
 }
 .silderBox .menuItem .subMenus {}
 .subMenus a {
@@ -48,24 +49,26 @@
     padding-left: 45px;
     cursor: pointer;
     text-decoration: none;
-    color: #a0b0c1;
+    color: #cad9ec;
+    border-left: 3px solid #3e4652;
 }
 .menuSubAction span {
-    color: #a0b0c1;
-    position: absolute;
-    top: 15px;
+    color: #cad9ec;
 }
 .menuSubAction a {
     display: block;
-    padding: 13px 0;
     padding-left: 45px;
     cursor: pointer;
     text-decoration: none;
-    color: #a0b0c1;
+    color: #cad9ec;
+    height: 45px;
+    line-height: 45px;
+    border-left: 3px solid #3e4652;
 }
 .silderBox .menuItem .subMenus a:hover {
-    background: #405060;
+    background: #fe8f00;
     color: white;
+    border-left: 3px solid #ea5404;
 }
 .menuicon {
     position: absolute;
@@ -74,6 +77,23 @@
 .directicon {
     position: absolute;
     right: 20px;
-    font-size: 12px;
-    font-weight: normal;
+}
+.menuHeaderDesc {
+    height: 160px;
+}
+.stationName {
+    position: absolute;
+    bottom: 14px;
+    right: -25px;
+}
+.descIn {
+    height: 90px;
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    position: absolute;
+}
+.drowItem {
+    display: block;
+    color: #cad9ec;
 }

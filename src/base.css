@@ -4,16 +4,16 @@
     border: 0;
     outline: none;
     font-size: 14px;
-    color: #232323;
+    font-family: "Microsoft YaHei";
 }
 span, a {
     display: inline-block;
     position: relative;
 }
-a{
-  text-decoration: none;
-  color: #0066cc;
-  cursor: pointer;
+a {
+    text-decoration: none;
+    color: #0066cc;
+    cursor: pointer;
 }
 div, p, ul, li {
     position: relative;
@@ -26,13 +26,12 @@ html, body {
     height: 100%;
 }
 input {
-  border: 1px solid #ddd;
-/*padding: 8px 0;*/
+    border: 1px solid #ddd;
     height: 28px;
-color: #888;
-border-radius: 4px;
-position: relative;
-text-indent: 12px;
+    color: #888;
+    border-radius: 4px;
+    position: relative;
+    text-indent: 12px;
 }
 input:hover, input:focus {
     border: 1px solid #4a5b6d;
@@ -47,7 +46,9 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-table thead {    border-left: 1px solid #ddd;}
+table thead {
+    border-left: 1px solid #ddd;
+}
 table thead tr {
     background: -webkit-linear-gradient(white, #f2f2f2);
     /* Safari 5.1 - 6.0 */
@@ -67,18 +68,18 @@ table thead th {
     color: #333;
     height: 40px;
     padding: 0 10px;
-    border-bottom: 1px solid #ddd;white-space: nowrap;
-
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
 }
 table tbody td {
-  color: #232323;
-  height: 40px;
-  text-align: center;white-space: nowrap;
-
-  vertical-align: middle;
-  padding: 0 10px;
-  line-height: 22px;
-  border: 1px solid #ddd;
+    color: #232323;
+    height: 40px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 0 10px;
+    line-height: 22px;
+    border: 1px solid #ddd;
 }
 table tbody td span {
     font-size: 13px;
@@ -88,29 +89,31 @@ table tbody td span {
 
 /**全局样式**/
 
+
 /**渐变**/
+
 :global(.tipRow) {
-  padding: 10px;
+    padding: 10px;
     color: red;
-  font-size: 13px;
-  margin-bottom: 15px;
+    font-size: 13px;
+    margin-bottom: 15px;
 }
 :global(.tipRow *) {
-  color: red;
+    color: red;
 }
 :global(.tipRowSub) {
-  margin-bottom: 10px
+    margin-bottom: 10px
 }
 :global(.gradent) {
-  background: -webkit-linear-gradient(white, #f2f2f2);
-  /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(white, #f2f2f2);
-  /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(white, #f2f2f2);
-  /* Firefox 3.6 - 15 */
-  background: linear-gradient(white, #f2f2f2);
-  FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
-  /*IE 6 7 8*/
+    background: -webkit-linear-gradient(white, #f2f2f2);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(white, #f2f2f2);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(white, #f2f2f2);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(white, #f2f2f2);
+    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
+    /*IE 6 7 8*/
 }
 :global(.upsu) {
     color: green;
@@ -122,7 +125,9 @@ table tbody td span {
     color: gray;
     font-size: 12px;
 }
+
 /**渐隐**/
+
 :global(.reback) {
     color: red;
 }
@@ -132,7 +137,7 @@ table tbody td span {
 :global(.itemrow) {
     margin-right: 20px;
     color: gray;
-font-size: 13px;
+    font-size: 13px;
 }
 :global(.fadeModal-enter) {
     opacity: 0;
@@ -148,72 +153,60 @@ font-size: 13px;
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
-:global(.app_container) {
-    padding-top: 80px;
-}
-:global(.app_header) {
-    position: fixed;
-    z-index: 20;
-    width: 100%;
-    top: 0;
-}
-
+:global(.app_header) {}
 :global(.needpaddingnull) {
     padding: 20px 0;
 }
 :global(.needpadding) {
-  padding: 20px;
-  background-color: #e6e6e6;
+    padding: 20px;
+    background-color: #e6e6e6;
 }
 :global(.needtop) {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 :global(.app_left_menus_box) {
+    position: absolute;
+    background-color: #3e4652;
     width: 200px;
-    position: fixed;
+    top: 0;
+    z-index: 1;
     height: 100%;
-    border-top: 1px solid #ddd;
-    background: #4a5b6d;
-    z-index: 12;
-    color: #a0b0c1;
 }
-:global(.app_main_container) {
-    /*padding-left: 200px;*/
+:global(.app_container) {
     width: calc(100% - 200px);
-        float: right;
+    float: right;
 }
-:global(.app_main_container .app_container_in) {
-    padding-top: 40px;
-    /*padding-bottom: 20px;*/
+:global(.app_container_in) {
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
 }
-:global(.app_main_container .app_container_in .clear) {
-    clear: both;
-}
-:global(.app_main_container .subTitle) {
-    background-color: #f2f2f2;
+:global(.app_container .subTitle) {
+    background-color: #eff6f9;
     padding: 0 20px;
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #ddd;
-    position: fixed;
-    width: 100%;
-    z-index: 11;
-    top: 80px;
 }
-:global(.app_main_container .subTitle .subSplit) {
-  width: 20px;
-  text-align: center;
+:global(.app_container .subTitle .curTitle) {
+    color: #fe8f00;
 }
-:global(.app_main_container .subTitle .backbtn) {
-  cursor: pointer;
-  width: 10px;
-  text-align: center;
-  margin-right: 8px;
+:global(.app_container .subTitle .subSplit) {
+    width: 20px;
+    text-align: center;
 }
-:global(.app_main_container .subTitle .rightClose) {
-  position: absolute;
-  right: 254px;
-  cursor: pointer;
+:global(.app_container .subTitle .backbtn) {
+    cursor: pointer;
+    width: 10px;
+    text-align: center;
+    margin-right: 8px;
+    position: absolute;
+    right: 20px;
+}
+:global(.app_container .subTitle .rightClose) {
+    position: absolute;
+    right: 254px;
+    cursor: pointer;
 }
 :global(.app_footer) {
     background: #b9b9b9;
@@ -222,13 +215,14 @@ font-size: 13px;
     line-height: 50px;
 }
 :global(.app_left_menus_box .v-link-active) {
-    background: #405060;
+    background: #fe8f00;
+    color: white;
+    border-left: 3px solid #ea5404;
+}
+:global(.app_left_menus_box .v-link-active *) {
     color: white;
 }
-:global(.app_left_menus_box .v-link-active span) {
-    background: #405060;
-    color: white;
-}
+
 /*---滚动条默认显示样式--*/
 
 ::-webkit-scrollbar-thumb {

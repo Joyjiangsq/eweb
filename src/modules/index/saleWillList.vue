@@ -1,40 +1,46 @@
 <template lang="html">
       <div class="">
-            <div :class="css.listOne" v-for="one in datas">
-              销售订单 <span :class='css.inrow' @click="goTo">FZXS201611100184</span> 暂未处理
-              <span :class='css.date'>2016.06.29</span>
+            <div :class='[css.operator, css.opSpec]'>
+                 <icon iconname="icon-left3" @click ="prevAction"></icon>
+                 <icon iconname="icon-right3" @click ="nextAction"></icon>
             </div>
+            <div :class="css.rowOne" v-for="one in datas" @click="goTo(one.U_PurchaseNum)">
+              子订单 {{one.U_PurchaseNum}} {{one.U_OrderStatus}}
+              <span :class='css.date'>{{one.U_Date | dateformate 'yyyy/mm/dd'}}</span>
+            </div>
+            <span v-if="curStatus == 'no-result'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">没有数据</span>
+            <span v-if="curStatus =='loading'" style="text-align: center; color: gray; display: block; margin: 0 auto; padding: 50px;">加载中</span>
       </div>
 </template>
 
 <script>
 import  baselist from "common/mixinList";
 import css from "./index.css";
+import  basedb from "./baseDB.js";
 export default {
-  mixins:[baselist],
+  mixins:[baselist,basedb],
   props:{
-    datas:{
-      default: function(){
-        return ["1","2","3",4,5,6,7,8]
-      }
+    url: {
+      default:"todo/sales"
     }
   },
   data: function () {
     return {
-      css
+      css,
+      name:"子订单",
+      routerUrl:"sale/subdetail"
     }
   },
   computed: {},
-  ready: function () {},
+  ready: function () {
+    setTimeout(()=>{
+        this.load = !this.load;
+    })
+  },
   attached: function () {},
   methods: {
-    goTo: function(){
-        this.$router.go({path:"sale/detail", query:{orderid: "FZXS201611100184"}})
-    }
+
   },
   components: {}
 }
 </script>
-
-<style lang="css">
-</style>

@@ -139,14 +139,13 @@ export default {
           this.addTag = true;
           this.newForm.validate = !this.newForm.validate;
           setTimeout(()=>{
-              console.log(this.addTag);
               if(this.addTag) {
                   this.$http.post(this.$Api+"users",JSON.stringify(this.addFormData)).then((res) => {
                       var d = res.json();
                       this.showFormDialog = !this.showFormDialog;
                       this.loadlist();
                       this.showMsg("success", "新增成功");
-                      this.addFormData = {CardCode:"", CardName:"",phone:"",ValidFor:"Y",roles:""}
+                      this.addFormData = {CardCode:"", CardName:"",phone:"",ValidFor:"Y",roles:"",position:""}
                   },(error) =>{
                     this.showMsg("error", error.msg);
                   })
@@ -186,6 +185,7 @@ export default {
     // 表单模糊查询点击
     formDimClick: function(d) {
        Object.assign(this.addFormData,d);
+       this.addFormData.position = d.role;
     },
     // 重置密码
     confirmReset: function(d){

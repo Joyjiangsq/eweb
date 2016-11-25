@@ -1,30 +1,60 @@
 @charset "UTF-8";
 .tabBox {
-  background-color: white;
-  width: 100%;
+    background-color: white;
+    width: 100%;
 }
-
-.tabBar {
-    background-color: #e6e6e6;
-
-}
-
+.tabBar {}
 .tabBar .active {
-  background: white;
-  border-bottom: 1px solid white;
+    background: white;
+    border-bottom: 1px solid white;
 }
 .tabOne {
-  padding: 10px 20px;
-  border: 1px solid #ddd;
-  margin-left: -1px;
-  cursor: pointer;
+    margin-left: -1px;
+    cursor: pointer;
+    margin-bottom: -1px;
 }
-
 .tabArea {
-  padding-top: 20px;
+    padding-top: 20px;
+}
+.smStyle {
+    padding: 10px;
+    color: #333;
+}
+/**主页主题**/
+.indexTab {
+  margin-top: 10px;
+}
+.indexTab .tabBar {
+    border-bottom: 1px solid #c9e2f1;
+    padding-left: 20px;
+}
+.indexTab .tabBar .tabOne {
+    border: 1px solid #c9e2f1;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    background-color: #eff6f9;
 }
 
-.smStyle {
-padding: 10px;
-color: #333;
+.indexTab .tabBar  .active {
+  background-color: white;
+  border-bottom: 1px solid white;
+}
+/**sale**/
+.sale {
+}
+.sale .tabBar {
+    border-bottom: 1px solid #ddd;
+}
+.sale .tabBar .tabOne {
+    border: 1px solid #ddd;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    background-color: #f2f2f2;
+}
+
+.sale .tabBar  .active {
+  background-color: white;
+  border-bottom: 1px solid white;
 }

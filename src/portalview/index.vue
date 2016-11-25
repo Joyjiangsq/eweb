@@ -3,30 +3,27 @@
         <div class="app_header">
             <headerbox></headerbox>
         </div>
+        <div class="app_left_menus_box">
+          <menus></menus>
+        </div>
         <div class="app_container">
-              <div class="app_left_menus_box">
-                    <menus></menus>
-              </div>
-              <div class="app_main_container">
-                    <div class="app_container_in">
-                        <div class="subTitle">
-                            <span v-if="titleIsArray">
-                                <span v-for="(index, one) in getTitle">
-                                  <span v-if="one.type == 'back'" class='backbtn' @click="closeHandler"><icon iconname="icon-back"></icon></span>
-                                  <span v-if="index!=0" class='subSplit'>/</span>
-                                  {{one.name}}
-                                </span>
-                            </span>
-                            <span v-else> {{getTitle}}</span>
-
-                            <!-- <span class='rightClose' @click="closeHandler" v-if="titleIsArray">
-                                <icon iconname="icon-close"></icon>
-                            </span> -->
-                        </div>
-                        <router-view ></router-view>
-                        <div class="clear"></div>
-                    </div>
-              </div>
+            <div class="subTitle">
+                <span class='curTitle'>当前位置： </span>
+                <span v-if="titleIsArray">
+                    <span v-for="(index, one) in getTitle">
+                      <span v-if="index!=0" class='subSplit'>/</span>
+                      {{one.name}}
+                    </span>
+                </span>
+                <span v-else> {{getTitle}}</span>
+                <span  v-if="titleIsArray" class='backbtn' @click="closeHandler">
+                    <icon iconname="icon-back"></icon>
+                </span>
+            </div>
+            <div class="app_container_in">
+                  <router-view ></router-view>
+            </div>
+            <div class="clear"></div>
         </div>
   </div>
 </template>
@@ -50,7 +47,8 @@ export default {
 
   ready: function () {
     this.$nextTick(function () {
-      //  this.$el.querySelector(".app_main_container").style.width = (1-200/window.innerWidth)*100 + "%";
+       $("#app_view").css("height",document.body.clientHeight +"px");
+       $(".app_container_in").css("height", (document.body.clientHeight - 125) +"px");
     })
   },
   attached: function () {},

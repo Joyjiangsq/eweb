@@ -1,32 +1,42 @@
 <template>
-  <div :class="protalCss.silderBox">
-        <div :class="protalCss.menuItem" v-for="(order, one) in datamenu">
-              <div v-if="one.subMenus" :class="protalCss.menuTitle" @click="changeSubBox(one)">
-                <icon :iconname="one.icon" :class='protalCss.menuicon'></icon> {{one.name}}  <icon  :class="protalCss.directicon"  iconname="icon-right3"></icon>
+      <div class="">
+              <div :class="portalCss.menuHeaderDesc">
+                    <div :class="portalCss.descIn">
+                          <img :src="defimg" alt="">
+                          <span :class='portalCss.drowItem'>
+                              欢迎您  | {{userInfo.CardName}}
+                          </span>
+                    </div>
               </div>
-              <div  :class="protalCss.menuSubAction" v-else>
-                <a v-link="one.url"><icon :class='protalCss.menuicon' :iconname="one.icon"></icon> {{one.name}} <icon :class="protalCss.directicon"  iconname="icon-right3"></icon> </a>
+              <div :class="portalCss.silderBox">
+                    <div :class="portalCss.menuItem" v-for="(order, one) in datamenu">
+                          <div v-if="one.subMenus" :class="portalCss.menuTitle" @click="changeSubBox(one)">
+                            <icon :iconname="one.icon" :class='portalCss.menuicon'></icon><span> {{one.name}}</span>  <icon  :class="portalCss.directicon"  iconname="icon-right3"></icon>
+                          </div>
+                          <div  :class="portalCss.menuSubAction" v-else>
+                            <a v-link="one.url"><icon :class='portalCss.menuicon' :iconname="one.icon"></icon> {{one.name}} <icon :class="portalCss.directicon"  iconname="icon-right3"></icon> </a>
+                          </div>
+                          <div :class="portalCss.subMenus" v-show="one.show">
+                            <a v-link="subone.url"  v-for="subone in one.subMenus">{{subone.name}}</a>
+                          </div>
+                    </div>
               </div>
-              <div :class="protalCss.subMenus" v-show="one.show">
-                <a v-link="subone.url"  v-for="subone in one.subMenus">{{subone.name}}</a>
-              </div>
-        </div>
-  </div>
+      </div>
 </template>
 
 <script>
-import protalCss from './portal.css';
+import portalCss from './portal.css';
 import icon from "component/sprite/icon";
 import {getUser} from "stores/getters.js";
+import def from 'asset/img/default.png';
 import Utils from "common/Utils";
 let staticMenus = [
-  {name:"首页", url:"/index", icon:"icon-home"},
-  {name:"账户管理", url:"/accountmgr", icon:"icon-tip"},
-  {name:"员工管理", url:"/employee", icon:"icon-tip"},
-  {name:"用户管理", url:"/user", icon:"icon-tip"},
-  {name:"客户管理", url:"/custom", icon:"icon-tip"},
-  {name:"销售订单管理", url:"/sale", icon:"icon-tip"},
-  {name:"采购管理", icon:"icon-tip",show: false,subMenus:[{
+  {name:"首页", url:"/index", icon:"icon-left-home"},
+  {name:"账户管理", url:"/accountmgr", icon:"icon-account"},
+  {name:"员工管理", url:"/employee", icon:"icon-staff"},
+  {name:"客户管理", url:"/custom", icon:"icon-customer"},
+  {name:"销售订单管理", url:"/sale", icon:"icon-sale"},
+  {name:"采购管理", icon:"icon-purchase",show: false,subMenus:[{
           url:"/purchase",name:"采购订单管理"
       },{
           url:"/prestore",name:"备货申请"
@@ -36,16 +46,19 @@ let staticMenus = [
           name:"加急卡管理", url:"/urgent"
       }]
   },
-  {name:"定制品设计管理", url:"/specmgr", icon:"icon-tip"},
+  {name:"定制品设计管理", url:"/specmgr", icon:"icon-custom-made"},
 
-  {name:"报表管理", url:"/tbmgr", icon:"icon-tip"}
+  {name:"报表管理", url:"/tbmgr", icon:"icon-report"},
+  {name:"用户管理", url:"/user", icon:"icon-user-manager"}
 ]
 export default {
     data(){
       return {
-        protalCss,
+        portalCss,
+        defimg:def,
         oneArry:[],
-        datamenu: Utils.getUserInfo().menus || staticMenus
+        userInfo:Utils.getUserInfo(),
+        datamenu: staticMenus//Utils.getUserInfo().menus || staticMenus
       }
     },
 
@@ -61,9 +74,7 @@ export default {
             }
       }
       var self = this;
-      this.$nextTick(function () {
-        $("." + self.protalCss.silderBox).css("height",  window.innerHeight- 90);
-      })
+
     },
 
     computed: {

@@ -1,9 +1,8 @@
 <template>
   <div :class="portalCss.headerView">
 
-        <div :class="portalCss.logoBox"><img :src="logo" alt="" /></div>
+        <div :class="portalCss.logoBox"><img :src="logo" alt="" /><span :class='portalCss.stationName'>{{station_name}}</span></div>
         <div :class="portalCss.headerBars">
-              <span :class="portalCss.who"><icon iconname="icon-user" :iconlabel="userName"></icon></span>
               <span :class="portalCss.operator">
                 <span  @click="changePasswd"><icon iconname="icon-key" iconlabel="修改密码"></icon></span>
                 <span  @click="loginOutAction"><icon iconname="icon-downaction" iconlabel="退出"></icon></span>
@@ -15,7 +14,7 @@
 
         </dialogtip>
         <!--修改密码-->
-        <dialog :flag.sync="flagdep" @dialogclick="dialogclick">
+        <dialog :flag.sync="flagdep" @dialogclick="dialogclick" title="修改密码">
               <div class="" slot="containerDialog">
                       <formtext labelname="原密码：" inputtype="password" formname='old_passwd' :vertical="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       <formtext labelname="新密码：" inputtype="password" formname='new_passwd' :vertical="true" :validatestart="validate" @onvalidate="validateHandler" :value.sync="passwd1"></formtext>
@@ -32,7 +31,7 @@
 <script>
 import {showTips} from "actions/index";
 import portalCss from './portal.css';
-import logo from 'asset/img/logo.png';
+import logo from 'asset/img/logo1.png';
 import icon from "component/sprite/icon.vue";
 import dialogtip from "component/dialog/dialogTip";
 import dialog from "component/dialog/dialog";
@@ -47,7 +46,7 @@ export default {
         portalCss,
         logo: logo,
         exitTag: false,
-        userName:"用户名",
+        station_name:"",
         flagdep: false,
         validate: false,
         passwd1:"",
@@ -60,7 +59,7 @@ export default {
     },
     ready: function(){
         let userInfo = Utils.getUserInfo();
-        if(userInfo) this.$set("userName", userInfo.CardName);
+        if(userInfo) this.$set("station_name", userInfo.station_name);
     },
     methods:{
       changePasswd: function(){
