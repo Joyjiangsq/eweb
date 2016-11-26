@@ -42,10 +42,11 @@
 .silderBox .menuItem .menuTitle * {
     color: #cad9ec;
 }
+
 .silderBox .menuItem .subMenus {}
 .subMenus a {
     display: block;
-    padding: 13px 0;
+    padding: 10px 0;
     padding-left: 45px;
     cursor: pointer;
     text-decoration: none;
@@ -55,6 +56,7 @@
 .menuSubAction span {
     color: #cad9ec;
 }
+
 .menuSubAction a {
     display: block;
     padding-left: 45px;
@@ -72,7 +74,11 @@
 }
 .menuicon {
     position: absolute;
-    left: 20px;
+    left: 10px;
+}
+
+.menuicon span {
+  font-size: 28px;
 }
 .directicon {
     position: absolute;

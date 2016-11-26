@@ -3,9 +3,8 @@
 }
 
 .iconlabel {
-  vertical-align: middle;
   margin-left: 5px;
-  color: #000!important
+  color: #000;
 }
 
 
@@ -16,7 +15,6 @@
   url('./iconfont.ttf?t=1471931080') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
   url('./iconfont.svg?t=1471931080#iconfont') format('svg'); /* iOS 4.1- */
 }
-
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
@@ -116,8 +114,8 @@
 
 .icon-open:before { content: "\e68e"; }
 
-.icon-account01:before { content: "\e68f"; }
-
 .icon-address:before { content: "\e690"; }
 
-.icon-mail:before { content: "\e691"; }
+.icon-mail:before { content: "\e692"; }
+
+.icon-account01:before { content: "\e691"; }

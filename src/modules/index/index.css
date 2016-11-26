@@ -55,10 +55,13 @@
     position: absolute;
     right: 13px;
 }
-.indexTile *{
+.headRow *{
     font-size: 16px;
     color: #fe8f00!important;
-    font-weight: bold;
+}
+.headRow .titleOne {
+  font-weight: bold;
+  margin-left: 5px;
 }
 .indexPanel {
     background-color: white;

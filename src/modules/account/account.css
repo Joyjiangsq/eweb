@@ -6,8 +6,10 @@
 .accountBox .accountTitleBox .itemone {
     width: 35%;
     padding-right: 10px;
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #c9e2f1;
     margin-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .accountBox .accountTitleBox .itemone:last-child {
     border: 0;
@@ -34,12 +36,10 @@
 }
 .backCash {
     position: absolute;
-    right: 5%;
+    right: 0;
     bottom: 0;
 }
 .mintitle {
-    font-weight: bold;
-    font-size: 15px;
     margin-right: 5px;
 }
 .cashText {
@@ -60,6 +60,20 @@
     font-size: 12px;
     line-height: 16px;
 }
-.badd {
-    margin-left: 65px;
+.panelRow {
+    margin: 20px 0 20px 20px;
+}
+.iconItem {
+  margin-right: 10px;
+}
+.iconItem span:first-child{
+  color: #fe8f00;
+}
+.iconItem span:last-child  {
+  color: #333;
+}
+.tipBtn {
+  color: #fe8f00;
+  margin-left: 5px;
+  cursor: pointer;
 }

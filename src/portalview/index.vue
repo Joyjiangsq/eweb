@@ -8,7 +8,7 @@
         </div>
         <div class="app_container">
             <div class="subTitle">
-                <span class='curTitle'>当前位置： </span>
+                <span class='curTitle'><icon iconname="icon-home" style="margin-right:4px;"></icon>当前位置： </span>
                 <span v-if="titleIsArray">
                     <span v-for="(index, one) in getTitle">
                       <span v-if="index!=0" class='subSplit'>/</span>

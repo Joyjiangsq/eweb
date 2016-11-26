@@ -19,7 +19,7 @@
                   <formtext labelname="组包选择：" :read="true" :must="false" :value.sync="data.base_info.U_SWW"  v-if="data.base_info.U_SWW"></formtext>
                   <formtext labelname="房本面积：" :read="true" :must="false"  unit="平米"  :value.sync="data.base_info.U_Acreage" v-if="data.base_info.U_Acreage"></formtext>
                   <formtext labelname="卫生间数量：" :read="true" :must="false" unit="个" :value.sync="data.base_info.U_ToiletNum" v-if="data.base_info.U_ToiletNum"></formtext>
-                  <formtext labelname="是否有电梯：" :read="true"  :must="false"  unit="平米"  :value.sync="data.base_info.U_IsElevator" v-if="data.base_info.U_IsElevator"></formtext>
+                  <formtext labelname="是否有电梯：" :read="true"  :must="false"  :value.sync="data.base_info.U_IsElevator" v-if="data.base_info.U_IsElevator"></formtext>
                   <formtext :read="true"  labelname="一口价：" unit="元" :must="false" :value.sync="data.base_info.one_price" v-if="data.base_info.one_price"></formtext>
                   <formtext labelname="实收金额：" :read="true" unit="元" :must="false" :value.sync="data.base_info.U_PaInAmount" v-if="data.base_info.U_PaInAmount"></formtext>
                   <formtext labelname="跟单员：" :read="true" :must="false" :value.sync="data.base_info.U_CntctCode" v-if="data.base_info.U_CntctCode"></formtext>

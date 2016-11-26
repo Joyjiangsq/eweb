@@ -1,7 +1,6 @@
 .panelBox {
   border: 1px solid #ddd;
   background-color: white;
-      /*box-shadow: 0 20px 10px -24px rgba(0, 0, 0, .5);*/
 }
 .panelIn {
   padding-top: 20px;
@@ -23,7 +22,11 @@
 }
 
 .pagePanel {
-  background-color: white;    padding: 20px;
+  background-color: white;
+  padding: 20px 20px 0 20px;
+  margin: 0 20px;
+  margin-top: 20px;
+  border: 1px solid #c9e2f1;
 }
 
 .bottom {

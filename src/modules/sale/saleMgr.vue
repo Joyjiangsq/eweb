@@ -20,8 +20,6 @@
           <div slot="containerDialog">
                   <div :class="css.inBoxCode">
                     <propertytext key="订单号" :value="curData.U_FZOrder"></propertytext>
-                    <!-- <propertytext key="分站名称：" :value="curData.U_FZOrder"></propertytext>
-                    <propertytext key="银行账号：" :value="------"></propertytext> -->
                     <propertytext key="业主姓名" :value="curData.base_info.CardName"></propertytext>
                     <propertytext key="业主电话" :value="curData.base_info.Phone2"></propertytext>
                     <propertytext key="业主地址" :value="curData.base_info.Address"></propertytext>

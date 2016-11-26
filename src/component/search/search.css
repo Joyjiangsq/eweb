@@ -37,3 +37,6 @@
 .typeTwo {
     margin-left: 20px;
 }
+.distance label {
+  min-width: 1px;
+}

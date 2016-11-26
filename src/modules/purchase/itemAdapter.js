@@ -1,4 +1,5 @@
 export default function adapterData(d) {
+        console.log(d);
         for (var i = 0; i < d.length; i++) {
            let one = d[i]; // 单条数据
            // 页面端  使用库存和采购数量

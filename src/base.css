@@ -127,7 +127,7 @@ table tbody td span {
 }
 
 /**渐隐**/
-
+:global(.fcolor) {color: #fe8f00;}
 :global(.reback) {
     color: red;
 }
@@ -139,12 +139,15 @@ table tbody td span {
     color: gray;
     font-size: 13px;
 }
-:global(.fadeModal-enter) {
-    opacity: 0;
+
+/*:global(.fadeModal-enter) {
+  opacity: 0;
 }
+
 :global(.fadeModal-leave) {
-    opacity: 0;
-}
+  opacity: 0;
+}*/
+
 :global(.fadeModal-enter .bounce) {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
@@ -154,7 +157,7 @@ table tbody td span {
     transform: scale(1.1);
 }
 :global(.app_header) {}
-:global(.needpaddingnull) {
+/*:global(.needpaddingnull) {
     padding: 20px 0;
 }
 :global(.needpadding) {
@@ -163,7 +166,7 @@ table tbody td span {
 }
 :global(.needtop) {
     margin-top: 20px;
-}
+}*/
 :global(.app_left_menus_box) {
     position: absolute;
     background-color: #3e4652;
@@ -186,7 +189,7 @@ table tbody td span {
     padding: 0 20px;
     height: 40px;
     line-height: 40px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #c9e2f1;
 }
 :global(.app_container .subTitle .curTitle) {
     color: #fe8f00;

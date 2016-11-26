@@ -1,50 +1,49 @@
 <template>
     <div :class="acCss.accountBox">
-        <pagepanel classname="needpadding" direct="bottom">
-
-          <div class="">
-            <propertytext key="账户名称" :horizontal="true" :value="accountBaseInfo.U_AccountName"></propertytext>
-            <propertytext key="邮箱" :horizontal="true" :value="accountBaseInfo.U_Email"></propertytext>
-            <propertytext key="提现账号" :horizontal="true" :value="accountBaseInfo.U_BankName"></propertytext></br>
-            <propertytext key="所属银行" :horizontal="true" :value="accountBaseInfo.U_BBank"></propertytext>
-            <span :class='acCss.badd'><propertytext key="开户行地址" :horizontal="true" :value="accountBaseInfo.U_BAddress"></propertytext></span>
-          </div>
+        <div :class="acCss.panelRow">
+          <icon iconname='icon-user' :classname="[acCss.iconItem, iconUser]" :iconlabel='accountBaseInfo.U_AccountName || "无"'></icon>
+          <icon iconname='icon-account01'  :classname="[acCss.iconItem, iconBname]" :iconlabel='accountBaseInfo.U_BankName || "无"'></icon>
+          <icon iconname='icon-account01' :classname="[acCss.iconItem, iconBbank]"  :iconlabel='accountBaseInfo.U_BBank || "无"'></icon>
+          <icon iconname='icon-address' :classname="[acCss.iconItem, iconBdd]"  :iconlabel='accountBaseInfo.U_BAddress || "无"'></icon>
+          <icon iconname='icon-mail' :classname="[acCss.iconItem, iconEmail]"  :iconlabel='accountBaseInfo.U_Email || "无"'></icon>
+        </div>
+        <pagepanel>
           <div :class="acCss.accountTitleBox">
               <div :class="acCss.accountTitleIn">
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
-                         <span :class='acCss.mintitle'>账户余额 : </span>
-                         <span>{{accountBaseInfo.Balance | mondec}}元</span>
-                      </div>
-                      <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>冻结金额 : </span>
-                         <span>{{accountBaseInfo.FrozenMount | mondec}}元</span>
+                         <span><span class='fcolor'>{{accountBaseInfo.FrozenMount | mondec}}</span>元</span>
                       </div>
-                      <!-- <div :class="acCss.itemBox">
-                            <span :class='acCss.cash'>{{accountBaseInfo.Balance}}</span>
+                      <div :class="acCss.itemBox">
+                            <span :class='acCss.mintitle'>账户余额 : </span>
+                            <span :class='acCss.cash'>{{accountBaseInfo.Balance | mondec }}</span>
                             <span :class='acCss.unit'>元</span>
-                      </div> -->
-                      <span :class="acCss.backCash"><btn  @clickaction="backCashHandler">提现</btn></span>
+                            <span :class="acCss.backCash">
+                              <btn  @clickaction="backCashHandler">提现</btn>
+                              <icon iconname="icon-warn" :classname="acCss.tipBtn"></icon>
+                            </span>
+                      </div>
                 </span>
 
                 <span :class='acCss.itemone'>
                       <div :class="acCss.itemTitle">
-                         <span :class='acCss.mintitle'>授信余额 : </span>
-                         <span>{{accountBaseInfo.CreditLineBalance | mondec}}元</span>
-                      </div>
-                      <div :class="acCss.itemTitle">
                          <span :class='acCss.mintitle'>授信额度 : </span>
-                         <span>{{accountBaseInfo.CreditLine | mondec}}元</span>
+                         <span><span  class='fcolor'>{{accountBaseInfo.CreditLine | mondec}}</span>元</span>
+                      </div>
+                      <div :class="acCss.itemBox">
+                            <span :class='acCss.mintitle'>授信余额 : </span>
+                            <span :class='acCss.cash'>{{accountBaseInfo.CreditLineBalance | mondec}}</span>
+                            <span :class='acCss.unit'>元</span>
                       </div>
                 </span>
 
               </div>
-
-              <div :class="[acCss.searchBox,'needtop']">
-                      <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
+              <div style="margin-top:20px;">
+                    <search  pathname="" :datas="sdata" :distance="true" :events = 'searchEvents'></search>
               </div>
           </div>
-            <div style="padding-bottom: 20px;">
+            <!-- <div style="padding-bottom: 20px;">
               <div class="tipRow">
                 <div class="tipRowSub">
                   <span :class="acCss.tonedesc">提现须知：</span>
@@ -59,7 +58,7 @@
                 <span :class="acCss.titledesc">6</span>大于1000万手续费200元；
                 例：提现10000元，扣除手续5元，实际到账银行卡金额9995元；
               </div>
-            </div>
+            </div> -->
         </pagepanel>
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
@@ -144,7 +143,7 @@ export default {
     // 查询参数初始化
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"combobox", keyid:"id", value:q.typeCode || "", labelname:"name", keyname:"typeCode", labelcaption:"类型", datas:accountTypes},
+      return [{type:"combobox", keyid:"id", value:q.typeCode || "", labelname:"name", keyname:"typeCode", labelcaption:"类型：", datas:accountTypes},
               {type:"daterange", keynamestart:"start", keynameend:"end", start:q.start || "", end:q.end || "", labelcaption:"凭证日期："}];
     }
   },

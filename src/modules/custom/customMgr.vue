@@ -140,14 +140,14 @@ export default {
     },
     sdata: function(){
       let q = this.$route.query;
-      let sArr = [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号:"},
-                  {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名:"},
-                  {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式:", property: "phone"}]
-      sArr.push({type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源", datas:this.formArray.fromConst});
+      let sArr = [{type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"业主编号："},
+                  {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"业主姓名："},
+                  {type:"text",  value:q.Phone2 || "",  keyname:"Phone2", labelcaption:"业主联系方式：", property: "phone"}]
+      sArr.push({type:"combobox", keyid:"name", value:q.U_ComeFrom || "", labelname:"name", keyname:"U_ComeFrom", labelcaption:"客户来源：", datas:this.formArray.fromConst});
       if(this.isE) {
-        sArr.push({type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"});
+        sArr.push({type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称："});
       }
-      sArr.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间:"});
+      sArr.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"创建时间："});
       return sArr
     },
     // fromAdapter: function(){

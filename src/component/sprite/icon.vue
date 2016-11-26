@@ -1,8 +1,8 @@
 <template>
-    <span :class='[classname, iconlabel?"":iconCss.iconfont, iconlabel?"":iconCss[iconname],iconlabel?"": iconCss[attach]]'>
-        <span :class='[iconCss.iconfont, iconCss[iconname], iconCss[attach]]'  v-if="iconlabel">
-            <span :class='iconCss.iconlabel' v-if="iconlabel">{{iconlabel}}</span>
+    <span :class='classname'>
+        <span :class='[iconCss.iconfont, iconCss[iconname]]'>
         </span>
+        <span :class='iconCss.iconlabel' v-if="iconlabel">{{iconlabel}}</span>
     </span>
 </template>
 
@@ -14,11 +14,6 @@ export default {
         default:""
     },
     iconname:{                        // 图标样式
-    },
-
-    attach:{                          // 附属样式
-      type:String,
-      default: "small"
     },
 
     iconlabel:{

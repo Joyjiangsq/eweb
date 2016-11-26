@@ -95,8 +95,8 @@ export default {
     sdata: function(){
       let q = this.$route.query;
       return [{type:"combobox", keyname:"roles", labelname:"name", keyid:"id", value:q.roles || "", datas:this.getRoles, labelcaption:"职位："},
-              {type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"员工编号:"},
-              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"员工姓名:"}];
+              {type:"text",  value:q.CardCode || "",  keyname:"CardCode", labelcaption:"员工编号："},
+              {type:"text",  value:q.CardName || "",  keyname:"CardName", labelcaption:"员工姓名："}];
 
     },
     getRoles: function(){

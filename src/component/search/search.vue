@@ -1,5 +1,5 @@
 <template>
-    <div :class="sCss.searchinfo">
+    <div :class="[sCss.searchinfo, distance?sCss['distance']:'']">
           <span v-for="(index, one) in datas" :class="sCss.searchItem">
             <!--城市级联-->
             <span v-if="one.type == 'cascade'" :class="[sCss.sone, sCss.itemtwo]"><label for="">{{one.labelcaption}}</label>
@@ -63,6 +63,10 @@ export default {
           {type:"text", keyname:"detail", value:"", labelcaption:""}
       ]
     **/
+    // 是否关闭lebel控制
+    distance:{
+        default: false
+    },
     hash:{
       default: true
     },

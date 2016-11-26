@@ -5,7 +5,10 @@
                 <div :class="inCss.levelBox">
                       <panel>
                           <div slot="panelTitle">
-                                 <span :class='inCss.indexTile'><icon iconname="icon-edit" iconlabel="待办事项"></icon></span>
+                                 <span :class='inCss.headRow'>
+                                   <span :class='inCss.indexTile'><icon iconname="icon-edit"></icon></span>
+                                   <span :class='inCss.titleOne'>待办事项</span>
+                                 </span>
 
                           </div>
                           <div slot="panelContent">
@@ -20,10 +23,13 @@
                       </panel>
                       <panel>
                           <div slot="panelTitle">
-                                  <span :class='inCss.indexTile'><icon iconname="icon-enclosure" iconlabel="培训附件"></icon></span>
+                                 <span :class='inCss.headRow'>
+                                   <span :class='inCss.indexTile'><icon iconname="icon-enclosure"></icon></span>
+                                   <span :class='inCss.titleOne'>培训附件</span>
+                                 </span>
                                  <div :class='inCss.operator'>
-                                      <icon iconname="icon-left3"></icon>
-                                      <icon iconname="icon-right3"></icon>
+                                   <icon iconname="icon-left3"></icon>
+                                   <icon iconname="icon-right3"></icon>
                                  </div>
                           </div>
                           <div slot="panelContent">
@@ -41,7 +47,10 @@
                 <div :class="inCss.levelBox">
                   <panel>
                       <div slot="panelTitle">
-                             <span :class='inCss.indexTile'><icon iconname="icon-notice" iconlabel="通知公告"></icon></span>
+                              <span :class='inCss.headRow'>
+                                <span :class='inCss.indexTile'><icon iconname="icon-notice"></icon></span>
+                                <span :class='inCss.titleOne'>通知公告</span>
+                              </span>
                              <div :class='inCss.operator'>
                                   <icon iconname="icon-left3"></icon>
                                   <icon iconname="icon-right3"></icon>

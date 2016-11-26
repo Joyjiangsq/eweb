@@ -11,10 +11,14 @@
               <div :class="portalCss.silderBox">
                     <div :class="portalCss.menuItem" v-for="(order, one) in datamenu">
                           <div v-if="one.subMenus" :class="portalCss.menuTitle" @click="changeSubBox(one)">
-                            <icon :iconname="one.icon" :class='portalCss.menuicon'></icon><span> {{one.name}}</span>  <icon  :class="portalCss.directicon"  iconname="icon-right3"></icon>
+                            <icon :iconname="one.icon" :class='portalCss.menuicon'></icon><span> {{one.name}}</span>
+                            <icon  :class="portalCss.directicon"  iconname="icon-open" v-if="!one.show"></icon>
+                            <icon  :class="portalCss.directicon"  iconname="icon-shrink" v-else></icon>
                           </div>
                           <div  :class="portalCss.menuSubAction" v-else>
-                            <a v-link="one.url"><icon :class='portalCss.menuicon' :iconname="one.icon"></icon> {{one.name}} <icon :class="portalCss.directicon"  iconname="icon-right3"></icon> </a>
+                            <a v-link="one.url"><icon :class='portalCss.menuicon' :iconname="one.icon"></icon> {{one.name}}
+                              <!-- <icon :class="portalCss.directicon"  iconname="icon-right3"></icon>  -->
+                            </a>
                           </div>
                           <div :class="portalCss.subMenus" v-show="one.show">
                             <a v-link="subone.url"  v-for="subone in one.subMenus">{{subone.name}}</a>
