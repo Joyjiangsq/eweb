@@ -1,6 +1,6 @@
 <template>
     <div :class="epCss.userBox">
-        <pagepanel classname="needpadding" direct="bottom">
+        <pagepanel>
               <div :class="epCss.userSearch">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
@@ -16,7 +16,7 @@
         <!--新增对话框-->
         <dialog :flag.sync="showFormDialog" title="新增" @dialogclick="dialogClickHandler">
               <div class="" slot="containerDialog">
-                    <div class="" v-if="showFormDialog">
+                    <div class="" v-if="hideDialogIn">
                       <formdim labelname="用户名："  placeholder="姓名"  dimlabel="CardName" querylabel="CardName" :value="addFormData.CardCode" :iptvalue="addFormData.CardName" id="CardCode"  @fromdim="formDimClick"  formname='CardName' :validatestart="newForm.validate" @onvalidate="newForm.validateHandler" url="employees" :params="dimParams"></formdim>
                       <formtext labelname="系统账号："  :value.sync="addFormData.CardCode" :must="false"  :vertical="true" :read="true" :ingnore='true' ></formtext>
                       <formtext labelname="用户电话：" :value.sync="addFormData.phone"  :must="false" :vertical="true" :read="true" :ingnore='true' ></formtext>
@@ -56,6 +56,7 @@ export default {
       epCss,
       moduleName:"用户管理",
       headercaption: headerData,
+      hideDialogIn: true,
       dimParams: {
           size: 5,
           page: 1
@@ -203,6 +204,14 @@ export default {
   watch:{
     "totals": function(){
       console.log(this.totals);
+    },
+    "showFormDialog": function(){
+        if(this.showFormDialog) this.hideDialogIn = this.showFormDialog
+        else {
+          setTimeout(()=>{
+              this.hideDialogIn = this.showFormDialog
+          }, 300)
+        }
     }
   }
 }

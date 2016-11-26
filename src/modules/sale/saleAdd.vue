@@ -1,34 +1,24 @@
 <template>
         <div class="">
-          <div :class="css.paddingType">
-            <panel>
-
-                <div slot="panelTitle">
-                       基础信息
-                </div>
-
-                <div slot="panelContent">
-                      <formdim labelname="客户信息："  placeholder="姓名/手机号" :adapter="dimAdapter" dimlabel="CardName" :value="baseInfo.CardCode" :iptvalue="baseInfo.CardName" id="CardCode"  @fromdim="formDimClick"  formname='userName' :validatestart="validate" @onvalidate="validateHandler" url="customers/search-by-name-or-phone" :params="dimParams"></formdim>
-                      <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :must="false" :value.sync= "baseInfo.Address" :detailv.sync="baseInfo.detail" formname="Address"  :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
-                      <comboxform keyid="name" labelname="组包选择：" :must="false"  @cashandler="onepHandler" :value.sync="baseInfo.U_SWW" keyname="name" formname="U_SWW" :datas="packageDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
-                      <formtext labelname="房本面积：" :must="false"  unit="平米" @blurhandler="onepHandler" :value.sync="baseInfo.U_Acreage" placeholder=""  formname='U_Acreage' :number="true" length='5' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext labelname="卫生间数量：" unit="个" :must="false"  @blurhandler="onepHandler"  :value.sync="baseInfo.U_ToiletNum" placeholder=""  formname='U_ToiletNum' :number="true" length='2' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <comboxform keyid="name" labelname="是否有电梯：" :value.sync="baseInfo.U_IsElevator" keyname="name" formname="U_IsElevator" :datas="hasDianti" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
-                      <formtext :read="true"  labelname="主材包一口价：" :must="false" unit="元" :value.sync="baseInfo.one_price" placeholder=""  formname='one_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext labelname="实收金额：" unit="元" :must="false" :value.sync="baseInfo.U_PaInAmount" placeholder=""  formname='U_PaInAmount' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <comboxform keyid="name" labelname="订单类型：" @itemclick="itemclick" :value.sync="baseInfo.order_type" dropfixed="dropfixed" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
-                      <formtext labelname="跟单员：" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext labelname="跟单员电话：" :phone="true"  :value.sync="baseInfo.U_CntctPhone"  :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                </div>
-            </panel>
-
-
-
-
-          </div>
-          <div :class="css.dataArea">
-                <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
-          </div>
+          <panel>
+              <div slot="panelTitle">
+                     基础信息
+              </div>
+              <div slot="panelContent">
+                    <formdim labelname="客户信息："  placeholder="姓名/手机号" :adapter="dimAdapter" dimlabel="CardName" :value="baseInfo.CardCode" :iptvalue="baseInfo.CardName" id="CardCode"  @fromdim="formDimClick"  formname='userName' :validatestart="validate" @onvalidate="validateHandler" url="customers/search-by-name-or-phone" :params="dimParams"></formdim>
+                    <cascadeform  labelname="业主地址：" :detailneed="true" :read="true" :must="false" :value.sync= "baseInfo.Address" :detailv.sync="baseInfo.detail" formname="Address"  :validatestart="validate" @onvalidate="validateHandler"></cascadeform>
+                    <comboxform keyid="name" labelname="组包选择：" :must="false"  @cashandler="onepHandler" :value.sync="baseInfo.U_SWW" keyname="name" formname="U_SWW" :datas="packageDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
+                    <formtext labelname="房本面积：" :must="false"  unit="平米" @blurhandler="onepHandler" :value.sync="baseInfo.U_Acreage" placeholder=""  formname='U_Acreage' :number="true" length='5' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext labelname="卫生间数量：" unit="个" :must="false"  @blurhandler="onepHandler"  :value.sync="baseInfo.U_ToiletNum" placeholder=""  formname='U_ToiletNum' :number="true" length='2' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <comboxform keyid="name" labelname="是否有电梯：" :value.sync="baseInfo.U_IsElevator" keyname="name" formname="U_IsElevator" :datas="hasDianti" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
+                    <formtext :read="true"  labelname="主材包一口价：" :must="false" unit="元" :value.sync="baseInfo.one_price" placeholder=""  formname='one_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext labelname="实收金额：" unit="元" :must="false" :value.sync="baseInfo.U_PaInAmount" placeholder=""  formname='U_PaInAmount' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <comboxform keyid="name" labelname="订单类型：" @itemclick="itemclick" :value.sync="baseInfo.order_type" dropfixed="dropfixed" keyname="name" formname="order_type" :datas="orderDatas" :validatestart="validate" @onvalidate="validateHandler"></comboxform>
+                    <formtext labelname="跟单员：" :value.sync="baseInfo.U_CntctCode" placeholder=""  formname='U_CntctCode' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext labelname="跟单员电话：" :phone="true"  :value.sync="baseInfo.U_CntctPhone"  :number="true"  placeholder=""  formname='U_CntctPhone' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+              </div>
+          </panel>
+          <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
           <div :class="css.footerBar">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>

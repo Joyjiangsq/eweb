@@ -1,6 +1,6 @@
 <template lang="html">
   <div :class="css.saleContainer">
-    <pagepanel classname="needpadding" direct="bottom">
+    <pagepanel>
           <div :class="css.userSearch">
             <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
           </div>

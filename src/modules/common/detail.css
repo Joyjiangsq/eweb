@@ -1,6 +1,5 @@
-.hrow {
-    padding-top: 15px;
-}
-.hitem {
-    margin-right: 5px;
+.infoRow {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }

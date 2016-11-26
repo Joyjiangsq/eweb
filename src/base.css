@@ -50,14 +50,14 @@ table thead {
     border-left: 1px solid #ddd;
 }
 table thead tr {
-    background: -webkit-linear-gradient(white, #f2f2f2);
+    background: -webkit-linear-gradient(white, #eff6f9);
     /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(white, #f2f2f2);
+    background: -o-linear-gradient(white, #eff6f9);
     /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(white, #f2f2f2);
+    background: -moz-linear-gradient(white, #eff6f9);
     /* Firefox 3.6 - 15 */
-    background: linear-gradient(white, #f2f2f2);
-    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
+    background: linear-gradient(white, #eff6f9);
+    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#eff6f9);
     /*IE 6 7 8*/
     /* 标准的语法（必须放在最后） */
 }
@@ -105,14 +105,14 @@ table tbody td span {
     margin-bottom: 10px
 }
 :global(.gradent) {
-    background: -webkit-linear-gradient(white, #f2f2f2);
+    background: -webkit-linear-gradient(white, #eff6f9);
     /* Safari 5.1 - 6.0 */
-    background: -o-linear-gradient(white, #f2f2f2);
+    background: -o-linear-gradient(white, #eff6f9);
     /* Opera 11.1 - 12.0 */
-    background: -moz-linear-gradient(white, #f2f2f2);
+    background: -moz-linear-gradient(white, #eff6f9);
     /* Firefox 3.6 - 15 */
-    background: linear-gradient(white, #f2f2f2);
-    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#f2f2f2);
+    background: linear-gradient(white, #eff6f9);
+    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#eff6f9);
     /*IE 6 7 8*/
 }
 :global(.upsu) {
@@ -140,13 +140,13 @@ table tbody td span {
     font-size: 13px;
 }
 
-/*:global(.fadeModal-enter) {
+:global(.fadeModal-enter) {
   opacity: 0;
 }
 
 :global(.fadeModal-leave) {
   opacity: 0;
-}*/
+}
 
 :global(.fadeModal-enter .bounce) {
     -webkit-transform: scale(1.1);
@@ -172,7 +172,7 @@ table tbody td span {
     background-color: #3e4652;
     width: 200px;
     top: 0;
-    z-index: 1;
+    z-index: 12;
     height: 100%;
 }
 :global(.app_container) {

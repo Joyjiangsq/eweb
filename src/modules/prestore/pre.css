@@ -25,11 +25,7 @@
     color: #0066cc;
     cursor: pointer;
 }
-.paddingType {
-    background-color: rgb(230, 230, 230);
-    padding: 20px;
-    padding-top: 0;
-}
+
 .customLeft {
     position: absolute;
     padding: 20px;
@@ -51,13 +47,8 @@
     padding: 10px;
     bottom: 0;
     right: 0;
-    background-color: #e6e6e6;
-    padding-right: 3%;
-    z-index: 11;
 }
-.dataArea {
-    margin-bottom: 50px;
-}
+
 .rowItem {
     padding: 10px;
     border-bottom: 1px dashed #ddd;

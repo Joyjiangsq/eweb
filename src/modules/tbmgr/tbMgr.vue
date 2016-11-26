@@ -1,6 +1,6 @@
 <template>
     <div :class="css.BoX">
-        <pagepanel classname="needpadding" direct="bottom">
+        <pagepanel>
               <div :class="css.searchBox">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>

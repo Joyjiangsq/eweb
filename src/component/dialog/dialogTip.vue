@@ -1,5 +1,5 @@
 <template>
-    <div :class="dCss.dialogBox"  v-show="modalshow" >
+    <div :class="dCss.dialogBox"  v-show="modalshow" transition="fadeModal">
         <div :class="dCss.dialogIn">
           <div :class="[dCss.dialog, 'bounce']">
                 <div :class="dCss.dialogContent">

@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="css.customBox">
-    <pagepanel classname="needpadding" direct="bottom">
+    <pagepanel>
           <div :class="css.userSearch">
             <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
           </div>
@@ -19,7 +19,7 @@
     <!--新增对话框-->
     <dialog :flag.sync="dialogMap.showFormDialog" :title="gettName" @dialogclick="dialogClickHandler" >
           <div slot="containerDialog" :class="css.dBox">
-              <div class="" v-if="dialogMap.showFormDialog">
+              <div class="" v-if="hideDialogIn">
                 <formcb keyid="name" labelname="客户来源：" v-if="isE" :read="curAction!='add'" :value.sync="formData.U_ComeFrom"  keyname="name" formname="U_ComeFrom" :datas="formArray.fromConst" :validatestart="formControl.validate" @onvalidate="formControl.validateHandler"></formcb>
                 <!--需要分站id -->
                 <formtext labelname="e站客服：" v-if="isE"  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
@@ -58,6 +58,7 @@ export default {
       css,
       descTip:"",
       moduleName:"客户管理",
+      hideDialogIn: true,
       tipvalidate: function(d){
            if(d.code == 500 || d.code == "500") {
                 if(d.data.length < 10) {
@@ -241,5 +242,18 @@ export default {
     }
   },
   components: {formtext,cascadeform, formcb, formdim, house, ft},
+  "watch": {
+    "dialogMap": {
+      deep:true,
+      handler: function(){
+          if(this.dialogMap.showFormDialog) this.hideDialogIn = this.dialogMap.showFormDialog
+          else {
+            setTimeout(()=>{
+                this.hideDialogIn = this.dialogMap.showFormDialog
+            }, 300)
+          }
+      }
+    }
+  }
 }
 </script>

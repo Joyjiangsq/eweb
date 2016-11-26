@@ -1,11 +1,7 @@
 <template>
         <div class="">
-          <div :class="css.paddingType">
-              <detail :data="detailData"></detail>
-          </div>
-          <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
-          </div>
+          <detail :data="detailData"></detail>
+          <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           <div :class="css.footerBar" v-show="!detail">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>

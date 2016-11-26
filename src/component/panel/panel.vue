@@ -1,6 +1,6 @@
 <template>
-<div :class="panelCss.panelIn">
-  <div :class="[classname, panelCss.panelBox]">
+<div :class="[panelCss.panelIn, classname]">
+  <div :class="panelCss.panelBox">
     <div :class="[panelCss.panelTitle,'gradent']">
       <slot name="panelTitle"></slot>
     </div>

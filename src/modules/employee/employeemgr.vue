@@ -1,6 +1,6 @@
 <template>
     <div :class="epCss.empBox">
-        <pagepanel classname="needpadding" direct="bottom">
+        <pagepanel>
               <div :class="epCss.empSearch">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
@@ -14,7 +14,7 @@
         </pagepanel>
         <dialog :flag.sync="flagdep" @dialogclick="diaologClick" :title="optitle">
               <div class="" slot="containerDialog">
-                <div class="" v-if="flagdep">
+                <div class="" v-if="hideDialogIn">
                   <formtext labelname="姓名：" :value.sync="addParams.CardName"  placeholder="请输入姓名" :vertical="true" formname='CardName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="电话：" :value.sync="addParams.phone"  placeholder="请输入电话" :vertical="true" :phone="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formcb keyid="name" labelname="职位：" dropfixed="dropfixed" keyname="name" formname="roles" :vertical="true" :value.sync="addParams.roles" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
@@ -48,6 +48,7 @@ export default {
   data: function () {
     return {
       epCss,
+      hideDialogIn: true,
       moduleName:"员工管理",
       validateSuccess: true,    // 判断表单验证是否通过
       curItem:{},               // 删除或者编辑当前的 数据
@@ -157,7 +158,14 @@ export default {
           });
       }
     },
-
+    "flagdep": function(){
+        if(this.flagdep) this.hideDialogIn = this.flagdep
+        else {
+          setTimeout(()=>{
+              this.hideDialogIn = this.flagdep
+          }, 300)
+        }
+    }
 
   },
   components: {formtext,formcb,dialogtip},

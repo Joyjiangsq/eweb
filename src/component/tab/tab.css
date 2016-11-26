@@ -1,7 +1,5 @@
 @charset "UTF-8";
 .tabBox {
-    background-color: white;
-    width: 100%;
 }
 .tabBar {}
 .tabBar .active {
@@ -12,6 +10,7 @@
     margin-left: -1px;
     cursor: pointer;
     margin-bottom: -1px;
+    z-index: 1
 }
 .tabArea {
     padding-top: 20px;
@@ -42,19 +41,32 @@
 }
 /**sale**/
 .sale {
+  margin: 0 20px;
+
 }
 .sale .tabBar {
-    border-bottom: 1px solid #ddd;
 }
 .sale .tabBar .tabOne {
-    border: 1px solid #ddd;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
+    border: 1px solid #c9e2f1;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
     background-color: #f2f2f2;
+    background: -webkit-linear-gradient(white, #eff6f9);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(white, #eff6f9);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(white, #eff6f9);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(white, #eff6f9);
+    FILTER: progid: DXImageTransform.Microsoft.Gradient(gradientType=0, startColorStr=white, endColorStr=#eff6f9);
 }
-
+.sale .tabArea {
+    border: 1px solid #c9e2f1;
+    padding-bottom: 20px;
+    background-color: white;
+}
 .sale .tabBar  .active {
-  background-color: white;
+  background: white;
   border-bottom: 1px solid white;
 }

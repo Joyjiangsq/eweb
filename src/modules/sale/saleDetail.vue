@@ -1,17 +1,12 @@
 <template>
         <div class="">
-          <div :class="css.paddingType">
-                <detail :data="baseInfo"></detail>
-          </div>
-          <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" :datamap="datamap" ></tblab>
-          </div>
+          <detail :data="baseInfo"></detail>
+          <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" :datamap="datamap" ></tblab>
         </div>
 </template>
 
 <script>
 import {setTitle} from "actions";
-import css from "./sale.css";
 import basePage from "common/mixinPage";
 import tblab from "component/block/typeLabDetail";
 import detail from "modules/common/detailInfo";
@@ -19,7 +14,6 @@ export default {
   mixins:[basePage],
   data: function () {
     return {
-      css,
       startvalidate: false,
       orderId:"",
       baseInfo:{},

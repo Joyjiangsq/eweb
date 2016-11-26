@@ -1,11 +1,7 @@
 <template>
         <div class="">
-          <div :class="css.paddingType">
-              <detail :data="detailData" type="back"></detail>
-          </div>
-          <div :class="css.dataArea">
-                <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate"  :datamap="datamap" :detail.sync="detail"></tblab>
-          </div>
+          <detail :data="detailData" type="back"></detail>
+          <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate"  :datamap="datamap" :detail.sync="detail"></tblab>
           <div :class="css.footerBar" v-if="detailData.U_OrderStatus =='待采购' || detailData.U_OrderStatus == 'e站驳回'">
               <!--在待采购  和 e站驳回的状态   才可以放开驳回按钮-->
               <span :class="css.itemone"><btn @clickaction="backClickHandler" btnname="btn-primary" iconname="icon-back">驳回</btn></span>

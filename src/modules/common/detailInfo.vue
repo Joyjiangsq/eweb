@@ -1,5 +1,5 @@
 <template lang="html">
-        <div :class="css.hrow">
+        <div :class="css.infoRow">
             <span class='itemrow'><span :class="css.hitem">订单号：</span> {{data.U_PurchaseNum || data.U_FZOrder}}</span>
             <span v-if="data.U_PurchaseNum">
               <span class='itemrow' v-if="data.DocNum"><span :class="css.hitem">SAP订单号：</span> {{data.DocNum}}</span>
@@ -9,7 +9,6 @@
             </span>
         </div>
         <panel>
-
             <div slot="panelTitle">
                    基础信息
             </div>

@@ -1,9 +1,12 @@
 .panelBox {
   border: 1px solid #ddd;
-  background-color: white;
 }
 .panelIn {
-  padding-top: 20px;
+  margin-top: 20px;
+  background-color: white;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .panelContainer {
@@ -13,7 +16,6 @@
 
 .panelTitle {
   padding: 12px;
-  background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
 }
 

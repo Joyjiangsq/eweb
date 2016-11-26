@@ -1,43 +1,31 @@
 @charset "UTF-8";
-.paddingType {
-      background-color: rgb(230, 230, 230);
-      padding: 20px;
-      padding-top: 0;
-}
-
 .customLeft {
-  position: absolute;
-  padding: 20px;
-  left: 0px;
+    position: absolute;
+    padding: 20px;
+    left: 0px;
 }
 .customRight {
-  position: absolute;
-  right: 10px;
-  margin-top: 50px;
+    position: absolute;
+    right: 10px;
+    margin-top: 50px;
 }
-
 .tBox {
-  overflow-x: scroll;
+    overflow-x: scroll;
 }
-
 .inRow {
-  color: #0066cc;
-  cursor: pointer;
+    color: #0066cc;
+    cursor: pointer;
 }
-
 .footerBar {
-  text-align: right;
-  width: 100%;
-  position: fixed;
-  padding: 10px;
-  bottom: 0;
-  right: 0;
-  background-color: #e6e6e6;
-  padding-right: 3%;
-    z-index: 11;
+    text-align: right;
+    width: 100%;
+    position: fixed;
+    padding: 10px;
+    bottom: 0;
+    right: 0;
 }
 .dataArea {
-      margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 .rowItem {
     padding: 10px;
@@ -45,23 +33,20 @@
     cursor: pointer;
 }
 .rowItem:last-child {
-  border: 0
+    border: 0
 }
 .hrow {
-      padding-top: 15px;
+    padding-top: 15px;
 }
-
 .hitem {
-  margin-right: 5px;
+    margin-right: 5px;
 }
-
 .inBoxCode {
-  height: 200px;
-      padding-right: 191px;
+    height: 200px;
+    padding-right: 191px;
 }
-
 .codeTarget {
-  position: absolute;
-top: 10px;
-right: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
