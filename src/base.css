@@ -42,12 +42,13 @@ input:disabled, textarea:disabled {
 table {
     background: white;
     width: 100%;
-    border: 1px solid #ddd;
+    border: 1px solid #c9e2f1;
     border-collapse: collapse;
     border-spacing: 0;
+    margin-bottom: 10px;
 }
 table thead {
-    border-left: 1px solid #ddd;
+    border-left: 1px solid #c9e2f1;
 }
 table thead tr {
     background: -webkit-linear-gradient(white, #eff6f9);
@@ -68,7 +69,7 @@ table thead th {
     color: #333;
     height: 40px;
     padding: 0 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #c9e2f1;
     white-space: nowrap;
 }
 table tbody td {
@@ -79,7 +80,7 @@ table tbody td {
     vertical-align: middle;
     padding: 0 10px;
     line-height: 22px;
-    border: 1px solid #ddd;
+    border: 1px solid #c9e2f1;
 }
 table tbody td span {
     font-size: 13px;
@@ -92,17 +93,14 @@ table tbody td span {
 
 /**渐变**/
 
-:global(.tipRow) {
-    padding: 10px;
-    color: red;
-    font-size: 13px;
-    margin-bottom: 15px;
+:global(.tipTitle) {
+    margin-bottom: 10px;
+    border-left: 3px solid #fe8f00;
+    padding-left: 10px;
 }
-:global(.tipRow *) {
-    color: red;
-}
-:global(.tipRowSub) {
-    margin-bottom: 10px
+:global(.cfooter) {
+  text-align: right;
+  margin: 0 20px;
 }
 :global(.gradent) {
     background: -webkit-linear-gradient(white, #eff6f9);
@@ -127,9 +125,25 @@ table tbody td span {
 }
 
 /**渐隐**/
-:global(.fcolor) {color: #fe8f00;}
+
+:global(.fcolor) {
+    color: #fe8f00;
+}
 :global(.reback) {
     color: red;
+}
+:global(.gray) {
+    color: #aaa;
+}
+:global(.epli) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+}
+:global(.atype) {
+    color: #0066cc;
+    cursor: pointer;
 }
 :global(.common) {
     color: gray;
@@ -139,15 +153,12 @@ table tbody td span {
     color: gray;
     font-size: 13px;
 }
-
 :global(.fadeModal-enter) {
-  opacity: 0;
+    opacity: 0;
 }
-
 :global(.fadeModal-leave) {
-  opacity: 0;
+    opacity: 0;
 }
-
 :global(.fadeModal-enter .bounce) {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
@@ -157,6 +168,7 @@ table tbody td span {
     transform: scale(1.1);
 }
 :global(.app_header) {}
+
 /*:global(.needpaddingnull) {
     padding: 20px 0;
 }
@@ -167,6 +179,7 @@ table tbody td span {
 :global(.needtop) {
     margin-top: 20px;
 }*/
+
 :global(.app_left_menus_box) {
     position: absolute;
     background-color: #3e4652;
@@ -202,9 +215,8 @@ table tbody td span {
     cursor: pointer;
     width: 10px;
     text-align: center;
-    margin-right: 8px;
     position: absolute;
-    right: 20px;
+    right: 57px;
 }
 :global(.app_container .subTitle .rightClose) {
     position: absolute;

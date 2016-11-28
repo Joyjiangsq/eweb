@@ -3,17 +3,16 @@
   margin-top: 20px;
   border-left: 5px solid #ddd;
   padding-left: 10px;
+    margin-bottom: 20px;
 }
 
 .itemList {
   border-top: 1px dashed #ddd;
-  margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .btnrow {
   padding-left: 39px;
-  margin-top: 20px;
 }
 
 .closeone {

@@ -1,23 +1,19 @@
 .dbox {
-    width: 97%;
     margin: 0 auto;
     padding-bottom: 10px;
 }
-.allBox {
-    background-color: rgb(230, 230, 230);
-}
+.allBox {}
 .inBox {
-    width: 95%;
     margin: 0 auto;
 }
 .rowItem {
     padding: 0 0 15px 23px;
 }
 .rowOne {
-    background-color: #f2f2f2;
+    background-color: #f5fafe;
     padding: 0 0 15px 23px;
-    border-top: 1px dashed #ddd;
-    border-bottom: 1px dashed #ddd;
+    border-top: 1px dashed #c9e2f1;
+    border-bottom: 1px dashed #c9e2f1;
 }
 .title {
     font-size: 15px;
@@ -30,32 +26,28 @@
     display: inline-block;
     vertical-align: top;
 }
-
-.formitem label{
-  min-width: 210px;
+.formitem label {
+    min-width: 210px;
 }
 .inRow {
-  color: #0066cc;
-  cursor: pointer;
+    color: #0066cc;
+    cursor: pointer;
 }
-
 .footer {
-  width: 100%;
-text-align: right;
-margin: 20px 0;
+  text-align: right;
+  margin: 20px;
 }
-
 .bitem {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 .upBox {
-      padding-top: 21px;
+    padding-top: 21px;
 }
-
-.hrow {
-      padding-top: 15px;
+.infoRow {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
-
 .hitem {
-  margin-right: 5px;
+    margin-right: 5px;
 }

@@ -17,7 +17,10 @@
   background: red;
   color: white;
 }
-
+.iconl {
+  margin: 0 6px;
+    vertical-align: middle;
+}
 .success .tipsIn {
   color: white;
   background: #00b541;

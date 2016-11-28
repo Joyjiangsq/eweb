@@ -1,13 +1,12 @@
 .rowbox {
     border-bottom: 1px dashed #ddd;
-    padding-bottom: 10px;
 }
 .srow {
-    margin-right: 5%;
+    margin-right: 3%;
     margin-left: 20px;
 }
 .rowhead {
-    line-height: 55px;
+    line-height: 40px;
 }
 .tBox {
     padding-top: 12px;
@@ -17,19 +16,40 @@
     font-size: 12px;
     font-style: italic;
 }
-.check {
-    margin-left: 25px;
-    margin-right: -25px;
-}
+.check {}
 .clicktarget {
     display: inline;
     position: absolute;
     cursor: pointer;
     width: 25px;
 }
-.inrow {
-    color: #0066cc;
-    cursor: pointer;
+.orderTwo {
+    width: 30%;
+}
+.tbbox {
+    padding-bottom: 10px;
+}
+.imgone {
+    position: absolute;
+    bottom: 12px;
+    margin-left: -20px;
+}
+.osLine {
+    margin: 0 5px;
+}
+.wlBtn {
+    position: absolute;
+    right: 10px;
+}
+.osLine:before {
+    content: "";
+    position: absolute;
+    border-right: 1px solid #ddd;
+    height: 20px;
+    top: -14px;
+}
+.orderOne {
+    width: 130px;
 }
 .customLeft {
     position: absolute;
@@ -45,15 +65,7 @@
 .tBox {
     overflow-x: scroll;
 }
-.footerBar {
-    text-align: right;
-    width: 100%;
-    position: fixed;
-    padding: 10px;
-    bottom: 0;
-    right: 0;
-    z-index: 11;
-}
+
 .dataArea {
     margin-bottom: 50px;
 }

@@ -1,14 +1,12 @@
 <template>
     <div>
-        <pagepanel direct="bottom">
-              <div>
+        <div :class='css.sBox'>
                 <search  pathname="" :datas="sdata" :hash="false" :needsearch="false" :events = 'searchEvents'></search>
               </div>
-        </pagepanel>
           <div :class="css.tBox">
             <tb :headercaption="headerCaption" :needindex="false" :url="products"  :totals.sync="totals" :load="load" :params="searchParams" :datas="testData" :events="tableEvents"></tb>
           </div>
-          <pg :totals="totals" :curpage="1" :hash="false"  @pagechange="pagechange"></pg>
+          <pg :totals="totals" :curpage.sync="searchParams.page"  :hash="false"  @pagechange="pagechange"></pg>
 
     </div>
 </template>

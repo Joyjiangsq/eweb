@@ -1,28 +1,30 @@
 @charset "UTF-8";
+.rfBox {
+
+}
 .customLeft {
-    position: absolute;
-    padding: 20px;
-    left: 0px;
+  margin: 20px;
+  float: left;
+  width: 70%;
+
+}
+.tbRow {
+    overflow-x: auto;
+    width: 100%;
 }
 .customRight {
-    position: absolute;
-    right: 10px;
-    margin-top: 50px;
+  float: left;
+  width: 25%;
+  margin-top: 50px;
+  overflow-x: auto;
 }
 .tBox {
     overflow-x: scroll;
 }
-.inRow {
-    color: #0066cc;
-    cursor: pointer;
-}
-.footerBar {
-    text-align: right;
-    width: 100%;
-    position: fixed;
-    padding: 10px;
-    bottom: 0;
-    right: 0;
+.infoRow {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 .dataArea {
     margin-bottom: 50px;

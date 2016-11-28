@@ -17,7 +17,8 @@
                 </span>
                 <span v-else> {{getTitle}}</span>
                 <span  v-if="titleIsArray" class='backbtn' @click="closeHandler">
-                    <icon iconname="icon-back"></icon>
+                    <!-- <icon iconname="icon-back"></icon> -->
+                    <btn iconname="icon-back"></btn>
                 </span>
             </div>
             <div class="app_container_in">
@@ -34,6 +35,7 @@ import menus from 'portal/menus';
 import foot from 'portal/footer';
 import {getTitle} from 'stores/getters';
 import icon from "component/sprite/icon";
+import btn from "component/sprite/button";
 export default {
   data: function () {
     return {
@@ -59,7 +61,7 @@ export default {
 
 
   },
-  components: {headerbox,menus,foot,icon},
+  components: {headerbox,menus,foot,icon,btn},
   vuex: {
       getters: {
          getTitle

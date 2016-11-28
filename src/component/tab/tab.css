@@ -6,6 +6,9 @@
     background: white;
     border-bottom: 1px solid white;
 }
+.tabBar .tabOne:first-child {
+  margin-left: 0;
+}
 .tabOne {
     margin-left: -1px;
     cursor: pointer;
@@ -63,7 +66,7 @@
 }
 .sale .tabArea {
     border: 1px solid #c9e2f1;
-    padding-bottom: 20px;
+    /*padding-bottom: 20px;*/
     background-color: white;
 }
 .sale .tabBar  .active {

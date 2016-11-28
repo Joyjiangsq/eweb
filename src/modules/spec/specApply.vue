@@ -1,7 +1,7 @@
 <template lang="html">
     <div :class="css.allBox">
       <div :class="css.dbox">
-        <div :class="css.hrow" v-if="orderId">
+        <div :class="css.infoRow" v-if="orderId">
             <span class='itemrow'><span :class="css.hitem">子订单号：</span> {{baseInfo.design_serial}}</span>
             <span class='itemrow'><span :class="css.hitem">子订单状态：</span> <span v-if = "baseInfo.status == 4" class="reback">{{statusCaption}}</span><span  v-else>{{statusCaption}}</span></span>
             <span class='itemrow' v-if="baseInfo.status == 4"><span :class="css.hitem" >回退理由：</span> {{baseInfo.backValueipt || '无'}}</span>

@@ -2,7 +2,7 @@
 
 .headerView {
     background-color: white;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #c9e2f1;
     height: 80px;
 }
 .headerView .logoBox {
@@ -29,7 +29,9 @@
 
 /**silderBox**/
 
-.silderBox {}
+.silderBox {
+    background-color: #3e4652;
+}
 .silderBox .menuItem {}
 .silderBox .menuItem .menuTitle {
     color: #cad9ec;

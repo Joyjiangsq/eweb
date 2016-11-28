@@ -1,7 +1,6 @@
 <template>
         <div class="">
-          <div :class="css.paddingType">
-            <div :class="css.hrow">
+            <div :class="css.infoRow">
                 <span><span :class="css.hitem">销售主订单号：</span> {{orderid}}</span>
             </div>
             <panel>
@@ -26,7 +25,6 @@
                 </div>
             </panel>
 
-          </div>
           <div :class="css.dataArea">
                 <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
           </div>

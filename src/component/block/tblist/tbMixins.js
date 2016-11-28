@@ -67,7 +67,9 @@ let tbMixin = {
             },
             searchEvents:{                  // 查询回调函数
               onSearch: function(params) {
-                  this.searchParams = Object.assign(this.searchParams, params);
+                  // this.searchParams = Object.assign(this.searchParams, params);
+                  Object.assign(this.searchParams, params);
+                  this.searchParams.page = 1;
                   this.loadlist();
               }
             },

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .formOne {
     display: inline-block;
-    margin-top: 20px;
+    margin-bottom: 20px;
     min-width: 330px;
 }
 .formOne input {

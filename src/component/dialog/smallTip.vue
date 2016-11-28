@@ -1,6 +1,8 @@
 <template>
     <div :class="[css.tipBox, css[type]]" v-show="show">
           <div :class="css.tipsIn">
+                <icon iconname="icon-check" :classname='css.iconl' v-if="type == 'success'"></icon>
+                <icon iconname="icon-warn" :classname='css.iconl' v-else></icon>
                 {{msg}}
           </div>
     </div>
@@ -8,7 +10,7 @@
 
 <script>
 import css from "./smalltip.css";
-
+import icon from "component/sprite/icon";
 export default {
   props:{
     type:{
@@ -43,7 +45,7 @@ export default {
         }, this.time)
     }
   },
-  components: {},
+  components: {icon},
   watch:{
     "datepicker": function(){
         this.showDialog();

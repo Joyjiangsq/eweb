@@ -54,10 +54,10 @@
             <itemtpl :testdata="testdata" :header="headerdetail"></itemtpl>
           </div>
 
-          <div :class="css.attachrow" v-if="curaction != 'alldetail' && !detail">
+          <div :class="css.attachrow" v-if="curaction != 'alldetail' && !detail" style=" margin-bottom: 20px;">
                 <ft url="upload" :filter="['zip', 'rar']" text="上传附件" @upsuccess="upSuccessHandler"></ft><span class="upsu">{{statusRes}}</span><span class="uptip">(仅允许上传zip,rar格式的文件包)</span>
           </div>
-          <div v-if="curaction != 'alldetail' && !!detail">
+          <div v-if="curaction != 'alldetail' && !!detail" style=" margin-bottom: 20px;">
             <div :class="css.attachrow">
               <a :href="eclosure" target="_blank" v-if="eclosure">下载附件</a>
               <span :class='css.noattach' v-else>没有附件</span>

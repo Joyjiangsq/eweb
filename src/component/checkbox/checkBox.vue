@@ -1,8 +1,9 @@
 <template>
     <div :class="css.checkBox">
         <span v-for="(index, one) in inDatas" :class='[css.checkone, one.checked?css.checked : css.unchecked]' @click="checkClick(index)">
-              <icon  iconname="icon-checked" :iconlabel="one[labelname]" v-if="!!one.checked"></icon>
-              <icon  iconname="icon-uncheck" :iconlabel="one[labelname]" v-else></icon>
+              <icon  iconname="icon-checked" :iconlabel="one[labelname]" v-if="close"></icon>
+              <icon  iconname="icon-checked" :iconlabel="one[labelname]" v-if="!!one.checked && !close"></icon>
+              <icon  iconname="icon-uncheck" :iconlabel="one[labelname]" v-if="!one.checked && !close"></icon>
         </span>
     </div>
 </template>
@@ -18,6 +19,9 @@ export default {
         default:function(){
           return [{checked: false}]
         } // [{label:"足球", id: 1, checked: true}]
+      },
+      close:{
+        default: false
       },
       read:{
         default: false
@@ -75,7 +79,7 @@ export default {
   },
   methods: {
     checkClick: function(index) {
-        if(this.read) return false;
+        if(this.read || this.close) return false;
         this.inDatas[index].checked = !this.inDatas[index].checked;
         this.resetValues();
         this.events.checkClick.call(this._context, this.value);

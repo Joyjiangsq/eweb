@@ -10,7 +10,7 @@
               </tr>
         </thead>
         <tbody >
-              <tr v-for="(order, done)  in dataList" >
+              <tr v-for="(order, done)  in dataList" :class="order%2 == 1? tableCss.active:''">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <span v-if="sone.type == 'data'" >

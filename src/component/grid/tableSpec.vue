@@ -10,7 +10,7 @@
               </tr>
         </thead>
         <tbody >
-              <tr v-for="(order, done)  in dataList" >
+              <tr v-for="(order, done)  in dataList" :class="order%2 == 1? tableCss.active:''">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag" @click="clickOne(done,order)">
@@ -37,8 +37,8 @@
               </tr>
               <tr v-if="curaction == 'add'">
                   <td  v-for="(index, sone) in headercaption">
-                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 0">
-                    <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 0">
+                    <input type="text" name="name" value="" :class='tableCss.enterKey' @keyup.enter="onEnterLook" v-if="index == 1">
+                    <span :class="tableCss.potert" @click="moreClikHandler"  v-if="index == 1">
                         <icon iconname="icon-elip"></icon>
                     </span>
                   </td>

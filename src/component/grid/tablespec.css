@@ -47,7 +47,9 @@ table tbody td {
 word-break: break-all;
 word-wrap: break-word;
 }
-
+.active {
+  background-color: #f5fafe;
+}
 .noresult {
     background-color: white;
     border-top: 0;

@@ -15,8 +15,8 @@ let pageBase = {
             load: false,                 // 表格是否加载开关
             searchEvents:{                  // 查询回调函数
               onSearch: function(params) {
-                  this.$set("searchParams", params);
-                  // Object.assign(searchParams)
+                  // this.$set("searchParams", params);
+                  Object.assign(this.searchParams, params);
               }
             },
             searchParams: {page:1}, // 初始查询依据

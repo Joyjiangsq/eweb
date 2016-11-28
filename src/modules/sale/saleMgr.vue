@@ -5,16 +5,18 @@
             <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
           </div>
     </pagepanel>
-    <div  :class="css.customLeft">
-          <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
-          <div :class="css.tBox">
-            <tb :headercaption="tableHeaderDatas" :load="load"  :needselected= "true" @successload="successloadHandler" :needindex="false" :totals.sync="totals" @rowclick="rowClickHanlder"  :params="searchParams" url="sales" :events="tableEvents"></tb>
-          </div>
-          <pg :totals="totals" :pix="4" :curpage.sync="searchParams.page" ></pg>
-    </div>
+    <div :class="css.rfBox">
+      <div  :class="css.customLeft">
+            <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
+            <div :class="css.tbRow">
+                  <tb :headercaption="tableHeaderDatas" :load="load"  :needselected= "true" @successload="successloadHandler" :needindex="false" :totals.sync="totals" @rowclick="rowClickHanlder"  :params="searchParams" url="sales" :events="tableEvents"></tb>
+            </div>
+            <pg :totals="totals" :pix="4" :curpage.sync="searchParams.page" ></pg>
+      </div>
 
-    <div  :class="css.customRight">
-          <tb :headercaption="subHeaders"  :needindex="false" :load="subLoad" url="sales/all-sub-orders" :params="subSearchParams"  :events="subTableEvents"></tb>
+      <div  :class="css.customRight">
+            <tb :headercaption="subHeaders"  :needindex="false" :load="subLoad" url="sales/all-sub-orders" :params="subSearchParams"  :events="subTableEvents"></tb>
+      </div>
     </div>
     <dialog :flag.sync="showCode" title="二维码">
           <div slot="containerDialog">
@@ -51,7 +53,7 @@ var orderComponent = Vue.extend({
       totals:0
     }
   },
-  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  template: '<div class="atype" @click="clickHandler">{{totals | json}}</div>',
   ready: function(){
     this.totals = this.selfData.U_FZOrder;
   },
@@ -68,7 +70,7 @@ var sorderComponent = Vue.extend({
       totals:0
     }
   },
-  template: '<div :class="css.inRow" @click="clickHandler">{{totals | json}}</div>',
+  template: '<div class="atype" @click="clickHandler">{{totals | json}}</div>',
   ready: function(){
     this.totals = this.selfData.U_PurchaseNum;
   },
@@ -151,7 +153,7 @@ export default {
   },
   ready: function () {
     this.$nextTick(function () {
-       this.$el.querySelector("."+this.css.customLeft).style.width = (window.innerWidth - 555)+"px";
+      //  this.$el.querySelector("."+this.css.customLeft).style.width = (window.innerWidth - 555)+"px";
     })
   },
   attached: function () {},

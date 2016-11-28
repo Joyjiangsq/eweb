@@ -5,15 +5,21 @@
             <div v-if="curStatus == 'renderData'">
                     <div :class="css.rowbox" v-for="one in viewData">
                           <div :class="css.rowhead">
-                              <icon :classname="css.clicktarget" :iconname="one.show?'icon-down':'icon-right3'" @click="iconClick(one)"></icon>
-                              <span :class="css.check" v-if="one.U_OrderStatus == '待采购' || one.U_OrderStatus == 'e站驳回'">
-                                    <checkbx  @checkclick="checkClick(one)"></checkbx>
+                              <span :class="css.check">
+                                    <checkbx  @checkclick="checkClick(one)" :close="one.U_OrderStatus != '待采购' && one.U_OrderStatus != 'e站驳回'"></checkbx>
                               </span>
-                              <span :class="css.srow">采购订单号： <span :class="css.inrow" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span><span :class='css.tipstext'>({{one.base_info.order_type}})</span></span>
-                              <span :class="css.srow">采购订单状态： <span v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '店长驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
-                              <span :class="css.srow">供应商： {{one.sub_orders[0].U_CardName || '-'}}</span>
-                              <span :class="css.srow">创建时间：{{one.U_Date | dateformate}}</span>
-                              <span :class="css.inrow" v-if="one.U_PageLink"><a href="one.U_PageLink" target="_blank" >查看物流</a></span>
+                              <icon :classname="css.clicktarget" class="gray" :iconname="one.show?'icon-down02':'icon-right2'" @click="iconClick(one)"></icon>
+                              <span :class="css.srow">{{one.U_Date | dateformate}} 订单号： <span class="atype" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span><span :class='css.tipstext'></span></span>
+
+                              <span :class="[css.srow, css.orderOne]">{{one.base_info.order_type}} <span :class='css.osLine'></span> <span v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '店长驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
+                              <span :class="[css.srow, css.orderTwo]">
+                                  <img :src='typeimg':class='css.imgone' />品类品牌： {{getTypeName(one.type)}}<span :class='css.osLine'></span>  {{one.sub_orders[0]['U_Brand']}}
+                              </span>
+
+                              <span :class="css.wlBtn">
+                                <a href="one.U_PageLink" target="_blank" class="atype" v-if="one.U_PageLink"><icon iconname="icon-search"></icon>查看物流</a>
+                                <span class='gray'><icon iconname="icon-search" v-else></icon>查看物流</span>
+                              </span>
                           </div>
                           <div :class="css.tbbox" v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '待采购'" v-show="one.show">
                                 <tb :datas="one['sub_orders']" :srcdata="one" :recdata="one.rec_info" :ignorevalidate="one.ignorevalidate" :subvalidate="subvalidate" @fail="failHandler" @success="successHandler"></tb>
@@ -25,12 +31,12 @@
             </div>
       </div>
 </template>
-
 <script>
 import {showTips} from "actions/index";
 import css from "./p.css";
 import list from "common/mixinList";
 import tb from "component/block/tb_purchase.vue";
+import typeimg from "asset/img/type.png";
 import icon from "component/sprite/icon";
 import checkbx from "component/checkbox/checkBox";
 import utils from "common/Utils";
@@ -50,6 +56,7 @@ export default {
   data: function () {
     return {
       css,
+      typeimg:typeimg,
       viewData:[],
       checkList:[],
       orderMap:[],
@@ -61,6 +68,9 @@ export default {
 
   },
   methods:{
+    getTypeName: function(t) {
+        return utils.getCateryCname(t);
+    },
     toDetailHandler: function(one) {
         this.$router.go({path:"purchase/purchasedetail", query:{orderid: one.U_PurchaseNum}})
     },

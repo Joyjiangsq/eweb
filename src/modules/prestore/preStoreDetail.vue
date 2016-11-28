@@ -2,7 +2,7 @@
         <div class="">
           <detail :data="detailData"></detail>
           <tblab  v-if="show" :tabs="tabs"  scene="back"   :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail="detailData.U_OrderStatus!='店长驳回'"></tblab>
-          <div :class="css.footerBar" v-show="detailData.U_OrderStatus =='店长驳回'">
+          <div class="cfooter" v-show="detailData.U_OrderStatus =='店长驳回'">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>
         </div>

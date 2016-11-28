@@ -19,7 +19,7 @@
               </div>
           </panel>
           <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
-          <div :class="css.footerBar">
+          <div class="cfooter">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>
           <clist :show.sync="showUserDialog" @onecheck="oneUserCheck" :datas="customDatas"></clist>

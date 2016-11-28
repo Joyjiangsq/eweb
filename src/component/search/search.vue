@@ -127,7 +127,7 @@ export default {
         }
     }
 
-    if(this.needsearch) this.searchHandler();
+    if(this.needsearch) this.searchHandler(false);
   },
   attached: function () {},
   methods: {
@@ -141,6 +141,7 @@ export default {
         this.events.onSearch.call(this._context, this.params);
         let cPage = this.$route.query.page;
         if(cPage) this.params.page = cPage;
+        if(e) this.params.page = 1;
         if(e && this.hash) this.$router.go({ path: this.pathname, query: this.params});
       },
       // 控制格式

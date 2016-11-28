@@ -1,12 +1,11 @@
 .box {
-    padding-bottom: 30px;
+    padding-bottom: 20px;
 }
 .dataBox {
     margin-top: 20px;
 }
 .row {
-    width: 94%;
-    margin: 0 auto;
+      margin: 0 20px;
 }
 .spone {
     margin-bottom: 30px;
@@ -19,10 +18,6 @@
 .rowBox {
     width: 99.9%;
     margin: 0 auto;
-    overflow-x: scroll;
-}
-.attachrow {
-    padding-top: 20px;
 }
 
 .noattach {
