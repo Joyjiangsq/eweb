@@ -14,7 +14,6 @@
           <div class="">
             <tb :headercaption="headercaption" :load="load"  :totals.sync="totals" :params="searchParams" url="customers" :events="tableEvents"></tb>
           </div>
-          {{searchParams | json}}
             <pg :totals="totals" :curpage.sync="searchParams.page"></pg>
     </pagepanel>
     <!--新增对话框-->
