@@ -28,7 +28,7 @@
           <div :class="css.dataArea">
                 <tblab @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show"></tblab>
           </div>
-          <div :class="css.footerBar">
+          <div class="cfooter">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>
           </div>
         </div>
