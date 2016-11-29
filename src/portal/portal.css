@@ -90,9 +90,10 @@
     height: 160px;
 }
 .stationName {
-    position: absolute;
+position: absolute;
     bottom: 14px;
-    right: -25px;
+    left: 93%;
+    width: 200px;
 }
 .descIn {
     height: 90px;
