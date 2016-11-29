@@ -18,6 +18,7 @@ export default {
       }
     },
     ready: function(){
+      console.log("aa");
     },
     vuex: {
         getters: {
