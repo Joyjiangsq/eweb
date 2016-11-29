@@ -1,7 +1,6 @@
 <template>
     <div>
             <div :class='css.sBox'>
-              {{searchParams | json}}
                 <search  pathname="" :datas="sdata" :hash="false" :needsearch="false" :events = 'searchEvents'></search>
               </div>
           <div :class="css.tBox">
