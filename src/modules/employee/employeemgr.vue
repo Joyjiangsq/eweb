@@ -122,7 +122,7 @@ export default {
                else this.eidtEmp()
             }
             else this.$set("validateSuccess", true);
-          })
+          },30)
        }
        else {
          this.resetParams(this.addParams);

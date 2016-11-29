@@ -158,8 +158,8 @@ export default {
           let offy = e.offsetY || 0;
           let w = e.currentTarget.clientWidth;   // 点击的对象的宽高
           let h = e.currentTarget.clientHeight;
-          let x = e.x;                  // 点击相对body的位置
-          let y = e.y;
+          let x = e.x || e.clientX;                  // 点击相对body的位置
+          let y = e.y || e.clientY;
           x = x - 185;
           this.style = {left: x +"px", top: (y+h-offy+5) + "px"}
         }

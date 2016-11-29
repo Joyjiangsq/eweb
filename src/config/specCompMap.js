@@ -215,7 +215,7 @@ export const  zhiComponent = Vue.extend({
 export const  qianyanComponent = Vue.extend({
   data:function(){
     return {
-      test:[{name:"请选择", id:""}, {name:"DM-008-直边", id:"DM-008-直边"}, {name:"DM-002-罗马边", id:"DM-002-罗马边"}],
+      test:[{name:"DM-008-直边", id:"DM-008-直边"}, {name:"DM-002-罗马边", id:"DM-002-罗马边"}],
       value: ""
     }
   },
@@ -241,7 +241,7 @@ export const  qianyanComponent = Vue.extend({
 export const taiyiComponent = Vue.extend({
   data:function(){
     return {
-      test:[{name:"请选择", id:""}, {name:"台上工艺", id:"台上工艺"}, {name:"台下工艺", id:"台下工艺"}],
+      test:[{name:"台上工艺", id:"台上工艺"}, {name:"台下工艺", id:"台下工艺"}],
       value:""
     }
   },

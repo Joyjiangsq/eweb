@@ -76,7 +76,6 @@ export default {
     },
 
     getText: function(one) {
-      console.log(one);
       if(one == "") return "-"
       if(one == "undefined" || !one) return "-"
       return one;

@@ -91,7 +91,7 @@ let addMenCols = function(arr, type = 'edit') {
       {name:"门洞深（mm）", labelValue:"U_DSThick", type:type},
       {name:"门扇宽（mm）", labelValue:"U_TDWide", type:type},
       {name:"门扇高（mm）", labelValue:"U_TDHigh", type:type},
-      {name:"门扇厚（mm）", labelValue:"U_TDThick", type:type},
+      {name:"门扇厚（mm）", labelValue:"U_TDThick", type:"dataspec"},
     ],tp);
 }
 // 门 类别的 列 可编辑属性
