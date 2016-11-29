@@ -80,7 +80,7 @@
               <div  slot="containerDialog">
                   <propertytext key="账户余额" :value="accountBaseInfo.Balance | mondec '2' '元'"></propertytext>
                   <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount | mondec '2' '元'"></propertytext>
-                  <propertytext key="可提现金额" :value="accountBaseInfo.AvailableBalance | mondec '2' '元'"></propertytext>
+                  <propertytext style="margin-bottom: 20px;" key="可提现金额" :value="accountBaseInfo.AvailableBalance | mondec '2' '元'"></propertytext>
                   <formtext labelname="提现金额：" :value.sync="backCashParams.U_TraAmount" placeholder="请输入提现金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="备注：" :value.sync="backCashParams.Memo" placeholder="备注" :vertical="true" formname='backCash'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>

@@ -7,11 +7,11 @@
     margin: 0 auto;
 }
 .rowItem {
-    padding: 0 0 15px 23px;
+    padding: 0 0 0 23px;
 }
 .rowOne {
     background-color: #f5fafe;
-    padding: 0 0 15px 23px;
+    padding: 0 0 0 23px;
     border-top: 1px dashed #c9e2f1;
     border-bottom: 1px dashed #c9e2f1;
 }
@@ -25,6 +25,7 @@
     width: 92%;
     display: inline-block;
     vertical-align: top;
+    margin-top: 20px;
 }
 .formitem label {
     min-width: 210px;
@@ -41,7 +42,7 @@
     margin-left: 20px;
 }
 .upBox {
-    padding-top: 21px;
+    margin-bottom: 20px;
 }
 .infoRow {
     margin-top: 20px;

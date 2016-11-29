@@ -17,7 +17,7 @@
           <!--选品对话框-->
           <dialog :flag.sync="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                      <zhuangxiufucailist :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="vlist"></zhuangxiufucailist>
+                      <zhuangxiufucailist :hash="false" :toload="toload" @addone="addoneHandler"  :listdata.sync="vlist"></zhuangxiufucailist>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>

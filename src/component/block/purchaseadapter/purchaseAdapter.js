@@ -1,3 +1,4 @@
+import {getLevelOneTypeByName} from "config/codeMap";
 export default function adapterData(d) {
       if(!d.stock || d.stock == 0) d.stock = "0";
       // 设置验证参数规则
@@ -55,8 +56,8 @@ export default function adapterData(d) {
           validateFun:function(data, index){
               // 计算转化数量
               // 包装规格   SalPackUn   如果是厨柜 或者木门 则忽略定制品忽略
-              if(d.ItmsGrpNam != "厨柜" && d.ItmsGrpNam != "门") {
-                if(d.ItmsGrpNam != "地板") {
+              if(d.ItmsGrpCod != getLevelOneTypeByName("厨柜") && d.ItmsGrpCod != getLevelOneTypeByName("门")) {
+                if(d.ItmsGrpCod != getLevelOneTypeByName("地板")) {
                   d.SalPackUn = d.SalPackUn || 1;
                   let sy = Math.ceil(this.def/d.SalPackUn);
                   d.Quantity = d.SalPackUn*sy;

@@ -1,3 +1,4 @@
+import {getLevelThreeTypeByName} from "config/codeMap";
 export default function adapterData(d) {
       d.U_SWW = d.SWW; // 这里sap xxx 不解释了
       if(!d.stock || d.stock == 0) d.stock = "0"; // 过滤库存不存在的情况  默认给0  不会出问题
@@ -61,10 +62,10 @@ export default function adapterData(d) {
       }
       //U_HandleName TODO
       // let bav = ["吊柜","地柜","高柜","半高柜","柜门","板件"];
-      let bav = ["柜门"]
+      let bav = [getLevelThreeTypeByName("柜门")]
       // 把手型号   下拉组件 默认 、、
       d.U_HandleName.validateFun = function(data, index){
-          if(bav.indexOf(d.U_ThreeL) != -1) {
+          if(bav.indexOf(d.Code) != -1) {
               if(!this.def || this.def == "")  return exepFun(this, "把手型号必填")
               else  return resetFun(this)
           }
@@ -147,18 +148,22 @@ export default function adapterData(d) {
       d.U_Pquantity.validateFun = function(data, index){
           if(isNaN(this.def)) return exepFun(this, "此项填写错误")
           else if(this.def < 0) return exepFun(this, "此项必须大于0")
-          else if(d.U_ThreeL != "台面") {
+          else if(d.Code != getLevelThreeTypeByName("台面")) {
               if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "此项必须填写")
               else  return resetFun(this)
           }
           else return resetFun(this)
       }
-      d.U_HandleName.tb_disabled = true // 关闭把手型号
-      if(d.U_ThreeL == "柜门") d.U_HandleName.tb_disabled = false
+       d.U_HandleName.tb_disabled = true // 关闭把手型号
+      if(d.Code == getLevelThreeTypeByName("柜门")) d.U_HandleName.tb_disabled = false
       //吊柜,地柜,高柜,半高柜,柜门,板件,顶线,灯线,罗马柱,木框玻璃门,上翻门,拉手,铰链,抽屉轨道,踢脚线,拉篮,台面,烟机,灶台,消毒柜,热水器,水槽,龙头
       let levelOne = ["板件","顶线","灯线","罗马柱","木框玻璃门","上翻门","拉手","铰链","抽屉轨道","踢脚线","拉篮","烟机","消毒柜","热水器","水槽","龙头"];
       let levelTwo = ["灶台", "台面"];
-      if(levelTwo.indexOf(d.U_ThreeL) == -1) {
+      levelOne = levelOne.map(one => getLevelThreeTypeByName(one));
+      levelTwo = levelTwo.map(one => getLevelThreeTypeByName(one));
+      console.log(levelOne);
+      // Code  三级分类编码
+      if(levelTwo.indexOf(d.Code) == -1) {
             // 关闭  前沿造型/气源方式/台盆工艺/台面进深（mm）/挡水高度（mm）/包管展开宽（mm）/包管展开深（mm）
             // 第一层 "吊柜","地柜","高柜","半高柜","柜门",
             d.U_FModeling.tb_disabled = true;
@@ -168,9 +173,10 @@ export default function adapterData(d) {
             d.U_HeightWR.tb_disabled = true;
             d.U_ASWide.tb_disabled = true;
             d.U_ASDeep.tb_disabled = true;
-            if(levelOne.indexOf(d.U_ThreeL) != -1) {
+            if(levelOne.indexOf(d.Code) != -1) {
                 d.U_PSDeep.tb_disabled = true; // 关闭进深
-                if(d.U_ThreeL != "板件") {
+                d.U_HandleName.tb_disabled = true // 关闭把手型号
+                if(d.Code != getLevelThreeTypeByName("板件")) {
                     d.U_PSWide.tb_disabled = true // 关闭宽
                     d.U_PSHigh.tb_disabled = true // 关闭高
                 }
@@ -181,7 +187,7 @@ export default function adapterData(d) {
             d.U_PSWide.tb_disabled = true; // 关闭宽
             d.U_PSHigh.tb_disabled = true; // 关闭高
             d.U_HandleName.tb_disabled = true // 关闭把手型号
-            if(d.U_ThreeL == "灶台") {
+            if(d.Code == getLevelThreeTypeByName("灶台")) {
                 //灶台  关闭 包管展开宽、包管展开高、台盆工艺、台面进深、挡水高度、前沿造型
                 d.U_FModeling.tb_disabled = true;
                 d.U_BasinT.tb_disabled = true;

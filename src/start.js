@@ -84,6 +84,7 @@ Vue.config.devtools = process.env.NODE_ENV === 'dev ';
 // window.router = router;
 if(navigator.userAgent.indexOf("Firefox") != -1) reWriteFun();
 let reWriteFun = function(){
+    // alert(1111)
     var __sto = setTimeout;  
 　　 window.setTimeout = function(callback,timeout,param) {
     　　var args = Array.prototype.slice.call(arguments,2);  

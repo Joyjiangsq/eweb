@@ -35,11 +35,13 @@
     padding: 50px 0;
     font-size: 12px;
     border-bottom: 1px solid #ddd;
+    margin-top: -10px;
     border-left: 1px solid #ddd;    border-right: 1px solid #ddd;
 }
 .loading {
     background-color: white;
     border-top: 0;
+    margin-top: -10px;
     text-align: center;
     color: #ccc;
     padding: 50px 0;

@@ -69,13 +69,13 @@ export default {
     keyDownHandler: function(e){
       console.log(e.keyCode);
       if(e.keyCode == 8) return true;  // 回退
-      if(this.number && !this.numberValidate(e.keyCode)) {
-        // if(e.keyCode == 229) {  // 中文验证
-        //    var tp = this.value;
-        //    setTimeout(() => { this.$set("value", tp); });
-        // }
-        e.preventDefault(); return false;
-      }
+      // if(this.number && !this.numberValidate(e.keyCode)) {
+      //   // if(e.keyCode == 229) {  // 中文验证
+      //   //    var tp = this.value;
+      //   //    setTimeout(() => { this.$set("value", tp); });
+      //   // }
+      //   e.preventDefault(); return false;
+      // }
       if(this.length) {
         if(this.length*1 == this.value.length) {e.preventDefault(); return false;}
       }

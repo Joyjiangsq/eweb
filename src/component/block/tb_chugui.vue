@@ -66,7 +66,7 @@
           <!--选品对话框-->
           <dialog :flag.sync="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                    <chuguitb :hash="false" :toload="toload" @addone="addoneHandler" @deleteone="deleteoneHandler" :listdata.sync="vlist"></chuguitb>
+                    <chuguitb :hash="false" :toload="toload" @addone="addoneHandler" :listdata.sync="vlist"></chuguitb>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>
@@ -121,12 +121,20 @@ export default {
           },
           operatorHandler: function(d){
               if(d.action == "delete") {
-                // 木门和铝框门的时候 渲染门的列表 g_array
-                if(d.data.FirmName == '柜体' || d.data.FirmName == '门板' ||  d.data.FirmName == '配件') this.g_array.splice(d.index,1)
+                // 木门和铝框门的时候 渲染门的列表 g_array   配件（厨柜）
+                if(d.data.FirmName == '柜体' || d.data.FirmName == '门板' ||  d.data.FirmName == '配件（厨柜）') this.g_array.splice(d.index,1)
                 // 门控五金 非智能锁的时候 渲染 t_array
                 else if(d.data.FirmName == '台面') this.t_array.splice(d.index,1)
                 // 门控五金 智能门锁的时候  渲染 w_array
                 else this.w_array.splice(d.index,1)
+
+                 for (var i = 0; i < this.vlist.length; i++) {
+                    let one = this.vlist[i];
+                    if(d.data.ItemCode == one.ItemCode) {
+                      this.vlist.splice(i,1);
+                      break;
+                    }
+                  }
               }
           }
       },
@@ -144,7 +152,7 @@ export default {
     for (var i = 0; i < this.vlist.length; i++) {
         let one = this.vlist[i];
         // 木门和铝框门的时候 渲染门的列表 g_array
-        if(one.FirmName == '柜体' || one.FirmName == '门板' ||  one.FirmName == '配件') {
+        if(one.FirmName == '柜体' || one.FirmName == '门板' ||  one.FirmName == '配件（厨柜）') {
             this.g_array.push(one);
             continue;
         }
@@ -175,11 +183,12 @@ export default {
         let one = this.adapterFun(d);
         // this.vlist.push(one);
         // 木门和铝框门的时候 渲染门的列表 g_array
-        if(one.FirmName == '柜体' || one.FirmName == '门板' || one.FirmName == '配件') this.g_array.push(one);
+        if(one.FirmName == '柜体' || one.FirmName == '门板' || one.FirmName == '配件（厨柜）') this.g_array.push(one);
         // 门控五金 非智能锁的时候 渲染 t_array
        else if(one.FirmName == '台面') this.t_array.push(one);
         // 门控五金 智能门锁的时候  渲染 w_array
        else  this.w_array.push(one);
+       this.vlist.push(one);
     },
     upSuccessHandler: function(d){
       console.log(d);

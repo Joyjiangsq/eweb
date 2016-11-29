@@ -29,7 +29,7 @@ export default {
     return {
       css,
       name:"厨柜",
-      filter:["柜体","门板","五金","配件"],
+      filter:["柜体","门板","五金","配件（厨柜）"],
       headerCaption:[
              {type:"operator", name:"", icon: true},{name:"二级分类", labelValue:"FirmName", type:"data"},
              {name:"三级分类", labelValue:"U_ThreeL", type:"data"},
@@ -40,11 +40,9 @@ export default {
              {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
              {name:"产品规格", labelValue:"Spec", type:"data"},
              {name:"颜色", labelValue:"U_Colour", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-             {name:"门套线类型", labelValue:"U_DLType", type:"data"},
-             {name:"切角方式", labelValue:"U_CutAMe", type:"data"},
-             {name:"玻璃类型", labelValue:"U_GType", type:"data"},
-             {name:"门扇数", labelValue:"U_DLNum", type:"data"},
-             {name:"门套线边数", labelValue:"U_DCLNum", type:"data"},
+             {name:"门板材质", labelValue:"U_DMaterial", type:"data"},
+             {name:"柜体材质", labelValue:"U_CQuality", type:"data"},
+             {name:"门型", labelValue:"U_DType", type:"data"},
              {name:"单位", labelValue:"SalUnitMsr",type:"data"}
       ],
     }

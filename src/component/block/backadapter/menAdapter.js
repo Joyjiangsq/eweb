@@ -1,3 +1,4 @@
+import {getLevelThreeTypeByName} from "config/codeMap";
 export default function adapterData(d) {
   d.U_SWW = d.SWW; // 这里sap xxx 不解释了
   if(!d.stock || d.stock == 0) d.stock = "0";
@@ -156,7 +157,7 @@ export default function adapterData(d) {
               }
          // 门扇宽   最小值  U_DLWideMin  极限值 U_DLWideL
             d.U_TDWide.validateFun = function(data, index){
-                if(d.U_ThreeL == "门扇") {
+                if(d.Code == getLevelThreeTypeByName("门扇")) {
                     if(this.def == "" || !this.def) return exepFun(this, "门扇宽必须填写")
                     else {}
                 }
@@ -169,7 +170,7 @@ export default function adapterData(d) {
               }
               // 门扇高   最小值  U_DLHighMin  极限值 U_DLHighL
             d.U_TDHigh.validateFun = function(data, index){
-                if(d.U_ThreeL == "门扇") {
+                if(d.Code == getLevelThreeTypeByName("门扇")) {
                     if(this.def == "" || !this.def) return exepFun(this, "门扇高必须填写")
                     else if(this.def < 0) return exepFun(this, "此项必须大于0")
                     else {}
@@ -183,7 +184,7 @@ export default function adapterData(d) {
             }
           // 门扇厚  最小值  U_DLThickMin  极限值 U_DLThickL
           // d.U_TDThick.validateFun = function(data, index){
-          //       if(d.U_ThreeL == "门扇") {
+          //       if(d.Code == getLevelThreeTypeByName("门扇")) {
           //           if(this.def == "" || !this.def) return exepFun(this, "门扇厚必须填写")
           //           else if(this.def < 0) return exepFun(this, "此项必须大于0")
           //       }
@@ -230,7 +231,11 @@ export default function adapterData(d) {
           var levelOneArray = ["移门（木门）", "移门（铝框门）","门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
           var levelTwoArray = ["门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
           var levelThreeArray = ["垭口（木门）","五金","普通门锁","合页","门吸"];
-          if(levelOneArray.indexOf(d.U_ThreeL) != -1) {
+          levelOneArray = levelOneArray.map(one => getLevelThreeTypeByName(one));
+          levelTwoArray = levelTwoArray.map(one => getLevelThreeTypeByName(one));
+          levelThreeArray = levelThreeArray.map(one => getLevelThreeTypeByName(one));
+          
+          if(levelOneArray.indexOf(d.Code) != -1) {
               // 移门的时候 去除 开启方式， 是否开孔 门锁，合页
               d.U_IKeyHole.tb_disabled = true; // 是否开孔
               d.U_HingeName.tb_disabled = true; // 合页
@@ -238,12 +243,12 @@ export default function adapterData(d) {
               d.U_OpenWay.tb_disabled = true; // 手否开孔
 
               // 门套木门是没有 门扇
-              if(levelTwoArray.indexOf(d.U_ThreeL) != -1) {
+              if(levelTwoArray.indexOf(d.Code) != -1) {
                   d.U_TDWide.tb_disabled = true; // 门扇宽
                   d.U_TDHigh.tb_disabled = true; // 门扇高
                   d.U_TDThick.tb_disabled = true; // 门扇厚
 
-                  if(levelThreeArray.indexOf(d.U_ThreeL) != -1) {
+                  if(levelThreeArray.indexOf(d.Code) != -1) {
                     d.U_DSWide.tb_disabled = true; // 门洞宽
                     d.U_DSHigh.tb_disabled = true; // 门洞高
                     d.U_DSThick.tb_disabled = true; // 门洞深
@@ -251,14 +256,14 @@ export default function adapterData(d) {
               }
            }
            // 门扇逻辑
-           if(d.U_ThreeL == "门扇") {
+           if(d.Code == getLevelThreeTypeByName("门扇")) {
              d.U_DSWide.tb_disabled = true; // 门洞宽
              d.U_DSHigh.tb_disabled = true; // 门洞高
              d.U_DSThick.tb_disabled = true; // 门洞深
            }
 
            // 门扇逻辑
-           if(d.U_ThreeL == "智能锁") {
+           if(d.Code == getLevelThreeTypeByName("智能锁")) {
                  d.U_DSWide.tb_disabled = true;  //门洞宽
                  d.U_DSHigh.tb_disabled = true;  //门洞高
                  d.U_DSThick.tb_disabled = true;  //门洞深

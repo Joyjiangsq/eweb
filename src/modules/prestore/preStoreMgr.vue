@@ -20,7 +20,6 @@ import css from "./pre.css";
 import Utils from "common/Utils.js";
 import {orderStatus} from "config/const";
 import pageBase from "common/mixinPage.js";
-console.log(pageBase);
 import Vue from "vue";
 
 // 自定义

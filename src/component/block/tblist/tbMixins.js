@@ -1,5 +1,6 @@
 import Utils from "common/Utils";
 import {showTips} from "actions/index";
+import {getLevelOneTypeByName} from "config/codeMap"
 let tbMixin = {
     props:{
       listdata:{
@@ -12,6 +13,7 @@ let tbMixin = {
     data: function() {
         return {
            products:"products",
+           getLevelOneTypeByName: getLevelOneTypeByName,
            twoLevelData:[],   // 二级分类
            threeLevelData:[], // 三级分类
            totals:0,                 // 表格load结束之后 传递给分页的页数
@@ -38,6 +40,7 @@ let tbMixin = {
                        else return [{action:"add",icon:"icon-add", data: d}]
                    },
                    operatorHandler: function(d){
+                       console.log(11);
                        if(d.action == "add") {
                           // 厨柜特殊
                            if(this.name == "厨柜") {
@@ -92,14 +95,15 @@ let tbMixin = {
       }
     },
     created: function(){
-      this.searchParams.ItmsGrpCod = Utils.getCateryCode(this.name);
+      this.searchParams.ItmsGrpCod = this.getLevelOneTypeByName(this.name);
+      console.log(this.searchParams.ItmsGrpCod );
     },
     ready: function() {
     },
     attached: function() {},
     methods: {
       getLevelData: function(){
-          this.$http.get(this.$Api + "products/firms", {params:{ItmsGrpCod: Utils.getCateryCode(this.name)}}).then((res)=>{
+          this.$http.get(this.$Api + "products/firms", {params:{ItmsGrpCod: this.getLevelOneTypeByName(this.name)}}).then((res)=>{
                 let d = res.json().data[0];
                 this.twoLevelData = d.firms;
                 for (var i = 0; i < d.firms.length; i++) {
@@ -125,7 +129,7 @@ let tbMixin = {
       putOne: function(data){
         let one = Utils.cloneObj(data);
         if(this.name == "厨柜" || this.name =="门") one.randomTag = Math.random().toString(16)
-        this.$dispatch("addone", one)
+        this.$dispatch("addone", one);
       }
     },
     watch: {

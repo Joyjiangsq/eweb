@@ -8,6 +8,7 @@ import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
 import {sale_standard_header, sale_standard_header_d} from "config/headerConst";
 import Utils from "common/Utils";
+console.log(Utils);
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -139,6 +140,7 @@ export default {
     }
   },
   ready: function(){
+    console.log("xxxxxxxxxxxxxxxxxxxxx");
     if(!this.detail) {
       for (var i = 0; i < this.testdata.length; i++) {
         var one = this.testdata[i];

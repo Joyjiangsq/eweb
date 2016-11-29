@@ -1,4 +1,5 @@
 import storejs from "storejs";
+
  let Utils = {
      formate: function(d, pattern){
          if (!d || d == "") return "";
@@ -54,21 +55,6 @@ import storejs from "storejs";
         else return false
      },
 
-     // 品类对应的编码
-     getCateryCode: function(name){
-          var CateDatas = {
-              "瓷砖": 111,
-              "地板": 115,
-              "洁具": 117,
-              "集成吊顶": 118,
-              "门": 116,
-              "厨柜": 121,
-              "施工辅材": 119,
-              "装修辅料": 120
-          }
-          if(CateDatas[name]) return CateDatas[name]
-          else return "";
-     },
      // 获取品类对应中文名
      getCateryCname: function(pinyin){
           var CateDatas = {
