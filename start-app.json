@@ -18,13 +18,14 @@
       "pre-deploy-local": "echo '    ○ 准备部署线上环境 …'",
       "post-deploy": "npm install && NODE_ENV=production pm2 startOrRestart start-app.json"
     },
+    
     "dev":{
       "user": "root",
       "host": "172.20.8.109",
       "ref": "origin/master",
       "repo": "git@git.coding.net:davych/substation.git",
       "path": "/var/www/node/web_substation",
-      // "ssh_options": "StrictHostKeyChecking=no",
+      "ssh_options": "StrictHostKeyChecking=no",
       "pre-deploy-local": "echo '    ○ 准备部署开发环境 …'",
       "post-deploy" : "echo 'start web pages.'"
     },
