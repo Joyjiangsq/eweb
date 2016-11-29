@@ -18,6 +18,18 @@ export const decorateStyle =[
   {name:"其他", id:-2}
 ]
 
+// 交易类型
+export const accountTypes = [
+  {name:"Pos刷入", id:"AD"},
+  {name:"打款", id:"AE"},
+  {name:"支付宝收入", id:"AF"},
+  {name:"支付宝佣金", id:"AG"},
+  {name:"银行手续费", id:"AH"},
+  {name:"分站提现", id:"AT"},
+  {name:"分站主材扣款", id:"ZA"},
+  {name:"分站运费扣款", id:"AC"}
+]
+
 // 渠道配置
 export const fromConst= [
   {name:"分站提供", id:"分站提供"},
@@ -76,16 +88,6 @@ export const rolesS = [
   {name:"财务", id:"财务"}
 ]
 
-// 提现烈性
-export const accountTypes = [
-  {name:"Pos刷入", id:""},
-  {name:"打款", id:""},
-  {name:"支付宝收入", id:""},
-  {name:"支付宝佣金", id:""},
-  {name:"银行手续费", id:""},
-  {name:"分站提现", id:""},
-  {name:"扣款", id:""}
-]
 
 // 厨柜订制品参数集合
 // 系列
