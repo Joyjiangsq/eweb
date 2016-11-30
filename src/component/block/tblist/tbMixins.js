@@ -45,6 +45,7 @@ let tbMixin = {
                           // 厨柜特殊
                            if(this.name == "厨柜") {
                                 if(d.data.U_CardName == ""　|| !d.data.U_CardName)  this.putOne(d.data); // 如果不存在供应商 直接过
+                                else if(this.filter.indexOf(d.data.FirmName) == -1)  this.putOne(d.data); // 如果新增数据不是filter里的 过
                                 else {
                                     let flg = true;
                                     for (var i = 0; i < this.listdata.length; i++) {

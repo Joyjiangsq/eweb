@@ -6,37 +6,37 @@
                     <btn @click="toSelect">选品</btn>
                   </div>
                   <div :class="css.rowBox">
-                    <div :class="css.typeitem" v-if="m_array.length !=0">
+                    <div :class="css.typeitem" v-if="a_array.length !=0">
                           <p :class="css.ptitle">门</p>
-                          <tb :headercaption="m_header" :datas="m_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                          <tb :headercaption="m_header" :datas="a_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                     </div>
-                    <div :class="css.typeitem" v-if="m_five_array.length !=0">
+                    <div :class="css.typeitem" v-if="b_array.length !=0">
                           <p :class="css.ptitle">门控五金</p>
-                          <tb :headercaption="m_five_header" :datas="m_five_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                          <tb :headercaption="m_five_header" :datas="b_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                     </div>
-                    <div :class="css.typeitem" v-if="m_lock_array.length !=0">
+                    <div :class="css.typeitem" v-if="c_array.length !=0">
                           <p :class="css.ptitle">智能门锁</p>
-                          <tb :headercaption="m_lock_header" :datas="m_lock_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                          <tb :headercaption="m_lock_header" :datas="c_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                     </div>
                   </div>
               </div>
               <div class="" v-else>
-                <div :class="css.typeitem" v-if="m_array.length !=0">
+                <div :class="css.typeitem" v-if="a_array.length !=0">
                       <p :class="css.ptitle">门</p>
                       <div :class="css.rowBox">
-                        <tb :headercaption="m_header_d" :datas="m_array"  :load="false" :curaction="curaction" :detail="detail" ></tb>
+                        <tb :headercaption="m_header_d" :datas="a_array"  :load="false" :curaction="curaction" :detail="detail" ></tb>
                       </div>
                 </div>
-                <div :class="css.typeitem" v-if="m_five_array.length !=0">
+                <div :class="css.typeitem" v-if="b_array.length !=0">
                       <p :class="css.ptitle">门控五金</p>
                       <div :class="css.rowBox">
-                        <tb :headercaption="m_five_header_d" :datas="m_five_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
+                        <tb :headercaption="m_five_header_d" :datas="b_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
                       </div>
                 </div>
-                <div :class="css.typeitem" v-if="m_lock_array.length !=0">
+                <div :class="css.typeitem" v-if="c_array.length !=0">
                       <p :class="css.ptitle">智能门锁</p>
                       <div :class="css.rowBox">
-                        <tb :headercaption="m_lock_header_d" :datas="m_lock_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
+                        <tb :headercaption="m_lock_header_d" :datas="c_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
                       </div>
                 </div>
               </div>
@@ -76,6 +76,7 @@ import {sale_men_header,
         sale_men_five_header_d,
         sale_men_z_header,
         sale_men_z_header_d} from "config/headerConst";
+import {specFun, specSetOne, getType} from "component/blockcommon/specCommon.js";
 export default {
   mixins:[baseMixins],
   data: function () {
@@ -89,18 +90,19 @@ export default {
           },
           operatorHandler: function(d){
               if(d.action == "delete") {
-                // 木门和铝框门的时候 渲染门的列表 m_array
-                if(d.data.FirmName == '木门' || d.data.FirmName == '铝框门') this.m_array.splice(d.index,1)
-                // 门控五金 非智能锁的时候 渲染 m_five_array
-                if(d.data.FirmName == '门控五金' && d.data.U_ThreeL.indexOf("智能") == -1) this.m_five_array.splice(d.index,1)
-                // 门控五金 智能门锁的时候  渲染 m_lock_array
-                if(d.data.FirmName == '门控五金' && d.data.U_ThreeL.indexOf("智能") != -1) this.m_lock_array.splice(d.index,1)
+                let type = getType(d.data, "men");
+                if(type == "a") this.a_array.splice(d.index,1)
+                else if(type == "b") this.b_array.splice(d.index,1)
+                else if(type == "c") this.c_array.splice(d.index,1)
+                // 木门和铝框门的时候 渲染门的列表 a_array
+                // 门控五金 非智能锁的时候 渲染 b_array
+                // 门控五金 智能门锁的时候  渲染 c_array
               }
           }
       },
-      m_array:[],
-      m_five_array:[],
-      m_lock_array:[],
+      a_array:[],
+      b_array:[],
+      c_array:[],
       m_header:sale_men_header(this.scene),
       m_five_header:sale_men_five_header(this.scene),
       m_lock_header:sale_men_z_header(this.scene),
@@ -119,36 +121,20 @@ export default {
         this.m_five_header.splice(0,1);
         this.m_header.splice(0,1);
       }
-      for (var i = 0; i < this.vlist.length; i++) {
-          let one = this.vlist[i];
-          // 木门和铝框门的时候 渲染门的列表 m_array
-          if(one.FirmName == '木门' || one.FirmName == '铝框门') {
-              this.m_array.push(one);
-              continue;
-          }
-          // 门控五金 非智能锁的时候 渲染 m_five_array
-          if(one.FirmName == '门控五金' && one.U_ThreeL.indexOf("智能") == -1) {
-              this.m_five_array.push(one);
-              continue;
-          }
-          // 门控五金 智能门锁的时候  渲染 m_lock_array
-          if(one.FirmName == '门控五金' && one.U_ThreeL.indexOf("智能") != -1) {
-              this.m_lock_array.push(one);
-              continue;
-          }
-      }
+      let collectionMap = specFun(this.vlist, "men");
+      this.a_array = collectionMap.a;
+      this.b_array = collectionMap.b;
+      this.c_array = collectionMap.c;
   },
   attached: function () {},
   methods: {
     addoneHandler : function(d){
         let one = this.adapterFun(d);
         // this.vlist.push(one);
-        // 木门和铝框门的时候 渲染门的列表 m_array
-        if(one.FirmName == '木门' || one.FirmName == '铝框门') this.m_array.push(one);
-        // 门控五金 非智能锁的时候 渲染 m_five_array
-       else if(one.FirmName == '门控五金' && one.U_ThreeL.indexOf("智能") == -1) this.m_five_array.push(one);
-        // 门控五金 智能门锁的时候  渲染 m_lock_array
-       else if(one.FirmName == '门控五金' && one.U_ThreeL.indexOf("智能") != -1) this.m_lock_array.push(one);
+        // 木门和铝框门的时候 渲染门的列表 a_array
+        // 门控五金 非智能锁的时候 渲染 b_array
+        // 门控五金 智能门锁的时候  渲染 c_array
+        specSetOne(one, "men" ,this.a_array, this.b_array, this.c_array); 
     },
     adapterFun: function(d) {
       if(this.scene == "sale") return saleAdapter(d)
@@ -159,7 +145,7 @@ export default {
         this.showSelectDialog = !this.showSelectDialog;
     },
     concatFunc: function(){
-        this.vlist = this.m_array.concat(this.m_five_array, this.m_lock_array);
+        this.vlist = this.a_array.concat(this.b_array, this.c_array);
     }
   },
   components: {tb,mentb,btn},

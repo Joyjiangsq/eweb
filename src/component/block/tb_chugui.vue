@@ -1,46 +1,42 @@
 <template lang="html">
     <div class="">
           <div  v-if="curaction != 'alldetail'">
-            <!-- <tb v-if="!detail" :headercaption="headercaption" @more="moreClickHandler" @loadsuccess="oneSuccessHandler" :curaction="curaction" :detail="detail"  :datas="vlist" codevalue="orderid" :events="tableEvents" enterdep="type" :load="false"></tb>
-            <div :class="css.rowBox" v-else>
-              <tbbase :headercaption="headerdetail" :datas="testdata"  :load="false"></tbbase>
-            </div> -->
             <div class="" v-if="!detail">
                 <div class=""  v-if="curaction == 'add'">
                   <btn @click="toSelect">选品</btn>
                 </div>
                 <div :class="css.rowBox">
-                  <div :class="css.typeitem" v-if="g_array.length !=0">
+                  <div :class="css.typeitem" v-if="a_array.length !=0">
                         <p :class="css.ptitle">柜体/门板/配件</p>
-                        <tb :headercaption="g_header" :datas="g_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                        <tb :headercaption="g_header" :datas="a_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                   </div>
-                  <div :class="css.typeitem" v-if="t_array.length !=0">
+                  <div :class="css.typeitem" v-if="b_array.length !=0">
                         <p :class="css.ptitle">台面</p>
-                        <tb :headercaption="t_header" :datas="t_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                        <tb :headercaption="t_header" :datas="b_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                   </div>
-                  <div :class="css.typeitem" v-if="w_array.length !=0">
+                  <div :class="css.typeitem" v-if="c_array.length !=0">
                         <p :class="css.ptitle">五金/厨电/水槽龙头</p>
-                        <tb :headercaption="w_header" :datas="w_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
+                        <tb :headercaption="w_header" :datas="c_array"  :load="false" :curaction="curaction" :detail="detail" :events="tableEvents"></tb>
                   </div>
                 </div>
             </div>
             <div class="" v-else>
-              <div :class="css.typeitem" v-if="g_array.length !=0">
+              <div :class="css.typeitem" v-if="a_array.length !=0">
                     <p :class="css.ptitle">柜体/门板/配件</p>
                     <div :class="css.rowBox">
-                      <tb :headercaption="g_header_d" :datas="g_array"  :load="false" :curaction="curaction" :detail="detail" ></tb>
+                      <tb :headercaption="g_header_d" :datas="a_array"  :load="false" :curaction="curaction" :detail="detail" ></tb>
                     </div>
               </div>
-              <div :class="css.typeitem" v-if="t_array.length !=0">
+              <div :class="css.typeitem" v-if="b_array.length !=0">
                     <p :class="css.ptitle">台面</p>
                     <div :class="css.rowBox">
-                      <tb :headercaption="t_header_d" :datas="t_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
+                      <tb :headercaption="t_header_d" :datas="b_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
                     </div>
               </div>
-              <div :class="css.typeitem" v-if="w_array.length !=0">
+              <div :class="css.typeitem" v-if="c_array.length !=0">
                     <p :class="css.ptitle">五金/厨电/水槽龙头</p>
                     <div :class="css.rowBox">
-                      <tb :headercaption="w_header_d" :datas="w_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
+                      <tb :headercaption="w_header_d" :datas="c_array"  :load="false" :curaction="curaction"  :detail="detail" ></tb>
                     </div>
               </div>
             </div>
@@ -92,6 +88,7 @@ import {sale_chu_g_header,
         sale_chu_tm_header_d,
         sale_chu_f_header,
         sale_chu_f_header_d} from "config/headerConst";
+import {specFun, specSetOne, getType} from "component/blockcommon/specCommon.js";
 export default {
   mixins:[baseMixins],
   props:{
@@ -105,9 +102,9 @@ export default {
       curName:"chugui",
       validate:false,
       statusRes:"",
-      g_array:[],
-      t_array:[],
-      w_array:[],
+      a_array:[],
+      b_array:[],
+      c_array:[],
       g_header: sale_chu_g_header(this.scene),
       t_header:sale_chu_tm_header(this.scene),
       w_header:sale_chu_f_header(this.scene),
@@ -121,14 +118,13 @@ export default {
           },
           operatorHandler: function(d){
               if(d.action == "delete") {
-                // 木门和铝框门的时候 渲染门的列表 g_array   配件（厨柜）
-                if(d.data.FirmName == '柜体' || d.data.FirmName == '门板' ||  d.data.FirmName == '配件（厨柜）') this.g_array.splice(d.index,1)
-                // 门控五金 非智能锁的时候 渲染 t_array
-                else if(d.data.FirmName == '台面') this.t_array.splice(d.index,1)
-                // 门控五金 智能门锁的时候  渲染 w_array
-                else this.w_array.splice(d.index,1)
+                  // 木门和铝框门的时候 渲染门的列表 a_array   配件（厨柜）
+                  let type = getType(d.data, "chugui");
+                  if(type == "a") this.a_array.splice(d.index,1)
+                  else if(type == "b") this.b_array.splice(d.index,1)
+                  else if(type == "c") this.c_array.splice(d.index,1)
 
-                 for (var i = 0; i < this.vlist.length; i++) {
+                  for (var i = 0; i < this.vlist.length; i++) {
                     let one = this.vlist[i];
                     if(d.data.ItemCode == one.ItemCode) {
                       this.vlist.splice(i,1);
@@ -149,21 +145,10 @@ export default {
       this.t_header.splice(0,1);
       this.w_header.splice(0,1);
     }
-    for (var i = 0; i < this.vlist.length; i++) {
-        let one = this.vlist[i];
-        // 木门和铝框门的时候 渲染门的列表 g_array
-        if(one.FirmName == '柜体' || one.FirmName == '门板' ||  one.FirmName == '配件（厨柜）') {
-            this.g_array.push(one);
-            continue;
-        }
-        // 门控五金 非智能锁的时候 渲染 t_array
-        if(one.FirmName == '台面') {
-            this.t_array.push(one);
-            continue;
-        }
-        // 门控五金 智能门锁的时候  渲染 w_array
-        this.w_array.push(one);
-    }
+    let collectionMap = specFun(this.vlist, "chugui");
+    this.a_array = collectionMap.a;
+    this.b_array = collectionMap.b;
+    this.c_array = collectionMap.c;
   },
   attached: function () {},
   methods: {
@@ -176,19 +161,16 @@ export default {
         this.showSelectDialog = !this.showSelectDialog;
     },
     concatFunc: function(){
-        this.vlist = this.g_array.concat(this.t_array, this.w_array);
+        this.vlist = this.a_array.concat(this.b_array, this.c_array);
     },
     addoneHandler : function(d){
         d = Utils.cloneObj(d);
         let one = this.adapterFun(d);
-        // this.vlist.push(one);
-        // 木门和铝框门的时候 渲染门的列表 g_array
-        if(one.FirmName == '柜体' || one.FirmName == '门板' || one.FirmName == '配件（厨柜）') this.g_array.push(one);
-        // 门控五金 非智能锁的时候 渲染 t_array
-       else if(one.FirmName == '台面') this.t_array.push(one);
-        // 门控五金 智能门锁的时候  渲染 w_array
-       else  this.w_array.push(one);
-       this.vlist.push(one);
+        // 木门和铝框门的时候 渲染门的列表 a_array
+        // 门控五金 非智能锁的时候 渲染 b_array
+        // 门控五金 智能门锁的时候  渲染 c_array
+        specSetOne(one, "chugui" ,this.a_array, this.b_array, this.c_array);
+        this.vlist.push(one);
     },
     upSuccessHandler: function(d){
       console.log(d);
