@@ -49,7 +49,7 @@ export default {
       baseInfo:{
         CardCode:"", //分站编码
         CardName:utils.getUserInfo().CardName,
-        Address:"安徽省,合肥市,高新区,xxx街道",// 客户地址  这里的客户就是分站
+        Address:utils.getUserInfo().Street || '',// 客户地址  这里的客户就是分站
         U_Phone : "分站联系人电话", //TODO  分站地址
         CntctCode: "分站联系人姓名",
         U_CntctCode:"", // 跟单员

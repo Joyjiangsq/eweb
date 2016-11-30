@@ -132,6 +132,11 @@ export default {
           }, 2000);
     }
   },
-  components: {icon, btn, checkbx}
+  components: {icon, btn, checkbx},
+  router: {
+        data: function(){
+              this.changeImg();
+        }
+  }
 }
 </script>

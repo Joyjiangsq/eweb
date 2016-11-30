@@ -78,7 +78,7 @@
         <!--提现对话框-->
         <dialog :flag.sync="showBackCashDialog" @dialogclick="dialogClickHandler" title="提现">
               <div  slot="containerDialog">
-                  <propertytext key="账户余额" :value="accountBaseInfo.Balance | mondec '2' '元'"></propertytext>
+                  <propertytext key="账户余额" style="margin-top: 0;"  :value="accountBaseInfo.Balance | mondec '2' '元'"></propertytext>
                   <propertytext key="冻结金额" :value="accountBaseInfo.FrozenMount | mondec '2' '元'"></propertytext>
                   <propertytext style="margin-bottom: 20px;" key="可提现金额" :value="accountBaseInfo.AvailableBalance | mondec '2' '元'"></propertytext>
                   <formtext labelname="提现金额：" :value.sync="backCashParams.U_TraAmount" placeholder="请输入提现金额" :vertical="true" formname='backCash' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>

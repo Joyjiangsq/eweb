@@ -10,7 +10,7 @@ export const roleData = [
 //装修风格
 export const decorateStyle =[
   {name:"中式", id:1},
-  {name:"简式", id:2},
+  {name:"简约", id:2},
   {name:"欧式", id:3},
   {name:"地中海式", id:4},
   {name:"田园", id:5},

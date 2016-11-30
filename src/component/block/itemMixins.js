@@ -25,7 +25,7 @@ export default {
     recdata:{
       default: function(){
         return {
-          Address2:"安徽省,合肥市,高新区,xxx街道", // 分站地址描述
+          Address2:Utils.getUserInfo().Street || '', // 分站地址描述
         }
       },
     },
