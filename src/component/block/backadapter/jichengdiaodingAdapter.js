@@ -12,7 +12,7 @@ export default function adapterData(d) {
               d.Quantity = d.SalPackUn*sy;
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是整数";
+                this.errorMsg = "必须是填写";
                 return false
               }
               if(this.def*1 < 0) {

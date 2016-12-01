@@ -47,6 +47,7 @@ export default {
       show: false,
       self: false,
       baseInfo:{
+        U_AddCode: Utils.getUserInfo().U_AddCode,
         CardCode:utils.getUserInfo().CardCode, //分站编码
         CardName:utils.getUserInfo().CardName,
         Address:utils.getUserInfo().Street || '',// 客户地址  这里的客户就是分站

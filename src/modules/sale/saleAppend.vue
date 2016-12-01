@@ -57,6 +57,7 @@ export default {
       self: true,
       orderDatas:orderType,
       baseInfo:{
+        U_AddCode: Utils.getUserInfo().U_AddCode,
         mult:"", // 客户信息的手机号 加姓名
         Address:"",// 客户地址
         detail:"", //详情地址

@@ -132,7 +132,7 @@ export default function adapterData(d) {
   // 设置验证参数规则 销售数量是公用的验证
   // 销售数量 限制不能购买0 个
   d.buyCounts.validateFun = function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "销售数量必须是整数")
+          if(isNaN(this.def)) return exepFun(this, "销售数量必须填写")
           else if(this.def < 0) return exepFun(this, "销售数量必须大于0")
           else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "必须填写销售数量")
           else return resetFun(this);

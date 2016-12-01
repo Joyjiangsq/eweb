@@ -132,7 +132,7 @@ export default function adapterData(d) {
   // 设置验证参数规则
 
   d.U_Pquantity.validateFun = function(data, index){
-    if(isNaN(this.def)) return exepFun(this, "采购数量必须是整数")
+    if(isNaN(this.def)) return exepFun(this, "采购数量必须填写")
     else if(this.def < 0) return exepFun(this, "采购数量必须大于0")
     else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "必须填写采购数量")
     else return resetFun(this);

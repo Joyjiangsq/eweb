@@ -122,7 +122,7 @@ export default {
               if(this.eclosure) params["U_Enclosure"] = this.eclosure;
               console.log(Utils.getUserInfo());
               // TODO 以下所有字段 不解释
-              params.U_AddCode = Utils.getUserInfo().U_AddCode; // 分站地址编码
+              // params.U_AddCode = Utils.getUserInfo().U_AddCode; // 分站地址编码  放base_info下了
               params.Descript = "";  // 分站地址描述
               params.WhsCode = "09"; // 仓库
               params.U_DeWay = "PS"; // ZT-自提  PS-配送

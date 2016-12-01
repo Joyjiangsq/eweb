@@ -9,7 +9,12 @@ export default function adapterData(d) {
           validateFun:function(data, index){
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是整数";
+                this.errorMsg = "必须填写";
+                return false
+              }
+              else if(d.ItmsGrpCod == "111" && Math.ceil(this.def) != this.def) { // 除了瓷砖验证不能小数'
+                this.defCss = "errorHappend";
+                this.errorMsg = "必须填写整数";
                 return false
               }
               else if(this.def*1 < 0) {
@@ -54,6 +59,7 @@ export default function adapterData(d) {
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
+              console.log(d);
               // 计算转化数量
               // 包装规格   SalPackUn   如果是厨柜 或者木门 则忽略定制品忽略
               if(d.ItmsGrpCod != getLevelOneTypeByName("厨柜") && d.ItmsGrpCod != getLevelOneTypeByName("门")) {
@@ -77,7 +83,12 @@ export default function adapterData(d) {
               }
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是整数";
+                this.errorMsg = "必须填写";
+                return false
+              }
+              else if(d.ItmsGrpCod == "111" && Math.ceil(this.def) != this.def) { // 除了瓷砖验证不能小数'
+                this.defCss = "errorHappend";
+                this.errorMsg = "必须填写整数";
                 return false
               }
               if(this.def*1 < 0) {

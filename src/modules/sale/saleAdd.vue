@@ -58,6 +58,7 @@ export default {
       showUserDialog: false, // 控制用户选择多个地址
       self: false,
       baseInfo:{
+        U_AddCode: Utils.getUserInfo().U_AddCode,
         GroupCode: "103", // 客户组
         U_OcrdType: "终端客户",// 业务伙伴类型
         Address:"",// 客户地址
