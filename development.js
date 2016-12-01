@@ -6,6 +6,7 @@ var webpackConfig = require('./webpack.dev.conf')
 var http = require('http');
 var cookieParser = require('cookie-parser')
 var querystring = require('querystring');
+var colors = require('colors');
 var url = require('url');
 // default port where dev server listens for incoming traffic
 var port = 8080
@@ -13,7 +14,6 @@ var proxy = require('express-http-proxy');
 
 var app = express()
 var compiler = webpack(webpackConfig)
-
 app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: "/"
 }));
@@ -25,10 +25,11 @@ app.use(require('webpack-hot-middleware')(compiler, {
 }));
 // app.use(cookieParser())
 // app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', proxy('172.20.8.109', {
+app.use('/', proxy('127.0.0.1:3000', {
   forwardPath: function(req, res) {
       var pathname = url.parse(req.url);
-      console.log(pathname.path);
+      console.log("[".green +req.method.green+"]".green + "----" + pathname.pathname.green);
+      console.log("======================================".gray);
       return pathname.path
   }
 }));

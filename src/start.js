@@ -30,10 +30,11 @@ const router = new VueRouter({
 sync(store, router);
 routerStart(router);
 
+console.log(process.env.NODE_ENV);
 // 全局
 Vue.prototype.$Api = config.serverUrl;
-// Vue.prototype.$SpecApi = process.env.NODE_ENV == 'dev '? "http://172.20.8.109/" : config.serverUrl;
-Vue.prototype.$CodeApi =  process.env.NODE_ENV == 'dev '? "http://172.20.8.109/" : "/";
+// Vue.prototype.$SpecApi = process.env.NODE_ENV == 'dev'? "http://172.20.8.109/" : config.serverUrl;
+Vue.prototype.$CodeApi =  process.env.NODE_ENV == 'dev'? "http://172.20.8.109/" : "/";
 // 自定义过滤器
 new filter().init(Vue)
 
@@ -76,8 +77,8 @@ Vue.http.interceptors.push(function(request, next) {
 
 const App = Vue.extend(require("app.vue"));
 router.start(App, '#app');
-Vue.config.debug = process.env.NODE_ENV === 'dev ';
-Vue.config.devtools = process.env.NODE_ENV === 'dev ';
+Vue.config.debug = process.env.NODE_ENV === 'dev';
+Vue.config.devtools = process.env.NODE_ENV === 'dev';
 
 
 // just for debugging

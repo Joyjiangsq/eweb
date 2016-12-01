@@ -119,6 +119,7 @@ export default {
         this.$http.post(this.$Api+"urgent", params).then((res) =>{
               this.show = !this.show;
               this.loadlist();
+              this.showMsg("success", "加急成功，请耐心等等。");
         }, (e) =>{
 
         });
