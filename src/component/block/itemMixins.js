@@ -130,7 +130,7 @@ export default {
                   let adArray = this.recdata.Address2.split(",");
                   this.recdata.Name = adArray[0];
                   this.recdata.city = adArray[1];
-                  this.recdata.Count = adArray[2];
+                  this.recdata.County = adArray[2];
               }
               this.$dispatch("success", {project:this.curName,data:params});
           }
