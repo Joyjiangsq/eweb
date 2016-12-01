@@ -86,6 +86,7 @@ export default {
               }
           }
         }
+        console.log(this.srcdata);
         let params = {
             type: this.srcdata.type || "",  // 类型
             U_PurchaseNum:this.srcdata.U_PurchaseNum || "",   // 订单id
@@ -98,7 +99,8 @@ export default {
             base_info: this.srcdata.base_info || {},
             U_DeWay: this.srcdata.U_DeWay || "PS", //默认配送
             U_FZOrder:this.srcdata.U_FZOrder, //主订单号
-            U_EDayD: this.srcdata.U_EDayD
+            U_EDayD: this.srcdata.U_EDayD,
+            U_AddCode: this.srcdata.U_AddCode // 地址编码
         }
         if(this.srcdata.U_Enclosure) params["U_Enclosure"] = this.srcdata.U_Enclosure;
         if(!this.validateRec) this.$dispatch("fail",this.srcdata);

@@ -10,6 +10,7 @@ const codeMapLevelOne = {
 }
 
 let getLevelOneTypeByName = function (name) {
+    console.log(name);
     return codeMapLevelOne[name] || '';
 }
 

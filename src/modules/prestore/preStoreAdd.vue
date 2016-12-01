@@ -47,7 +47,7 @@ export default {
       show: false,
       self: false,
       baseInfo:{
-        CardCode:"", //分站编码
+        CardCode:utils.getUserInfo().CardCode, //分站编码
         CardName:utils.getUserInfo().CardName,
         Address:utils.getUserInfo().Street || '',// 客户地址  这里的客户就是分站
         U_Phone : "分站联系人电话", //TODO  分站地址
@@ -91,7 +91,7 @@ export default {
         let newInfo = Utils.cloneObj(this.baseInfo);
         delete newInfo.validate;    // 删除验证字段
         // 下备货单
-        this.$http.post(this.$Api+"/stockpiles",JSON.stringify({sub_orders:ndata, base_info:newInfo})).then((res) => {
+        this.$http.post(this.$Api+"stockpiles",JSON.stringify({sub_orders:ndata, base_info:newInfo})).then((res) => {
             var d = res.json();
             console.log(d);
             this.self = true;

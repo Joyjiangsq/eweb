@@ -8,6 +8,7 @@ import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
 import {sale_standard_header, sale_standard_header_d} from "config/headerConst";
 import Utils from "common/Utils";
+console.log(Utils.getUserInfo());
 console.log(Utils);
 export default {
   props :{
@@ -120,8 +121,9 @@ export default {
               this.recdata.U_DstCutm = ""; // 分站编码  配送客户
               let params = {list: this.vlist, rec_info: this.recdata};
               if(this.eclosure) params["U_Enclosure"] = this.eclosure;
+              console.log(Utils.getUserInfo());
               // TODO 以下所有字段 不解释
-              params.U_AddCode = "1,2,3,4"; // 分站地址编码
+              params.U_AddCode = Utils.getUserInfo().U_AddCode; // 分站地址编码
               params.Descript = "";  // 分站地址描述
               params.WhsCode = "09"; // 仓库
               params.U_DeWay = "PS"; // ZT-自提  PS-配送
