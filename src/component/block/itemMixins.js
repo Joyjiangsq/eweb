@@ -8,8 +8,7 @@ import itemtpl from "./itemtpl.vue";
 import {showTips} from "actions/index";
 import {sale_standard_header, sale_standard_header_d} from "config/headerConst";
 import Utils from "common/Utils";
-console.log(Utils.getUserInfo());
-console.log(Utils);
+
 export default {
   props :{
     subvalidate:{         // 开启验证的开关   验证结束会向父类派发success 和 fail 两个事件 并且附带品类名称
@@ -127,6 +126,12 @@ export default {
               params.Descript = "";  // 分站地址描述
               params.WhsCode = "09"; // 仓库
               params.U_DeWay = "PS"; // ZT-自提  PS-配送
+              if(this.curName == "cizhuan") {
+                  let adArray = this.recdata.Address2.split(",");
+                  this.recdata.Name = adArray[0];
+                  this.recdata.city = adArray[1];
+                  this.recdata.Count = adArray[2];
+              }
               this.$dispatch("success", {project:this.curName,data:params});
           }
         })
