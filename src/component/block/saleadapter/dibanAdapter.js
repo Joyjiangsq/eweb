@@ -1,7 +1,7 @@
 export default function adapterData(d) {
       d.U_SWW = d.SWW; // 这里sap xxx 不解释了
       // 设置验证参数规则
-      d.buyCounts = {     // 销售数量 限制不能购买0 个
+      d.sale_counts = {     // 销售数量 限制不能购买0 个
           def: d.sale_counts || 0,
           defCss: "default",
           errorMsg:"",

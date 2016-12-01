@@ -29,7 +29,7 @@ let addCommon = function() {
 }
 // 追加末尾
 let addLast = function(arr, type = 'edit') {
-    arr.unshift({type:"operator", name:""});
+    if(type == "edit") arr.unshift({type:"operator", name:""});
     arr.push({name:"单位", labelValue:"SalUnitMsr",type:"data"});
     arr.push({name:"备注", labelValue:"Freetxt",type: type});
 }
@@ -38,7 +38,7 @@ let addLast = function(arr, type = 'edit') {
 // scene 分为 sale下单 和 back备货
 let addByScene = function(arr, type, scene = 'sale', name=scene=='sale'?'销售数量':'采购数量') {
     if(scene == "sale") {
-      arr.push({name:name, labelValue:"buyCounts",type:type, number: true});
+      arr.push({name:name, labelValue:"sale_counts",type:type, number: true});
       arr.push({name:"可用库存量", labelValue:"stock",type: "data"});
     }
     else {

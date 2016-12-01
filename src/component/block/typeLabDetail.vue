@@ -88,7 +88,6 @@ export default {
       lastDataMap:{},
       tabTpl:{index:110, ename:""},
       tabArray: [{show: false},{show: false},{show: false},{show: false},{show: false},{show: false},{show: false}, {show: false}],
-      // zhuangxiu:[{ItemCode:"xxx01ww", ItemName:"装修辅料", buyCounts:{}, stock:20, SWW:"主材包", FirmName:"这是二级分类", U_ThreeL:"这是三级分类", U_Brand:"这是品牌哦", U_CardName:"装修辅料", U_Modle:"031x33",U_Series:"xxwoo",U_MQuality:"金w子",SalUnitMsr:"个w", Spec:"哦w，哦，哦，"}],
     }
   },
   computed: {

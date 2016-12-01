@@ -10,7 +10,7 @@
                 </div>
 
                 <div slot="panelContent">
-                      <formtext labelname="客户信息：" :read="true"  :value="baseInfo.CardCode" ></formtext>
+                      <formtext labelname="客户信息：" :read="true"  :value="baseInfo.CardName" ></formtext>
                       <cascadeform  labelname="业主地址：" :read="true"  :detailneed="true" :read="true" :must="false" :value.sync= "baseInfo.Address" :detailv.sync="baseInfo.detail" formname="Address"   ></cascadeform>
                       <formtext  labelname="组包选择：" :read="true"  :value.sync="baseInfo.U_SWW" ></formtext>
                       <formtext labelname="房本面积：" :read="true"  unit="平米" :value.sync="baseInfo.U_Acreage" ></formtext>
@@ -58,7 +58,8 @@ export default {
       orderDatas:orderType,
       baseInfo:{
         U_AddCode: Utils.getUserInfo().U_AddCode,
-        mult:"", // 客户信息的手机号 加姓名
+        CardName: "",
+        // mult:"", // 客户信息的手机号 加姓名
         Address:"",// 客户地址
         detail:"", //详情地址
         U_SWW:"", // 组包
@@ -118,7 +119,8 @@ export default {
         this.$http.get(this.$Api+"sales/base-info",{params:{U_FZOrder: id}}).then((res) => {
             var d = res.json();
             console.log(d);
-            this.baseInfo = d.data.base_info;
+           this.baseInfo =  Object.assign(this.baseInfo, d.data.base_info);
+            //  = ;
         },(error) =>{
           console.log(error);
         })

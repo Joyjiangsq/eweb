@@ -29,7 +29,7 @@ export default function adapterData(d) {
         {keyName:"U_ASWide", defValue:d.U_ASWide || ""},                     // 包管展开宽
         {keyName:"U_ASDeep", defValue:d.U_ASDeep || ""},                     // 包管展开深
         {keyName:"Freetxt", defValue:d.Freetxt || ""},                       // 备注
-        {keyName:"buyCounts", defValue:d.sale_counts || 0}                   // 延米（m）/销售数量
+        {keyName:"sale_counts", defValue:d.sale_counts || 0}                   // 延米（m）/销售数量
       ]
 
       // 初始化参数属性
@@ -47,7 +47,7 @@ export default function adapterData(d) {
       // 重新设置特殊参数属性
       // 前沿造型   下拉组件 默认 、、 DM-008-直边、  DM-002-罗马边
       d.U_FModeling.validateFun = function(data, index){
-           if(d.buyCounts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
+           if(d.sale_counts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
                 if(!this.def || this.def == "")  return exepFun(this, "必须选择前沿造型")
                 else  return resetFun(this)
            }
@@ -55,7 +55,7 @@ export default function adapterData(d) {
       }
       // 台盆工艺   下拉组件 默认  台上工艺、台下工艺
       d.U_BasinT.validateFun = function(data, index){
-          if(d.buyCounts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
+          if(d.sale_counts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
                if(!this.def || this.def == "") return exepFun(this, "必须选择台盆工艺")
                else  return resetFun(this)
           }
@@ -100,7 +100,7 @@ export default function adapterData(d) {
       }
       // 台面进深（mm）   文本输入 个性化深最小值 U_PSDeepMin   个性化深最大值 U_PSDeepMax
       d.U_TableB.validateFun = function(data, index){
-          if(d.buyCounts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
+          if(d.sale_counts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
                if(!this.def || this.def == "")  return exepFun(this, "必须填写台面进深")
                else if(isNaN(this.def)) return exepFun(this, "台面进深填写不正确")
                else if(this.def*1 < 0)  return exepFun(this, "台面进深必须大于0")
@@ -112,7 +112,7 @@ export default function adapterData(d) {
       }
       // 挡水高度（mm）   文本输入   个性化高最小值 U_PSHighMin   个性化高最大值 U_PSHighMax
       d.U_HeightWR.validateFun =function(data, index){
-          if(d.buyCounts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
+          if(d.sale_counts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
                if(!this.def || this.def == "") return exepFun(this, "必须填写挡水高度")
                else if(isNaN(this.def)) return exepFun(this, "挡水高度填写不正确")
                else if(this.def*1 < 0)  return exepFun(this, "挡水高度必须大于0")
@@ -125,7 +125,7 @@ export default function adapterData(d) {
       // 如果销售数量存在  则忽略此项验证  否则开启验证
       // 包管展开宽（mm）   文本输入  包管宽最小值 U_AWideMin
       d.U_ASWide.validateFun = function(data, index){
-          if(d.buyCounts.def*1 == 0 || !d.buyCounts.def) {
+          if(d.sale_counts.def*1 == 0 || !d.sale_counts.def) {
               if(!this.def || this.def == "") return exepFun(this, "必须填写包管宽度")
               else if(isNaN(this.def)) return exepFun(this, "包管宽填写不正确")
               else if(this.def*1 < 0)  return exepFun(this, "包管宽必须大于0")
@@ -136,7 +136,7 @@ export default function adapterData(d) {
       }
       // 包管展开深（mm）   文本输入 包管高 最小值 U_AHighMin
       d.U_ASDeep.validateFun =function(data, index){
-          if(d.buyCounts.def*1 == 0 || !d.buyCounts.def) {
+          if(d.sale_counts.def*1 == 0 || !d.sale_counts.def) {
               if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
               else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
               else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
@@ -147,7 +147,7 @@ export default function adapterData(d) {
       }
       // 设置验证参数规则
      // 延米（m）/销售数量
-      d.buyCounts.validateFun = function(data, index){
+      d.sale_counts.validateFun = function(data, index){
           if(isNaN(this.def)) return exepFun(this, "此项填写错误")
           else if(this.def < 0) return exepFun(this, "此项必须大于0")
           else if(d.Code != getLevelThreeTypeByName("台面")) {

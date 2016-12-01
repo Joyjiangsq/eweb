@@ -3,7 +3,7 @@
       <div :class="inCss.indexIn">
         <div :class="inCss.indexLeft">
                 <div :class="inCss.levelBox">
-                      <panel>
+                      <panel style="height:  415px;">
                           <div slot="panelTitle">
                                  <span :class='inCss.headRow'>
                                    <span :class='inCss.indexTile'><icon iconname="icon-edit"></icon></span>

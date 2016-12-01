@@ -43,7 +43,7 @@ export default function adapterData(d) {
     {keyName:"U_DoorO", defValue:d.U_DoorO || "左内开"},         // 智能门锁门开向   左内开，左外开，右内开，右外开
     {keyName:"U_IHEH", defValue:d.U_IHEH || "是"},               // 智能门锁是否有天地钩
     {keyName:"Freetxt", defValue:d.Freetxt || ""},               // 备注
-    {keyName:"buyCounts", defValue:d.sale_counts || 0}           // 销售数量
+    {keyName:"sale_counts", defValue:d.sale_counts || 0}           // 销售数量
   ]
 
   // 初始化参数属性
@@ -131,7 +131,7 @@ export default function adapterData(d) {
 
   // 设置验证参数规则 销售数量是公用的验证
   // 销售数量 限制不能购买0 个
-  d.buyCounts.validateFun = function(data, index){
+  d.sale_counts.validateFun = function(data, index){
           if(isNaN(this.def)) return exepFun(this, "销售数量必须填写")
           else if(this.def < 0) return exepFun(this, "销售数量必须大于0")
           else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "必须填写销售数量")
