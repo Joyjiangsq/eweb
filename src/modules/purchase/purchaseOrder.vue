@@ -19,8 +19,8 @@
         </dialog>
         <dialog :flag.sync="priceShow" title="核价结果" @dialogclick="closeAction">
               <div slot="containerDialog">
-                    <propertytext key="主材款" :value="priceInfo.zprice" style="margin-top:0"></propertytext>
-                    <propertytext key="服务费" :value="priceInfo.sprice"  style="margin-bottom:20px"></propertytext>
+                    <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
+                    <propertytext key="服务费" :value="priceInfo.sprice" ></propertytext>
               </div>
               <div slot="footerDialog">
                   <btnbar :buttons="buttons" :events="footerClick"></btnbar>

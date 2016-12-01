@@ -57,7 +57,7 @@ export default {
       moduleName:"备货申请",
       orderStatus: orderStatus,
       headercaption:tableHeaderDatas, // 表格头部信息设置
-      btnsData:[{name:"新增", icon:"icon-share", action:"add"},{name:"导出", icon:"icon-export", action:"export"}],
+      btnsData:[{name:"新增", icon:"icon-add", action:"add"},{name:"导出", icon:"icon-export", action:"export"}],
       btnEvents:{
         btnClick: function(d){
             if(d.action == "add") {

@@ -70,7 +70,7 @@ export default {
       selfControl: false,
       priceArry:[{name:"500加急", value:500}, {name:"200加急", value:200}, {name:"自定义", value:"自定义"}],
       headercaption:tableHeaderDatas, // 表格头部信息设置
-      btnsData:[{name:"申请购买", icon:"icon-share", action:"apply"}],
+      btnsData:[{name:"申请购买", icon:"icon-add", action:"apply"}],
       orderStatus:orderStatus,
       formParams:{
       },
