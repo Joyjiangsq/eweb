@@ -15,7 +15,7 @@ table tbody td {
 .tableBox {
       width: 99.9%;
     margin: 0 auto;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .tableBox table {
     min-width: 100%;

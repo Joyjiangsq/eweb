@@ -186,7 +186,7 @@ export default {
     // 表单模糊查询点击
     formDimClick: function(d) {
        Object.assign(this.addFormData,d);
-       this.addFormData.position = d.role;
+       this.addFormData.position = d.roles;
     },
     // 重置密码
     confirmReset: function(d){

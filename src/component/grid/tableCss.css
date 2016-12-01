@@ -6,6 +6,7 @@
     border-left: 0;
     margin-top: 10px;
     margin-bottom: 10px;
+    overflow-x: auto;
 }
 .tableBox thead {
   border: 1px solid #c9e2f1;

@@ -4,7 +4,7 @@
                     <div :class="portalCss.descIn">
                           <img :src="defimg" alt="">
                           <span :class='portalCss.drowItem'>
-                              欢迎您  | {{userInfo.CardName}}
+                              {{userInfo.position || '管理员'}}  | {{userInfo.CardName}}
                           </span>
                     </div>
               </div>

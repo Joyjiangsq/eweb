@@ -28,7 +28,7 @@ export default class filter {
     }),
 
     Vue.filter("mondec", (val, N, U) => {
-        if(!val) return "";
+        if(!val && val != 0) return "";
         U = U || "";
         val = (val * 1)/100;
         return val.toFixed(N || 2) + U;

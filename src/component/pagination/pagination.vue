@@ -1,5 +1,5 @@
 <template>
-      <div :class="pageCss.paginationBox">
+      <div :class="pageCss.paginationBox" v-if="tPages > 1">
               <div :class="pageCss.pageCenter">
                     <span :class='indexBtn' @click="clickPage(1)">首页</span>
                     <span :class='prevBtn'  @click="clickPage(curpage-1)">上一页</span>
