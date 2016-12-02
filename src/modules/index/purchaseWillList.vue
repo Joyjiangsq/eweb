@@ -35,7 +35,7 @@ export default {
   ready: function () {
     setTimeout(()=>{
         this.load = !this.load;
-    })
+    },30)
   },
   attached: function () {},
   methods: {

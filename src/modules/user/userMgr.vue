@@ -151,7 +151,7 @@ export default {
                     this.showMsg("error", error.msg);
                   })
               }
-          })
+          },30)
       }
     },
     // 修改角色对话框
@@ -165,7 +165,7 @@ export default {
 
                       })
                   }
-              })
+              },30)
         }
     },
     changeOpen: function(type){

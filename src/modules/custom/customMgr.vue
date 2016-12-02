@@ -196,7 +196,7 @@ export default {
                 if(this.curAction == "add") this.addOne();
                 else if(this.curAction == "edit") this.editOne();
             }
-          })
+          },30)
         }
         else {
           this.formData = {   // 重置数据

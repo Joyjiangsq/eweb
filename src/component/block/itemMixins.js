@@ -134,7 +134,7 @@ export default {
               }
               this.$dispatch("success", {project:this.curName,data:params});
           }
-        })
+        },30)
     },
 
     deleteoneHandler: function(d) {

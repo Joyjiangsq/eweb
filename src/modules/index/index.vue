@@ -3,7 +3,7 @@
       <div :class="inCss.indexIn">
         <div :class="inCss.indexLeft">
                 <div :class="inCss.levelBox">
-                      <panel style="height:  415px;">
+                      <panel >
                           <div slot="panelTitle">
                                  <span :class='inCss.headRow'>
                                    <span :class='inCss.indexTile'><icon iconname="icon-edit"></icon></span>
@@ -12,7 +12,7 @@
 
                           </div>
                           <div slot="panelContent">
-                                <div :class="inCss.oneBox">
+                                <div :class="inCss.oneBox" style="height:  415px;">
                                   <tabbar :datas="tabArray"  @tabclick="tabClickHandler" theme="indexTab">
                                         <div :class="inCss.tabone" v-for="(index, one) in tabArray" v-show="one.show">
                                                 <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>

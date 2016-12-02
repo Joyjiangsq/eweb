@@ -82,17 +82,19 @@ Vue.config.devtools = process.env.NODE_ENV === 'dev';
 
 
 // just for debugging
-// window.router = router;
-if(navigator.userAgent.indexOf("Firefox") != -1) reWriteFun();
-let reWriteFun = function(){
-    // alert(1111)
-    var __sto = setTimeout;  
-　　 window.setTimeout = function(callback,timeout,param) {
-    　　var args = Array.prototype.slice.call(arguments,2);  
-    　　var _cb = function() {
-            callback.apply(null,args);  
-        }
-　　     __sto(_cb,timeout || 30);  
-　　}  
-}
+// // window.router = router;
+// // if(navigator.userAgent.indexOf("Firefox") != -1) reWriteFun();
+// // reWriteFun();
+// // let reWriteFun = function(){
+//     // alert(1111)
+//     var __sto = setTimeout;  
+//     alert(111)
+// 　　 window.setTimeout = function(callback,timeout,param) {
+//     　　var args = Array.prototype.slice.call(arguments,2);  
+//     　　var _cb = function() {
+//             callback.apply(null,args);  
+//         }
+// 　　     __sto(_cb,1000);  
+// 　　}  
+// // }
 

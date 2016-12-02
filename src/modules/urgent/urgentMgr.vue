@@ -130,7 +130,7 @@ export default {
               this.validate = !this.validate;
               setTimeout(()=>{
                     if(this.validateRes) this.setUrgent();
-              })
+              },30)
           }
     }
   },

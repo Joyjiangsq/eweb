@@ -84,7 +84,7 @@ let tableBase = {
                 this.noresult = false;
                 this.loading = false;
                 this.adapertDataMin(this.datas);
-              }, 1)
+              }, 30)
           }
 
         },

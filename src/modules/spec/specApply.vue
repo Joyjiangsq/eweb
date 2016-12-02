@@ -367,7 +367,7 @@ export default {
 
               })
           }
-      })
+      }, 30)
     },
 
     resub: function() {

@@ -2,7 +2,7 @@
     <div :class="[combCss.combobox, classname]" v-show="true">
           <div :class="[combCss.comboLabel, read?combCss.read:'']"  @click="changeDropAction">
                   <span :class="[combCss.comboLabelspan]">{{defaultInfo[labelname]}}</span>
-                  <span :class='combCss.bticon'><icon iconname="icon-down"></icon></span>
+                  <span :class='combCss.bticon' style="background-color:white;"><icon iconname="icon-down"></icon></span>
           </div>
           <div :class="[combCss.dropBox, combCss[dropfixed]]" v-show="dropshow" :style="style">
               <div :class="combCss.dropOne" v-for="item in realData" @click="dropClick(item)">

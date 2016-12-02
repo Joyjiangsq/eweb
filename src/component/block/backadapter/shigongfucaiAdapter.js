@@ -1,5 +1,8 @@
 export default function adapterData(d) {
       d.U_SWW = d.SWW; // 这里sap xxx 不解释了
+      // delete d.SWW;
+      d.U_SupNum = d.CardCode;
+      delete d.CardCode;
       if(!d.stock || d.stock == 0) d.stock = "0";
       // 设置验证参数规则
       d.U_Pquantity = {     //

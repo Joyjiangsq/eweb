@@ -79,7 +79,7 @@ export default {
   ready: function () {
     setTimeout(()=>{
         this.show = true;
-    })
+    },30)
   },
   attached: function () {},
   methods: {
@@ -106,7 +106,7 @@ export default {
             window.onbeforeunload  = function(){}
             setTimeout(()=>{
               history.back();
-            })
+            },30)
         },(error) =>{
           console.log(error);
         })

@@ -81,7 +81,7 @@ export default {
     setTimeout(()=>{
         this.show = true;
 
-    })
+    },30)
 
   },
   attached: function () {},
