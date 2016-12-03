@@ -64,8 +64,8 @@ import storejs from "storejs";
               'jichengdiaoding': "集成吊顶",
               'men':"门",
               'chugui': "厨柜",
-              'shigongfuliao':"施工辅材",
-              'zhuangxiufuliao': "装修辅料"
+              'shigongfucai':"施工辅材",
+              'zhuangxiufucai': "装修辅料"
           }
           if(CateDatas[pinyin]) return CateDatas[pinyin]
           else return "";

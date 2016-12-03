@@ -129,7 +129,7 @@ export default {
       showtips: false,
       finalData:{U_Poundage:0, U_TraAmount:0},
       // 表格头
-      headercaption:[{name:"类型", labelValue:"U_Type",type:"data"},{name:"凭证日期", labelValue:"TaxDate", type:"data"},{name:"借方金额", labelValue:"Debit",type:"data"}, {name:"贷方金额", labelValue:"Credit",type:"data"},
+      headercaption:[{name:"类型", labelValue:"U_Type",type:"data"},{name:"凭证日期", labelValue:"TaxDate", type:"data"},{name:"借方金额", labelValue:"Debit",type:"data", attr:"price"}, {name:"贷方金额", labelValue:"Credit",type:"data", attr:"price"},
                     {name:"科目名称", labelValue:"AcctName",type:"data"},{name:"备注", labelValue:"xx",type:"data", adapterFun: function(d){return this.remarkText(d)}}],
       // 验证提现表单参数
       validate: false,

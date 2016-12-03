@@ -56,6 +56,9 @@
 .selectedRow {
   background-color: #fcf3e2;
 }
+.price {
+   text-align: right;
+}
 .selectedRow:hover {
   /*background-color: #fcf3e2;*/
 }

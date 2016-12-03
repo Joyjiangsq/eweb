@@ -19,8 +19,8 @@
         </dialog>
         <dialog :flag.sync="priceShow" title="核价结果" @dialogclick="closeAction">
               <div slot="containerDialog">
-                    <propertytext key="主材款" :value="priceInfo.zprice"></propertytext>
-                    <propertytext key="服务费" :value="priceInfo.sprice" ></propertytext>
+                    <propertytext key="主材款" :value="priceInfo.zprice  | mondec '2' '元'"></propertytext>
+                    <propertytext key="服务费" :value="priceInfo.sprice  | mondec '2' '元'" ></propertytext>
               </div>
               <div slot="footerDialog">
                   <btnbar :buttons="buttons" :events="footerClick"></btnbar>
@@ -102,40 +102,60 @@ export default {
               console.log(d); // 核价
 
               this.finalData = d;
+              if(d.length == 1) {
+                  if(d[0].base_info.Series == 81) this.doGetPrice(d); // 81售后订单
+                  else if(d[0].sub_orders.length <= 1) {
+                      this.showMsg("warn", "正常订单不允许核价单个标品");
+                      return false;
+                  }
+              }
+              else {
+                   let pMap = [];
+                   for (var i = 0; i < d.length; i++) {
+                      let one = d[i];
+                      if(one.base_info.Series == 81) continue
+                      pMap.push({type:one.type, value:one.sub_orders.length})
+                    }
+                    if(pMap.length <= 1) {
+                        this.showMsg("warn", "正常订单不允许核价单个标品");
+                        return false;
+                    }
+                    else this.doGetPrice(d);
+              }
               // 验证通过规则  如果是单个品类- 如果不是定制品 则不能过
               // 如果是多个品类  如果只有一个是非定制品   则不能过
-              // 定制品名称为  厨柜 门  对应比对字段  ItmsGrpNam 品类
-              let canContinue = true;
-              let pMap = [];
-              for (var i = 0; i < d.length; i++) {
-                let one = d[i];
-                if(one.base_info.Series == 81) continue
-                pMap.push({type:one.type, value:one.sub_orders.length})
-              }
-              // 如果只有单个品类  判断是订制品还是标品
-              if(pMap.length == 1) {
-                  let justone = pMap[0];
-                  // 当既不是厨柜也不是门 且产品数量为1
-                  if(justone.type != "chugui" && justone.type !="men" && justone.value == 1) {
-                    this.showMsg("warn", "单个标品不允许核价");
-                    return false;
-                  }
-              }
-              // 反向条件 只需要判断有大于一个单品的数据  既可以过
-                  // 大于一个单品的条件可能有
-                        // 两个单品各有一条 || 一个单品有两条
-              else {
-                  var successCount = 0; // 计算最终 如果successCount 数值大于1  则通过
-                  for (var i = 0; i < pMap.length; i++) {
-                    let pone = pMap[i];
-                    if(pone.type != "chugui" && pone.type !="men") successCount += pone.value*1;
-                  }
-              }
-              if(successCount <=1 && pMap.length != 0) {
-                this.showMsg("warn", "存在单个标品不允许核价");
-                return false;
-              }
-              this.doGetPrice(d);
+              // 定制品名称为  厨柜 门  对应比对字段  ItmsGrpNam 品类 //TODO 需求变更n次  代码注释起来备用
+              // let canContinue = true;
+              // let pMap = [];
+              // for (var i = 0; i < d.length; i++) {
+              //   let one = d[i];
+              //   if(one.base_info.Series == 81) continue
+              //   pMap.push({type:one.type, value:one.sub_orders.length})
+              // }
+              // // 如果只有单个品类  判断是订制品还是标品
+              // if(pMap.length == 1) {
+              //     let justone = pMap[0];
+              //     // 当既不是厨柜也不是门 且产品数量为1
+              //     if(justone.type != "chugui" && justone.type !="men" && justone.value == 1) {
+              //       this.showMsg("warn", "单个标品不允许核价");
+              //       return false;
+              //     }
+              // }
+              // // 反向条件 只需要判断有大于一个单品的数据  既可以过
+              //     // 大于一个单品的条件可能有
+              //           // 两个单品各有一条 || 一个单品有两条
+              // else {
+              //     var successCount = 0; // 计算最终 如果successCount 数值大于1  则通过
+              //     for (var i = 0; i < pMap.length; i++) {
+              //       let pone = pMap[i];
+              //       if(pone.type != "chugui" && pone.type !="men") successCount += pone.value*1;
+              //     }
+              // }
+              // if(successCount <=1 && pMap.length != 0) {
+              //   this.showMsg("warn", "存在单个标品不允许核价");
+              //   return false;
+              // }
+              // this.doGetPrice(d);
           }
       },
       doGetPrice: function(d) {

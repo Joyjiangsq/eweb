@@ -232,7 +232,7 @@ export default function adapterData(d) {
           d.U_DType.tb_disabled = true;
           d.U_DoorO.tb_disabled = true;
           d.U_IHEH.tb_disabled = true;
-
+          
           var levelOneArray = ["移门（木门）", "移门（铝框门）","门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
           var levelTwoArray = ["门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
           var levelThreeArray = ["垭口（木门）","五金","普通门锁","合页","门吸"];
