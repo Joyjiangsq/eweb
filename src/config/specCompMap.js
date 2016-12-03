@@ -295,8 +295,9 @@ export const  bashouComponent = Vue.extend({
       value: ""
     }
   },
-  template: '<div><combobox labelname="ItemName" @dropclick="dropclick" :value="value"  keyid="ItemName" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="U_Modle" @dropclick="dropclick" :value="value"  keyid="U_Modle" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
+    //ItemName
     this.test = this.selfData.U_HandleCodes.def;
     this.value = this.selfData.U_HandleName.def || "";
   },
