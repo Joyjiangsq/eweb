@@ -3,8 +3,8 @@ export default function adapterData(d) {
     console.log(d);
       d.U_SWW = d.SWW; // 这里sap xxx 不解释了
     //   delete d.SWW;
-      d.U_SupNum = d.CardCode;
-      delete d.CardCode;
+    //   d.U_SupNum = d.CardCode;
+    //   delete d.CardCode;
       if(!d.stock || d.stock == 0) d.stock = "0"; // 过滤库存不存在的情况  默认给0  不会出问题
 
       let exepFun = function(scope, msg){

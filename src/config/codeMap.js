@@ -154,8 +154,8 @@ const codeMapLevelThree = {
     "软管": "075",
     "法兰圈": "076",
     "生料带": "077"
-
 }
+
 let getLevelThreeTypeByName = function (name) {
     return codeMapLevelThree[name] || '';
 }

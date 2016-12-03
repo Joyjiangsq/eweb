@@ -36,6 +36,9 @@
 .combobox .read {
     background-color: #f2f2f2;
 }
+.combobox .read .bticon {
+     background-color: #f2f2f2;
+}
 .combobox .dropBox {
     position: absolute;
     line-height: 30px;
@@ -75,6 +78,8 @@
     position: absolute;
     right: 8px;
     top: 0;
+    background-color: white;
+    height: 27px;
 }
 .combobox .bticon span {
     font-size: 12px;
