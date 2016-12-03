@@ -55,7 +55,7 @@ export default function adapterData(d) {
         d[item.keyName] = {
             def: item.defValue,
             defCss: "default",
-            errorMsg:"",tb_disabled: false,
+            errorMsg:"",tb_disabled: true,
             validateFun:function(data, index){
                  return true;
             }
@@ -140,175 +140,175 @@ export default function adapterData(d) {
           else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "必须填写销售数量")
           else return resetFun(this);
   }
-  // 验证规则根据 三级分类的名称区分走哪个验证逻辑
-  // 目前三级分类有 平开门（木门）, 移门（木门）,门套（木门）,垭口（木门）,窗套,飘窗板,门扇,平开门（铝框门）,移门（铝框门）,门套（铝框门）,五金,普通门锁,智能锁,合页,门吸
-          //(1)门洞宽、门洞高、门洞深、开启方式、是否开锁孔、销售数量 限制必填
-          //(2)门洞宽、门洞高、门洞深、门扇宽、门扇高、门扇厚、开启方式、是否开锁孔
-          //(3) 当选择是开孔的时候 门锁／品牌／规格／型号  -门锁／品牌／规格／型号 可填写 并且验证必填
-          // 默认是平开门（铝框门）  平开门（木门）
-          // 设置验证参数规则
-          // 门洞高    最小值 U_DWHighMin  极限值 U_DWHighL
-          // 设置验证参数规则
-          // 门洞深  最小值 U_DWDeepMin  极限值 U_DWDeepL
-            d.U_DSThick.validateFun = function(data, index){
-                if(isNaN(this.def)) return exepFun(this, "门洞深必须是数字")
-                else if(this.def < 0) return exepFun(this, "此项必须大于0")
-                else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "门洞深必须填写")
-                else if(this.def*1 < d.U_DWDeepMin*1) return exepFun(this, "门洞深不能小于"+d.U_DWDeepMin)
-                else if(this.def*1 > d.U_DWDeepL*1) return exepFun(this, "门洞深不能大于"+d.U_DWDeepL)
-                else return resetFun(this)
-              }
-         // 门扇宽   最小值  U_DLWideMin  极限值 U_DLWideL
-            d.U_TDWide.validateFun = function(data, index){
-                if(d.Code == getLevelThreeTypeByName("门扇")) {
-                    if(this.def == "" || !this.def) return exepFun(this, "门扇宽必须填写")
-                    else {}
-                }
-                else if(this.def == "" || !this.def) return resetFun(this)
-                if(isNaN(this.def))  return exepFun(this, "门扇宽必须是数字")
-                else if(this.def < 0) return exepFun(this, "此项必须大于0")
-                else if(this.def*1 < data.U_DLWideMin) return exepFun(this, "门扇宽不能小于" + data.U_DLWideMin)
-                else if(this.def*1 > data.U_DLWideL) return exepFun(this, "门扇宽不能大于" + data.U_DLWideL)
-                else return resetFun(this)
-              }
-              // 门扇高   最小值  U_DLHighMin  极限值 U_DLHighL
-            d.U_TDHigh.validateFun = function(data, index){
-                if(d.Code == getLevelThreeTypeByName("门扇")) {
-                    if(this.def == "" || !this.def) return exepFun(this, "门扇高必须填写")
-                    else if(this.def < 0) return exepFun(this, "此项必须大于0")
-                    else {}
-                }
-                else if(this.def == "" || !this.def) return resetFun(this)
-                if(isNaN(this.def)) return exepFun(this, "门扇高必须是数字")
-                else if(this.def < 0) return exepFun(this, "此项必须大于0")
-                else if(this.def*1 < data.U_DLHighMin) return exepFun(this, "门扇高不能小于" + data.U_DLHighMin)
-                else if(this.def*1 > data.U_DLHighL) return exepFun(this, "门扇高不能大于" + data.U_DLHighL)
-                else return resetFun(this)
-            }
-          // 门扇厚  最小值  U_DLThickMin  极限值 U_DLThickL
-          // 去除
-          // d.U_TDThick.validateFun = function(data, index){
-          //       if(d.Code == getLevelThreeTypeByName("门扇")) {
-          //           if(this.def == "" || !this.def) return exepFun(this, "门扇厚必须填写")
-          //           else if(this.def < 0) return exepFun(this, "此项必须大于0")
-          //       }
-          //       else if(this.def == "" || !this.def) return resetFun(this)
-          //       if(isNaN(this.def)) return exepFun(this, "门扇厚必须是数字")
-          //       else if(this.def < 0) return exepFun(this, "此项必须大于0")
-          //       else if(this.def*1 < data.U_DLThickMin) return exepFun(this, "门扇厚不能小于" + data.U_DLThickMin)
-          //       else if(this.def*1 > data.U_DLThickL)  return exepFun(this, "门扇厚不能大于" + data.U_DLThickL)
-          //       else return resetFun(this)
-          // }
-          // 是否开孔
-          d.U_IKeyHole.validateFun = function(data, index){
-                  if(this.def == "否")  {
-                      d.U_LockName.def = "";
-                      d.U_HingeName.def = "";
-                  }// 如果否的时候  重置 合页与门锁的值
-                  return true;
-          }
-           // 合页品牌/型号/规格
-          d.U_HingeName.validateFun = function(data, index){
-                if(this.def == 0 || this.def == "" || !this.def) {
-                    if(data.U_IKeyHole.def == "是") return exepFun(this, "必须选择合页") // 是开孔的时候  此项必填
-                }
-                else return resetFun(this)
-          }
-           // 门锁品牌/型号/规格
-          d.U_LockName.validateFun = function(data, index){
-                if(this.def == 0 || this.def == "" || !this.def) {
-                    if(data.U_IKeyHole.def == "是") return exepFun(this, "必须选择门锁")  // 是开孔的时候  此项必填
-                }
-                else return resetFun(this)
-          }
+    d.U_DSThick.validateFun = function(data, index){
+        if(isNaN(this.def)) return exepFun(this, "门洞深必须是数字")
+        else if(this.def < 0) return exepFun(this, "此项必须大于0")
+        else if(this.def == 0 || this.def == "" || !this.def) return exepFun(this, "门洞深必须填写")
+        else if(this.def*1 < d.U_DWDeepMin*1) return exepFun(this, "门洞深不能小于"+d.U_DWDeepMin)
+        else if(this.def*1 > d.U_DWDeepL*1) return exepFun(this, "门洞深不能大于"+d.U_DWDeepL)
+        else return resetFun(this)
+        }
+    // 门扇宽   最小值  U_DLWideMin  极限值 U_DLWideL
+    d.U_TDWide.validateFun = function(data, index){
+        if(d.Code == getLevelThreeTypeByName("门扇")) {
+            if(this.def == "" || !this.def) return exepFun(this, "门扇宽必须填写")
+            else {}
+        }
+        else if(this.def == "" || !this.def) return resetFun(this)
+        if(isNaN(this.def))  return exepFun(this, "门扇宽必须是数字")
+        else if(this.def < 0) return exepFun(this, "此项必须大于0")
+        else if(this.def*1 < data.U_DLWideMin) return exepFun(this, "门扇宽不能小于" + data.U_DLWideMin)
+        else if(this.def*1 > data.U_DLWideL) return exepFun(this, "门扇宽不能大于" + data.U_DLWideL)
+        else return resetFun(this)
+        }
+        // 门扇高   最小值  U_DLHighMin  极限值 U_DLHighL
+    d.U_TDHigh.validateFun = function(data, index){
+        if(d.Code == getLevelThreeTypeByName("门扇")) {
+            if(this.def == "" || !this.def) return exepFun(this, "门扇高必须填写")
+            else if(this.def < 0) return exepFun(this, "此项必须大于0")
+            else {}
+        }
+        else if(this.def == "" || !this.def) return resetFun(this)
+        if(isNaN(this.def)) return exepFun(this, "门扇高必须是数字")
+        else if(this.def < 0) return exepFun(this, "此项必须大于0")
+        else if(this.def*1 < data.U_DLHighMin) return exepFun(this, "门扇高不能小于" + data.U_DLHighMin)
+        else if(this.def*1 > data.U_DLHighL) return exepFun(this, "门扇高不能大于" + data.U_DLHighL)
+        else return resetFun(this)
+    }
+    // 门扇厚  最小值  U_DLThickMin  极限值 U_DLThickL
+    // 去除
+    // d.U_TDThick.validateFun = function(data, index){
+    //       if(d.Code == getLevelThreeTypeByName("门扇")) {
+    //           if(this.def == "" || !this.def) return exepFun(this, "门扇厚必须填写")
+    //           else if(this.def < 0) return exepFun(this, "此项必须大于0")
+    //       }
+    //       else if(this.def == "" || !this.def) return resetFun(this)
+    //       if(isNaN(this.def)) return exepFun(this, "门扇厚必须是数字")
+    //       else if(this.def < 0) return exepFun(this, "此项必须大于0")
+    //       else if(this.def*1 < data.U_DLThickMin) return exepFun(this, "门扇厚不能小于" + data.U_DLThickMin)
+    //       else if(this.def*1 > data.U_DLThickL)  return exepFun(this, "门扇厚不能大于" + data.U_DLThickL)
+    //       else return resetFun(this)
+    // }
+    // 是否开孔
+    d.U_IKeyHole.validateFun = function(data, index){
+            if(this.def == "否")  {
+                d.U_LockName.def = "";
+                d.U_HingeName.def = "";
+            }// 如果否的时候  重置 合页与门锁的值
+            return true;
+    }
+    // 合页品牌/型号/规格
+    d.U_HingeName.validateFun = function(data, index){
+        if(this.def == 0 || this.def == "" || !this.def) {
+            if(data.U_IKeyHole.def == "是") return exepFun(this, "必须选择合页") // 是开孔的时候  此项必填
+        }
+        else return resetFun(this)
+    }
+    // 门锁品牌/型号/规格
+    d.U_LockName.validateFun = function(data, index){
+        if(this.def == 0 || this.def == "" || !this.def) {
+            if(data.U_IKeyHole.def == "是") return exepFun(this, "必须选择门锁")  // 是开孔的时候  此项必填
+        }
+        else return resetFun(this)
+    }
 
-          d.U_DThick.tb_disabled = true;
-          d.U_LBLength.tb_disabled = true;
-          d.U_LBWide.tb_disabled = true;
-          d.U_AbDis.tb_disabled = true;
-          d.U_UDDis.tb_disabled = true;
-          d.U_LTRDis.tb_disabled = true;
-          d.U_TLLength.tb_disabled = true;
-          d.U_DType.tb_disabled = true;
-          d.U_DoorO.tb_disabled = true;
-          d.U_IHEH.tb_disabled = true;
-          
-          var levelOneArray = ["移门（木门）", "移门（铝框门）","门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
-          var levelTwoArray = ["门套（木门）","门套（铝框门）","垭口（木门）","窗套","飘窗板","五金","普通门锁","合页","门吸"];
-          var levelThreeArray = ["垭口（木门）","五金","普通门锁","合页","门吸"];
-          levelOneArray = levelOneArray.map(one => getLevelThreeTypeByName(one));
-          levelTwoArray = levelTwoArray.map(one => getLevelThreeTypeByName(one));
-          levelThreeArray = levelThreeArray.map(one => getLevelThreeTypeByName(one));
-          
-          if(levelOneArray.indexOf(d.Code) != -1) {
-              // 移门的时候 去除 开启方式， 是否开孔 门锁，合页
-              d.U_IKeyHole.tb_disabled = true; // 是否开孔
-              d.U_HingeName.tb_disabled = true; // 合页
-              d.U_LockName.tb_disabled = true; // 门锁
-              d.U_OpenWay.tb_disabled = true; // 手否开孔
+    
+    
+    // 默认销售与备注是放开的
+    d.sale_counts.tb_disabled = false;
+    d.Freetxt.tb_disabled = false;
+    // 根据业务表格抽象出类型
+    // 关闭或者开启智能门锁
+    let depZNkeys = function(tag){
+            // 智能门锁厚度
+            d.U_DThick.tb_disabled = tag;
+            // // 智能门锁锁体挡板长度
+            d.U_LBLength.tb_disabled = tag;
+            // 智能门锁锁体挡板宽度
+            d.U_LBWide.tb_disabled = tag;
+            // 智能门锁锁体档板左右螺丝十字中心孔距
+            d.U_AbDis.tb_disabled = tag;
+            // 智能门锁锁体档板上下螺丝十字中心孔距
+            d.U_UDDis.tb_disabled = tag;
+            // 智能门锁门边到锁面板右侧的距离
+            d.U_LTRDis.tb_disabled = tag;
+            // 智能门锁门锁面板总长度
+            d.U_TLLength.tb_disabled = tag;
+            // 智能门锁门的类别
+            d.U_DType.tb_disabled = tag;
+            // 智能门锁门开向
+            d.U_DoorO.tb_disabled = tag;
+            // 智能门锁是否有天地钩
+            d.U_IHEH.tb_disabled = tag;
+    }
+    // 关闭或开启门洞宽高深
+    let depMhole = function(tag) {
+        d.U_DSWide.tb_disabled = tag; // 门洞宽
+        d.U_DSHigh.tb_disabled = tag; // 门洞高
+        d.U_DSThick.tb_disabled = tag; // 门洞深
+    }
 
-              // 门套木门是没有 门扇
-              if(levelTwoArray.indexOf(d.Code) != -1) {
-                  d.U_TDWide.tb_disabled = true; // 门扇宽
-                  d.U_TDHigh.tb_disabled = true; // 门扇高
-                  d.U_TDThick.tb_disabled = true; // 门扇厚
+    // 关闭或开启门扇宽高厚
+    let depMshan = function(tag) {
+        d.U_TDWide.tb_disabled = tag; // 门扇宽
+        d.U_TDHigh.tb_disabled = tag; // 门扇高
+        d.U_TDThick.tb_disabled = tag; // 门扇厚
+    }
 
-                  if(levelThreeArray.indexOf(d.Code) != -1) {
-                    d.U_DSWide.tb_disabled = true; // 门洞宽
-                    d.U_DSHigh.tb_disabled = true; // 门洞高
-                    d.U_DSThick.tb_disabled = true; // 门洞深
-                  }
-              }
-           }
-           // 门扇逻辑
-           if(d.Code == getLevelThreeTypeByName("门扇")) {
-             d.U_DSWide.tb_disabled = true; // 门洞宽
-             d.U_DSHigh.tb_disabled = true; // 门洞高
-             d.U_DSThick.tb_disabled = true; // 门洞深
-           }
+    // 关闭或开启（开启方式、是否开锁孔，门锁，合页）
+    let depMbs = function(tag) {
+        d.U_IKeyHole.tb_disabled = tag; // 是否开孔
+        d.U_HingeName.tb_disabled = tag; // 合页
+        d.U_LockName.tb_disabled = tag; // 门锁
+        d.U_OpenWay.tb_disabled = tag; // 开启方式
+    }
+    console.log("---------------------------------------");
+    let lone = ["平开门（木门）","平开门（铝框门）"]
+    lone = lone.map(one => getLevelThreeTypeByName(one));
+    if(lone.indexOf(d.Code) != -1) {
+        depMhole(false); depMshan(false);depMbs(false);
+        return d
+    }
 
-           // 门扇逻辑
-           if(d.Code == getLevelThreeTypeByName("智能锁")) {
-                 d.U_DSWide.tb_disabled = true;  //门洞宽
-                 d.U_DSHigh.tb_disabled = true;  //门洞高
-                 d.U_DSThick.tb_disabled = true;  //门洞深
-                 d.U_TDWide.tb_disabled = true;  //门扇宽
-                 d.U_TDHigh.tb_disabled = true;  //门扇高
-                 d.U_TDThick.tb_disabled = true;  //门扇厚
-                 d.U_IKeyHole.tb_disabled = true;  //是否开孔
-                 d.U_HingeName.tb_disabled = true;  //合页品牌/型号/规格
-                 d.U_LockName.tb_disabled = true;  //门锁品牌/型号/规格
-                 d.U_OpenWay.tb_disabled = true;  //开启方式   左开  右开
+    let ltwo = ["移门（木门）", "移门（铝框门）"]
+    ltwo = ltwo.map(one => getLevelThreeTypeByName(one));
+    if(ltwo.indexOf(d.Code) != -1) {
+        depMhole(false); depMshan(false);
+        d.U_OpenWay.tb_disabled = false; // 开启方式
+        return d
+    }
 
-                 // 智能门锁厚度
-                 d.U_DThick.tb_disabled = false;
-                 // // 智能门锁锁体挡板长度
-                 d.U_LBLength.tb_disabled = false;
-                 // 智能门锁锁体挡板宽度
-                 d.U_LBWide.tb_disabled = false;
-                 // 智能门锁锁体档板左右螺丝十字中心孔距
-                 d.U_AbDis.tb_disabled = false;
-                 // 智能门锁锁体档板上下螺丝十字中心孔距
-                 d.U_UDDis.tb_disabled = false;
-                 // 智能门锁门边到锁面板右侧的距离
-                 d.U_LTRDis.tb_disabled = false;
-                 // 智能门锁门锁面板总长度
-                 d.U_TLLength.tb_disabled = false;
-                 // 智能门锁门的类别
-                 d.U_DType.tb_disabled = false;
-                 // 智能门锁门开向
-                 d.U_DoorO.tb_disabled = false;
-                //  d.U_DoorO.validateFun = function(data, index){
-                //       // TODO
-                //  }
-                 // 智能门锁是否有天地钩
-                 d.U_IHEH.tb_disabled = false;
-                //  d.U_IHEH.validateFun = function(data, index){
-                //     // TODO
-                //  }
-           }
+    let lthree = ["门扇（木门）", "门扇（铝框门）"]
+    lthree = lthree.map(one => getLevelThreeTypeByName(one));
+    if(lthree.indexOf(d.Code) != -1) {
+        depMshan(false);depMbs(false);
+        return d
+    }
 
+    let lfour = ["筒子板（木门）", "门套（木门）","筒子板（铝框门）","门套（铝框门）"]
+    lfour = lfour.map(one => getLevelThreeTypeByName(one));
+    if(lfour.indexOf(d.Code) != -1) {
+        depMhole(false);
+        return d
+    }
 
-  // 开门（木门）的时候
-  return d;
+    let lfive = ["遮轮板（铝框门）", "遮轮板（木门）"]
+    lfive = lfive.map(one => getLevelThreeTypeByName(one));
+    if(lfive.indexOf(d.Code) != -1) {
+        d.U_DSWide.tb_disabled = false; // 门洞宽
+        return d
+    }
+
+    let lsix = ["飘窗板", "门套线（铝框门）","五金","普通门锁","吊轮","拉手（门）","吊轨","合页","门吸"]
+    lsix = lsix.map(one => getLevelThreeTypeByName(one));
+    if(lsix.indexOf(d.Code) != -1) {
+        return d
+    }
+
+    let ZNcode = getLevelThreeTypeByName("智能锁");
+    if(ZNcode == d.Code) {
+        depZNkeys(false);
+        return d;
+    }
+    return d;
 }
