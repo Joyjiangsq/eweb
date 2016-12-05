@@ -117,7 +117,7 @@ export default {
                       if(one.base_info.Series == 81) continue
                       pMap.push({type:one.type, value:one.sub_orders.length})
                     }
-                    if(pMap.length <= 1) {
+                    if(pMap.length == 1) {
                         this.showMsg("warn", "正常订单不允许核价单个标品");
                         return false;
                     }
