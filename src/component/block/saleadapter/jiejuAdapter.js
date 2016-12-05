@@ -11,7 +11,7 @@ export default function adapterData(d) {
           validateFun:function(data, index){
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "销售数量必须填写";
+                this.errorMsg = "销售数量填写不正确";
                 return false
               }
               else if(this.def < 0) {

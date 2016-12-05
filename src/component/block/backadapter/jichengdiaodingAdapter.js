@@ -15,12 +15,12 @@ export default function adapterData(d) {
               d.Quantity = d.SalPackUn*sy;
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是填写";
+                this.errorMsg = "采购数量填写错误";
                 return false
               }
               if(this.def*1 < 0) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是大于0";
+                this.errorMsg = "采购数量必须大于0";
                 return false
               }
               else if(this.def == 0 || this.def == "" || !this.def) {

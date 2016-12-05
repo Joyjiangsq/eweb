@@ -149,10 +149,10 @@ export default function adapterData(d) {
           else return resetFun(this)
       }
       d.U_Pquantity.validateFun = function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "此项填写错误")
-          else if(this.def < 0) return exepFun(this, "此项必须大于0")
+          if(isNaN(this.def)) return exepFun(this, "采购数量填写错误")
+          else if(this.def < 0) return exepFun(this, "采购数量必须大于0")
           else if(d.Code != getLevelThreeTypeByName("台面")) {
-              if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "此项必须填写")
+              if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "采购数量必须填写")
               else  return resetFun(this)
           }
           else return resetFun(this)

@@ -9,6 +9,7 @@ export default function adapterData(d) {
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
+              console.log(data);
               // 计算转化数量
               // 包装规格   SalPackUn   如果是厨柜 或者木门 则忽略定制品忽略
               // U_PMeasure
@@ -17,18 +18,18 @@ export default function adapterData(d) {
                 d.Quantity = d.Quantity.toFixed(3);
               }
               else {
-                d.Quantity = ((d.U_Pquantity/d.U_PMeasure*1)*d.U_PMeasure*1).toFixed(3);
+                d.Quantity = ((this.def/d.U_PMeasure*1)*d.U_PMeasure*1).toFixed(3);
               }
 
 
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须填写";
+                this.errorMsg = "采购数量填写错误";
                 return false
               }
               if(this.def*1 < 0) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是大于0";
+                this.errorMsg = "采购数量必须大于0";
                 return false
               }
               else if(this.def == 0 || this.def == "" || !this.def) {

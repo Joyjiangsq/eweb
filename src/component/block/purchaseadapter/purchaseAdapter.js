@@ -9,17 +9,17 @@ export default function adapterData(d) {
           validateFun:function(data, index){
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须填写";
+                this.errorMsg = "库存数量填写不正确";
                 return false
               }
               else if(d.ItmsGrpCod == "111" && Math.ceil(this.def) != this.def) { // 除了瓷砖验证不能小数'
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须填写整数";
+                this.errorMsg = "库存必须填写整数";
                 return false
               }
               else if(this.def*1 < 0) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须大于0";
+                this.errorMsg = "库存必须大于0";
                 return false
               }
               else if(this.def > d.stock) {
@@ -83,17 +83,17 @@ export default function adapterData(d) {
               }
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须填写";
+                this.errorMsg = "采购数量填写不正确";
                 return false
               }
               else if(d.ItmsGrpCod == "111" && Math.ceil(this.def) != this.def) { // 除了瓷砖验证不能小数'
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须填写整数";
+                this.errorMsg = "采购数量必须填写整数";
                 return false
               }
               if(this.def*1 < 0) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "必须是大于0";
+                this.errorMsg = "采购数量必须大于0";
                 return false
               }
               else if(this.def == 0 || this.def == "" || !this.def) {

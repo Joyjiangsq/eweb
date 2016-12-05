@@ -151,10 +151,10 @@ export default function adapterData(d) {
       // 设置验证参数规则
      // 延米（m）/销售数量
       d.sale_counts.validateFun = function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "此项填写错误")
-          else if(this.def < 0) return exepFun(this, "此项必须大于0")
+          if(isNaN(this.def)) return exepFun(this, "延米填写错误")
+          else if(this.def < 0) return exepFun(this, "延米必须大于0")
           else if(d.Code != getLevelThreeTypeByName("台面")) {
-              if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "此项必须填写")
+              if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "延米必须填写")
               else  return resetFun(this)
           }
           else return resetFun(this)
