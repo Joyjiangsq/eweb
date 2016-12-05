@@ -12,7 +12,7 @@
 
                           </div>
                           <div slot="panelContent">
-                                <div :class="inCss.oneBox" style="height:  415px;">
+                                <div :class="inCss.oneBox">
                                   <tabbar :datas="tabArray"  @tabclick="tabClickHandler" theme="indexTab">
                                         <div :class="inCss.tabone" v-for="(index, one) in tabArray" v-show="one.show">
                                                 <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>
@@ -98,9 +98,9 @@ export default {
   computed: {},
   ready: function () {
     this.$nextTick( () => {
-       $("."+this.inCss.oneBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
+      //  $("."+this.inCss.oneBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
        $("."+this.inCss.twoBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
-       $("."+this.inCss.threeBox).css("height",(document.body.clientHeight- 125 - 101) +"px");
+      //  $("."+this.inCss.threeBox).css("height",(document.body.clientHeight- 125 - 101) +"px");
     })
     this.setFirstTab();
   },
