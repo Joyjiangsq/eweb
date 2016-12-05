@@ -8,10 +8,14 @@ export const heyeComponent = Vue.extend({
   data:function(){
     return {
       test:[],
-      value:""
+      value:"",
+      adapter: function(d){
+          d.multyNameLabel = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+          return d
+      }
     }
   },
-  template: '<div><combobox labelname="ItemName" @dropclick="dropclick" :value="value" keyid="ItemName" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="multyNameLabel" :adapter="adapter" @itemclick="dropclick" :value="value" keyid="multyNameLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       this.test = this.selfData.U_HingeCodes.def || [];
       this.value = this.selfData.U_HingeName.def || "";
@@ -20,7 +24,7 @@ export const heyeComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
-            this.selfData.U_HingeName.def = d;
+            this.selfData.U_HingeName.def = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
             this.selfData.U_HingeName.tb_disabled= false;  // 合页
             this.selfData.U_HingeName.defCss= "default";  // 合页
             this.selfData.U_HingeName.errorMsg= "";  // 合页
@@ -37,9 +41,13 @@ export const  mensuoComponent = Vue.extend({
     return {
       test:[],
       value:"",
+       adapter: function(d){
+          d.multyNameLabel = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+          return d
+      }
     }
   },
-  template: '<div><combobox labelname="ItemName" :value="value"  @dropclick="dropclick"  keyid="ItemName" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="ItemName" :adapter="adapter" :value="value"  @dropclick="dropclick"  keyid="ItemName" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       this.test = this.selfData.U_LockCodes.def || [];
       this.value = this.selfData.U_LockName.def || "";
@@ -48,7 +56,7 @@ export const  mensuoComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
-            this.selfData.U_LockName.def = d+"";
+            this.selfData.U_LockName.def = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
             this.selfData.U_LockName.tb_disabled= false; // 门锁
             this.selfData.U_LockName.defCss= "default";  // 门锁
             this.selfData.U_LockName.errorMsg= "";  // 门锁

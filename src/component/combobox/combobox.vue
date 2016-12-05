@@ -59,7 +59,9 @@ export default {
         default: () => {}
       },
 
-
+      adapter: {
+        type: Function
+      }
   },
   data: function () {
     return {
@@ -113,8 +115,13 @@ export default {
       p[this.keyid] ="";      // name 与 p最好不要一样
       p[this.labelname] ="请选择";
       this.defaultInfo = Utils.cloneObj(p);
-      this.realData = Utils.cloneObj(this.datas);
-      this.realData.unshift(p);
+      for(let i = 0; i < this.datas.length; i++) {
+           let one = Utils.cloneObj(this.datas[i]);
+           if(one[this.labelname] == "请选择") continue;
+           if(this.adapter) one = this.adapter(one);
+           this.realData.push(one)
+      }
+      // this.realData.unshift(p);
     },
 
     dropClick(item) {
