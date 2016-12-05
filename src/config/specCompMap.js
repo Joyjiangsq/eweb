@@ -42,12 +42,12 @@ export const  mensuoComponent = Vue.extend({
       test:[],
       value:"",
        adapter: function(d){
-          d.multyNameLabel = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+          d.multyLockLabel = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
           return d
       }
     }
   },
-  template: '<div><combobox labelname="ItemName" :adapter="adapter" :value="value"  @dropclick="dropclick"  keyid="ItemName" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="multyLockLabel" :adapter="adapter" :value="value"  @dropclick="dropclick"  keyid="multyLockLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       this.test = this.selfData.U_LockCodes.def || [];
       this.value = this.selfData.U_LockName.def || "";
