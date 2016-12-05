@@ -129,7 +129,7 @@ export default {
               if(this.curName == "cizhuan") {
                   let adArray = this.recdata.Address2.split(",");
                   this.recdata.Name = adArray[0];
-                  this.recdata.city = adArray[1];
+                  this.recdata.City = adArray[1];
                   this.recdata.County = adArray[2];
               }
               this.$dispatch("success", {project:this.curName,data:params});
