@@ -1,4 +1,6 @@
 import {getLevelOneTypeByName} from "config/codeMap";
+import uqfun from "component/blockcommon/uqFun";
+import decimalIs from "component/blockcommon/decimal";
 export default function adapterData(d) {
       if(!d.stock || d.stock == 0) d.stock = "0";
       // 设置验证参数规则
@@ -12,9 +14,9 @@ export default function adapterData(d) {
                 this.errorMsg = "库存数量填写不正确";
                 return false
               }
-              else if(d.ItmsGrpCod == "111" && Math.ceil(this.def) != this.def) { // 除了瓷砖验证不能小数'
+              else if(!decimalIs(d, this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "库存必须填写整数";
+                this.errorMsg = "库存必须是整数";
                 return false
               }
               else if(this.def*1 < 0) {
@@ -59,36 +61,15 @@ export default function adapterData(d) {
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
-              console.log(d);
-              // 计算转化数量
-              // 包装规格   SalPackUn   如果是厨柜 或者木门 则忽略定制品忽略
-              if(d.ItmsGrpCod != getLevelOneTypeByName("厨柜") && d.ItmsGrpCod != getLevelOneTypeByName("门")) {
-                if(d.ItmsGrpCod != getLevelOneTypeByName("地板")) {
-                  d.SalPackUn = d.SalPackUn || 1;
-                  let sy = Math.ceil(this.def/d.SalPackUn);
-                  d.Quantity = d.SalPackUn*sy;
-                  d.Quantity = d.Quantity.toFixed(3);
-                  console.log(d.Quantity);
-                }
-                else {
-                  // U_PMeasure
-                  if(d.U_PMeasure*1 <= 0) {
-                    d.Quantity = 0;
-                    d.Quantity = d.Quantity.toFixed(3);
-                  }
-                  else {
-                    d.Quantity = ((this.def/d.U_PMeasure*1)*d.U_PMeasure*1).toFixed(3);
-                  }
-                }
-              }
+              uqfun(d);
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
                 this.errorMsg = "采购数量填写不正确";
                 return false
               }
-              else if(d.ItmsGrpCod == "111" && Math.ceil(this.def) != this.def) { // 除了瓷砖验证不能小数'
+              else if(!decimalIs(d, this.def)) {
                 this.defCss = "errorHappend";
-                this.errorMsg = "采购数量必须填写整数";
+                this.errorMsg = "采购数量必须是整数";
                 return false
               }
               if(this.def*1 < 0) {

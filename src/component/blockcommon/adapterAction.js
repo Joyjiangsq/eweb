@@ -6,11 +6,11 @@
     {action:"a_must", msg:""} // 验证必须填写
 
     {action:"a_int", msg:""} // 验证只能整数
-
     {action:"a_greater_one", min:"", msg:""} // 验证必须大于某个值  value为该值
     {action:"a_less_one", max:"", msg:""} // 验证必须小于某个值  value为该值
 ]
  */
+import decimalIs from "./decimal";
 let exepFun = function(scope, msg){
     scope.defCss = "errorHappend";
     scope.errorMsg = msg;
@@ -45,6 +45,13 @@ let getIsMust = function(scope, one){
     else return true
 }
 
+// 验证是否是小数
+let isDecimal = function(scope, one, data) {
+    let res = decimalIs(data, scope.def);
+    if(!res) return exepFun(scope, one.msg || "必须填写整数");
+    else return true
+}
+
 export default function actionFun(scope, actions, d){
     let res = true;
     console.log(res);
@@ -63,6 +70,11 @@ export default function actionFun(scope, actions, d){
 
         if(one.action == "a_greatere") {
              res = getIsGreayterEZero(scope, one);
+             if(!res) break;
+        }
+
+        if(one.action == "a_int") {
+             res = isDecimal(scope, one,d);
              if(!res) break;
         }
 

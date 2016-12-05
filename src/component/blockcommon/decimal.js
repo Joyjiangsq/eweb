@@ -106,6 +106,12 @@ let cannots = [
 
 cans = cans.map(one => getLevelThreeTypeByName(one));
 cannots = cannots.map(one => getLevelThreeTypeByName(one));
-export default decimalIs = function(data){
-    if()
+export default function decimalIs (data, value){
+    if(cans.indexOf(data.Code) != -1) {
+        return true
+    }
+    else {
+        // 验证小数
+        return Math.ceil(value) == value
+    }
 }

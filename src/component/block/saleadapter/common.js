@@ -9,7 +9,7 @@ export default function adapter(d) {
           defCss: "default",
           errorMsg:"",
           validateFun:function(data, index){
-              let actions = [{action:"a_number", msg:"销售数量填写不正确"}]
+              let actions = [{action:"a_number", msg:"销售数量填写不正确"},{action:"a_int"}]
               if(d.Code != getLevelThreeTypeByName("台面")) {
                   actions.push({action:"a_greater", msg:"销售数量必须大于0"});
                   actions.push({action:"a_must", msg:"销售数量必须填写"});

@@ -1,5 +1,5 @@
 import { getLevelThreeTypeByName } from "config/codeMap";
-
+// 定制品渲染适配器
 let menMap = {
     // 门
     a_datas:[

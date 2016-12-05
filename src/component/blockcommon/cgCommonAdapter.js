@@ -32,7 +32,7 @@ export default function adapterData(d) {
             d[item.keyName] = {
                 def: item.defValue,
                 defCss: "default",
-                errorMsg:"",tb_disabled: false,
+                errorMsg:"",tb_disabled: true,
                 validateFun:function(data, index){
                      return true;
                 }
@@ -191,23 +191,23 @@ export default function adapterData(d) {
       }
       // 设置验证参数规则
      // 延米（m）/销售数量
-     if(d.sale_counts) d.sale_counts.validateFun = function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "延米填写错误")
-          else if(this.def < 0) return exepFun(this, "延米必须大于0")
-          else if(d.Code != getLevelThreeTypeByName("台面")) {
-              if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "延米必须填写")
-              else  return resetFun(this)
-          }
-          else return resetFun(this)
-      }
-      // 采购数量
-     if(d.U_Pquantity) d.U_Pquantity.validateFun = function(data, index){
-          if(isNaN(this.def)) return exepFun(this, "延米填写错误")
-          else if(this.def < 0) return exepFun(this, "延米必须大于0")
-          else if(d.Code != getLevelThreeTypeByName("台面")) {
-              if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "延米必须填写")
-              else  return resetFun(this)
-          }
-          else return resetFun(this)
-      }
+    //  if(d.sale_counts) d.sale_counts.validateFun = function(data, index){
+    //       if(isNaN(this.def)) return exepFun(this, "延米填写错误")
+    //       else if(this.def < 0) return exepFun(this, "延米必须大于0")
+    //       else if(d.Code != getLevelThreeTypeByName("台面")) {
+    //           if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "延米必须填写")
+    //           else  return resetFun(this)
+    //       }
+    //       else return resetFun(this)
+    //   }
+    //   // 采购数量
+    //  if(d.U_Pquantity) d.U_Pquantity.validateFun = function(data, index){
+    //       if(isNaN(this.def)) return exepFun(this, "延米填写错误")
+    //       else if(this.def < 0) return exepFun(this, "延米必须大于0")
+    //       else if(d.Code != getLevelThreeTypeByName("台面")) {
+    //           if(this.def ==0 || this.def == "" || !this.def) return exepFun(this, "延米必须填写")
+    //           else  return resetFun(this)
+    //       }
+    //       else return resetFun(this)
+    //   }
 }

@@ -1,5 +1,6 @@
 import actionFun from "component/blockcommon/adapterAction";
 import uqfun from "component/blockcommon/uqFun";
+import {getLevelThreeTypeByName} from "config/codeMap";
 export default function adapter(d) {
       d.U_SWW = d.SWW; // 这里sap xxx 不解释了
       d.U_Pquantity = {     //
@@ -8,11 +9,13 @@ export default function adapter(d) {
           errorMsg:"",
           validateFun:function(data, index){
               uqfun(d);
-              return actionFun(this, [
-                {action:"a_number", msg:"采购数量填写不正确"},
-                {action:"a_greater", msg:"采购数量必须大于0"},
-                {action:"a_must", msg:"采购数量必须填写"}
-              ], d)
+              let actions = [{action:"a_number", msg:"销售数量填写不正确"},{action:"a_int"}]
+              if(d.Code != getLevelThreeTypeByName("台面")) {
+                  actions.push({action:"a_greater", msg:"销售数量必须大于0"});
+                  actions.push({action:"a_must", msg:"销售数量必须填写"});
+              }
+              else actions.push({action:"a_greatere", msg:"销售数量必须大于等于0"});
+              return actionFun(this,actions, d);
           }
       };
       d.Quantity = d.Quantity || "";// 转化数量
