@@ -32,6 +32,7 @@
       </div>
 </template>
 <script>
+//DocNum
 import {showTips} from "actions/index";
 import css from "./p.css";
 import list from "common/mixinList";

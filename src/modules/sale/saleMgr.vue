@@ -99,7 +99,6 @@ export default {
     return {
       css,
       moduleName:"销售订单管理",
-      testData:[{totals:"xxxx", html:true, orderId:"卡拉", orderStatus: 1, selected: true},{totals:"1102019201", orderId:"卡拉", orderStatus:2, selected: false}],
       tableHeaderDatas: tableHeaderDatas,  // 表头初始化
       subHeaders: subHeaders, // 子订单表格表头
       subLoad: false, // 子列表加载

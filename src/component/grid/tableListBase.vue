@@ -51,9 +51,7 @@ export default {
      needindex:{
        default: true
      },
-     needselected:{
-       default: false
-     }
+     
   },
   data: function () {
     return {

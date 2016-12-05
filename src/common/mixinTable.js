@@ -5,6 +5,9 @@ let tableBase = {
             type:String,
             default: ""
           },
+          needselected:{
+            default: false
+          },
           load:{
             type: Boolean,
             default: false
@@ -134,8 +137,10 @@ let tableBase = {
                       //  if(this.adpArry.indexOf(hone.labelValue) == -1)  this.adpArry.push(hone.labelValue);
                     }
                     rowData["_id"] = one["_id"];
-                    if(i == 0) rowData["selected"] = true;  // 选中行样式
-                    else rowData["selected"] = false;
+                    if(this.needselected) {   // 选中状态
+                      if(i == 0) rowData["selected"] = true;  // 选中行样式
+                      else rowData["selected"] = false;
+                    }
                     if(hone.checkbox) one.checkTag = false;
                   }
                   let nd = Object.assign(one, rowData);

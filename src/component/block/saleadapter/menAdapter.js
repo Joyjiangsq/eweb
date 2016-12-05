@@ -285,7 +285,7 @@ export default function adapterData(d) {
         return d
     }
 
-    let lfour = ["筒子板（木门）", "门套（木门）","筒子板（铝框门）","门套（铝框门）"]
+    let lfour = ["筒子板（木门）", "门套（木门）","垭口（木门）","窗套","飘窗板","筒子板（铝框门）","门套（铝框门）"]
     lfour = lfour.map(one => getLevelThreeTypeByName(one));
     if(lfour.indexOf(d.Code) != -1) {
         depMhole(false);
@@ -299,7 +299,7 @@ export default function adapterData(d) {
         return d
     }
 
-    let lsix = ["飘窗板", "门套线（铝框门）","五金","普通门锁","吊轮","拉手（门）","吊轨","合页","门吸"]
+    let lsix = ["飘窗板", "门套线（铝框门）","门套线（木门）","五金","普通门锁","吊轮","拉手（门）","吊轨","合页","门吸"]
     lsix = lsix.map(one => getLevelThreeTypeByName(one));
     if(lsix.indexOf(d.Code) != -1) {
         return d

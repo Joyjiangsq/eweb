@@ -108,6 +108,7 @@ export default {
                       this.showMsg("warn", "正常订单不允许核价单个标品");
                       return false;
                   }
+                  else this.doGetPrice(d); // 81售后订单
               }
               else {
                    let pMap = [];
@@ -175,6 +176,7 @@ export default {
             let one = this.priceArray[i];
             this.priceInfo.sprice += one.U_SerCharge*1;
             this.priceInfo.zprice += one.docTotal*1;
+            this.finalData[i]["U_SerCharge"] = one.U_SerCharge || 0;
           }
       },
       failHandler: function(d){
