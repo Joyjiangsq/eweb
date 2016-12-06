@@ -88,7 +88,7 @@ export default {
     return {
       inCss,
       curTabIndex:0,
-      tabArray:[{labelName:"子订单", id: "xiaoshoucom", show:false, component: saleList},
+      tabArray:[{labelName:"销售子订单", id: "xiaoshoucom", show:false, component: saleList},
                 {labelName:"采购订单", id: "caigou", show:false, component: purchaseList},
                 {labelName:"备货订单", id: "beihuo", show:false, component: backWillList},
                 {labelName:"定制品", id: "dingzhipin", show:false, component: specWillList},

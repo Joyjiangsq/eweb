@@ -1,5 +1,5 @@
 <template>
-    <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
+    <div :class="[css.formOne, classname, vertical?css.verticalitem:'', distance?css.distance:'']">
         <label v-if="labelname" for="" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget" style="min-width: 200px">
             <checkbx :datas="datas" checkname="name" :read="read" :events="checkEvents" :labelname="lname" :labelkey="lkey" :value.sync="value"></checkbx>

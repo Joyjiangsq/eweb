@@ -40,6 +40,9 @@ let  formBase = {
                 ingnore: {
                   type: Boolean,
                   default: false
+                },
+                distance: {
+                  type: false  // label宽度控制
                 }
           },
           data: function () {

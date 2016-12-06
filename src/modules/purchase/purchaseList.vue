@@ -9,7 +9,14 @@
                                     <checkbx  @checkclick="checkClick(one)" :close="one.U_OrderStatus != '待采购' && one.U_OrderStatus != 'e站驳回'"></checkbx>
                               </span>
                               <icon :classname="css.clicktarget" class="gray" :iconname="one.show?'icon-down02':'icon-right2'" @click="iconClick(one)"></icon>
-                              <span :class="css.srow">{{one.U_Date | dateformate}} 订单号： <span class="atype" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span><span :class='css.tipstext'></span></span>
+                              <span :class="css.srow">
+                                    {{one.U_Date | dateformate}}
+                                     订单号： 
+                                     <span class="atype" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span>
+                                     <span :class='css.osLine'></span>
+                                     SAP订单号：
+                                     <span :class="css.saptype">{{one.DocNum || '暂无'}}</span>
+                                     </span>
 
                               <span :class="[css.srow, css.orderOne]">{{one.base_info.order_type}} <span :class='css.osLine'></span> <span v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '店长驳回'" class='reback'>{{one.U_OrderStatus}}</span><span class='common' v-else>{{one.U_OrderStatus}}</span></span>
                               <span :class="[css.srow, css.orderTwo]">

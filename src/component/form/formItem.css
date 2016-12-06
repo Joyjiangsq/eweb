@@ -80,3 +80,6 @@
   text-align: right;
   padding-right: 10px;
 }
+.distance label {
+    min-width: 1px;
+}

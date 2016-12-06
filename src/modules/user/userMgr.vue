@@ -28,7 +28,7 @@
         <!--重设角色对话框-->
         <dialog :flag.sync="showRolesDialog" title="更改角色" @dialogclick="rolesDialogClickHandler">
               <div class="" slot="containerDialog">
-                  <formck labelname="角色：" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getRoles" :validatestart="newForm.validate1" @onvalidate="newForm.validateHandler1"></formck>
+                  <formck labelname="角色：" :distance="true" :vertical="true" formname="roles" :value.sync="curopData.roles"  lname="name" lkey="name"  :datas="getRoles" :validatestart="newForm.validate1" @onvalidate="newForm.validateHandler1"></formck>
               </div>
         </dialog>
         <!--重置密码提示-->

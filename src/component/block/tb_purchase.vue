@@ -37,7 +37,11 @@ export default {
                     {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
                     {name:"可用库存量", labelValue:"stock",type:"data"},{name:"使用库存数", labelValue:"use_stores",type:"edit"},
                     {name:"采购数量", labelValue:"U_Pquantity",type:"edit"},
-                    {name:"包装规格", labelValue:"pack_spc",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
+                    {name:"包装规格", labelValue:"pack_spc",type:"data", adapterFun: function(d) {
+                        // 地板特殊
+                        if(d.ItmsGrpCod == "115") return d.U_PMeasure+d.SalUnitMsr+"/"+(d.SalPackMsr || '')
+                        else return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')  
+                    }},
                     {name:"转化数量", labelValue:"Quantity",type:"data"},
                     {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
                     ],
@@ -47,7 +51,11 @@ export default {
                   {name:"产品规格", labelValue:"Spec", type:"data"},{name:"销售数量", labelValue:"sale_counts", type:"data"},
                   {name:"可用库存量", labelValue:"stock",type:"data"},{name:"使用库存数", labelValue:"use_stores",type:"edit", read: true},
                   {name:"采购数量", labelValue:"U_Pquantity",type:"edit", read: true},
-                  {name:"包装规格", labelValue:"pack_spc",type:"data", adapterFun: function(d) {return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')}},
+                  {name:"包装规格", labelValue:"pack_spc",type:"data", adapterFun: function(d) {
+                      // 地板特殊
+                      if(d.ItmsGrpCod == "115") return d.U_PMeasure+d.SalUnitMsr+"/"+(d.SalPackMsr || '')
+                      else return d.SalPackUn+d.SalUnitMsr+"/"+(d.SalPackMsr || '')
+                  }},
                   {name:"转化数量", labelValue:"Quantity",type:"data"},
                   {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
                   ],

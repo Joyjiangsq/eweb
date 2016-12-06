@@ -11,17 +11,16 @@
 .tBox {
     padding-top: 12px;
 }
-.tipstext {
-    color: gray;
-    font-size: 12px;
-    font-style: italic;
-}
+
 .check {}
 .clicktarget {
     display: inline;
     position: absolute;
     cursor: pointer;
     width: 25px;
+}
+.saptype {
+    width: 170px;
 }
 .orderTwo {
     width: 30%;

@@ -66,7 +66,7 @@ export default {
   },
   methods:{
     clickRow: function(index, d) {
-        if(!d.selected) return false
+        if(d.selected !== false) return false
         this.dataList[this.oldIndex].selected = false;
         d.selected = true;
         this.$set("oldIndex", index);
