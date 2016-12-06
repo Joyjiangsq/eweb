@@ -158,14 +158,6 @@ export default {
           });
       }
     },
-    "flagdep": function(){
-        if(this.flagdep) this.hideDialogIn = this.flagdep
-        else {
-          setTimeout(()=>{
-              this.hideDialogIn = this.flagdep
-          }, 300)
-        }
-    }
 
   },
   components: {formtext,formcb,dialogtip},

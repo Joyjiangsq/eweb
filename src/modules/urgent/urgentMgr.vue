@@ -16,7 +16,7 @@
         <dialog :flag.sync="show" title="加急" @dialogclick="dialogclick">
               <div slot="containerDialog">
                     <formcb keyid="value" labelname="加急金额：" @itemclick="itemclick" :value.sync="formParams.LineTotala" :vertical="true" keyname="name" dropfixed="dropfixed" formname="LineTotala" :datas="priceArry" :validatestart="validate" @onvalidate="validateHandler"></formcb>
-                    <formtext labelname="自定义金额："  :vertical="true" placeholder="请输入自定义金额" :must="selfControl" :value.sync="formParams.LineTotalb" formname='LineTotalb' v-show="selfControl"   :validatestart="validate"  @onvalidate="validateHandler"></formtext>
+                    <formtext labelname="自定义金额：" :number="true" :validatefun="intValidate"  :vertical="true" placeholder="请输入自定义金额" :must="selfControl" :value.sync="formParams.LineTotalb" formname='LineTotalb' v-show="selfControl"   :validatestart="validate"  @onvalidate="validateHandler"></formtext>
                     <formtext labelname="关联采购单号：" :vertical="true" placeholder="请输入关联采购单号" :value.sync="formParams.U_PurchaseNum" formname='U_PurchaseNum'  :validatestart="validate"  @onvalidate="validateHandler"></formtext>
               </div>
         </dialog>
@@ -123,6 +123,10 @@ export default {
         }, (e) =>{
 
         });
+    },
+    intValidate: function(value){
+        if(value*1 <=0 ) return {res:"fail", msg:"请正确填写金额"}
+        return true;
     },
     dialogclick: function(d){
           if(d.action =="confirm") {

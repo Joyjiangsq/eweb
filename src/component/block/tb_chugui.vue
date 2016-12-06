@@ -73,7 +73,7 @@
 // 厨柜分类
 import ft from "component/file/filedeal";
 import Vue from "vue";
-import tb from "component/grid/menTable";
+import tb from "component/grid/customTable";
 import css from "./type.css";
 import btn from "component/sprite/button";
 import saleAdapter from "./saleadapter/chuguiAdapter.js";

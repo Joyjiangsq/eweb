@@ -200,7 +200,7 @@ export default {
          setTimeout(()=>{
             if(this.backCashParams.validate) {
                   if(this.backCashParams.U_TraAmount> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可提现金额");
-                  if(this.backCashParams.U_TraAmount*1 < 6) this.showMsg("warn", "体现金额不得小于6元");
+                  if(this.backCashParams.U_TraAmount*1 < 6) this.showMsg("warn", "提现金额不得小于6元");
                   else {
                     delete this.backCashParams.validate;
                     let nobj = Utils.cloneObj(this.backCashParams);

@@ -62,7 +62,7 @@
 
 // 瓷砖分类
 import Vue from "vue";
-import tb from "component/grid/menTable";
+import tb from "component/grid/customTable";
 import btn from "component/sprite/button";
 import css from "./type.css";
 import mentb from "./tblist/menList.vue";

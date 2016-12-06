@@ -48,7 +48,7 @@
 import mdialog from "component/blockcommon/mealDialog";
 import css from "./type.css";
 import tbbase from "component/grid/tableListBase";
-import tb from "component/grid/menTable";
+import tb from "component/grid/customTable";
 import {specFun, specSetOne, getType} from "component/blockcommon/specCommon.js";
 import {sale_chu_g_header_d,
         sale_chu_tm_header_d,
