@@ -218,7 +218,7 @@ export default {
               this.$http.post(this.$Api+"purchases",JSON.stringify(this.finalData)).then((res) => {
                   var d = res.json();
                   this.priceShow = !this.priceShow;
-                  this.showMsg("success", "购买成功");
+                  this.showMsg("success", "活动期间，核价结果为预测价，实际以扣款为主。");
                   this.loadlist();
               },(error) =>{
                 console.log(error);

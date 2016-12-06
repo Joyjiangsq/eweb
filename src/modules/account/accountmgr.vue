@@ -191,7 +191,7 @@ export default {
     dialogClickHandler: function(d) {
       if(d.action == "confirm") {
          if(!this.accountBaseInfo.U_AccountName || !this.accountBaseInfo.U_BankName || !this.accountBaseInfo.U_BBank || !this.accountBaseInfo.U_BAddress) {
-            this.showMsg("warn", "账户信息不全，请联系总部");
+            this.showMsg("warn", "账户信息不全，无法提现！请联系总部财务更新分站账户信息！");
             return false;
          }
 

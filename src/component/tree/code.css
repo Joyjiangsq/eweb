@@ -1,0 +1,53 @@
+.toper {
+    cursor: pointer;
+    width: 20px;
+    vertical-align: top;
+}
+
+.ltwoBox {
+    padding-left: 20px;
+}
+
+.lthreeBox {
+    padding-left: 20px;
+}
+
+.selected {
+    color: red;
+}
+.addBtn {
+    position: absolute;
+    width: 70px;
+    display: none;
+}
+.addBtn span {
+    color: gray;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.addBtn span:hover {
+    color: #333;
+}
+.itemOne {
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.itemOne:hover {
+    color: red
+}
+.itemOne:hover .addBtn {
+    display: inline-block;
+}
+
+.tText {
+    width: 114px;
+}
+.wText {
+    width: 95px;
+}
+
+.lText {
+    width: 118px;
+}

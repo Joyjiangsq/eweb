@@ -264,7 +264,7 @@ export default {
               console.log(this.checkedList);
               this.$http.post(this.$Api+"stockpiles/buy",JSON.stringify(this.checkedList)).then((res) => {
                   var d = res.json();
-                  this.showMsg("success", "购买成功");
+                  this.showMsg("success", "活动期间，核价结果为预测价，实际以扣款为主。");
                   this.loadlist();
                   this.priceShow = !this.priceShow;
               },(error) =>{

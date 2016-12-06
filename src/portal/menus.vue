@@ -68,19 +68,7 @@ export default {
     },
 
     ready: function(){
-      let path = this.$route.name;
-      for (let i = 0; i < this.datamenu.length; i++) {
-            let one = this.datamenu[i];
-            if(!one.subMenus || one.subMenus.length == 0) continue;
-            let subStr = JSON.stringify(one.subMenus);
-            if(subStr.indexOf(path) != -1) {
-              one.show = true;
-              break;
-            }
-      }
-      var self = this;
-
-      this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
+       this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
             url:"/material",name:"材料管理"
         },{
             url:"/materialCatery",name:"材料分类管理"
@@ -94,6 +82,19 @@ export default {
             url:"/buildPrice",name:"施工包一口价对照表"
         }]
       })
+      let path = this.$route.name;
+      for (let i = 0; i < this.datamenu.length; i++) {
+            let one = this.datamenu[i];
+            if(!one.subMenus || one.subMenus.length == 0) continue;
+            let subStr = JSON.stringify(one.subMenus);
+            if(subStr.indexOf(path) != -1) {
+              one.show = true;
+              break;
+            }
+      }
+      var self = this;
+
+     
     },
 
     computed: {

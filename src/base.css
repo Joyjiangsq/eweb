@@ -123,7 +123,11 @@ table tbody td span {
     color: gray;
     font-size: 12px;
 }
-
+:global(.elip) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 /**渐隐**/
 
 :global(.fcolor) {

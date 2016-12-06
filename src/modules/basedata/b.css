@@ -1,0 +1,43 @@
+.mcBox {
+    margin: 20px;
+    padding: 0 20px;
+    overflow: hidden;
+}
+.mcBox .mcLeft {
+    width: 220px;
+    float: left;
+    background: white;
+    min-height: 400px;
+}
+.mcBox .mcRight {
+    background: white;
+    margin-left: 240px;
+    min-height: 400px;
+}
+.mcBox .opRow {
+    background: #eff6f9;
+    padding: 10px;
+}
+.mcBox .operBtn {
+    position: absolute;
+    right: 10px
+}
+.mcBox .operBtn span {
+    color: gray;
+    font-size: 13px;
+    cursor: pointer
+}
+.mcBox .codeBox {
+    padding: 10px;
+}
+
+.mcBox .rightBox {
+    text-align: center;
+    padding-top: 10%;
+    color: gray;
+}
+
+.mcBox .rightIn {
+    display: inline-block;
+    text-align: left;
+}
