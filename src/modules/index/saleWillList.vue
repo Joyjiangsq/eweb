@@ -27,7 +27,7 @@ export default {
   data: function () {
     return {
       css,
-      name:"子订单",
+      name:"销售子订单",
       routerUrl:"sale/subdetail"
     }
   },
