@@ -11,6 +11,7 @@ import css from "./type.css";
 import baseMixins from "./itemMixins";
 import adapter from "./purchaseadapter/purchaseAdapter";
 import mdialog from "component/blockcommon/mealDialog";
+import Utils from "common/Utils";
 export default {
   mixins:[baseMixins],
   props:{
@@ -103,7 +104,7 @@ export default {
             WhsCode:this.srcdata.WhsCode || "09", // 仓库
             sub_orders:this.vlist,
             rec_info: this.recdata,
-            GroupName:this.srcdata.GroupName,
+            GroupName:this.srcdata.GroupName || Utils.getUserInfo().GroupName,
             base_info: this.srcdata.base_info || {},
             U_DeWay: this.srcdata.U_DeWay || "PS", //默认配送
             U_FZOrder:this.srcdata.U_FZOrder, //主订单号

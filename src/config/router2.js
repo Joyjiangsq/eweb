@@ -30,6 +30,13 @@ import spec from 'modules/spec/specBase.vue';
 import specView from 'modules/spec/specMgr.vue';
 import specApply from 'modules/spec/specApply.vue';
 
+import buildCateryView from 'modules/basedata/buildCatery.vue';
+import buildMgrView from 'modules/basedata/buildMgr.vue';
+import buildPriceView from 'modules/basedata/buildPrice.vue';
+import materialView from 'modules/basedata/material.vue';
+import materialCateryView from 'modules/basedata/materialCatery.vue';
+import supplierView from 'modules/basedata/supplier.vue';
+
 import tbView from 'modules/tbmgr/tbMgr.vue';
 import urView from 'modules/urgent/urgentMgr.vue'
 
@@ -42,32 +49,32 @@ export function routerStart(router) {
           component: index,
           // 在/foo下设置一个子路由
           subRoutes: {
-                // 首页
+                // 首页-----------------------------------------------------------------
                 '/index': {
                   name:"index",
                   component: indexView
                 },
-                // 分站账户管理
+                // 分站账户管理-----------------------------------------------------------------
                 '/accountmgr': {
                   name:"accountmgr",
                   component: accountView
                 },
-                // 分站员工管理
+                // 分站员工管理-----------------------------------------------------------------
                 '/employee': {
                   name:"employee",
                   component: empView
                 },
-                // 客户管理
+                // 客户管理---------------------------------------------------------------------
                 '/custom': {
                   name:"custom",
                   component: customView
                 },
-                // 用户管理
+                // 用户管理---------------------------------------------------------------------
                 "/user":{
                   name:"user",
                   component:userView
                 },
-                // 销售下单管理
+                // 销售下单管理------------------------------------------------------------------
                 '/sale': {
                   name:"sale",
                   component: saleView,
@@ -89,6 +96,7 @@ export function routerStart(router) {
                     }
                   }
                 },
+                // 采购管理模块------------------------------------------------------------------------------------
                 // 采购订单管理
                 '/purchase': {
                   name:"purchase",
@@ -131,7 +139,48 @@ export function routerStart(router) {
                     }
                   }
                 },
+                // 加急卡
+                '/urgent': {
+                  name:"urgent",
+                  component: urView
+                },
+                // 基础数据模块------------------------------------------------------
+                // 材料管理
+                '/material': {
+                  name:"material",
+                  component: materialView
+                },
 
+                 // 材料分类管理
+                '/materialCatery': {
+                  name:"materialCatery",
+                  component: materialCateryView
+                },
+
+                 // 供应商数据
+                '/supplier': {
+                  name:"supplier",
+                  component: supplierView
+                },
+
+                 // 施工报价管理
+                '/buildMgr': {
+                  name:"buildMgr",
+                  component: buildMgrView
+                },
+
+                 // 施工报价分类管理
+                '/buildCatery': {
+                  name:"buildCatery",
+                  component: buildCateryView
+                },
+
+                 // 施工报价一口价对照表
+                '/buildPrice': {
+                  name:"buildPrice",
+                  component: buildPriceView
+                },
+                // 定制品模块--------------------------------------------------------
                 // 订制品设计申请管理
                 '/specmgr': {
                   name:"specmgr",
@@ -146,16 +195,13 @@ export function routerStart(router) {
                   }
                 },
 
-                '/urgent': {
-                  name:"urgent",
-                  component: urView
-                },
 
+                // 报表模块--------------------------------------------------------
                 '/tbmgr': {
                   name:"tbmgr",
                   component: tbView
                 },
-
+                // 权限不足-------------------------------------------------------
                 '/forbidden': {
                   name:"tbmgr",
                   component: fbView

@@ -1,31 +1,32 @@
 <template>
-      <div class="">
-              <div :class="portalCss.menuHeaderDesc">
-                    <div :class="portalCss.descIn">
-                          <img :src="defimg" alt="">
-                          <span :class='portalCss.drowItem'>
+  <div class="">
+    <div :class="portalCss.menuHeaderDesc">
+      <div :class="portalCss.descIn">
+        <img :src="defimg" alt="">
+        <span :class='portalCss.drowItem'>
                               {{userInfo.position || '管理员'}}  | {{userInfo.CardName}}
                           </span>
-                    </div>
-              </div>
-              <div :class="portalCss.silderBox">
-                    <div :class="portalCss.menuItem" v-for="(order, one) in datamenu">
-                          <div v-if="one.subMenus" :class="portalCss.menuTitle" @click="changeSubBox(one)">
-                            <icon :iconname="one.icon" :class='portalCss.menuicon'></icon><span> {{one.name}}</span>
-                            <icon  :class="portalCss.directicon"  iconname="icon-open" v-if="!one.show"></icon>
-                            <icon  :class="portalCss.directicon"  iconname="icon-shrink" v-else></icon>
-                          </div>
-                          <div  :class="portalCss.menuSubAction" v-else>
-                            <a v-link="one.url"><icon :class='portalCss.menuicon' :iconname="one.icon"></icon> {{one.name}}
-                              <!-- <icon :class="portalCss.directicon"  iconname="icon-right3"></icon>  -->
-                            </a>
-                          </div>
-                          <div :class="portalCss.subMenus" v-show="one.show">
-                            <a v-link="subone.url"  v-for="subone in one.subMenus">{{subone.name}}</a>
-                          </div>
-                    </div>
-              </div>
       </div>
+    </div>
+    <div :class="portalCss.silderBox">
+      <div :class="portalCss.menuItem" v-for="(order, one) in datamenu">
+        <div v-if="one.subMenus" :class="portalCss.menuTitle" @click="changeSubBox(one)">
+          <icon :iconname="one.icon" :class='portalCss.menuicon'></icon><span> {{one.name}}</span>
+          <icon :class="portalCss.directicon" iconname="icon-open" v-if="!one.show"></icon>
+          <icon :class="portalCss.directicon" iconname="icon-shrink" v-else></icon>
+        </div>
+        <div :class="portalCss.menuSubAction" v-else>
+          <a v-link="one.url">
+            <icon :class='portalCss.menuicon' :iconname="one.icon"></icon> {{one.name}}
+            <!-- <icon :class="portalCss.directicon"  iconname="icon-right3"></icon>  -->
+          </a>
+        </div>
+        <div :class="portalCss.subMenus" v-show="one.show">
+          <a v-link="subone.url" v-for="subone in one.subMenus">{{subone.name}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -79,6 +80,20 @@ export default {
       }
       var self = this;
 
+      this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
+            url:"/material",name:"材料管理"
+        },{
+            url:"/materialCatery",name:"材料分类管理"
+        },{
+            url:"/supplier",name:"供应商数据"
+        },{
+            url:"/buildMgr",name:"施工报价管理"
+        },{
+            url:"/buildCatery",name:"施工报价分类管理"
+        },{
+            url:"/buildPrice",name:"施工包一口价对照表"
+        }]
+      })
     },
 
     computed: {

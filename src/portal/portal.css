@@ -31,6 +31,8 @@
 
 .silderBox {
     background-color: #3e4652;
+    padding-bottom: 20px;
+    overflow-y: auto;
 }
 .silderBox .menuItem {}
 .silderBox .menuItem .menuTitle {
