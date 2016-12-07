@@ -195,6 +195,7 @@ export default {
           }
       },
       getCheckList: function(list) {
+          alert(list.length);
           if(list.length == 0) {
             this.showMsg("warn", "至少选择一项");
             return false

@@ -11,7 +11,7 @@
                               <icon :classname="css.clicktarget" class="gray" :iconname="one.show?'icon-down02':'icon-right2'" @click="iconClick(one)"></icon>
                               <span :class="css.srow">
                                     {{one.U_Date | dateformate}}
-                                     订单号： 
+                                     订单号：
                                      <span class="atype" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span>
                                      <span :class='css.osLine'></span>
                                      SAP订单号：
@@ -67,8 +67,7 @@ export default {
       typeimg:typeimg,
       viewData:[],
       checkList:[],
-      orderMap:[],
-      counts:0
+      orderMap:[]
     }
   },
   computed: {},
@@ -119,10 +118,10 @@ export default {
         let newObj = utils.cloneObj(d);
         adapter(newObj.sub_orders);
         this.orderMap.push(newObj);
-        this.counts += 1;
-        if(this.checkList.length == this.counts) {
-           this.$dispatch("success", this.orderMap);
-        }
+        // this.counts += 1;
+        // if(this.checkList.length == this.counts) {
+        this.$dispatch("success", this.orderMap);
+        // }
     },
     failHandler : function(d) {
         d.show = true;
@@ -137,6 +136,9 @@ export default {
           one.ignorevalidate = true;
           this.viewData.push(utils.cloneObj(one));
       }
+    },
+    loadSuccess: function(){
+        this.checkList = [];
     }
   },
   attached: function () {},
@@ -147,7 +149,7 @@ export default {
         if(this.checkList.length == 0) {
           showTips(this.$store, {type:"warn", msg:"至少选择一项"});
         }
-        this.counts = 0;
+        // this.counts = 0;
     }
   }
 }

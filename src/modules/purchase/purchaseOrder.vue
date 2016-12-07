@@ -180,7 +180,7 @@ export default {
           }
       },
       failHandler: function(d){
-
+          console.log(d);
       },
       rebackAction: function(params){
            this.$http.put(this.$Api+"purchases",JSON.stringify(params)).then((res) => {
