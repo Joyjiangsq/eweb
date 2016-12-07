@@ -67,7 +67,8 @@ export default {
       typeimg:typeimg,
       viewData:[],
       checkList:[],
-      orderMap:[]
+      orderMap:[],
+      counts:0
     }
   },
   computed: {},
@@ -118,10 +119,10 @@ export default {
         let newObj = utils.cloneObj(d);
         adapter(newObj.sub_orders);
         this.orderMap.push(newObj);
-        // this.counts += 1;
-        // if(this.checkList.length == this.counts) {
-        this.$dispatch("success", this.orderMap);
-        // }
+        this.counts += 1;
+        if(this.checkList.length == this.counts) {
+          this.$dispatch("success", this.orderMap);
+        }
     },
     failHandler : function(d) {
         d.show = true;
@@ -149,7 +150,7 @@ export default {
         if(this.checkList.length == 0) {
           showTips(this.$store, {type:"warn", msg:"至少选择一项"});
         }
-        // this.counts = 0;
+        this.counts = 0;
     }
   }
 }
