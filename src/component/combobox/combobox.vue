@@ -79,6 +79,7 @@ export default {
   created: function(){
     this.defaultInfo[this.keyid] = "";
     this.defaultInfo[this.labelname] = "请选择";
+    this.realData.push(this.defaultInfo);
     if(this.url) this.loadData();
     // alert(JSON.stringify(this.defaultInfo));
   },
@@ -117,7 +118,7 @@ export default {
       this.defaultInfo = Utils.cloneObj(p);
       for(let i = 0; i < this.datas.length; i++) {
            let one = Utils.cloneObj(this.datas[i]);
-           if(one[this.labelname] == "请选择") continue;
+          //  if(one[this.labelname] == "请选择") continue;
            if(this.adapter) one = this.adapter(one);
            this.realData.push(one)
       }

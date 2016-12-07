@@ -77,6 +77,13 @@ export default {
          this.$set("error", true);
          return false;
        }
+       if(this.value.split(",").indexOf("") != -1 && this.must) {
+         this.$dispatch("onvalidate", {res:"fail", msg: "请填写好地址"});
+         this.$set("errormsg", "请填写好地址");
+         this.$set("error", true);
+         return false;
+       }
+
        if(!this.detailv && this.must) {
          this.$dispatch("onvalidate", {res:"fail", msg: "请填写好地址"});
          this.$set("errormsg", "请填写好地址");
