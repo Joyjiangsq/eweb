@@ -13,6 +13,8 @@ let menMap = {
         "门套板（木门）",
         "哑口板（木门）",
         "遮轮板（木门）",
+        "筒子板（木门）",
+        "筒子板（铝框门）",
         "门扇（木门）",
         "平开门（铝框门）",
         "移门（铝框门）",
@@ -86,7 +88,7 @@ export const specFun = function(datas, type){
         let one = datas[i];
         if(depData.a_datas.indexOf(one.Code) != -1) {res.a.push(one); continue;}
         if(depData.b_datas.indexOf(one.Code) != -1) {res.b.push(one); continue;}
-        if(depData.c_datas.indexOf(one.Code) != -1) res.c.push(one); 
+        if(depData.c_datas.indexOf(one.Code) != -1) res.c.push(one);
     }
     return res
 }
@@ -99,7 +101,7 @@ export const specSetOne = function(one, type, a,b,c) {
     else if(depData.c_datas.indexOf(one.Code) != -1) c.push(one);
 }
 
-// 
+//
 export const getType = function(one, type) {
     let depData = typeMap[type];
     if(depData.a_datas.indexOf(one.Code) != -1) return "a"
