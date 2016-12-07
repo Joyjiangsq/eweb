@@ -126,6 +126,7 @@ export default {
               params.Descript = "";  // 分站地址描述
               params.WhsCode = "09"; // 仓库
               params.U_DeWay = "PS"; // ZT-自提  PS-配送
+              params.U_ShortName = Utils.getUserInfo().CardCode; // 分站编码
               if(this.curName == "cizhuan") {
                   let adArray = this.recdata.Address2.split(",");
                   this.recdata.Name = adArray[0];

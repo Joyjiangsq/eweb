@@ -195,13 +195,11 @@ export default {
           }
       },
       getCheckList: function(list) {
-          alert(list.length);
           if(list.length == 0) {
             this.showMsg("warn", "至少选择一项");
             return false
           }
           this.checkedList = list;
-          console.log(11);
           if(this.curaction == "buy") {
               // 验证通过规则  如果是单个品类- 如果不是定制品 则不能过
               // 如果是多个品类  如果只有一个是非定制品   则不能过
