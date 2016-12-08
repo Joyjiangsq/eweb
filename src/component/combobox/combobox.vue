@@ -112,6 +112,7 @@ export default {
 
     resetList: function(){
       if(!this.datas || this.datas.length == 0) return false;
+      this.realData = [];
       let p = {};
       p[this.keyid] ="";      // name 与 p最好不要一样
       p[this.labelname] ="请选择";

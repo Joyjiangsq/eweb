@@ -47,7 +47,7 @@ export const  mensuoComponent = Vue.extend({
       }
     }
   },
-  template: '<div><combobox labelname="multyLockLabel" :adapter="adapter" :value="value"  @dropclick="dropclick"  keyid="multyLockLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="multyLockLabel" :adapter="adapter" :value="value"  @itemclick="dropclick"  keyid="multyLockLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       this.test = this.selfData.U_LockCodes.def || [];
       this.value = this.selfData.U_LockName.def || "";

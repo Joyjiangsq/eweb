@@ -76,18 +76,25 @@ export const orderStatus = [
 ]
 
 // 角色
+
 export const rolesE = [
-  {name:"总部客服", id:7},
-  {name:"总部设计师", id:8},
+  {name:"总部客服", id:"总部客服", permission:["custom"]},
+  {name:"总部设计师", id:"总部设计师", permission:["spec"]},
 ]
 export const rolesS = [
-  {name:"店长", id:"店长"},
-  {name:"精算师", id:"精算师"},
-  {name:"销售员", id:"销售员"},
-  {name:"材料员", id:"材料员"},
-  {name:"财务", id:"财务"}
+  {name:"店长", id:"店长", permission:["sale", "purchase", "store", "custom"]},
+  {name:"精算师", id:"精算师", permission:["spec"]},
+  {name:"销售员", id:"销售员", permission:["sale"]},
+  {name:"材料员", id:"材料员", permission:["purchase", "store"]},
+  {name:"财务", id:"财务", permission:[]}
 ]
 
+let rolesNew = [
+  {name:"分站管理员", id:"分站管理员", permission:["sale", "purchase", "store", "spec", "custom"]},
+  {name:"系统管理员", id:"系统管理员", permission:["sale", "purchase", "store", "spec", "custom"]}
+]
+
+export const allRows = rolesNew.concat(rolesS, rolesE);
 
 // 厨柜订制品参数集合
 // 系列

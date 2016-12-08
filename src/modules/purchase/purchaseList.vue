@@ -10,7 +10,7 @@
                               </span>
                               <icon :classname="css.clicktarget" class="gray" :iconname="one.show?'icon-down02':'icon-right2'" @click="iconClick(one)"></icon>
                               <span :class="css.srow">
-                                    {{one.U_Date | dateformate}}
+                                    {{one.updateAt | dateformate}}
                                      订单号：
                                      <span class="atype" @click="toDetailHandler(one)">{{one.U_PurchaseNum}}</span>
                                      <span :class='css.osLine'></span>

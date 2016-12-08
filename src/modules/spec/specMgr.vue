@@ -39,8 +39,14 @@ var orderurgent = Vue.extend({
     }
   }
 })
-let tableHeaderDatas = [
-                        {name:"设计申请单号", labelValue:"design_serial",type:"component", component: orderurgent, cname:"orderurgent2"},
+
+export default {
+  mixins: [pageBase],
+  data: function () {
+    return {
+      css,
+      moduleName:"定制品设计管理",
+      headercaption: [ {name:"设计申请单号", labelValue:"design_serial",type:"component", component: orderurgent, cname:"orderurgent2"},
                         {name:"品类", labelValue:"series",type:"data"},
                         {name:"测量员", labelValue:"ce_people",type:"data"},
                         {name:"测量员电话", labelValue:"ce_phone",type:"data"},
@@ -49,14 +55,7 @@ let tableHeaderDatas = [
                                "1":"待交付","2":"待确认", "3":"已完成", "4":"退回修改"
                             }
                             return mp[d.status]
-                        }}]
-export default {
-  mixins: [pageBase],
-  data: function () {
-    return {
-      css,
-      moduleName:"定制品设计管理",
-      headercaption:tableHeaderDatas, // 表格头部信息设置
+                        }}], // 表格头部信息设置
       btnsData:[{name:"设计申请", icon:"icon-add", action:"add"}],
       btnEvents:{
         btnClick: function(d){
@@ -80,6 +79,8 @@ export default {
     isE: function() {
       return Utils.isEAdmin();
     },
+  },
+  created: function(){
   },
   ready: function () {
     if(this.isE) {
