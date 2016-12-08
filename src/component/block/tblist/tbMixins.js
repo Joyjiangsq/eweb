@@ -22,9 +22,10 @@ let tbMixin = {
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
                    operatorRender: function(d){
-                       if(this.name == "厨柜" || this.name =="门") return [{action:"add",icon:"icon-add", data: d}]
+                      //  if(this.name == "厨柜" || this.name =="门") return [{action:"add",icon:"icon-add", data: d}]
                        let exit = false;
                        let index = 0;
+                       console.log("this.listdata");
                        for (var i = 0; i < this.listdata.length; i++) {
                          let one = this.listdata[i];
                          let str = "";

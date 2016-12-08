@@ -130,7 +130,7 @@ export default {
   methods: {
     addoneHandler : function(d){
         let one = this.adapterFun(d);
-        // this.vlist.push(one);
+        this.vlist.push(one);
         // 木门和铝框门的时候 渲染门的列表 a_array
         // 门控五金 非智能锁的时候 渲染 b_array
         // 门控五金 智能门锁的时候  渲染 c_array

@@ -141,7 +141,6 @@ export default {
     deleteoneHandler: function(d) {
         this.vlist.split(d.index,1);
     },
-    // 预留
     addoneHandler : function(d){
         let one = this.adapterFun(d);
         this.vlist.push(one);
