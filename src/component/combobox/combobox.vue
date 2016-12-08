@@ -112,10 +112,10 @@ export default {
 
     resetList: function(){
       if(!this.datas || this.datas.length == 0) return false;
-      this.realData = [];
       let p = {};
       p[this.keyid] ="";      // name 与 p最好不要一样
       p[this.labelname] ="请选择";
+      this.realData = [p];
       this.defaultInfo = Utils.cloneObj(p);
       for(let i = 0; i < this.datas.length; i++) {
            let one = Utils.cloneObj(this.datas[i]);
