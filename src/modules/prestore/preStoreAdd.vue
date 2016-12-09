@@ -78,6 +78,10 @@ export default {
     },
     // 成功回调
     successHandler: function(d) {
+        if(!utils.getUserInfo().Street) {
+          showTips(this.$store, {type:"warn", msg:"分站地址未维护，无法下单，请联系总监供应链部门维护更新分站信息", time: 4000});
+          return false;
+        }
         let ndata = utils.cloneObj(d);
         // 基础信息验证失败 则不执行
         if(!this.baseInfo.validate) return false;

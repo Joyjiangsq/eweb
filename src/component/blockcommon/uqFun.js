@@ -1,4 +1,4 @@
-import {getLevelOneTypeByName} from "config/codeMap";
+import {getLevelOneTypeByName, getLevelThreeTypeByName} from "config/codeMap";
 // 计算转化数量
 export default function ufun(d) {
     console.log(d);
@@ -10,6 +10,9 @@ export default function ufun(d) {
         let sy = Math.ceil(d.U_Pquantity.def/d.SalPackUn);
         d.Quantity = d.SalPackUn*sy;
         d.Quantity = d.Quantity.toFixed(3);
+    }
+    else if(d.Code == getLevelThreeTypeByName("扣板")) {
+        d.Quantity = d.U_Pquantity;
     }
     else {
         // U_PMeasure

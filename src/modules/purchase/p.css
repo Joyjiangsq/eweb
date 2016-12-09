@@ -2,8 +2,11 @@
     border-bottom: 1px dashed #ddd;
 }
 .srow {
-    margin-right: 2%;
+    margin-right: 10px;
     margin-left: 20px;
+}
+.firstItem {
+     width: 50%;
 }
 .rowhead {
     line-height: 40px;
@@ -20,10 +23,9 @@
     width: 25px;
 }
 .saptype {
-    width: 170px;
+   
 }
 .orderTwo {
-    width: 30%;
 }
 .tbbox {
     padding-bottom: 10px;
@@ -48,7 +50,7 @@
     top: -14px;
 }
 .orderOne {
-    width: 130px;
+    width: 16%;
 }
 .customLeft {
     position: absolute;

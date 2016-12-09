@@ -41,7 +41,6 @@ import Utils from "common/Utils";
 import {showTips} from "actions/index";
 import {packageType, orderType} from "config/const";
 import clist from "./customListDialog";
-import utils from "common/Utils";
 export default {
   data: function () {
     return {
@@ -136,6 +135,10 @@ export default {
     },
     // 成功回调
     successHandler: function(d) {
+        if(!Utils.getUserInfo().Street) {
+          showTips(this.$store, {type:"warn", msg:"分站地址未维护，无法下单，请联系总监供应链部门维护更新分站信息", time: 4000});
+          return false;
+        }
         // console.log(d);
         // 基础信息验证失败 则不执行
         if(!this.baseInfo.validate) return false;
@@ -184,7 +187,7 @@ export default {
         this.baseInfo.Phone2 = d.Phone2;    // 设置用户手机号
         this.baseInfo.U_ComeFrom = d.U_ComeFrom; // 设置客户来源
         this.baseInfo.U_BTSubstation = d.station; // 设置归属分站编码
-        this.baseInfo.U_DateRgst = utils.formate(new Date(d.createAt), "yyyy-mm-dd"); // 设置登记日期
+        this.baseInfo.U_DateRgst = Utils.formate(new Date(d.createAt), "yyyy-mm-dd"); // 设置登记日期
         if(d.house_list.length > 1) {
             this.showUserDialog = !this.showUserDialog;
             this.customDatas = d.house_list;
