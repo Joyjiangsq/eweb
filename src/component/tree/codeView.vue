@@ -62,8 +62,10 @@ export default {
         datas:{
             default: function(){
                 return [
-                    {name:"国民包", id:"1", show:false, selected:false, subTypes:[{name:"瓷砖", id:"1",show:false, selected:false, subTypes:[{name:"大地地砖",selected:false,  id:"1"},{name:"墙砖", selected:false, id:"2"}]}]},
-                    {name:"国民包2", id:"2", selected:false, show:false, subTypes:[{name:"达到是", id:"1", show: false, selected: false}]}
+                    {lv1_name:"国民包", id:"1",pkg:"国民包",usable: true, show:false, selected:false, 
+                     lv2:[{name:"瓷砖", usable: true,id:"1",show:false, selected:false, 
+                     lv3:[{name:"大地地砖", usable:true, selected:false,  id:"1"}]
+                    },{name:"瓷砖", usable: true,id:"1",show:false, selected:false}]},
                 ]
             }
         }

@@ -9,7 +9,6 @@
                     <formtext labelname="备注："  :must="false" :read="false" formname="" :value.sync="" :validatestart="" @onvalidate=""></formtext>
                     <formrd labelname="启用：" :vertical="true" formname="" :value.sync="" :datas="[{label:'是', id:'Y', checked: false},{label:'否', id:'N', checked: false},]"  :validatestart="" @onvalidate=""></formrd>
                 </div>
-
           <!--</div>-->
     </div>
 </template>
