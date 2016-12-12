@@ -183,3 +183,15 @@ export default {
 import combobox from "component/combobox/combobox";
 
 </script>
+{
+        lv1_code: 'MC001', lv1_name: '国民包', usable: true, pkg: '国民包',
+        lv2: [
+            {
+                code: 'MC0011001', name: '瓷砖', usable: true,
+                lv3: [
+                    { code: 'MC00110011001', name: '大地砖', usable: true }
+                ]
+            },
+            { code: 'MC0011002', name: '厨柜', usable: false }
+        ]
+    }

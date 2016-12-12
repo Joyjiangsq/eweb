@@ -60,3 +60,7 @@
     display: inline-block;
     text-align: left;
 }
+
+.mcBox .rightBox .xuanpin{
+    margin-left: 0px;
+}
