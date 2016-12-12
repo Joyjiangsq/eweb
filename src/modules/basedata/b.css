@@ -1,9 +1,28 @@
 .mcBox {
-    margin: 20px;
-    padding: 0 20px;
+    /*margin: 20px;*/
+    /*padding: 0 20px;*/
     overflow: hidden;
 }
+.mcBox .mcSearch{
+
+}
+
+.mcBox .dBox{
+    width: 663px;
+}
+.itemList {
+  border-top: 1px dashed #ddd;
+  margin-bottom: 20px;
+}
+.titlerow {
+  margin-left: 38px;
+  margin-top: 20px;
+  border-left: 5px solid #ddd;
+  padding-left: 10px;
+    margin-bottom: 20px;
+}
 .mcBox .mcLeft {
+    margin-top: 10px;
     width: 220px;
     float: left;
     background: white;
@@ -33,7 +52,7 @@
 
 .mcBox .rightBox {
     text-align: center;
-    padding-top: 10%;
+    /*padding-top: 10%;*/
     color: gray;
 }
 
