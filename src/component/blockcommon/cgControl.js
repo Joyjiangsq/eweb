@@ -26,17 +26,18 @@ export default function men_c(d) {
         d.U_FModeling.tb_disabled = tag; // 前沿造型
     }
 
-    let lone = ["吊柜","地柜","高柜","半高柜","板件"]
+    let lone = ["吊柜","地柜","高柜","半高柜","柜门"]
     lone = lone.map(one => getLevelThreeTypeByName(one));
     if(lone.indexOf(d.Code) != -1) {
         depSpec(false);
+        depBs(false);
         return d
     }
 
-    let ltwo = ["柜门"]
+    let ltwo = ["板件"]
     ltwo = ltwo.map(one => getLevelThreeTypeByName(one));
     if(ltwo.indexOf(d.Code) != -1) {
-        depBs(false);
+        depSpec(false);
         return d
     }
 
