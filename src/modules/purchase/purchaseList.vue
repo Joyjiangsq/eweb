@@ -24,7 +24,7 @@
                               </span>
 
                               <span :class="css.wlBtn">
-                                <a href="one.U_PageLink" target="_blank" class="atype" v-if="one.U_PageLink"><icon iconname="icon-search"></icon>查看物流</a>
+                                <a :href="one.U_PageLink" target="_blank" class="atype" v-if="one.U_PageLink"><icon iconname="icon-search"></icon>查看物流</a>
                                 <span class='gray'><icon iconname="icon-search" v-else></icon>查看物流</span>
                               </span>
                           </div>

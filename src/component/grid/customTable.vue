@@ -57,7 +57,7 @@
 
 <script>
 /**
-  门的逻辑不好抽离  单独做一份门的业务组件
+  定制品的逻辑不好抽离  单独做一份 定制品的业务组件
 **/
 import Utils from "common/Utils";
 import tableCss from "./tablespec.css";

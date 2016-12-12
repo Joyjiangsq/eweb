@@ -1,0 +1,6 @@
+.addTarget {
+    cursor: pointer;
+}
+.selectedRow {
+  background-color: #fcf3e2;
+}
