@@ -1,18 +1,20 @@
 <template>
-    <div :class="epCss.empBox">
-       <parea></parea>
+    <div :class="css.Box">
+      <pagepanel>
+            <parea></parea>
+      </pagepanel>
     </div>
 </template>
 
 <script>
-
-import epCss from "./price.css";
+import pagepanel from "component/panel/pagepanel";
+import css from "./price.css";
 import Utils from "common/Utils.js";
 import parea from "component/priceblock/priceArea";
 export default {
   data: function () {
     return {
-      epCss,
+      css,
      
     }
   },
@@ -24,7 +26,7 @@ export default {
   methods: {
 
   },
-  components: {parea},
+  components: {parea,pagepanel},
 
 }
 </script>

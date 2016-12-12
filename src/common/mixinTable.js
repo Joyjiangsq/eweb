@@ -181,6 +181,7 @@ let tableBase = {
                 this.adapertData({data: datas.data.docs});
                 this.$set("totals", datas.data.count);
                 this.$dispatch("successload", datas.data.docs);
+                if(this.loadSuccess) this.loadSuccess();
             },(e) =>{
               this.$set("loading", false);
               this.$set("noresult", true);

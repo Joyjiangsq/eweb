@@ -72,7 +72,9 @@ export default {
         this.$set("oldIndex", index);
         this.$dispatch("rowclick", d);
     },
-
+    loadSuccess: function(){
+       this.oldIndex = 0;
+    },
     getText: function(one) {
       if(one == "") return "-"
       if(one == "undefined" || !one) return "-"

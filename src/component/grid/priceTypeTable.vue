@@ -33,7 +33,7 @@
               </tr>
               <tr v-if="scene == 'add_yes'">
                   <td  v-for="(index, sone) in headercaption">
-                    <span v-if="index == 0" :class="css.addTarget" @click="addOneHandler">
+                    <span v-if="index == 0" :class="css.addTarget" >
                         <btn @clickaction="btnClickHandler" :iconname="icon-add" >选择分类</btn>
                     </span>
                   </td>

@@ -1,8 +1,8 @@
 <template>
     <div :class="css.radio">
-        <span v-for="(index, one) in datas"  :class='[css.radione, one.checked?css.checked : css.unchecked]' @click="radioClick(index)">
-              <icon  iconname="icon-radio" :iconlabel="one.label" v-if="!one.checked"></icon>
-              <icon  iconname="icon-radio1" :iconlabel="one.label" v-else></icon>
+        <span v-for="(index, one) in datas"  :class='[css.radione, one.checked?css.checked : css.unchecked, vertical?css.vertical:""]' @click="radioClick(index)">
+              <icon  iconname="icon-radio" :iconlabel="one[label]" v-if="!one.checked"></icon>
+              <icon  iconname="icon-radio1" :iconlabel="one[label]" v-else></icon>
         </span>
     </div>
 </template>
@@ -22,12 +22,20 @@ export default {
       value:{
 
       },
+      vertical:{      // 是否垂直
+        type:Boolean,
+        default: false,
+      },
       read:{
         default: false
       },
       labelkey:{
         type:String,
         default:"id"
+      },
+      label:{
+        type:String,
+        default:"label"
       },
       events:{
         type: Object,
@@ -65,6 +73,7 @@ export default {
       }
 
       this.datas[index].checked = true;
+      this.$dispatch("radioclick", this.datas[index]);
       this.resetValues();
     },
 

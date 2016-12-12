@@ -1,3 +1,15 @@
 .Box .leftBox {
-    width: 200px
+    width: 15%;
+    float: left;
+}
+
+.Box .rightBox {
+    float: left;
+    width: 84%;
+    margin-left: 1%;
+}
+
+.Box {
+    overflow: hidden;
+    width: 100%;
 }

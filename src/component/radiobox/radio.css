@@ -17,3 +17,8 @@
 .radio .unchecked span {
   color: #c8c8c8;
 }
+
+.vertical {
+  display: block;
+  margin-bottom: 10px;
+}
