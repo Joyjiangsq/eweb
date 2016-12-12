@@ -58,7 +58,7 @@ export default {
     "start": function(v){
         this.endstartdate = new Date(this.start);
         this.$dispatch("rangechange", {name:"start", value:v});
-        this.end = ""; //
+        // this.end = ""; //
     },
     "end": function(v) {
         this.startstopdate = new Date(this.end);

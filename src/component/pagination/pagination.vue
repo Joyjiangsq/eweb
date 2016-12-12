@@ -6,7 +6,7 @@
                     <span :class='pageCss.pageIndex'>
                           <span v-for="one in pageArry"  @click="clickPage(one)" :class="one == curpage?pageCss.active:''">{{one}}</span>
                     </span>
-                    <span :class='nextBtn'  @click="clickPage(curpage+1)">下一页</span>
+                    <span :class='nextBtn'  @click="clickPage(curpage*1+1)">下一页</span>
                     <span :class='lastBtn'  @click="clickPage(tPages)">尾页</span>
               </div>
               <div :class="pageCss.gotoBox">

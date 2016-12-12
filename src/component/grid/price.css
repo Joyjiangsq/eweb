@@ -4,3 +4,15 @@
 .selectedRow {
   background-color: #fcf3e2;
 }
+.errorRow {
+  color: red;
+  color: red;
+  font-size: 12px;
+  display: block;
+}
+.iptBox .errorRow {
+  /*line-height: 0;*/
+}
+.errorHappend {
+    border: 1px solid red;
+}
