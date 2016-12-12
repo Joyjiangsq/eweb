@@ -136,7 +136,7 @@ export default {
     // 成功回调
     successHandler: function(d) {
         if(!Utils.getUserInfo().Street) {
-          showTips(this.$store, {type:"warn", msg:"分站地址未维护，无法下单，请联系总监供应链部门维护更新分站信息", time: 4000});
+          showTips(this.$store, {type:"warn", msg:"分站地址未维护，无法下单，请联系总部供应链部门维护更新分站信息", time: 4000});
           return false;
         }
         // console.log(d);

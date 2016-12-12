@@ -114,10 +114,10 @@ export default {
           let beiginTimes = this.startdate.getTime();
           for(var i=startDate; i <= endDate; i++) {
             var times = new Date(year, month, i).getTime();
-            if(times > stopTimes || times < (beiginTimes - 3600*24*1000)) dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.closeDay});
+            if(times > stopTimes || times < (beiginTimes - 3600*12*1000)) dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.closeDay});
             else if(i == curDay) {
               if(year == new Date(this.value).getFullYear() && month == new Date(this.value).getMonth())   dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay, active: this.datepCss.active});
-
+               else dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay});
             }
             else dateArry.push({ day: i,year: year, month: month+1,tag:this.datepCss.curDay});
           }  // 整月
@@ -126,12 +126,12 @@ export default {
           let oneDay = 3600*24*1000;
           for(var i=0; i < startDay; i++) {       // 补前
               let rangeDay = oneDay + oneDay*i; let preDay = startTimes - rangeDay; let preDateObj = new Date(preDay);
-              dateArry.unshift({day: preDateObj.getDate(),year: preDateObj.getFullYear(),month: preDateObj.getMonth()+1,tag:this.datepCss.prevDay});
+              dateArry.unshift({day: preDateObj.getDate(),year: preDateObj.getFullYear(),month: preDateObj.getMonth()+1,tag:this.datepCss.prevDay});  //this.datepCss.prevDay
           }
-
+          console.log(6-endDay);
           for(var i=0; i < 6-endDay; i++) {     // 补后
               let rangeDay = oneDay + oneDay*i; let nextDay = endTimes + rangeDay; let nextDateObj = new Date(nextDay);
-              dateArry.push({day: nextDateObj.getDate(),year: nextDateObj.getFullYear(),month: nextDateObj.getMonth()+1, tag:this.datepCss.nextDay});
+              dateArry.push({day: nextDateObj.getDate(),year: nextDateObj.getFullYear(),month: nextDateObj.getMonth()+1, tag:this.datepCss.nextDay}); //this.datepCss.nextDay
           }
 
           let l = dateArry.length/7;          let datemap = [];

@@ -82,6 +82,10 @@ export default {
             url:"/buildPrice",name:"施工包一口价对照表"
         }]
       })
+      this.datamenu.push({name:"报价管理", icon:"icon-purchase",show: false,subMenus:[{
+           url:"/priceDemo",name:"报价模板"
+       }]
+     })
       let path = this.$route.name;
       for (let i = 0; i < this.datamenu.length; i++) {
             let one = this.datamenu[i];
@@ -94,7 +98,7 @@ export default {
       }
       var self = this;
 
-     
+
     },
 
     computed: {

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-
+// 特殊表格
 import Utils from "common/Utils";
 import tableCss from "./tablespec.css";
 import icon from "component/sprite/icon";

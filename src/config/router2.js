@@ -37,6 +37,11 @@ import materialView from 'modules/basedata/material.vue';
 import materialCateryView from 'modules/basedata/materialCatery.vue';
 import supplierView from 'modules/basedata/supplier.vue';
 
+// 报价模板
+import priceDemoView from "modules/pricedemo/priceDemo.vue";
+import priceTransView from "modules/pricedemo/priceTrans.vue";
+import priceAddView from "modules/pricedemo/priceAdd.vue";
+
 import tbView from 'modules/tbmgr/tbMgr.vue';
 import urView from 'modules/urgent/urgentMgr.vue'
 
@@ -194,8 +199,19 @@ export function routerStart(router) {
                     }
                   }
                 },
-
-
+                // 报价模板-----------------------------------------------------------
+                "/priceDemo": {
+                  name:"pricedemo",
+                  component:priceTransView,
+                  subRoutes: {
+                    "/":{
+                      component: priceDemoView
+                    },
+                    "/priceAdd": {
+                        component: priceAddView
+                    }
+                  }
+                },
                 // 报表模块--------------------------------------------------------
                 '/tbmgr': {
                   name:"tbmgr",
