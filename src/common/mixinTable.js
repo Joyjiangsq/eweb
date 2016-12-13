@@ -103,6 +103,7 @@ let tableBase = {
               return newa;
           },
           clickOne: function(one, index){
+
           },
           checkedAll: function(){
               if(this.all) {
@@ -191,7 +192,9 @@ let tableBase = {
           operatorHandler(id, action){
               // this.$dispatch("table_action", {id: id, action:action}); // 发射事件
               this.events.operatorHandler.call(this._context, action, id);
-          }
+          },
+
+          
         },
         watch:{
           "load": function(){

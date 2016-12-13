@@ -1,5 +1,6 @@
 <template>
     <div :class="css.Box">
+        {{glData | json}}
         <div :class='css.leftBox'>
             <lefttb :headercaption="leftHeader" @rowclick="rowclick" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="glData" :events="tableEventsLeft"></lefttb> 
         </div>
@@ -8,6 +9,7 @@
             <righttb :headercaption="rightHeader" @selectchange="selectchangeHandler"  scene="add_yes" :datas="rightDatas.sub_list" :events="tableEventsRight" v-else></righttb>
         </div>
         <typedialog :show="showTypeDialog" @onecheck="typeCheck"></typedialog>
+        <showselect :show="showSelectDialog"></showselect>
     </div>
 </template>
 
@@ -19,6 +21,8 @@ import lefttb from "component/grid/priceWhereTable";
 import righttb from "component/grid/priceTypeTable";
 import typedialog from "./typeDialog";
 import adapter_left from "./adapterLeft.js";
+import showselect from "component/blockcommon/selectProductDialog";
+
 export default {
   props: {
     action:{
@@ -38,6 +42,7 @@ export default {
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
       rightDatas:[],
       showTypeDialog: false, // 分类型对话框
+      showSelectDialog: false,
       tableEventsLeft:{
         operatorRender: function(d){
           return [{name:"删除", action:"delete",icon:"icon-delete", data:d}];
@@ -53,7 +58,9 @@ export default {
          },
 
          operatorHandler: function(d){
-              
+              if(d.action == "select") {
+                this.showSelectDialog = !this.showSelectDialog;
+              }
          }
       }
     }
@@ -85,7 +92,7 @@ export default {
         this.showTypeDialog = !this.showTypeDialog
     }
   },
-  components: {lefttb,righttb,typedialog},
+  components: {lefttb,righttb,typedialog,showselect},
 
 }
 </script>

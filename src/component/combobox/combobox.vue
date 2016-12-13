@@ -61,6 +61,11 @@ export default {
 
       adapter: {
         type: Function
+      },
+
+      attach: {
+        type: Object,
+        default: () => {}
       }
   },
   data: function () {
@@ -133,7 +138,7 @@ export default {
       if(this.value == "请选择") this.value = "";
       this.changeDropAction();
       this.$dispatch("dropclick", this.value);
-      this.$dispatch("itemclick", item);
+      this.$dispatch("itemclick", item, this.attach);
     },
 
     loadData(p) {
@@ -179,7 +184,9 @@ export default {
           this.defaultInfo[this.labelname] = "请选择";
           this.value = "";
       }
-     else  this.resetList();
+     else  {
+       this.resetList();
+     }
     },
     "value":function(){
         this.setDef();

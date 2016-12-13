@@ -4,7 +4,7 @@
         <thead>
               <tr>
                 <th v-for="tone in headercaption" :style="tone.style">
-                      <!-- <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all"> -->
+                       <input type="checkBox" name="name" value="" v-if="tone.checkbox" :class='tableCss.checkTag' @click="checkedAll" v-model="all"> 
                       {{tone.name}}
                       <span  v-if="tone.sort">升序</span>
                       <span  v-if="tone.sort">降序</span>
@@ -15,7 +15,7 @@
               <tr v-for="(order, done)  in dataList" :class="[done.selected && needselected?tableCss.selectedRow:'',order%2 == 1? tableCss.active:'']" @click="clickRow(order, done)">
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
-                          <!-- <input type="checkBox" name="name" value="" v-if="sone.checkbox"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag"  @click="clickOne(done[codevalue])"> -->
+                           <input type="checkBox" name="name" value="" v-if="sone.checkbox && showCheck(sone, done)"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag"  @click="clickOne(done[codevalue])"> 
                           <span v-if="sone.type == 'data'" :style="sone.style" :class='[tableCss.inoneitem, sone.attr == "price"?"price":""]'> {{{getText(done[sone.labelValue])}}}</span>
                           <span v-if="sone.type == 'component' || sone.type == 'componentspec'" >
                               <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
@@ -65,6 +65,12 @@ export default {
     }
   },
   methods:{
+    showCheck: function(sone, done){
+        if(sone.validateFun) {
+          return sone.validateFun(done);
+        }
+        else return true
+    },
     clickRow: function(index, d) {
         if(d.selected !== false) return false
         this.dataList[this.oldIndex].selected = false;
