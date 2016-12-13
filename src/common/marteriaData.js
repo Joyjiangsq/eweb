@@ -40,3 +40,13 @@ export const barData = {
         id: 7
     }
 }
+
+export const codeData = [
+    {label:"瓷砖", code:"111"},
+    {label:"地板", code:"115"},
+    {label:"洁具", code:"117"},
+    {label:"集成吊顶", code:"118"},
+    {label:"门", code:"116"},
+    {label:"厨柜", code:"121"},
+    {label:"装修辅料", code:"119"},
+    {label:"施工辅材", code:"120"}]

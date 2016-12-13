@@ -31,7 +31,8 @@
 
             <!--下拉选择-->
             <span v-if="one.type == 'combobox'"  :class="sCss.sone"><label for="">{{one.labelcaption}}</label>
-                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid" :params="one.params"  :datas="one.datas || []" :url="one.url" :value.sync="params[one.keyname]"></combobox>
+                <combobox v-if="!one.fun" :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid" :params="one.params"  :datas="one.datas || []" :url="one.url" :value.sync="params[one.keyname]"></combobox>
+                <combobox :labelname="one.labelname" :classname="sCss.dself" :keyid="one.keyid"  @itemclick="combClick" :attach="one" :params="one.params"  :datas="one.datas || []" :url="one.url" :value.sync="params[one.keyname]" v-else></combobox>
             </span>
 
             <span :class='sCss.searchbtn' v-if="needShow(index)"><btn @click="searchHandler" iconname="icon-search" btnname="btn-primary">查询</btn></span>
@@ -86,7 +87,9 @@ export default {
     pathname:{
         type: String
     },
-
+    adapter:{
+        default: false
+    },
     events:{
         type:Object,
         default: function() {return {onSearch: function(){}}}
@@ -104,6 +107,7 @@ export default {
 
   },
   ready: function () {
+    console.log(this.datas);
   },
   created(){
     for(var i=0; i < this.datas.length; i++) {
@@ -131,6 +135,9 @@ export default {
   },
   attached: function () {},
   methods: {
+      combClick: function(d, at) {
+        if(at.validaFor) at.validaFor.call(this._context, d)
+      },
       dimClick: function(d) {
         this.$set("params.dimLabel", d.name);
       },
@@ -138,6 +145,7 @@ export default {
 
       },
       searchHandler: function(e){
+        
         this.events.onSearch.call(this._context, this.params);
         let cPage = this.$route.query.page;
         if(cPage) this.params.page = cPage;
@@ -163,7 +171,10 @@ export default {
           console.log(v);
       },
       deep: true
-    }
+    },
+    "adapter": function(){
+      this.events.adapterSearch.call(this._context, this.params);
+    } 
   }
 }
 </script>

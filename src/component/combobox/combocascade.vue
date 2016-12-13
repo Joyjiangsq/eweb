@@ -2,7 +2,7 @@
     <div :class="cascadeCss.cascadeBox">
                   <combobox labelname="name" :classname="cascadeCss.limit" keyid="name" :read = "read"  :value.sync="provient" :datas="parry"  @dropclick="pClick"></combobox>
                   <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="cname"  :datas="carry"  @dropclick="cClick" ></combobox>
-                  <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
+                  <combobox labelname="area" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
 
     </div>
 </template>
@@ -80,7 +80,7 @@ export default {
       for (var i = 0; i < this.carry.length; i++) {
          var one = this.carry[i];
          if(one.name == value) {
-             this.aarry = one.areas;
+             this.aarry = one.area;
          }
       }
     },
