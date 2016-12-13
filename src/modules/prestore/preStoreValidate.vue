@@ -123,13 +123,13 @@ export default {
       },
       tableEvents:{
         operatorRender: function(d){
-          if(!d.DocNum) return []
-          return [{name:"查看物流",action:"look",icon:"icon-edit", data: d.DocNum}]
+          if(!d.U_PurchaseNum) return []
+          return [{name:"查看物流",action:"look",icon:"icon-edit", data: d.U_PurchaseNum}]
         },
         operatorHandler: function(d){
           if(d.action == "look") {
-            window.open(d.U_PageLink);
-            this.$http.get(this.$Api + "/purchases/otms?sap_id="+d.data).then((res)=>{
+            // window.open(d.U_PageLink);
+            this.$http.get(this.$Api + "/purchases/otms?U_PurchaseNum="+d.data).then((res)=>{
                     let r = res.json();
                     if(r.code == "200") {
                         if(r.data) {

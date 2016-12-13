@@ -24,7 +24,7 @@
                               </span>
 
                               <span :class="css.wlBtn">
-                                <span  class="atype" v-if="one.DocNum" @click="clickHandler(one.DocNum)"><icon iconname="icon-search"></icon>查看物流</span>
+                                <span  class="atype" v-if="one.U_PurchaseNum" @click="clickHandler(one.U_PurchaseNum)"><icon iconname="icon-search"></icon>查看物流</span>
                                 <span class='gray'  v-else><icon iconname="icon-search"></icon>查看物流</span>
                               </span>
                           </div>
@@ -80,7 +80,7 @@ export default {
         return utils.getCateryCname(t);
     },
     clickHandler: function(id) {
-        this.$http.get(this.$Api+ "purchases/otms?sap_id="+id).then((res)=> {
+        this.$http.get(this.$Api+ "purchases/otms?U_PurchaseNum="+id).then((res)=> {
             let d = res.json();
             console.log(d);
             if(d.code == "200") {
