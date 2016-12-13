@@ -1,6 +1,5 @@
 <template>
     <div :class="css.Box">
-        {{glData | json}}
         <div :class='css.leftBox'>
             <lefttb :headercaption="leftHeader" @rowclick="rowclick" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="glData" :events="tableEventsLeft"></lefttb> 
         </div>
@@ -38,7 +37,9 @@ export default {
       rightHeader:[{type:"operator", name:"操作"},{name:"分类编号", labelValue:"catery_code", type:"data"},{name:"分类名称", labelValue:"catery_name", type:"data"},
                   {name:"产品名称", labelValue:"product_name", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
                   {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
-                  {name:"单位", labelValue:"Unit", type:"data"}],
+                  {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
+                  {name:"差价", labelValue:"diff_price", type:"data"}, {name:"金额", labelValue:"price", type:"edit"},
+                  {name:"备注", labelValue:"remark", type:"edit"}],
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
       rightDatas:[],
       showTypeDialog: false, // 分类型对话框

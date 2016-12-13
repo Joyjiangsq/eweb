@@ -34,10 +34,10 @@
                           </div>
                           <div slot="panelContent">
                             <div :class='inCss.twoBox'>
-                                  <div :class="inCss.rowOne">
-                                      <span :class='inCss.inrow'>销售管理操作手册.ppt</span>
-                                      <span :class='inCss.date'>2016/06/29</span>
-                                  </div>
+                                  <a :class="inCss.rowOne" v-for="one in parray" target="_blanck" :href="one.url">
+                                      <span :class='inCss.inrow'>{{one.desc}}</span>
+                                      <span :class='inCss.date'>{{one.createAt | dateformate 'yyyy/mm/dd'}}</span>
+                                  </a>
                             </div>
                           </div>
                       </panel>
@@ -51,17 +51,17 @@
                                 <span :class='inCss.indexTile'><icon iconname="icon-notice"></icon></span>
                                 <span :class='inCss.titleOne'>通知公告</span>
                               </span>
-                             <div :class='inCss.operator'>
+                             <div :class='inCss.operator' >
                                   <icon iconname="icon-left3"></icon>
                                   <icon iconname="icon-right3"></icon>
                              </div>
                       </div>
                       <div slot="panelContent">
                         <div :class='inCss.threeBox'>
-                            <div :class="inCss.rowOne">
-                              <span :class='inCss.inrow'>分站下单.doc</span>
-                              <span :class='inCss.date'>2016/06/29</span>
-                            </div>
+                            <a :class="inCss.rowOne"  v-for="one in tarray" target="_blanck" :href="one.url">
+                              <span :class='inCss.inrow'>{{one.desc}}</span>
+                              <span :class='inCss.date'>{{one.createAt | dateformate 'yyyy/mm/dd'}}</span>
+                            </a>
                         </div>
                       </div>
                   </panel>
@@ -91,7 +91,9 @@ export default {
       inCss,
       curTabIndex:0,
       Utils: Utils,
-      tabArray:[]
+      tabArray:[],
+      parray:[],
+      tarray:[]
     }
   },
   computed: {
@@ -101,6 +103,7 @@ export default {
        $("."+this.inCss.twoBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
     })
     this.permissionAdapert(this.tabArray);
+    this.getStaticDoc();
   },
 
   route:{
@@ -110,6 +113,17 @@ export default {
   },
 
   methods: {
+    getStaticDoc: function(){
+        this.$http.get(this.$Api + "training").then((res)=>{
+              let one = res.json();
+              this.parray = one.data.docs;
+        })
+
+        this.$http.get(this.$Api + "announcement").then((res)=>{
+              let one = res.json();
+              this.tarray = one.data.docs;
+        })
+    },
     permissionAdapert: function(arr){
       //allRows 
         let userInfo = this.Utils.getUserInfo();

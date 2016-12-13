@@ -36,7 +36,7 @@ export default {
     },
     params:{
       type: Object,
-      default: {}
+      default: () => {}
     }
   },
   data: function () {

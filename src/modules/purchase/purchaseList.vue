@@ -24,8 +24,8 @@
                               </span>
 
                               <span :class="css.wlBtn">
-                                <a :href="one.U_PageLink" target="_blank" class="atype" v-if="one.U_PageLink"><icon iconname="icon-search"></icon>查看物流</a>
-                                <span class='gray'><icon iconname="icon-search" v-else></icon>查看物流</span>
+                                <span  class="atype" v-if="one.DocNum" @click="clickHandler(one.DocNum)"><icon iconname="icon-search"></icon>查看物流</span>
+                                <span class='gray'  v-else><icon iconname="icon-search"></icon>查看物流</span>
                               </span>
                           </div>
                           <div :class="css.tbbox" v-if="one.U_OrderStatus == 'e站驳回' || one.U_OrderStatus == '待采购'" v-show="one.show">
@@ -78,6 +78,20 @@ export default {
   methods:{
     getTypeName: function(t) {
         return utils.getCateryCname(t);
+    },
+    clickHandler: function(id) {
+        this.$http.get(this.$Api+ "purchases/otms?sap_id="+id).then((res)=> {
+            let d = res.json();
+            console.log(d);
+            if(d.code == "200") {
+                if(d.data) {
+                  window.open(d.data);
+                }
+            }
+            else {
+
+            }
+        })
     },
     toDetailHandler: function(one) {
         this.$router.go({path:"purchase/purchasedetail", query:{orderid: one.U_PurchaseNum}})

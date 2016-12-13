@@ -123,12 +123,23 @@ export default {
       },
       tableEvents:{
         operatorRender: function(d){
-          if(!d.U_PageLink) return []
-          return [{name:"查看物流",action:"look",icon:"icon-edit", data: d}]
+          if(!d.DocNum) return []
+          return [{name:"查看物流",action:"look",icon:"icon-edit", data: d.DocNum}]
         },
         operatorHandler: function(d){
           if(d.action == "look") {
             window.open(d.U_PageLink);
+            this.$http.get(this.$Api + "/purchases/otms?sap_id="+d.data).then((res)=>{
+                    let r = res.json();
+                    if(r.code == "200") {
+                        if(r.data) {
+                          window.open(r.data);
+                        }
+                    }
+                    else {
+
+                    }
+            })
           }
         }
       },

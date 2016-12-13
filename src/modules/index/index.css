@@ -7,6 +7,8 @@
 .rowOne {
     margin-bottom: 8px;
     padding: 0 15px;
+    display: block;
+    color: #333;
     cursor: pointer;
 }
 .tabone {}
