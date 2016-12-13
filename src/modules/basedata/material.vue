@@ -14,7 +14,7 @@
                     <span :class='css.operBtn' @click="addMenu"><icon iconname="icon-add"></icon></span>
                  </div>
                  <div :class='css.codeBox'>
-                    <codeview  url="material-category" :params="codeParams" :datas="datas" @treeclick="treeClickHandler" @addclick="addClickHandler" @editclick="editClickHandler" @deleteclick="deleteClickHandler"></codeview>
+                    <codeview  url="material-category" :params="codeParams" :datas="datas" :reload="reload" @treeclick="treeClickHandler" @addclick="addClickHandler" @editclick="editClickHandler" @deleteclick="deleteClickHandler"></codeview>
                  </div>
               </div>
               <div  :class="css.mcRight">
@@ -24,22 +24,26 @@
                     <pg :totals="totals" :curpage="searchParams.page"></pg>
                  </div>
               </div>
+              <div style="clear:both"></div>
       </pagepanel>
       <!--新增材料分类对话框-->
         <materialitem :formData="newData" @success="addSuccess" :show="showAdd"></materialitem>
         <!--选品对话框-->
-        <dialog :flag.sync="showSelectDialog" title="选品" >
+        <selectproductdialog :show="showSelectDialog" :params="{}" ></selectproductdialog>
+
+        <!--<dialog :flag.sync="showSelectDialog" title="选品" >
             <div slot="containerDialog">
                 <chuguitb :hash="false" :toload="toload" @addone="addoneHandler" :listdata.sync="vlist"></chuguitb>
             </div>
             <div slot="footerDialog"></div>
-        </dialog>
+        </dialog>-->
        <!--删除提示-->
         <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
   </div>
 </template>
 
 <script>
+import selectproductdialog from "component/blockcommon/selectProductDialog";
 import dialogtip from "component/dialog/dialogTip";
 import btn from "component/sprite/button.vue";
 import chuguitb from "component/block/tblist/chuguiList";
@@ -60,41 +64,57 @@ export default {
     data(){
       return {
         css,
+        reload: false,
         showSelectDialog: false,
         isEAdmin: false,
         moduleName:"材料管理",
         headercaption: headerData,
         showFormDialog: false,
         hideDialogIn: true,
+        curAction:"add",             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
         btnsData:[{name:"新增", icon:"icon-add", action:"add"}],
         showAddMa: false,
-        showAdd: false,
+        showAdd: false,     //弹框显示隐藏
         addTag:false,
         deleteTag: false,         // 删除确认弹框显示隐藏
         validate: false,            // 表单验证动作的开关
         selectedLevel: 0,          //默认添加材料的等级
         datas: [],
-        newData1: {},
         detail:{name:'',id:''},
-        codeParams: {}, 
+        codeParams: {},
+        index:1, 
+        actionMap:{     //根据selectedLevel不同映射
+            0:{
+                url:"material-category/lv1",
+                params:{}
+            },
+            1:{
+                url:"material-category/lv2",
+                params:{}
+            },
+            2:{
+                 url:"material-category/lv3",
+                params:{}
+            }
+        },
         newData: {}, //materialItem組件
         tableEvents:{
-        operatorRender: function(d){
-          return [{name:"编辑",action:"edit",icon:"icon-edit", data: d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
-        },
-        operatorHandler: function(d){
-          this.$set("curItem", d.data);
-          if(d.action == "delete") this.$set("deleteTag", !this.deleteTag);
-          else if (d.action == "edit") {
-            this.$set("optitle", "编辑");
-            this.$set("curAction", "edit");
-            this.addParams.CardName = d.data.CardName;
-            this.addParams.phone = d.data.phone;
-            this.addParams.roles = d.data.roles;
-            this.flagdep = !this.flagdep;
-          }
+            operatorRender: function(d){
+            return [{name:"编辑",action:"edit",icon:"icon-edit", data: d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
+            },
+            operatorHandler: function(d){
+              if(d.action == "edit") {
+                this.$set("curAction", "edit");
+                // this.formData = Utils.cloneObj(d.data);
+                // this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
+              }
+              else if(d.action == "add") {
+                this.$set("curAction", "add");
+                // this.formData = Utils.cloneObj(d.data);
+                // this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
+              }
         }
-      },
+        },
         btnEvents:{
             btnClick: function(d){
                 if(d.action == "add") this.$set("showFormDialog", !this.showFormDialog);
@@ -120,38 +140,39 @@ export default {
     ready(){
     },
     methods:{
+        //materialItem组件弹框表单验证成功
         addSuccess: function() {
-            if(this.selectedLevel ==0){
-            this.$http.post(this.$Api+"material-category/lv1",JSON.stringify(this.newData)).then((res) => {
-                    var d = res.json();
-                    console.log(d);
-                    this.self = true;
-                    this.showMsg("success", "新增成功");
-                    window.onbeforeunload  = function(){}
-                    this.$router.go({path:"/material"})
-                });
-            }else if(this.selectedLevel == 1){
-                console.log('2级增加');
-                console.log(JSON.stringify(this.newData1));
-                this.$http.post(this.$Api+"material-category/lv2",JSON.stringify(this.newData)).then((res) => {
-                    var d = res.json();
-                    console.log(d);
-                    this.self = true;
-                    this.showMsg("success", "新增成功");
-                    window.onbeforeunload  = function(){}
-                    this.$router.go({path:"/material"})
-                });
-            }else if(this.selectedLevel == 2){
-                 console.log('3级增加');
-                this.$http.post(this.$Api+"material-category/lv3",JSON.stringify(this.newData2)).then((res) => {
-                    var d = res.json();
-                    console.log(d);
-                    this.self = true;
-                    this.showMsg("success", "新增成功");
-                    window.onbeforeunload  = function(){}
-                    this.$router.go({path:"/material"})
-                });
-            }
+            if(this.curAction == "add") {
+                    let action = this.actionMap[this.selectedLevel];
+                    Object.assign(this.newData, action.params);   //将参数优先
+                    if(this.selectedLevel >0){
+                        delete this.newData.pkg
+                    }
+                    this.$http.post(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
+                        var d = res.json();
+                        this.showMsg("success", "新增成功");
+                        this.showAdd = false;
+                        this.newData ={};
+                        this.getData();
+                    });
+                }else {
+                    let action = this.actionMap[this.selectedLevel];
+                    Object.assign(this.newData, action.params);
+                    if(this.selectedLevel >0){
+                        delete this.newData.pkg
+                    }
+                    this.$http.put(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
+                        var d = res.json();
+                        this.showMsg("success", "新增成功");
+                        this.showAdd = false;
+                        this.newData ={};
+                        this.getData();
+                    });
+                }
+        },
+        //添加材料分类之后再次刷新渲染三级
+        getData: function(){
+            this.reload = !this.reload; 
         },
         addFail: function() {
             this.addTag = false;
@@ -160,11 +181,13 @@ export default {
 
         },
         toSelect: function(){
-            this.$set("toload", true);
+            // this.$set("toload", true);
             this.showSelectDialog = !this.showSelectDialog;
         },
         addMenu: function(){
             this.showAdd = !this.showAdd;
+            this.selectedLevel = 0;
+            this.index = 1;
         },
         treeClickHandler: function(d) {
             console.log(d);
@@ -180,44 +203,59 @@ export default {
         },
         addClickHandler: function(d) {
             // 设置参数
-            this.addMenu();
+             this.addMenu();
+             if(d.action="add"){
+                this.$set("curAction", "add");
+             }
             if(d.level == 1){
-                console.log('000');
-                console.log(d);
-                
+                //添加參數lv1_code
                 this.newData.lv1_code = d.one.code;
-                // console.log(this.newData.lv1_name);
-                // console.log('222');
-                // d.sone = {name:'',};
-                // var newdata = { name: this.newData.lv1_name, usable: this.newData.usable};
-                // this.newData1   = newdata;
-                // console.log('选择的等级是'+d.level);
                 this.selectedLevel =1;
-                // this.addSuccess()
             }else if(d.level ==2){
-                var newdata = { name: newData.name, usable: newData.usable};
-                this.newData2 = newdata;
+                this.newData.lv1_code = d.one.code;
+                this.newData.lv2_code = d.sone.code;
                 this.selectedLevel =2;
-                // this.addSuccess()
             }
+            
         },
         deleteClickHandler: function(d) {
 
         },
         editClickHandler: function(d) {
             console.log(d);
-            if(d.level == 1) this.resetData(d.one)
-            else if(d.level == 2) this.resetData(d.sone)
-            else if(d.level == 3) this.resetData(d.mone);
             this.addMenu();
+            if(d.action="edit"){
+                this.$set("curAction", "edit");
+             }
+            //编辑时显示原数据
+             if(d.level == 1) {
+                 this.selectedLevel =0;
+                  this.newData = d.one;
+                //  {lv1_code: 'MC101',name: '国民包', usable: true, pkg: '国民包'}
+                 this.newData.lv1_code = d.one.code;
+             }else if(d.level == 2) {
+                 this.selectedLevel =1;
+                 this.newData = Utils.cloneObj(d.sone);
+                 if(this.newData.lv3) delete this.newData.lv3;
+                 if(this.newData.code) delete this.newData.code;
+                 if(!this.newData.selected) delete this.newData.selected;
+                 if(!this.newData.show) delete this.newData.show;
+                //  {lv2_code: 'MC101101', name: '瓷砖', usable: true}
+                 this.newData.lv2_code = d.sone.code;
+             }else if(d.level == 3) {
+                 console.log(d);
+                 console.log(d.index);
+                 this.selectedLevel =2;
+                 this.newData = d.mone;
+                 // {idx: 1, lv2_code: 'MC1011001', name: '大地砖', usable: true}
+                this.newData.lv2_code = d.sone.code; 
+                this.newData.idx = d.index;   
+            }
+
+            
         },
         resetData: function(d) {
-            //编辑时显示原数据
             console.log(d);
-            // this.materialList.lv1_name = d.lv1_name;
-            // this.materialList.pkg = d.pkg;
-            // this.materialList.usable = d.usable;
-            // this.materialList.ValidFor = d.ValidFor;
         },
         confirmDelete: function(d){
             if(d.action == "confirm") {
@@ -230,19 +268,7 @@ export default {
         },
 
     },
-    components:{codeview, icon,dialogtip,materialitem,chuguitb,btn}
+    components:{codeview, icon,dialogtip,materialitem,chuguitb,btn,selectproductdialog}
 
 }
 </script>
-{
-        lv1_code: 'MC001', lv1_name: '国民包', usable: true, pkg: '国民包',
-        lv2: [
-            {
-                code: 'MC0011001', name: '瓷砖', usable: true,
-                lv3: [
-                    { code: 'MC00110011001', name: '大地砖', usable: true }
-                ]
-            },
-            { code: 'MC0011002', name: '厨柜', usable: false }
-        ]
-    }

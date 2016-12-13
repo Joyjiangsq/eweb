@@ -30,12 +30,12 @@
                         <icon iconname="icon-delete"  @click="deleteHandler(2,one, sone)"></icon>
                     </span>
                 </span>
-                <div v-for="mone in sone.lv3" v-show="sone.show"  :class="css.lthreeBox">
+                <div v-for="(index,mone) in sone.lv3" v-show="sone.show"  :class="css.lthreeBox">
                     <span  @click="oneClickHandler(3,one, sone, mone)"  :class='[mone.selected?css.selected:"", css.itemOne]'>
                         <span :class='["elip", css.lText]'>{{mone.name}}</span>
                         <span :class='css.addBtn' v-if="edit">
-                            <icon iconname="icon-edit"  @click="editHandler(3,one, sone, mone)"></icon>
-                            <icon iconname="icon-delete"  @click="deleteHandler(3,one, sone, mone)"></icon>
+                            <icon iconname="icon-edit"  @click="editHandler(3,one, sone, mone,index)"></icon>
+                            <icon iconname="icon-delete"  @click="deleteHandler(3,one, sone, mone,index)"></icon>
                         </span>
                     </span>
                 </div>
@@ -53,6 +53,9 @@ export default {
         level: {
             default: 3,
             type: Number
+        },
+        reload: {
+            default: false
         },
         params: {
             default: () => {},
@@ -132,12 +135,13 @@ export default {
             });
         },
         // 编辑
-        editHandler: function(level, one, sone, mone) {
+        editHandler: function(level, one, sone, mone,index) {
             this.$dispatch("editclick", {
                 level: level,
                 one: one,
                 sone: sone,
-                mone:mone
+                mone:mone,
+                index:index
             });
         },
         // 删除
@@ -156,7 +160,11 @@ export default {
                 this.oldData = one;
         }
     },
-    components:{icon}
-
+    components:{icon},
+    watch: {
+        "reload": function(){
+            this.getData();
+        }
+    }
 }
 </script>
