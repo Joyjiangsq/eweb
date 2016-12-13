@@ -1,5 +1,6 @@
 <template>
     <div :class="epCss.userBox">
+        {{addFormData | json}}
         <pagepanel>
               <div :class="epCss.userSearch">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>

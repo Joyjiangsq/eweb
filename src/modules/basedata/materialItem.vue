@@ -1,14 +1,16 @@
 <template>
     <div :class="css.itemList">
-          <div class="" v-for="(index, formData) in materialList">
-                <span :class="css.titlerow">材料信息</span>
-                <div>
-                    <formtext labelname="分类名称：" :must="false" :read="false" formname="" :value.sync="formData.lv1_name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formcb keyid="name" labelname="所属包：" :read="curaction == 'detail'" dropfixed="dropfixed" :value.sync="formData.pkg"  keyname="name" :must="false" formname="" :datas="" :validatestart="validate" @onvalidate="validateHandler"></formcb>
-                    <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formData.usable" :datas="[{label:'是', id:'Y', checked: true},{label:'否', id:'N', checked: false},]"  :validatestart="newForm.validate" @onvalidate="newForm.validateHandler"></formrd>
+                  <!--新增材料分类对话框-->
+      <dialog :flag.sync="show" title="新增材料" @dialogclick="dialogClickHandler">
+                <div  slot="containerDialog">
+                        <span :class="css.titlerow">材料信息</span>
+                         <div>   {{formdata | json}}
+                            <formtext labelname="分类名称：" :vertical="true"  formname="" :value.sync="formdata.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                            <formcb keyid="name" labelname="所属包：" dropfixed="dropfixed" :vertical="true"   :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+                            <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formdata.usable" :datas="[{label:'是', id:'Y', checked: true},{label:'否', id:'N', checked: false},]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                        </div>
                 </div>
-          </div>
-    </div>
+        </dialog>
 </template>
 
 <script>
@@ -18,54 +20,50 @@ import formrd from "component/form/formRadio";
 import formtext from "component/form/formText";
 import btn from "component/sprite/button";
 import icon from "component/sprite/icon";
+import {packageType} from "config/const.js";
+import dialog from "component/dialog/dialog";
 export default {
   props:{
-    materialList:{
-      type: Array,
-      default:() => [{lv1_name:"", pkg:"",usable:false,}]
-    },
+    formdata:{name:"",pkg:"",usable:false},
+    show:{
+        default: false
+    }
   },
   data: function () {
     return {
       css,
-    //   formData:{typeName:'',ownerBag:'',remark:'',ValidFor:''}
-    newForm:{
-          validate: false,
-          validate1: false,
-          validateHandler: function(d) {
-              if(d.res == "fail") {
-                  this.addTag = false;
-              }
-          },
-          validateHandler1: function(d) {
-              if(d.res == "fail") {
-                  this.editTag = false;
-              }
-          }
-      },
+      validate: false, //验证开关
+      validateTag: false, //表单验证
     }
   },
-  computed: {},
+  computed: {
+      getRoles: function(){
+        return packageType
+      }
+  },
   ready: function () {
   },
   attached: function () {},
   methods: {
     validateHandler: function(d){
-      if(d.res == "fail") this.$set("validateSuccess", false);
+        if(d.res == "fail") this.validateTag = false;
     },
-    clickaction: function(){
-        this.houselist.push({});
-    },
-    dealOne: function(index) {
-        this.houselist.splice(index,1);
-    },
-    errorhp: function(){
-      this.$dispatch("errorh")
+    dialogClickHandler: function(d) {
+        this.validateTag = true;
+        if(d.action == "confirm") {
+            this.validate = !this.validate;
+            setTimeout(()=> {
+                if(this.validateTag) this.$dispatch("success");
+                else {
+                    
+                }
+            },30)
+        }
     }
   },
-  components: { btn,icon,formtext,formrd,formcb},
+  components: { btn,icon,formtext,formrd,formcb,dialog},
   watch:{
-
+    
   }
 }
 </script>

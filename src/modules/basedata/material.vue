@@ -7,13 +7,14 @@
       </pagepanel>
       <!-- （分站）btn-新增&修改-->
       <pagepanel v-if="!isEAdmin">
+          {{newData1 | json}}
               <div  :class="css.mcLeft"> 
                  <div :class='css.opRow'>
                     <span>材料分类</span>
                     <span :class='css.operBtn' @click="addMenu"><icon iconname="icon-add"></icon></span>
                  </div>
                  <div :class='css.codeBox'>
-                    <codeview  @treeclick="treeClickHandler" @addclick="addClickHandler" @editclick="editClickHandler" @deleteclick="deleteClickHandler"></codeview>
+                    <codeview  url="material-category" :params="codeParams" :datas="datas" @treeclick="treeClickHandler" @addclick="addClickHandler" @editclick="editClickHandler" @deleteclick="deleteClickHandler"></codeview>
                  </div>
               </div>
               <div  :class="css.mcRight">
@@ -24,29 +25,8 @@
                  </div>
               </div>
       </pagepanel>
-      <!--e站 no-btn-->
-      <pagepanel v-else>
-              <div  :class="css.mcLeft"> 
-                 <div :class='css.opRow'>
-                    <span>材料分类</span>
-                 </div>
-                 <div :class='css.codeBox'>
-                    <codeview  @treeclick="treeClickHandler" :edit="false"></codeview>
-                 </div>
-              </div>
-              <div  :class="css.mcRight">
-                 <div :class="css.rightBox">
-                    <tb :headercaption="headercaption" url="users" :params="searchParams" :totals.sync = "totals" :load="load"  :events="tableEvents"></tb>
-                    <pg :totals="totals" :curpage="searchParams.page"></pg>
-                 </div>
-              </div>
-      </pagepanel>
       <!--新增材料分类对话框-->
-      <dialog :flag.sync="showAdd" title="新增材料" @dialogclick="dialogClickHandler">
-                <div  slot="containerDialog">
-                        <materialitem ></materialitem>
-                </div>
-        </dialog>
+        <materialitem :formData="newData" @success="addSuccess" :show="showAdd"></materialitem>
         <!--选品对话框-->
         <dialog :flag.sync="showSelectDialog" title="选品" >
             <div slot="containerDialog">
@@ -69,6 +49,7 @@ import icon from "component/sprite/icon";
 import css from './b.css';
 import codeview from "component/tree/codeView";
 import pageBase from "common/mixinPage.js";
+
 let headerData = [{name:"选择", labelValue:"", type:"data"},{name:"材料分类", labelValue:"", type:"data"},{name:"材料分类", labelValue:"",type:"data"},
                   {name:"产品编码", labelValue:"",type:"data"},{name:"产品名称", labelValue:"",type:"data"},
                   {name:"品牌", labelValue:"", type:"data"},{name:"型号", labelValue:"", type:"data"},{name:"规格", labelValue:"", type:"data"},{name:"材质", labelValue:"", type:"data"},
@@ -88,12 +69,15 @@ export default {
         btnsData:[{name:"新增", icon:"icon-add", action:"add"}],
         showAddMa: false,
         showAdd: false,
+        addTag:false,
         deleteTag: false,         // 删除确认弹框显示隐藏
-        validate: false,          // 表单验证动作的开关
+        validate: false,            // 表单验证动作的开关
+        selectedLevel: 0,          //默认添加材料的等级
         datas: [],
-        currentData: [],
+        newData1: {},
         detail:{name:'',id:''},
-        materialList: [{typeName:"", ownerBag:"",remark:'',ValidFor:''}], //组件materialItem
+        codeParams: {}, 
+        newData: {}, //materialItem組件
         tableEvents:{
         operatorRender: function(d){
           return [{name:"编辑",action:"edit",icon:"icon-edit", data: d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
@@ -136,27 +120,41 @@ export default {
     ready(){
     },
     methods:{
-        // 新增权限用户对话框
-        dialogClickHandler: function(d) {
-            if(d.action == "confirm") {
-                this.$set("validate", !this.validate);
-                // this.datas.push({name:"国民包", id:"1", show:false, selected:false, subTypes:[{name:"瓷砖", id:"1",show:false, selected:false, subTypes:[{name:"大地地砖",selected:false,  id:"1"},{name:"墙砖", selected:false, id:"2"}]}]});
-                this.addTag = true;
-                // this.newForm.validate = !this.newForm.validate;
-                setTimeout(()=>{
-                    if(this.addTag) {
-                        this.$http.post(this.$Api+"users",JSON.stringify(this.materialList)).then((res) => {
-                            var d = res.json();
-                            this.showFormDialog = !this.showFormDialog;
-                            this.loadlist();
-                            this.showMsg("success", "新增成功");
-                            this.materialList = {typeName:"", ownerBag:"",remark:'',ValidFor:''}
-                        },(error) =>{
-                            this.showMsg("error", error.msg);
-                        })
-                    }
-                },30)
+        addSuccess: function() {
+            if(this.selectedLevel ==0){
+            this.$http.post(this.$Api+"material-category/lv1",JSON.stringify(this.newData)).then((res) => {
+                    var d = res.json();
+                    console.log(d);
+                    this.self = true;
+                    this.showMsg("success", "新增成功");
+                    window.onbeforeunload  = function(){}
+                    this.$router.go({path:"/material"})
+                });
+            }else if(this.selectedLevel == 1){
+                console.log('2级增加');
+                console.log(JSON.stringify(this.newData1));
+                this.$http.post(this.$Api+"material-category/lv2",JSON.stringify(this.newData)).then((res) => {
+                    var d = res.json();
+                    console.log(d);
+                    this.self = true;
+                    this.showMsg("success", "新增成功");
+                    window.onbeforeunload  = function(){}
+                    this.$router.go({path:"/material"})
+                });
+            }else if(this.selectedLevel == 2){
+                 console.log('3级增加');
+                this.$http.post(this.$Api+"material-category/lv3",JSON.stringify(this.newData2)).then((res) => {
+                    var d = res.json();
+                    console.log(d);
+                    this.self = true;
+                    this.showMsg("success", "新增成功");
+                    window.onbeforeunload  = function(){}
+                    this.$router.go({path:"/material"})
+                });
             }
+        },
+        addFail: function() {
+            this.addTag = false;
         },
         addoneHandler: function() {
 
@@ -174,20 +172,34 @@ export default {
             if(d.level == 1) {this.setData(d.one)}
             else if(d.level == 2) this.setData(d.sone)
             else if(d.level == 3) this.setData(d.mone);
-            // if(d.level == 1) this.datas.push({name:"国民包", id:"1", show:false, selected:false,subTypes:[]})
         },
         setData: function(d){
             this.detail = {
-                name:d.name, id:d.id
-                // name:"国民包", id:"1", show:false, selected:false, subTypes:[]
+                name:d.name, id:d.id  
             };
-            // this.datas.push(this.detail);
         },
         addClickHandler: function(d) {
             // 设置参数
-            if(d.level == 1) d.
-            console.log(d);
             this.addMenu();
+            if(d.level == 1){
+                console.log('000');
+                console.log(d);
+                
+                this.newData.lv1_code = d.one.code;
+                // console.log(this.newData.lv1_name);
+                // console.log('222');
+                // d.sone = {name:'',};
+                // var newdata = { name: this.newData.lv1_name, usable: this.newData.usable};
+                // this.newData1   = newdata;
+                // console.log('选择的等级是'+d.level);
+                this.selectedLevel =1;
+                // this.addSuccess()
+            }else if(d.level ==2){
+                var newdata = { name: newData.name, usable: newData.usable};
+                this.newData2 = newdata;
+                this.selectedLevel =2;
+                // this.addSuccess()
+            }
         },
         deleteClickHandler: function(d) {
 
@@ -201,16 +213,17 @@ export default {
         },
         resetData: function(d) {
             //编辑时显示原数据
-            this.materialList.typeName = d.name;
-            this.materialList.ownerBag = d.id;
-            this.materialList.remark = d.remark;
-            this.materialList.ValidFor = d.ValidFor;
+            console.log(d);
+            // this.materialList.lv1_name = d.lv1_name;
+            // this.materialList.pkg = d.pkg;
+            // this.materialList.usable = d.usable;
+            // this.materialList.ValidFor = d.ValidFor;
         },
         confirmDelete: function(d){
             if(d.action == "confirm") {
                 this.$http.delete(this.$Api+"employees", {params: {"CardCode": this.curItem.CardCode}}).then((res)=>{
                     this.$set("deleteTag", !this.deleteTag);
-                    this.loadlist()
+                    this.loadlist();
                     this.showMsg("success", "删除成功！");
                 });
             }

@@ -2,7 +2,7 @@
     <div>
         <div v-for="one in datas" :class="css.loneBox">
             <span @click="levelClick(one)" :class="css.toper">
-                <span v-if="one.subTypes">
+                <span v-if="one.lv2">
                      <icon iconname="icon-right2" v-if="!one.show"></icon>
                      <icon iconname="icon-down02" v-else></icon>
                 </span>
@@ -15,9 +15,9 @@
                     <icon iconname="icon-delete"  @click="deleteHandler(1,one)"></icon>
                 </span>
             </span>
-            <div v-for="sone in one.subTypes" v-show="one.show" :class="css.ltwoBox">
+            <div v-for="sone in one.lv2" v-show="one.show" :class="css.ltwoBox">
                 <span @click="levelClick(sone)" :class="css.toper">
-                    <span  v-if="sone.subTypes">
+                    <span  v-if="sone.lv3">
                         <icon iconname="icon-right2" v-if="!sone.show"></icon>
                         <icon iconname="icon-down02" v-else></icon>
                     </span>
@@ -30,7 +30,7 @@
                         <icon iconname="icon-delete"  @click="deleteHandler(2,one, sone)"></icon>
                     </span>
                 </span>
-                <div v-for="mone in sone.subTypes" v-show="sone.show"  :class="css.lthreeBox">
+                <div v-for="mone in sone.lv3" v-show="sone.show"  :class="css.lthreeBox">
                     <span  @click="oneClickHandler(3,one, sone, mone)"  :class='[mone.selected?css.selected:"", css.itemOne]'>
                         <span :class='["elip", css.lText]'>{{mone.name}}</span>
                         <span :class='css.addBtn' v-if="edit">
@@ -47,27 +47,31 @@
 <script>
 import css from './code.css';
 import icon from "component/sprite/icon";
+import Utils from "common/Utils";
 export default {
     props: {
         level: {
-            default: 3
+            default: 3,
+            type: Number
         },
-
+        params: {
+            default: () => {},
+            type:Object
+        },
         url: {
-            default:""
+            default:"",
+            type:String
         },
         edit: {
-            default: true
+            default: true,
+            type:Boolean
         },
         datas:{
-            default: function(){
-                return [
-                    {lv1_name:"国民包", id:"1",pkg:"国民包",usable: true, show:false, selected:false, 
-                     lv2:[{name:"瓷砖", usable: true,id:"1",show:false, selected:false, 
-                     lv3:[{name:"大地地砖", usable:true, selected:false,  id:"1"}]
-                    },{name:"瓷砖", usable: true,id:"1",show:false, selected:false}]},
-                ]
-            }
+            default: () =>  [ { "_id": "584e44dfbd0688fb7008bb7b", "code": "MC001", "name": "cizhuan", 
+            "lv2": [ { "code": "M2002", "name": "erji02", "show": false, "selected": false }, { "code": "M2003", "name": "ddz", "Valid": false, 
+            "lv3": [ { "code": "M3001", "name": "大地砖4", "show": false, "selected": false }, { "code": "M3002", "name": "大地砖4", "show": false, "selected": false } ], "show": false, "selected": true } ],
+             "show": true, "selected": false } ],
+            type:Array
         }
     },
     data(){
@@ -76,7 +80,34 @@ export default {
         oldData:{selected: false}
       }
     },
+    ready: function () {
+        this.getData();
+    },
     methods:{
+        getData: function(){
+            console.log('getdata');
+            this.$http.get(this.$Api+this.url, {params:this.params}).then((res) => {
+                let d = res.json();
+                let p = d.data.docs.map((one) => {
+                    one.show = false;
+                    one.selected = false;
+                    if(!one.lv2) return  Utils.cloneObj(one)
+                    one.lv2.map((sone) => {
+                        sone.show=false; 
+                        sone.selected=false;
+                        if(!sone.lv3) return sone;
+                        sone.lv3.map((ssone) => {ssone.show=false; ssone.selected=false;return ssone})
+                        return sone
+                    });
+                   
+                    return Utils.cloneObj(one)
+                })
+                console.log(p);
+                this.datas = p;
+            },(error) =>{
+                console.log(error);
+            })
+        },
         levelClick: function(d){
             d.show = !d.show;
         },
