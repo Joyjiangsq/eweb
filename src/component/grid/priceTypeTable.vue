@@ -24,12 +24,14 @@
                               <div v-if="done.code == 'gxh'">
                                     {{done[sone.labelValue] || '-'}}
                               </div>
-                              <div :class="css.iptBox" v-if="!done[sone.labelValue].tb_disabled">
+                              <div  v-if="done[sone.labelValue].tb_disabled">
+                                  -
+                              </div>
+
+                              <div :class="css.iptBox" v-else > 
                                   <input type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
                                   <div :class="css.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>
-
-                              <div v-else > -</div>
                           </div>
                           <span v-if="sone.type == 'operator'" >
                                 <btnbar :buttons="btnData(done,order)"  @btnclick="btnEventHandler"></btnbar>

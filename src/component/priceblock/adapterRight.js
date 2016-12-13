@@ -32,18 +32,14 @@ export default function adapter(d) {
            else return resetFun(this)
         }
     };
-
-     d.price = {    
-        def: d.price || "",
+    d.remark = {    
+        def: d.remark || "",
         defCss: "default",
-        tb_disabled: true,
         errorMsg:"",
+        tb_disabled: true,
         validateFun:function(data, index){
             return true
         }
     };
-
-
-
     return d;
 }

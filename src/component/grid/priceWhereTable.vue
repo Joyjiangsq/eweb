@@ -27,7 +27,10 @@
                               </div>
                           </div>
                           <span v-if="sone.type == 'operator'" >
-                                <iconbar  :buttons="btnData(done, order)"  @btnclick="btnEventHandler"></iconbar>
+                                <div v-if="done.code == 'gxh'">
+                                    -
+                                </div>
+                                <iconbar  :buttons="btnData(done, order)"  @btnclick="btnEventHandler" v-else></iconbar>
                           </span>
                     </td>
               </tr>

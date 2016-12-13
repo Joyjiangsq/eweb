@@ -1,15 +1,21 @@
 .Box .leftBox {
-    width: 15%;
+    width: 20%;
     float: left;
 }
 
 .Box .rightBox {
     float: left;
-    width: 84%;
+    width: 79%;
     margin-left: 1%;
+    overflow-x: auto;
 }
 
 .Box {
     overflow: hidden;
+    width: 100%;
+}
+
+.attachInfo {
+    clear: both;
     width: 100%;
 }

@@ -8,6 +8,9 @@ let tableBase = {
           needselected:{
             default: false
           },
+          deleteindex:{
+            default: function() {return {index: -1}}
+          },
           load:{
             type: Boolean,
             default: false
@@ -214,6 +217,15 @@ let tableBase = {
           },
           "getchecks": function(){
                 this.$dispatch("checklist", this.getCheckeds());
+          },
+          // 监听删除
+          "deleteindex": {
+            deep: true,
+            handler: function() {
+                if(this.deleteindex.index != -1) {
+                  this.datas.splice(this.deleteindex.index, 1);  // 删除的是数据源
+                }
+            }
           }
         }
  }
