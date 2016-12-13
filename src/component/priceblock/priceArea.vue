@@ -9,6 +9,8 @@
         </div>
         <typedialog :show="showTypeDialog" @onecheck="typeCheck"></typedialog>
         <showselect :show="showSelectDialog"></showselect>
+
+        {{glData | json}}
     </div>
 </template>
 
@@ -20,6 +22,7 @@ import lefttb from "component/grid/priceWhereTable";
 import righttb from "component/grid/priceTypeTable";
 import typedialog from "./typeDialog";
 import adapter_left from "./adapterLeft.js";
+import adapter_right from "./adapterRight.js";
 import showselect from "component/blockcommon/selectProductDialog";
 
 export default {
@@ -38,19 +41,21 @@ export default {
                   {name:"产品名称", labelValue:"product_name", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
                   {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
                   {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
-                  {name:"差价", labelValue:"diff_price", type:"data"}, {name:"金额", labelValue:"price", type:"edit"},
+                  {name:"差价", labelValue:"diff_price", type:"edit"}, {name:"金额", labelValue:"price", type:"dataspec"},
                   {name:"备注", labelValue:"remark", type:"edit"}],
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
       rightDatas:[],
       showTypeDialog: false, // 分类型对话框
       showSelectDialog: false,
       tableEventsLeft:{
-        operatorRender: function(d){
-          return [{name:"删除", action:"delete",icon:"icon-delete", data:d}];
+        operatorRender: function(d, index){
+          return [{name:"删除", action:"delete",icon:"icon-delete", index:index}];
         },
 
         operatorHandler: function(d){
-             
+             if(d.action == "delete") {
+                  this.glData.splice(d.index, 1);
+             }
         }
       },
       tableEventsRight:{
@@ -78,7 +83,8 @@ export default {
         this.glData.unshift(one);
     },
     typeCheck: function(d) {
-        this.rightDatas.sub_list.push({catery_code: d.code, catery_name:d.name});
+        let data = adapter_right({catery_code: d.code, catery_name:d.name})
+        this.rightDatas.sub_list.push(data);
     },
     rowclick: function(d) {
       if(d.code && d.code == "gxh") {

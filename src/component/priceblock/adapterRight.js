@@ -10,15 +10,40 @@ export default function adapter(d) {
         scope.def = scope.def;
         return true;
     }
-    //   d.name = {    
-    //       def: d.name || "",
-    //       defCss: "default",
-    //       errorMsg:"",
-    //       validateFun:function(data, index){
-    //          if(!this.def) return exepFun(this, "必须填写")
-    //          else return resetFun(this)
-    //       }
-    //   };
+    d.diff_price = {    
+        def: d.diff_price || "",
+        defCss: "default",
+        tb_disabled: true,
+        errorMsg:"",
+        validateFun:function(data, index){
+           if(isNaN(this.def)) return exepFun(this, "请填写正确的差价");
+           else return resetFun(this)
+        }
+    };
 
-      return d;
+    d.counts = {    
+        def: d.counts || "",
+        defCss: "default",
+        errorMsg:"",
+        tb_disabled: true,
+        validateFun:function(data, index){
+           if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
+           else if(this.def*1 == 0) return  exepFun(this, "数量不能为0");
+           else return resetFun(this)
+        }
+    };
+
+     d.price = {    
+        def: d.price || "",
+        defCss: "default",
+        tb_disabled: true,
+        errorMsg:"",
+        validateFun:function(data, index){
+            return true
+        }
+    };
+
+
+
+    return d;
 }

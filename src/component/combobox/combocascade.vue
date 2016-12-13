@@ -2,7 +2,7 @@
     <div :class="cascadeCss.cascadeBox">
                   <combobox labelname="name" :classname="cascadeCss.limit" keyid="name" :read = "read"  :value.sync="provient" :datas="parry"  @dropclick="pClick"></combobox>
                   <combobox labelname="name" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="cname"  :datas="carry"  @dropclick="cClick" ></combobox>
-                  <combobox labelname="area" :classname="cascadeCss.limit"  keyid="name" :read = "read" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
+                  <combobox labelname="area" :classname="cascadeCss.limit"  keyid="area" :read = "read" :value.sync="aname"  :datas="aarry"  @dropclick="aClick"></combobox>
 
     </div>
 </template>
