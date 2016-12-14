@@ -1,6 +1,6 @@
 <template>
         <div class="">
-          <detail :data="detailData"></detail>
+          <detail :data="detailData" type="detail"></detail>
           <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" @success="successHandler" @fail="failHandler" :datamap="datamap" :detail.sync="detail"></tblab>
           <div class="cfooter" v-show="!detail">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">提交订单</btn>

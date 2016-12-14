@@ -1,6 +1,6 @@
 <template>
         <div class="">
-          <detail :data="detailData" type="back"></detail>
+          <detail :data="detailData" type="detail"></detail>
           <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate"  :datamap="datamap" :detail.sync="detail"></tblab>
           <div class="cfooter" v-if="detailData.U_OrderStatus =='待采购' || detailData.U_OrderStatus == 'e站驳回'">
               <!--在待采购  和 e站驳回的状态   才可以放开驳回按钮-->

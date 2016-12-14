@@ -44,7 +44,7 @@ import dialog from "component/dialog/dialog";
                             
                         }
                      },
-                     headerCaption: [{type: "radio"},{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                     headerCaption: [{type: "radio", validateFun:function(d){return true}},{name:"产品编码", labelValue:"ItemCode", type:"data"},
                                     {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"cizhuancc", component:mdialog},
                                     {name:"所属包", labelValue:"SWW", type:"data"},
                                     {name:"二级分类", labelValue:"FirmName", type:"data"},

@@ -1,6 +1,6 @@
 <template>
         <div class="">
-          <detail :data="baseInfo"></detail>
+          <detail :data="baseInfo" type="detail"></detail>
           <tblab  v-if="show" :tabs="tabs" :startvalidate="startvalidate" :datamap="datamap" ></tblab>
         </div>
 </template>

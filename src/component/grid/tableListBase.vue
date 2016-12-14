@@ -27,7 +27,8 @@
                           </span>
                           <!--单选-->
                           <span v-if="sone.type == 'radio'">
-                                <input type="radio" :class='tableCss.checkTag' :checked="done.validateFun(done)" >
+                                {{sone.validateFun(done)}}
+                                <input type="radio" name="name" :class='tableCss.checkTag' checked="checked" >
                           </span>
                     </td>
               </tr>
