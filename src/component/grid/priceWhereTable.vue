@@ -59,6 +59,10 @@ export default {
       scene: {      // 如果当前是模板新增页面 则开发增加按钮
           type: String,
           default: "add_no" // add_yes
+      },
+
+      redef: {          //  重置
+          default: false
       }
   },
   data: function () {
@@ -92,5 +96,18 @@ export default {
   },
   attached: function () {},
   components: {iconbar, icon},
+  watch: {
+        "redef": function(){
+              this.$dispatch("rowclick", this.dataList[0]);
+              for(let i = 0; i < this.dataList.length; i++) {
+                  let one = this.dataList[i];
+                  if(one.selected) {
+                        one.selected = false;
+                        break;
+                  }
+             }
+             this.dataList[0]['selected'] = true;
+        }
+  }
 }
 </script>

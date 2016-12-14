@@ -4,7 +4,7 @@
         <dialog :flag.sync="showTag" title="选择分类">
               <div  slot="containerDialog">
                     <div :class='css.checkBox'>
-                        <radiobx :datas="data"  @radioclick="radioclick" label="lv_contact_name" labelkey="code" :vertical="true"></radiobx>
+                        <radiobx :datas="data"  @radioclick="radioclick" label="lv_contact_name" labelkey="lv_code" :vertical="true"></radiobx>
                     </div>
               </div>
               <div class="" slot="footerDialog">
@@ -44,13 +44,13 @@ export default {
                     one.lv2.map((sone)=> {
                             if(sone.lv3) {
                                 sone.lv3.map((ssone) => {
-                                    tpl.push({code:ssone.code, level:3, lv3_name:ssone.name, lv_contact_name: one.name+"-"+sone.name+"-"+ssone.name,checked: false})
+                                    tpl.push({lv_code:ssone.code, level_n:3, lv3_name:ssone.name, lv_contact_name: one.name+"-"+sone.name+"-"+ssone.name,checked: false})
                                 })
                             }
-                            else tpl.push({code:sone.code, level:2, lv2_name:sone.name, lv_contact_name: one.name+"-"+sone.name,checked: false})
+                            else tpl.push({lv_code:sone.code, level_n:2, lv2_name:sone.name, lv_contact_name: one.name+"-"+sone.name,checked: false})
                     })
                 }
-                else tpl.push({code:one.code, level:1, lv1_name:one.name, lv_contact_name: one.name,checked: false})
+                else tpl.push({lv_code:one.code, level_n:1, lv1_name:one.name, lv_contact_name: one.name,checked: false})
             })
             console.log(tpl);
             this.data = tpl

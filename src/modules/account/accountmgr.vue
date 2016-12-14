@@ -194,14 +194,13 @@ export default {
             this.showMsg("warn", "账户信息不全，无法提现！请联系总部财务更新分站账户信息！");
             return false;
          }
+        if(this.backCashParams.U_TraAmount> this.accountBaseInfo.AvailableBalance) {this.showMsg("warn", "不能大于可提现金额"); return false}
+        if(this.backCashParams.U_TraAmount*1 < 6) {this.showMsg("warn", "提现金额不得小于6元"); return false}
 
          this.validate = !this.validate;
          this.backCashParams.validate = true;
          setTimeout(()=>{
             if(this.backCashParams.validate) {
-                  if(this.backCashParams.U_TraAmount> this.accountBaseInfo.AvailableBalance) this.showMsg("warn", "不能大于可提现金额");
-                  if(this.backCashParams.U_TraAmount*1 < 6) this.showMsg("warn", "提现金额不得小于6元");
-                  else {
                     delete this.backCashParams.validate;
                     let nobj = Utils.cloneObj(this.backCashParams);
                     nobj.U_TraAmount = nobj.U_TraAmount*100;
@@ -213,7 +212,6 @@ export default {
                           this.showtips = !this.showtips;
                           this.loadInfo();
                     })
-                  }
             }
          },30)
       }
