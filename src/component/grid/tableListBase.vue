@@ -16,7 +16,6 @@
                     <!--id-->
                     <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
                           <input type="checkBox" name="name" value="" v-if="sone.checkbox && showCheck(sone, done)"  :class='tableCss.checkTag' :checked="done.checkTag" v-model = "done.checkTag"  @click="clickOne(done[codevalue])"> 
-                          <input type="radio" name="name" :class='tableCss.checkTag' >
                           <span v-if="sone.type == 'data'" :style="sone.style" :class='[tableCss.inoneitem, sone.attr == "price"?"price":""]'> {{{getText(done[sone.labelValue])}}}</span>
                           <span v-if="sone.type == 'component' || sone.type == 'componentspec'" >
                               <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
