@@ -7,7 +7,7 @@
                           <search pathname :datas="sdata" :hash="false" :needsearch="false"  :events="searchEvents"></search>
                         </div>
                     <div :class="css.tBox">{{params | json}}
-                      <tb :headercaption="headerCaption" @checklist="checklist" :getchecks="getchecks" :needindex="false" url="material" :totals.sync="totals" :load="load" :params="params" :events="tableEvents"></tb>
+                      <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" url="material" :totals.sync="totals" :load="load" :params="params" :events="tableEvents"></tb>
                     </div>
                     <pg @pagechange="pagechange" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
                 </div>
@@ -20,6 +20,7 @@ import search from "component/search/search";
 import tb from "component/grid/tableListBase";
 import pg from "component/pagination/pagination";
 import Utils from "common/Utils.js";
+import {showTips} from "actions/index";
 import mdialog from "component/blockcommon/mealDialog";
 import dialog from "component/dialog/dialog";
     export default {
@@ -32,6 +33,11 @@ import dialog from "component/dialog/dialog";
                 },
                 show:{
                     default: false
+                },
+                rcheck:{
+                    default: () => {
+
+                    }
                 }
             },
             data: function() {
@@ -44,7 +50,7 @@ import dialog from "component/dialog/dialog";
                             
                         }
                      },
-                     headerCaption: [{type: "radio", validateFun:function(d){return true}},{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                     headerCaption: [{type: "radio", validateFun:function(d){return d.ItemCode == this.rcheck.ItemCode}},{name:"产品编码", labelValue:"ItemCode", type:"data"},
                                     {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"cizhuancc", component:mdialog},
                                     {name:"所属包", labelValue:"SWW", type:"data"},
                                     {name:"二级分类", labelValue:"FirmName", type:"data"},
@@ -65,8 +71,8 @@ import dialog from "component/dialog/dialog";
             },
             components:{search,tb,pg,dialog},
             methods:{
-                checklist: function(list) {
-
+                radioclick: function(one) {
+                        this.rcheck = one;
                 },
 
                 loadList: function() {
@@ -77,8 +83,13 @@ import dialog from "component/dialog/dialog";
                     this.searchParams.page = d.page;
                     this.loadList();
                 },
-                dialogClickHandler: function() {
-
+                dialogClickHandler: function(d) {
+                    if(d.action == "confirm") {
+                        if(Object.keys(this.rcheck).length == 0) {
+                            showTips(this.$store, {type:"warn", msg:"没有选中任何项目", time: 2000});
+                        }
+                        else this.$dispatch("success", this.rcheck)
+                    }
                 }
             },
             watch: {

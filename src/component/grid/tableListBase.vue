@@ -1,5 +1,5 @@
 <template>
-  <div :class="tableCss.tableBox" :style="stylein">
+  <div :class="tableCss.tableBox" :style="stylein"> 
     <table :class="classname">
         <thead>
               <tr>
@@ -27,8 +27,7 @@
                           </span>
                           <!--单选-->
                           <span v-if="sone.type == 'radio'">
-                                {{sone.validateFun(done)}}
-                                <input type="radio" name="name" :class='tableCss.checkTag' checked="checked" >
+                                <input type="radio" name="name" :class='tableCss.checkTag' @click="radioClick(done)" checked="getRadioCheck(done, sone)" />
                           </span>
                     </td>
               </tr>
@@ -70,6 +69,13 @@ export default {
     }
   },
   methods:{
+    getRadioCheck: function(done, sone) {
+        if(sone.validateFun) return sone.validateFun.call(this._context, done);
+        else return false
+    },
+    radioClick: function(one) {
+        this.$dispatch("radioclick", one);
+    },
     showCheck: function(sone, done){
         if(sone.validateFun) {
           return sone.validateFun(done);
