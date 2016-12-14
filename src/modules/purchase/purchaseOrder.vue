@@ -188,6 +188,7 @@ export default {
                this.showMsg("success", "驳回成功");
                this.loadlist();
                this.show = !this.show;
+               this.orderids = []; // 清空
            },(error) =>{
              console.log(error);
              this.showMsg("error", error.msg);

@@ -29,6 +29,7 @@
                 <house :startvalidate="startvalidate" :curaction="curAction" :houselist="formData.house_list" @errorh="errorh"></house>
               </div>
           </div>
+          <div slot="footerDialog" v-if="curAction=='detail'"></div>
     </dialog>
     <dialog :flag.sync="showRepeat" title="提示">
           <div class="" slot="containerDialog">
