@@ -64,7 +64,7 @@ export default {
   data: function () {
     return {
         css,
-      oldIndex: 0
+      // oldIndex: 0
     }
   },
   created: function(){
@@ -74,13 +74,19 @@ export default {
   methods:{
        addOneHandler: function() {
              this.$dispatch("addone");
-             this.oldIndex = this.oldIndex*1 +1;
+            //  this.oldIndex = this.oldIndex*1 +1;
        },
        clickRow: function(index, d) {
             if(d.selected !== false) return false
-            this.dataList[this.oldIndex].selected = false;
+            for(let i = 0; i < this.dataList.length; i++) {
+                  let one = this.dataList[i];
+                  if(one.selected) {
+                        one.selected = false;
+                        break;
+                  }
+            }
             d.selected = true;
-            this.$set("oldIndex", index);
+            // this.$set("oldIndex", index);
             this.$dispatch("rowclick", d);
       },
   },

@@ -1,7 +1,15 @@
 <template>
     <div :class="css.Box">
+        {{glData | json}}
         <div :class='css.leftBox'>
             <lefttb :headercaption="leftHeader" @rowclick="rowclick" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="glData" :events="tableEventsLeft"></lefttb> 
+            <div :class="css.attachInfo">
+                <propertytext key="升级金额" :horizontal="true" value="0"></propertytext>
+                <propertytext key="降级金额" :horizontal="true" value="0"></propertytext>
+                <propertytext key="减项金额" :horizontal="true" value="0"></propertytext>
+                <propertytext key="互换金额" :horizontal="true" value="0"></propertytext>
+                <propertytext key="个性化金额" :horizontal="true" value="0"></propertytext>
+            </div>
         </div>
         <div :class='css.rightBox'>
             <div v-if="gxhTip">{{gxhTip}}</div>
@@ -9,13 +17,6 @@
         </div>
         <typedialog :show="showTypeDialog" @onecheck="typeCheck"></typedialog>
         <showselect :show="showSelectDialog"></showselect>
-        <div :class="css.attachInfo">
-            <propertytext key="升级金额" :horizontal="true" value="0"></propertytext>
-            <propertytext key="降级金额" :horizontal="true" value="0"></propertytext>
-            <propertytext key="减项金额" :horizontal="true" value="0"></propertytext>
-            <propertytext key="互换金额" :horizontal="true" value="0"></propertytext>
-            <propertytext key="个性化金额" :horizontal="true" value="0"></propertytext>
-        </div>
     </div>
 </template>
 
@@ -43,7 +44,7 @@ export default {
       css,
       gxhTip:"", // 个性化提示
       glData:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
-      rightHeader:[{type:"operator", name:"操作"},{name:"分类编号", labelValue:"catery_code", type:"data"},{name:"分类名称", labelValue:"catery_name", type:"data"},
+      rightHeader:[{type:"operator", name:"操作"},{name:"分类编号", labelValue:"code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
                   {name:"产品名称", labelValue:"product_name", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
                   {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
                   {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
@@ -53,7 +54,7 @@ export default {
       rightDatas:[],
       showTypeDialog: false, // 分类型对话框
       showSelectDialog: false,
-      deleteindex: {index: -1}, 
+      deleteindex: {index: -1},
       tableEventsLeft:{
         operatorRender: function(d, index){
           return [{name:"删除", action:"delete",icon:"icon-delete", index:index}];
@@ -75,7 +76,6 @@ export default {
                 this.showSelectDialog = !this.showSelectDialog;
               }
               else if(d.action == "delete") {
-                console.log(d);
                 this.deleteindex = {index: d.index}
               }
          }
@@ -94,7 +94,8 @@ export default {
         this.glData.unshift(one);
     },
     typeCheck: function(d) {
-        let data = adapter_right({catery_code: d.code, catery_name:d.name})
+        let data = Utils.cloneObj(adapter_right(d));
+        delete data.selected;
         this.rightDatas.sub_list.push(data);
     },
     rowclick: function(d) {
