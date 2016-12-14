@@ -1,6 +1,5 @@
 <template>
     <div :class="css.Box">
-        {{glData | json}}
         <div :class='css.leftBox'>
             <lefttb :headercaption="leftHeader" @rowclick="rowclick" :redef="redef" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="glData" :events="tableEventsLeft"></lefttb> 
             <div :class="css.attachInfo">
@@ -16,7 +15,7 @@
             <righttb :headercaption="rightHeader" @selectchange="selectchangeHandler"  scene="add_yes" :deleteindex="deleteindex" :datas="rightDatas.sub_list" :events="tableEventsRight" v-else></righttb>
         </div>
         <typedialog :show="showTypeDialog" @onecheck="typeCheck"></typedialog>
-        <showselect :show="showSelectDialog" :toload="toloadProduct" :params="selectParams"></showselect>
+        <showselect :show="showSelectDialog" :toload="toloadProduct" :params="selectParams" @success="successHandler" :rcheck="rSelectData"></showselect>
     </div>
 </template>
 
@@ -44,11 +43,12 @@ export default {
       css,
       gxhTip:"", // 个性化提示
       redef: false,
+      rSelectData:{},
       glData:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
       rightHeader:[{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
-                  {name:"产品名称", labelValue:"product_name", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
-                  {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
-                  {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
+                  {name:"产品名称", labelValue:"ItemName", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
+                  {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
+                  {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
                   {name:"差价", labelValue:"diff_price", type:"edit"}, {name:"金额", labelValue:"price", type:"data"},
                   {name:"备注", labelValue:"remark", type:"edit"}],
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
@@ -84,6 +84,9 @@ export default {
                 if(d.data.level_n == 1) this.selectParams.lv1_code = d.data.lv_code;
                 else if(d.data.level_n == 2) this.selectParams.lv2_code = d.data.lv_code;
                 else this.selectParams.lv3_code = d.data.lv_code;
+                // 设置rSelectData
+                // 如果存在ItemCode
+                this.rSelectData = d.data;
                 this.toloadProduct = !this.toloadProduct
               }
               else if(d.action == "delete") {
@@ -100,12 +103,24 @@ export default {
   },
   attached: function () {},
   methods: {
+    successHandler: function(d) {
+        adapter_right(d, true);
+        Object.assign(this.rSelectData,d);
+        this.showSelectDialog = !this.showSelectDialog;
+    },
     leftAddOne: function() {
         let one = adapter_left({selected: false, sub_data:{sub_list:[]}});
         this.glData.unshift(one);
     },
     typeCheck: function(d) {
-        let data = Utils.cloneObj(adapter_right(d));
+        // 数据初始绑定
+        this.rightHeader.map((one)=>{
+            if(one.type != "operator") {
+              if(!d[one.labelValue]) d[one.labelValue] = "";
+            }
+        })
+       
+        let data =  adapter_right(Utils.cloneObj(d));
         delete data.selected;
         this.rightDatas.sub_list.push(data);
     },

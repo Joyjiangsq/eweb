@@ -161,7 +161,7 @@ export default {
           let x = e.x || e.clientX;                  // 点击相对body的位置
           let y = e.y || e.clientY;
           x = x - 185;
-          this.style = {left: x +"px", top: (y+h-offy+5) + "px"}
+          this.style = {left: x +"px", top: (y+h-offy+5) + "px", position:"fixed"}
         }
     },
 
