@@ -20,7 +20,7 @@
               <div  :class="css.mcRight">
                  <btn :class="" @click="toSelect">选品</btn>
                  <div :class="css.rightBox">
-                    <tb :headercaption="headercaption" url="users" :params="searchParams" :totals.sync = "totals" :load="load"  :events="tableEvents"></tb>
+                    <tb :headercaption="headercaption" url="users" :params="searchParams" :datas="rightData" :totals.sync = "totals" :load="load"  :events="tableEvents"></tb>
                     <pg :totals="totals" :curpage="searchParams.page"></pg>
                  </div>
               </div>
@@ -29,7 +29,7 @@
       <!--新增材料分类对话框-->
         <materialitem :formData="newData" @success="addSuccess" :show="showAdd"></materialitem>
         <!--选品对话框-->
-        <selectproductdialog :show="showSelectDialog" :params="{}" ></selectproductdialog>
+        <selectproductdialog :show="showSelectDialog" :params="{}" @getcheck="addCheckedList" ></selectproductdialog>
 
         <!--<dialog :flag.sync="showSelectDialog" title="选品" >
             <div slot="containerDialog">
@@ -80,6 +80,7 @@ export default {
         validate: false,            // 表单验证动作的开关
         selectedLevel: 0,          //默认添加材料的等级
         datas: [],
+        rightData: [],
         detail:{name:'',id:''},
         codeParams: {},
         index:1, 
@@ -180,6 +181,12 @@ export default {
         addoneHandler: function() {
 
         },
+        //得到选中的选品
+        addCheckedList: function(d) {
+            console.log(d);
+            this.rightData.push(d);
+            this.showSelectDialog = !this.showSelectDialog;
+        },
         toSelect: function(){
             // this.$set("toload", true);
             this.showSelectDialog = !this.showSelectDialog;
@@ -230,26 +237,33 @@ export default {
             //编辑时显示原数据
              if(d.level == 1) {
                  this.selectedLevel =0;
-                  this.newData = d.one;
-                //  {lv1_code: 'MC101',name: '国民包', usable: true, pkg: '国民包'}
+                  this.newData = Utils.cloneObj(d.one);
+                // params {lv1_code: 'MC101',name: '国民包', usable: true, pkg: '国民包'}
                  this.newData.lv1_code = d.one.code;
+                 this.getData();
              }else if(d.level == 2) {
                  this.selectedLevel =1;
-                 this.newData = Utils.cloneObj(d.sone);
+                 // 克隆数据，不破坏源数据
+                 this.newData = Utils.cloneObj(d.sone); 
                  if(this.newData.lv3) delete this.newData.lv3;
                  if(this.newData.code) delete this.newData.code;
                  if(!this.newData.selected) delete this.newData.selected;
                  if(!this.newData.show) delete this.newData.show;
-                //  {lv2_code: 'MC101101', name: '瓷砖', usable: true}
+                // params {lv2_code: 'MC101101', name: '瓷砖', usable: true}
                  this.newData.lv2_code = d.sone.code;
+                 this.getData();
              }else if(d.level == 3) {
                  console.log(d);
                  console.log(d.index);
                  this.selectedLevel =2;
-                 this.newData = d.mone;
-                 // {idx: 1, lv2_code: 'MC1011001', name: '大地砖', usable: true}
+                 this.newData = Utils.cloneObj(d.mone);
+                 if(this.newData.code) delete this.newData.code;
+                 if(!this.newData.selected) delete this.newData.selected;
+                 if(!this.newData.show) delete this.newData.show;
+                 //params {idx: 1, lv2_code: 'MC1011001', name: '大地砖', usable: true}
                 this.newData.lv2_code = d.sone.code; 
-                this.newData.idx = d.index;   
+                this.newData.idx = d.index;
+                this.getData();   
             }
 
             

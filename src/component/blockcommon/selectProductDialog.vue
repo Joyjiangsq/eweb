@@ -139,8 +139,9 @@ export default {
         this.searchParams.page = d.page;
         this.loadlist();
     },
+    //派发被选中的
     checklist: function(d) {
-      this.$dispatch("getcheck", d);
+      this.$dispatch("getcheck", d); 
     }
   },
   watch: {
