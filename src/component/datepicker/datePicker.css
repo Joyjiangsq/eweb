@@ -65,7 +65,7 @@
 }
 .pickerMain {
     background-color: white;
-    position: absolute;
+    position: fixed;
     border: 1px solid #ddd;
     /*top: 100%;*/
     box-shadow: 3px 5px 15px -9px rgba(0, 0, 0, .5);

@@ -68,24 +68,24 @@ export default {
     },
 
     ready: function(){
-       this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
-            url:"/material",name:"材料管理"
-        },{
-            url:"/materialCatery",name:"材料分类管理"
-        },{
-            url:"/supplier",name:"供应商数据"
-        },{
-            url:"/buildMgr",name:"施工报价管理"
-        },{
-            url:"/buildCatery",name:"施工报价分类管理"
-        },{
-            url:"/buildPrice",name:"施工包一口价对照表"
-        }]
-      })
-      this.datamenu.push({name:"报价管理", icon:"icon-purchase",show: false,subMenus:[{
-           url:"/priceDemo",name:"报价模板"
-       }]
-     })
+    //    this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
+    //         url:"/material",name:"材料管理"
+    //     },{
+    //         url:"/materialCatery",name:"材料分类管理"
+    //     },{
+    //         url:"/supplier",name:"供应商数据"
+    //     },{
+    //         url:"/buildMgr",name:"施工报价管理"
+    //     },{
+    //         url:"/buildCatery",name:"施工报价分类管理"
+    //     },{
+    //         url:"/buildPrice",name:"施工包一口价对照表"
+    //     }]
+    //   })
+    //   this.datamenu.push({name:"报价管理", icon:"icon-purchase",show: false,subMenus:[{
+    //        url:"/priceDemo",name:"报价模板"
+    //    }]
+    //  })
       let path = this.$route.name;
       for (let i = 0; i < this.datamenu.length; i++) {
             let one = this.datamenu[i];
