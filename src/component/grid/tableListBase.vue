@@ -25,6 +25,10 @@
                                 <iconbar v-if="sone.icon"  :buttons="btnData(done,order)"  @btnclick="btnEventHandler"></iconbar>
                                 <btnbar :buttons="btnData(done,order)"  @btnclick="btnEventHandler" v-else></btnbar>
                           </span>
+                          <!--单选-->
+                          <span v-if="sone.type == 'radio'">
+                                <input type="radio" :class='tableCss.checkTag' :checked="done.validateFun(done)" >
+                          </span>
                     </td>
               </tr>
         </tbody>
