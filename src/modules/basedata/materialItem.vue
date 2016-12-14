@@ -5,9 +5,9 @@
                 <div  slot="containerDialog">
                         <span :class="css.titlerow">材料信息</span>
                          <div>   {{formdata | json}}
-                            <formtext labelname="分类名称：" :vertical="true"  formname="" :value.sync="formdata.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                            <formcb keyid="name" labelname="所属包：" dropfixed="dropfixed" :vertical="true"   :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
-                            <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formdata.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                            <formtext labelname="分类名称：" :vertical="true"   :value.sync="formdata.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                            <formcb keyid="name" labelname="所属包：" dropfixed="dropfixed" :vertical="true" v-if="level"  :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+                            <formrd labelname="启用：" :vertical="true"  :value.sync="formdata.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
                         </div>
                 </div>
         </dialog>
@@ -27,6 +27,10 @@ export default {
     formdata:{name:"",pkg:"",usable:false},
     show:{
         default: false
+    },
+    level:{
+        default: true,
+        type :Boolean
     }
   },
   data: function () {

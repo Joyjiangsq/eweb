@@ -84,9 +84,10 @@ export default {
       }
     },
     ready: function () {
-        this.getData();
+        if(this.url) this.getData();
     },
     methods:{
+        //三级菜单
         getData: function(){
             console.log('getdata');
             this.$http.get(this.$Api+this.url, {params:this.params}).then((res) => {
@@ -102,7 +103,6 @@ export default {
                         sone.lv3.map((ssone) => {ssone.show=false; ssone.selected=false;return ssone})
                         return sone
                     });
-                   
                     return Utils.cloneObj(one)
                 })
                 console.log(p);
