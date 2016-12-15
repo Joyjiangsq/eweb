@@ -7,10 +7,9 @@
       </pagepanel>
       <!-- （分站）-->
       <pagepanel v-if="!isEAdmin">
-          {{newData | json}}
               <div  :class="css.mcLeft"> 
                  <div :class='css.opRow'>
-                    <span>材料分类</span>
+                    <span>施工分类</span>
                     <span :class='css.operBtn' @click="addMenu"><icon iconname="icon-add"></icon></span>
                  </div>
                  <div :class='css.codeBox'>
@@ -18,18 +17,18 @@
                  </div>
               </div>
               <div  :class="css.mcRight">
-                 <btn :class="" @click="toSelect">选品</btn>
+                 <btn :class="" @click="toAdd">新增</btn>
                  <div :class="css.rightBox">
-                    <tb :headercaption="headercaption" url="construction-quote" :params="detail" :datas="rightData" :totals.sync="totals" :load="load"  :events="tableEvents"></tb>-->
-                    <pg :totals="totals" :curpage="detail.page"></pg>
+                    <tb :headercaption="headercaption" url="construction-quote" :params="searchParams" :datas="rightData" :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
+                    <pg :totals="totals" :curpage="searchParams.page"></pg>
                  </div>
               </div>
               <div style="clear:both"></div>
       </pagepanel>
-      <!--新增材料分类对话框-->
-        <!--<buildmgradd :formData="newData" @success="addSuccess" :show="showAdd" ></buildmgradd>-->
-        <!--选品对话框-->
-        <!--<selectproductdialog :show="showSelectDialog" :params="{}" @getcheck="addCheckedList" ></selectproductdialog>-->
+      <!--新增施工报价分类对话框-->
+        <!--<buildmgrcateryadd :formData="newData" @success="addSuccess" :show="showAdd"></buildmgrcateryadd>-->
+        <!--新增对话框-->
+        <buildmgrpriceadd :formdata="newData" :formdatas="formdatas" @success="addSuccess" :show="showAdd" :catery="catery" :showtbedit="showtbedit"></buildmgrpriceadd>
        <!--删除提示-->
         <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
   </div>
@@ -39,7 +38,8 @@
 import icon from "component/sprite/icon";
 import btn from "component/sprite/button.vue";
 import chuguitb from "component/block/tblist/chuguiList";
-import buildmgradd from "./buildMgrAdd";
+// import buildmgrcateryadd from "./buildMgrCateryAdd";
+import buildmgrpriceadd from "./buildMgrAdd";
 import dialogtip from "component/dialog/dialogTip";
 import css from './b.css';
 import codeview from "component/tree/codeView";
@@ -47,36 +47,67 @@ import basePage from "common/mixinPage";
 import propertytext from "component/form/propertyText.vue";
 import formtext from "component/form/formText";
 import Utils from "common/Utils.js";
-let headerData =[{type:"operator", name:"操作"},{name:"项目分类编码", labelValue:"", type:"data"},
-             {name:"项目分类", labelValue:"", type:"data"},
+let headerData =[{type:"operator", name:"操作"},{name:"项目分类编码", labelValue:"lv1_code", type:"data"},
+             {name:"项目分类", labelValue:"lv1_name", type:"data"},
              {name:"项目编码", labelValue:"", type:"data"},
-             {name:"项目名称", labelValue:"", type:"data"},
-             {name:"工艺说明", labelValue:"", type:"data"},
-             {name:"单位", labelValue:"", type:"data"},{name:"销售价", labelValue:"", type:"data"},
-              {name:"成本价", labelValue:"", type:"data"}];
+             {name:"项目名称", labelValue:"project_name", type:"data"},
+             {name:"工艺说明", labelValue:"description", type:"data"},
+             {name:"单位", labelValue:"unit", type:"data"},{name:"销售价", labelValue:"selling_price", type:"data"},
+              {name:"成本价", labelValue:"cost_price", type:"data"}];
 export default {
     mixins:[basePage],
     data(){
       return {
         css,
         datas: [],
+        newData: {},
+        formdatas: {},
         codeParams: {},
+        curItem:{},
+        editItem:{},               // 删除或者编辑当前的 数据
         headercaption: headerData,
+        reload: false,  //添加分类后刷新分类菜单
         isEAdmin: false, //判断是否为(e)分站
         showAdd: false, //弹框显示隐藏
+        catery: false, //切换分类/报价弹出框
+        showtbedit: false, //切换表格删除数据弹框
         moduleName:"施工报价管理",
+        deleteTag: false,         // 删除确认弹框显示隐藏
         detail: {page:1},
         rightData: [],
+        curAction:'',             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
         totals: 0,
+        da:{},
+        selectedLevel: 0,
+        actionMap:{     //根据selectedLevel不同映射
+            0:{url:"construction-quote-category/lv1",params:{}},
+            1:{url:"construction-quote-category/lv2",params:{}},
+            2:{url:"construction-quote-category/lv3",params:{}}
+        },
         tableEvents:{
             operatorRender: function(d){
-                return [{name:"删除", action:"delete",icon:"icon-delete",data:d}]
+                return [{name:"修改", action:"edit",icon:"icon-edit",data:d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
             },
             operatorHandler: function(d){
-             this.$set("curItem", d.data);
-             if(d.action == "delete") {
-                this.$set("deleteTag", !this.deleteTag);
-             }
+                console.log('d.level');
+                console.log(d.level);
+                console.log('d.level');
+                console.log('this.ddddddddd');
+                console.log(d);
+                console.log('this.ddddddddd');
+                this.$set("curItem", d.data);
+                if(d.action == "delete") {
+                    this.$set("deleteTag", !this.deleteTag);
+                }else if(d.action == "edit"){
+                    console.log('第二步');
+                    this.$set("curAction","tbedit");
+                    this.showtbedit = !this.showtbedit;
+                    this.showAdd = !this.showAdd;
+                     this.newData = Utils.cloneObj(this.curItem);
+                     console.log('this.newdata!!!');
+                     console.log(this.newData);          //包含了lv1~lv3数据
+                     console.log('this.newdata!!!');
+                }
             }
         },
       }
@@ -98,46 +129,154 @@ export default {
     methods:{
         //表格数据
         getTableDetail: function(){
-            this.detail.page = 1;
+            // this.detail.page = 1;
             this.load = !this.load;
         },
         addMenu: function() {
-
+            this.$set("curAction", "add");
+            this.formdatas = {};
+            this.catery = true;
+            this.showAdd = !this.showAdd;
         },
-        //组件弹框表单验证成功
+        //分类组件弹框表单验证成功
         addSuccess: function() {
-
+            if(this.curAction == "add") {
+                    let action = this.actionMap[this.selectedLevel];
+                    Object.assign(this.formdatas, action.params);   //将参数优先
+                    this.$http.post(this.$Api+action.url,JSON.stringify(this.formdatas)).then((res) => {
+                        this.showMsg("success", "新增成功");
+                        this.showAdd = !this.showAdd;
+                        this.formdatas = {};
+                        this.getData();
+                     });
+                }else if(this.curAction == "edit"){
+                    let action = this.actionMap[this.selectedLevel];
+                    Object.assign(this.formdatas, action.params);
+                    this.$http.put(this.$Api+action.url,JSON.stringify(this.formdatas)).then((res) => {
+                        this.showMsg("success", "修改成功");
+                        this.showAdd = !this.showAdd;
+                        this.formdatas = {};
+                        this.getData();
+                    });
+                }else if(this.curAction == "tbedit"){
+                    if(this.newData._id) delete this.newData._id;
+                    if(this.newData.createAt) delete this.newData.createAt;   
+                    this.newData.code = this.editItem;
+                    this.$http.put(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
+                        var d = res.json();
+                        this.showMsg("success", "修改成功");
+                        this.showAdd = false;
+                        this.newData ={};
+                        this.getTableDetail();
+                    });
+                }else {
+                    this.$http.post(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
+                        this.showMsg("success", "新增成功");
+                        this.showAdd = !this.showAdd;
+                        this.newData = {};
+                        this.getTableDetail();
+                     });
+                }
+        },
+        //添加新增施工报价分类之后再次刷新渲染分类表单
+        getData: function(){
+            this.reload = !this.reload; 
         },
         treeClickHandler: function(d) {
-            console.log(d);
+            if(d.level == 1) {
+                this.$set("editItem",d.one.code);
+                this.newData.lv1_name = d.one.name;
+                this.newData.lv1_code = d.one.code;
+                this.searchParams= {page:1} ;
+                this.searchParams.lv1_code = d.one.code;
+            }else if(d.level == 2){
+                console.log('第一步');
+                this.$set("editItem",d.sone.code);
+                this.newData.lv1_name = d.one.name;
+                this.newData.lv1_code = d.one.code;
+                this.newData.lv2_name = d.sone.name;
+                this.newData.lv2_code = d.sone.code;
+                this.searchParams= {page:1} ;
+                this.searchParams.lv1_code = d.one.code;
+                this.searchParams.lv2_code = d.sone.code;
+            }else if(d.level == 3){
+                console.log('打开了第三级');
+                this.$set("editItem",d.mone.code);
+                this.newData.lv1_name = d.one.name;
+                this.newData.lv1_code = d.one.code;
+                this.newData.lv2_name = d.sone.name;
+                this.newData.lv2_code = d.sone.code;
+                this.newData.lv3_name = d.mone.name;
+                this.newData.lv3_code = d.mone.code;
+                this.searchParams= {page:1} ;
+                this.searchParams.lv1_code = d.one.code;
+                this.searchParams.lv2_code = d.sone.code;
+                this.searchParams.lv3_code = d.mone.code;
+            } 
+            this.getTableDetail();
         },
         addClickHandler: function(d) {
-
+            this.catery = true;
+            // 设置参数
+             this.addMenu();
+            if(d.action="add"){
+                this.$set("curAction", "add");
+            }
+            if(d.level == 1){   
+                //添加參數lv1_code
+                this.formdatas.lv1_code = d.one.code;
+                this.selectedLevel =1;
+            }else if(d.level ==2){
+                this.formdatas.lv1_code = d.one.code;
+                this.formdatas.lv2_code = d.sone.code;
+                this.selectedLevel =2;
+            }
         },
         editClickHandler: function(d){
-
+            this.addMenu();
+            if(d.action="edit") this.$set("curAction", "edit");
+            //编辑时显示原数据
+             if(d.level == 1) {
+                 this.selectedLevel =0;
+                  this.formdatas = Utils.cloneObj(d.one);
+                 this.formdatas.lv1_code = d.one.code;
+             }else if(d.level == 2) {
+                 this.selectedLevel =1;
+                 // 克隆数据，不破坏源数据
+                 this.formdatas = Utils.cloneObj(d.sone); 
+                 if(this.formdatas.lv3) delete this.formdatas.lv3;
+                 if(this.formdatas.code) delete this.formdatas.code;
+                 if(!this.formdatas.selected) delete this.formdatas.selected;
+                 if(!this.formdatas.show) delete this.formdatas.show;
+                 this.formdatas.lv2_code = d.sone.code;
+             }else if(d.level == 3) {
+                 this.selectedLevel =2;
+                 this.formdatas = Utils.cloneObj(d.mone);
+                 if(this.formdatas.code) delete this.formdatas.code;
+                 if(!this.formdatas.selected) delete this.formdatas.selected;
+                 if(!this.formdatas.show) delete this.formdatas.show;
+                this.formdatas.lv2_code = d.sone.code; 
+                this.formdatas.idx = d.index;
+             }
         },
         deleteClickHandler: function(d) {
             
         },
-        toSelect: function(){
-            // this.$set("toload", true);
-            // this.showSelectDialog = !this.showSelectDialog;
+        toAdd: function(){
+            this.catery = false;
+            this.showAdd = !this.showAdd;
         },
         confirmDelete: function(d){
-            // console.log('delete');
-            // console.log(d);
-            // console.log('delete');
-            // if(d.action == "confirm") {
-            //     this.$http.delete(this.$Api+"material", {params: {"ItemCode": d.ItemCode}}).then((res)=>{
-            //         this.$set("deleteTag", !this.deleteTag);
-            //         this.loadlist();
-            //         this.showMsg("success", "删除成功！");
-            //     });
-            // }
+            if(d.action == "confirm") {
+                this.$http.delete(this.$Api+"construction-quote", {params: {"_id": this.curItem._id}}).then((res)=>{
+                    this.$set("deleteTag", !this.deleteTag);
+                    this.loadlist();
+                    this.showMsg("success", "删除成功！");
+                });
+            }
         },
     },
-    components:{codeview, icon, propertytext,formtext,dialogtip,buildmgradd,chuguitb,btn}
+    components:{codeview, icon, propertytext,formtext,dialogtip,buildmgrpriceadd,chuguitb,btn}
 
 }
 </script>

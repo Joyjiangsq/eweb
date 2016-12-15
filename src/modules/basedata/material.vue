@@ -69,13 +69,11 @@ export default {
         moduleName:"材料管理",
         curItem:{},               // 删除或者编辑当前的 数据
         headercaption: headerData,
-        showFormDialog: false,
         hideDialogIn: true,
         curAction:"add",             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
         showAddMa: false,
         showAdd: false,     //弹框显示隐藏
         deleteTag: false,         // 删除确认弹框显示隐藏
-        validate: false,            // 表单验证动作的开关
         selectedLevel: 0,          //默认添加材料的等级
         datas: [],
         rightData: [],
@@ -100,14 +98,6 @@ export default {
              }
             }
         },
-        btnEvents:{
-            btnClick: function(d){
-                if(d.action == "add") this.$set("showFormDialog", !this.showFormDialog);
-                else if(d.action == "") {
-                window.open(this.$Api+"users/download?" + $.param(this.searchParams));
-                }
-            }
-        }
       }
     },
     computed:{
@@ -188,7 +178,6 @@ export default {
             this.showSelectDialog = !this.showSelectDialog;
         },
         toSelect: function(){
-            // this.$set("toload", true);
             this.showSelectDialog = !this.showSelectDialog;
         },
         addMenu: function(){
@@ -197,7 +186,6 @@ export default {
             this.levelEqualZero = true;
         },
         treeClickHandler: function(d) {
-            console.log(d);
             if(d.level == 1) {
                 this.da.lv1_name = d.one.name;
                 this.da.lv1_code = d.one.code;
@@ -224,9 +212,6 @@ export default {
             } 
             this.getTableDetail();
         },
-        // setData: function(d){
-        //     this.detail = {};
-        // },
         addClickHandler: function(d) {
             // 设置参数
              this.addMenu();
@@ -249,10 +234,8 @@ export default {
             
         },
         editClickHandler: function(d) {
-            console.log(d);
             this.addMenu();
             if(d.action="edit") this.$set("curAction", "edit");
-             
             //编辑时显示原数据
              if(d.level == 1) {
                  this.levelEqualZero = true;
@@ -279,9 +262,6 @@ export default {
                 this.newData.lv2_code = d.sone.code; 
                 this.newData.idx = d.index;
             }
-        },
-        resetData: function(d) {
-            console.log(d);
         },
         confirmDelete: function(d){
             console.log('delete');

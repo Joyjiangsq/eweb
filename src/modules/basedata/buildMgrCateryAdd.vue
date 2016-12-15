@@ -1,17 +1,15 @@
 <template>
     <div :class="css.itemList">
-                  <!--新增材料分类对话框-->
-      <dialog :flag.sync="show" title="新增材料" @dialogclick="dialogClickHandler">
+    <!--新增施工报价分类对话框-->
+      <dialog :flag.sync="show" title="新增施工报价分类" @dialogclick="dialogClickHandler">
                 <div  slot="containerDialog">
                         <span :class="css.titlerow">材料信息</span>
                          <div>   {{formdata | json}}
-                            <formtext labelname="分类名称：" :vertical="true"   :value.sync="formdata.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                            <formcb keyid="name" labelname="所属包：" dropfixed="dropfixed" :vertical="true" v-if="level"  :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
-                            <formrd labelname="启用：" :vertical="true"  :value.sync="formdata.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                            <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdata.name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                            <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formdata.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
                         </div>
                 </div>
         </dialog>
-    </div>
 </template>
 
 <script>
@@ -25,7 +23,11 @@ import {packageType} from "config/const.js";
 import dialog from "component/dialog/dialog";
 export default {
   props:{
-    formdata:{name:"",pkg:"",usable:false},
+    formdata:{
+        default: function(){
+           return {name:'', usable:'1'}
+        }
+    },
     show:{
         default: false
     },
@@ -42,10 +44,7 @@ export default {
     }
   },
   computed: {
-      //所属包下拉值
-      getRoles: function(){
-        return packageType
-      }
+      
   },
   ready: function () {
   },

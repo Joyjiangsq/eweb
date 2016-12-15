@@ -55,7 +55,7 @@ let staticMenus = [
 
   {name:"报表管理", url:"/tbmgr", icon:"icon-report"},
   {name:"用户管理", url:"/user", icon:"icon-user-manager"}
-]
+]  
 export default {
     data(){
       return {
