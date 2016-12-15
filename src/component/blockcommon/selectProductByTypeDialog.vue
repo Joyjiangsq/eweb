@@ -6,7 +6,7 @@
                     <div :class="css.sBox">
                           <search pathname :datas="sdata" :hash="false" :needsearch="false"  :events="searchEvents"></search>
                         </div>
-                    <div :class="css.tBox">{{params | json}}
+                    <div :class="css.tBox">
                       <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" url="material" :totals.sync="totals" :load="load" :params="params" :events="tableEvents"></tb>
                     </div>
                     <pg @pagechange="pagechange" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
