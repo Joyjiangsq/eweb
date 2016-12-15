@@ -24,6 +24,9 @@ export default {
       show: {
           default: false,
           type: Boolean
+      },
+      url:{
+          default:""
       }
   },
   data: function () {
@@ -36,7 +39,7 @@ export default {
   computed: {
   },
   ready: function () {
-      this.$http.get(this.$Api + "material-category", {}).then((res)=>{
+      this.$http.get(this.$Api + this.url, {}).then((res)=>{
             let d = res.json().data.docs;
             let tpl = [];
             d.map((one)=>{
@@ -44,13 +47,13 @@ export default {
                     one.lv2.map((sone)=> {
                             if(sone.lv3) {
                                 sone.lv3.map((ssone) => {
-                                    tpl.push({lv_code:ssone.code, level_n:3, lv3_name:ssone.name, lv_contact_name: one.name+"-"+sone.name+"-"+ssone.name,checked: false})
+                                    tpl.push({lv_code:ssone.code, level_n:3, lv_name:ssone.name, lv_contact_name: one.name+"-"+sone.name+"-"+ssone.name,checked: false})
                                 })
                             }
-                            else tpl.push({lv_code:sone.code, level_n:2, lv2_name:sone.name, lv_contact_name: one.name+"-"+sone.name,checked: false})
+                            else tpl.push({lv_code:sone.code, level_n:2, lv_name:sone.name, lv_contact_name: one.name+"-"+sone.name,checked: false})
                     })
                 }
-                else tpl.push({lv_code:one.code, level_n:1, lv1_name:one.name, lv_contact_name: one.name,checked: false})
+                else tpl.push({lv_code:one.code, level_n:1, lv_name:one.name, lv_contact_name: one.name,checked: false})
             })
             console.log(tpl);
             this.data = tpl

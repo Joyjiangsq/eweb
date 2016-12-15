@@ -38,9 +38,11 @@ import materialCateryView from 'modules/basedata/materialCatery.vue';
 import supplierView from 'modules/basedata/supplier.vue';
 
 // 报价模板
-import priceDemoView from "modules/pricedemo/priceDemo.vue";
+import priceDemoViewc from "modules/pricedemo/priceDemoc.vue";
+import priceDemoViews from "modules/pricedemo/priceDemos.vue";
 import priceTransView from "modules/pricedemo/priceTrans.vue";
-import priceAddView from "modules/pricedemo/priceAdd.vue";
+import priceAddcView from "modules/pricedemo/priceAddc.vue";
+import priceAddsView from "modules/pricedemo/priceAdds.vue";
 
 import tbView from 'modules/tbmgr/tbMgr.vue';
 import urView from 'modules/urgent/urgentMgr.vue'
@@ -200,15 +202,27 @@ export function routerStart(router) {
                   }
                 },
                 // 报价模板-----------------------------------------------------------
-                "/priceDemo": {
-                  name:"pricedemo",
+                "/priceDemoc": {
+                  name:"priceDemoc",
                   component:priceTransView,
                   subRoutes: {
                     "/":{
-                      component: priceDemoView
+                      component: priceDemoViewc
                     },
-                    "/priceAdd": {
-                        component: priceAddView
+                    "/priceAddc": {
+                        component: priceAddcView
+                    }
+                  }
+                },
+                "/priceDemos": {
+                  name:"priceDemos",
+                  component:priceTransView,
+                  subRoutes: {
+                    "/":{
+                      component: priceDemoViews
+                    },
+                    "/priceAdds": {
+                        component: priceAddsView
                     }
                   }
                 },

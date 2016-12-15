@@ -59,7 +59,8 @@ let tableHeaderDatas = [
                         {name:"关联采购单号", labelValue:"U_PurchaseNum",type:"component", component: orderurgent, cname:"orderurgent1"},
                         {name:"购买人", labelValue:"purchaser",type:"data"},
                         {name:"购买时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
-                        {name:"订单状态", labelValue:"U_OrderStatus",type:"data"}]
+                        {name:"订单状态", labelValue:"U_OrderStatus",type:"data"},
+                        {name:"驳回理由", labelValue:"U_CloseWhy", type:"data"}]
 export default {
   mixins: [pageBase],
   data: function () {
@@ -90,7 +91,7 @@ export default {
       let q = this.$route.query;
       return [{type:"text",  value:q.U_SPOrder || "",  keyname:"U_SPOrder", labelcaption:"加急订单号:"},
               {type:"text",  value:q.U_PurchaseNum || "",  keyname:"U_PurchaseNum", labelcaption:"关联订单号:"},
-              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"id", value:q.U_OrderStatus || "", datas:[{name:"待扣款", id:"-1"},{name:"已扣款", id:"0"}], labelcaption:"订单状态:"},
+              {type:"combobox", keyname:"U_OrderStatus", labelname:"name", keyid:"id", value:q.U_OrderStatus || "", datas:[{name:"待扣款", id:"-1"},{name:"e站驳回", id:"9"},{name:"已扣款", id:"0"}], labelcaption:"订单状态:"},
               {type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"购买时间:"}];
 
     }

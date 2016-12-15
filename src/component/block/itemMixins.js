@@ -147,7 +147,6 @@ export default {
     }
   },
   ready: function(){
-    console.log("xxxxxxxxxxxxxxxxxxxxx");
     if(!this.detail) {
       for (var i = 0; i < this.testdata.length; i++) {
         var one = this.testdata[i];

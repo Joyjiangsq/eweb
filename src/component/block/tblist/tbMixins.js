@@ -86,7 +86,7 @@ let tbMixin = {
               {type:"text",  value:"",  keyname:"U_Brand", labelcaption:"品牌:"},
               {type:"text",  value:"",  keyname:"U_Series", labelcaption:"系列:"},
               {type:"text",  value:"",  keyname:"U_MQuality", labelcaption:"材质:"},
-              {type:"text",  value:"",  keyname:"U_colour", labelcaption:"颜色:"}]
+              {type:"text",  value:"",  keyname:"U_Colour", labelcaption:"颜色:"}]
         }
     },
     computed: {

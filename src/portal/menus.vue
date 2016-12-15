@@ -83,7 +83,9 @@ export default {
         }]
       })
       this.datamenu.push({name:"报价管理", icon:"icon-purchase",show: false,subMenus:[{
-           url:"/priceDemo",name:"报价模板"
+           url:"/priceDemoc",name:"报价材料模板"
+       },{
+           url:"/priceDemos",name:"报价施工模板"
        }]
      })
       let path = this.$route.name;

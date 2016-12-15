@@ -101,7 +101,7 @@ export default {
               if(hone.checkbox) one.checkTag = false;
             }
             let nd = Object.assign(one, rowData);
-            if(nd.U_OrderStatus != "待采购" && nd.U_OrderStatus != "e站驳回") nd.closeCheckTag = true;
+            if(nd.U_OrderStatus.indexOf("待采购") == -1 && nd.U_OrderStatus.indexOf("e站驳回") == -1) nd.closeCheckTag = true;
             this.dataList.push(nd);
         }
           this.$set("loading", false);
@@ -110,7 +110,7 @@ export default {
         let newa = [];
         for (var i = 0; i < this.dataList.length; i++) {
             let one = Utils.cloneObj(this.dataList[i]);
-            if(one.U_OrderStatus != "待采购" && one.U_OrderStatus != "e站驳回") continue;
+            if(one.U_OrderStatus.indexOf("待采购") == -1 && one.U_OrderStatus.indexOf("e站驳回") == -1) continue;
             delete one.checkTag;
             delete one.selected;
             delete one.U_Consignee;
