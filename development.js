@@ -25,7 +25,7 @@ app.use(require('webpack-hot-middleware')(compiler, {
 }));
 // app.use(cookieParser())
 // app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/', proxy('172.20.8.110', {
+app.use('/', proxy('172.20.8.109', {
   forwardPath: function(req, res) {
       var pathname = url.parse(req.url);
       console.log("[".green +req.method.green+"]".green + "----" + pathname.pathname.green);
