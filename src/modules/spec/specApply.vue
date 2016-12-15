@@ -371,6 +371,7 @@ export default {
     },
 
     resub: function() {
+      // TODO
       this.baseInfo.backValueipt = ""
       this.baseInfo.status =  1;
 
