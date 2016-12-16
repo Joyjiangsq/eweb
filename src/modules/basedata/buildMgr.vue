@@ -25,8 +25,6 @@
               </div>
               <div style="clear:both"></div>
       </pagepanel>
-      <!--新增施工报价分类对话框-->
-        <!--<buildmgrcateryadd :formData="newData" @success="addSuccess" :show="showAdd"></buildmgrcateryadd>-->
         <!--新增对话框-->
         <buildmgrpriceadd :formdata="newData" :formdatas="formdatas" @success="addSuccess" :show="showAdd" :catery="catery" :showtbedit="showtbedit"></buildmgrpriceadd>
        <!--删除提示-->
@@ -38,7 +36,6 @@
 import icon from "component/sprite/icon";
 import btn from "component/sprite/button.vue";
 import chuguitb from "component/block/tblist/chuguiList";
-// import buildmgrcateryadd from "./buildMgrCateryAdd";
 import buildmgrpriceadd from "./buildMgrAdd";
 import dialogtip from "component/dialog/dialogTip";
 import css from './b.css';
@@ -64,8 +61,8 @@ export default {
         formdatas: {},
         codeParams: {},
         curItem:{},
-        editItem:{},               // 删除或者编辑当前的 数据
         headercaption: headerData,
+        canAdd: false,  //控制新增按钮状态
         reload: false,  //添加分类后刷新分类菜单
         isEAdmin: false, //判断是否为(e)分站
         showAdd: false, //弹框显示隐藏
@@ -73,10 +70,10 @@ export default {
         showtbedit: false, //切换表格删除数据弹框
         moduleName:"施工报价管理",
         deleteTag: false,         // 删除确认弹框显示隐藏
-        detail: {page:1},
         rightData: [],
         curAction:'',             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
         totals: 0,
+        selectLevel: 0,            //修改表格数据时排除多余参数
         da:{},
         selectedLevel: 0,
         actionMap:{     //根据selectedLevel不同映射
@@ -89,24 +86,14 @@ export default {
                 return [{name:"修改", action:"edit",icon:"icon-edit",data:d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
             },
             operatorHandler: function(d){
-                console.log('d.level');
-                console.log(d.level);
-                console.log('d.level');
-                console.log('this.ddddddddd');
-                console.log(d);
-                console.log('this.ddddddddd');
                 this.$set("curItem", d.data);
                 if(d.action == "delete") {
                     this.$set("deleteTag", !this.deleteTag);
                 }else if(d.action == "edit"){
-                    console.log('第二步');
                     this.$set("curAction","tbedit");
                     this.showtbedit = !this.showtbedit;
                     this.showAdd = !this.showAdd;
                      this.newData = Utils.cloneObj(this.curItem);
-                     console.log('this.newdata!!!');
-                     console.log(this.newData);          //包含了lv1~lv3数据
-                     console.log('this.newdata!!!');
                 }
             }
         },
@@ -129,18 +116,18 @@ export default {
     methods:{
         //表格数据
         getTableDetail: function(){
-            // this.detail.page = 1;
             this.load = !this.load;
         },
         addMenu: function() {
             this.$set("curAction", "add");
             this.formdatas = {};
-            this.catery = true;
             this.showAdd = !this.showAdd;
+            this.catery = !this.catery;
         },
         //分类组件弹框表单验证成功
         addSuccess: function() {
             if(this.curAction == "add") {
+                console.log('this.curAction == add');
                     let action = this.actionMap[this.selectedLevel];
                     Object.assign(this.formdatas, action.params);   //将参数优先
                     this.$http.post(this.$Api+action.url,JSON.stringify(this.formdatas)).then((res) => {
@@ -150,6 +137,7 @@ export default {
                         this.getData();
                      });
                 }else if(this.curAction == "edit"){
+                    console.log('this.curAction == edit');
                     let action = this.actionMap[this.selectedLevel];
                     Object.assign(this.formdatas, action.params);
                     this.$http.put(this.$Api+action.url,JSON.stringify(this.formdatas)).then((res) => {
@@ -159,9 +147,10 @@ export default {
                         this.getData();
                     });
                 }else if(this.curAction == "tbedit"){
+                    console.log('this.curAction == tbedit');
                     if(this.newData._id) delete this.newData._id;
                     if(this.newData.createAt) delete this.newData.createAt;   
-                    this.newData.code = this.editItem;
+                    this.newData.code = this.curItem.code;
                     this.$http.put(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
                         var d = res.json();
                         this.showMsg("success", "修改成功");
@@ -169,7 +158,8 @@ export default {
                         this.newData ={};
                         this.getTableDetail();
                     });
-                }else {
+                }else if(this.curAction == "tbadd") {
+                    console.log('this.curAction == tbadd');
                     this.$http.post(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
                         this.showMsg("success", "新增成功");
                         this.showAdd = !this.showAdd;
@@ -183,15 +173,17 @@ export default {
             this.reload = !this.reload; 
         },
         treeClickHandler: function(d) {
+            this.canAdd = true;
+            this.newData = {};
             if(d.level == 1) {
-                this.$set("editItem",d.one.code);
+                this.selectLevel = 1; 
                 this.newData.lv1_name = d.one.name;
                 this.newData.lv1_code = d.one.code;
                 this.searchParams= {page:1} ;
                 this.searchParams.lv1_code = d.one.code;
             }else if(d.level == 2){
+                this.selectLevel = 2; 
                 console.log('第一步');
-                this.$set("editItem",d.sone.code);
                 this.newData.lv1_name = d.one.name;
                 this.newData.lv1_code = d.one.code;
                 this.newData.lv2_name = d.sone.name;
@@ -200,13 +192,14 @@ export default {
                 this.searchParams.lv1_code = d.one.code;
                 this.searchParams.lv2_code = d.sone.code;
             }else if(d.level == 3){
+                this.selectLevel = 3; 
                 console.log('打开了第三级');
-                this.$set("editItem",d.mone.code);
                 this.newData.lv1_name = d.one.name;
                 this.newData.lv1_code = d.one.code;
                 this.newData.lv2_name = d.sone.name;
                 this.newData.lv2_code = d.sone.code;
                 this.newData.lv3_name = d.mone.name;
+                console.log(d.mone.name);
                 this.newData.lv3_code = d.mone.code;
                 this.searchParams= {page:1} ;
                 this.searchParams.lv1_code = d.one.code;
@@ -216,14 +209,14 @@ export default {
             this.getTableDetail();
         },
         addClickHandler: function(d) {
-            this.catery = true;
-            // 设置参数
-             this.addMenu();
+            console.log('点击了');
+            this.formdatas={};
+            this.catery = !this.catery;
+            this.showAdd = !this.showAdd;
             if(d.action="add"){
                 this.$set("curAction", "add");
             }
             if(d.level == 1){   
-                //添加參數lv1_code
                 this.formdatas.lv1_code = d.one.code;
                 this.selectedLevel =1;
             }else if(d.level ==2){
@@ -263,7 +256,9 @@ export default {
             
         },
         toAdd: function(){
-            this.catery = false;
+            if(!this.canAdd) return ;
+            this.$set("curAction","tbadd");
+            this.showtbedit = !this.showtbedit;
             this.showAdd = !this.showAdd;
         },
         confirmDelete: function(d){

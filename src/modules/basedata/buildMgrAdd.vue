@@ -102,11 +102,13 @@ export default {
   watch:{
       "catery": function(){
           console.log('catery changed');
-          this.exCatery = !this.exCatery;
+          this.exCatery = true;
+          console.log(this.exCatery);
       },
        "showtbedit": function(){
           console.log('showtbedit changed');
           this.exCatery = false;
+          console.log(this.exCatery);
       }
   }
 

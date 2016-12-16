@@ -74,6 +74,7 @@ export default {
         showAddMa: false,
         showAdd: false,     //弹框显示隐藏
         deleteTag: false,         // 删除确认弹框显示隐藏
+        canAdd: false,  //控制新增按钮状态
         selectedLevel: 0,          //默认添加材料的等级
         datas: [],
         rightData: [],
@@ -127,22 +128,23 @@ export default {
                         this.showAdd = false;
                         this.newData ={};
                         this.getData();
+                        this.canAdd = false;
                     });
                 }else {
                     let action = this.actionMap[this.selectedLevel];
                     Object.assign(this.newData, action.params);
                     this.$http.put(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
                         var d = res.json();
-                        this.showMsg("success", "新增成功");
+                        this.showMsg("success", "修改成功");
                         this.showAdd = false;
                         this.newData ={};
                         this.getData();
+                        this.canAdd = false;
                     });
                 }
         },
         //表格数据
         getTableDetail: function(){
-            // this.detail.page = 1;
             this.load = !this.load;
         },
         //添加材料分类之后再次刷新渲染三级
@@ -152,22 +154,24 @@ export default {
         addoneHandler: function() {
 
         },
-        //得到选中的选品
+        //选品添加
         addCheckedList: function(d) {
-            let newD = [];
-            let eachD = {};
             for(let i = 0; i<d.length; i++){
                 if(this.addListLevel == 1){
                     d[i].lv1_name = this.da.lv1_name;
                     d[i].lv1_code = this.da.lv1_code;
                 }else if(this.addListLevel == 2){
-                    eachD.lv2_code = d[i].ItemCode;
-                    eachD.lv2_name = d[i].ItemName;
-                    newD.push(eachD);
+                    d[i].lv1_name = this.da.lv1_name;
+                    d[i].lv1_code = this.da.lv1_code;
+                    d[i].lv2_name = this.da.lv2_name;
+                    d[i].lv2_code = this.da.lv2_code;
                 }else if(this.addListLevel == 3){
-                    eachD.lv3_code = d[i].ItemCode;
-                    eachD.lv3_name = d[i].ItemName;
-                    newD.push(eachD);
+                    d[i].lv1_name = this.da.lv1_name;
+                    d[i].lv1_code = this.da.lv1_code;
+                    d[i].lv2_name = this.da.lv2_name;
+                    d[i].lv2_code = this.da.lv2_code;
+                    d[i].lv3_name = this.da.lv3_name;
+                    d[i].lv3_code = this.da.lv3_code;
                 }
             }
             this.$http.post(this.$Api+"material",JSON.stringify(d)).then((res) => {
@@ -178,6 +182,7 @@ export default {
             this.showSelectDialog = !this.showSelectDialog;
         },
         toSelect: function(){
+            if(!this.canAdd) return;
             this.showSelectDialog = !this.showSelectDialog;
         },
         addMenu: function(){
@@ -186,6 +191,8 @@ export default {
             this.levelEqualZero = true;
         },
         treeClickHandler: function(d) {
+            this.canAdd = true;
+            this.selectLevel = true;
             if(d.level == 1) {
                 this.da.lv1_name = d.one.name;
                 this.da.lv1_code = d.one.code;
@@ -214,6 +221,7 @@ export default {
         },
         addClickHandler: function(d) {
             // 设置参数
+            this.newData = {};
              this.addMenu();
              if(d.action="add"){
                 this.$set("curAction", "add");
@@ -265,10 +273,10 @@ export default {
         },
         confirmDelete: function(d){
             console.log('delete');
-            console.log(d);
+            console.log(this.curItem);
             console.log('delete');
             if(d.action == "confirm") {
-                this.$http.delete(this.$Api+"material", {params: {"ItemCode": d.ItemCode}}).then((res)=>{
+                this.$http.delete(this.$Api+"material", {params: {"ItemCode": this.curItem.ItemCode}}).then((res)=>{
                     this.$set("deleteTag", !this.deleteTag);
                     this.loadlist();
                     this.showMsg("success", "删除成功！");
