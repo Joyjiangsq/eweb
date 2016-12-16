@@ -52,7 +52,7 @@ export default {
                         {name:"测量员电话", labelValue:"ce_phone",type:"data"},
                         {name:"订单状态", labelValue:"status",type:"data",adapterFun: function(d) {
                             let mp = {
-                               "1":"待交付","2":"待确认", "3":"已完成", "4":"退回修改"
+                               "1":"待交付","2":"待确认", "3":"已完成", "4":"退回修改", "5": "提交失败"
                             }
                             return mp[d.status]
                         }}], // 表格头部信息设置
@@ -70,11 +70,19 @@ export default {
     sdata: function(){
       let q = this.$route.query;
       let sd = [{type:"text",  value:q.design_serial || "",  keyname:"design_serial", labelcaption:"设计申请单号:"},
-              {type:"combobox", keyname:"status", labelname:"name", keyid:"id", value:q.status || "", datas:[{name:"待交付", id:1},{name:"待确认", id:2},{name:"退回修改", id:4},{name:"已完成", id:3}], labelcaption:"订单状态:"}];
+              {type:"combobox", keyname:"status", labelname:"name", keyid:"id", value:q.status || "", datas:this.smenus, labelcaption:"订单状态:"}]
       if(this.isE) sd.push({type:"text",  value:q.station_name || "",  keyname:"station_name", labelcaption:"分站名称:"});
       sd.push({type:"daterange",  keynamestart:"start", keynameend:"end", start:q.start || "",  end:q.end || "", formate:"yyyy-mm-dd", labelcaption:"申请时间:"});
       return sd
 
+    },
+    smenus: function() {
+        let m = [{name:"待交付", id:1},{name:"待确认", id:2},{name:"退回修改", id:4},{name:"已完成", id:3}];
+        if(this.isE) return m;
+        else {
+          m.push({name:"提交失败", id:5});
+          return m
+        } 
     },
     isE: function() {
       return Utils.isEAdmin();

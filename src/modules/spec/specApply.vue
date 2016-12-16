@@ -193,6 +193,9 @@
         <div :class='css.footer' v-if="!isE && baseInfo.status == 4">
           <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back"  @clickaction="resub">重新提交</btn></span>
         </div>
+        <div :class='css.footer' v-if="!isE && baseInfo.status == 5"> <!--提交失败-->
+          <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back"  @clickaction="resub">重新提交</btn></span>
+        </div>
         <div :class='css.footer' v-if="!isE && baseInfo.status == 2">
           <span :class="css.bitem"><btn btnname="btn-primary" iconname="icon-check"  @clickaction="finishHandler">确认</btn></span>
           <span :class="css.bitem"><btn btnname="btn-default" iconname="icon-back"  @clickaction="resub">重新提交</btn></span>
