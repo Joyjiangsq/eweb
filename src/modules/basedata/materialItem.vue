@@ -1,9 +1,8 @@
 <template>
     <div :class="css.itemList">
                   <!--新增材料分类对话框-->
-      <dialog :flag.sync="show" title="新增材料" @dialogclick="dialogClickHandler">
+      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler">
                 <div  slot="containerDialog">
-                        <span :class="css.titlerow">材料信息</span>
                          <div>   
                             <formtext labelname="分类名称：" :vertical="true"   :value.sync="formdata.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                             <formcb keyid="name" labelname="所属包：" dropfixed="dropfixed" :vertical="true" v-if="level"  :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
@@ -32,6 +31,9 @@ export default {
     level:{
         default: true,
         type :Boolean
+    },
+    title:{
+        default:''
     }
   },
   data: function () {

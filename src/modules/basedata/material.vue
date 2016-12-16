@@ -7,7 +7,6 @@
       </pagepanel>
       <!-- （分站）-->
       <pagepanel v-if="!isEAdmin">
-          {{newData1 | json}}
               <div  :class="css.mcLeft"> 
                  <div :class='css.opRow'>
                     <span>材料分类</span>
@@ -27,7 +26,7 @@
               <div style="clear:both"></div>
       </pagepanel>
       <!--新增材料分类对话框-->
-        <materialitem :formData="newData" @success="addSuccess" :show="showAdd" :level="levelEqualZero"></materialitem>
+        <materialitem :formData="newData" :title="title" @success="addSuccess" :show="showAdd" :level="levelEqualZero"></materialitem>
         <!--选品对话框-->
         <selectproductdialog :show="showSelectDialog" :params="{}" @getcheck="addCheckedList" ></selectproductdialog>
        <!--删除提示-->
@@ -62,6 +61,7 @@ export default {
     data(){
       return {
         css,
+        title: '',
         reload: false,
         levelEqualZero: false,  //控制新增框所属包显示
         showSelectDialog: false,
@@ -186,6 +186,8 @@ export default {
             this.showSelectDialog = !this.showSelectDialog;
         },
         addMenu: function(){
+             this.$set("curAction", "add");
+            this.title = "新增材料";
             this.showAdd = !this.showAdd;
             this.selectedLevel = 0;
             this.levelEqualZero = true;
@@ -221,8 +223,12 @@ export default {
         },
         addClickHandler: function(d) {
             // 设置参数
+            this.title = "新增材料";
             this.newData = {};
-             this.addMenu();
+            //  this.addMenu();
+            this.showAdd = !this.showAdd;
+            this.selectedLevel = 0;
+            this.levelEqualZero = true;
              if(d.action="add"){
                 this.$set("curAction", "add");
              }
@@ -242,7 +248,11 @@ export default {
             
         },
         editClickHandler: function(d) {
-            this.addMenu();
+            this.title = "编辑材料";
+            // this.addMenu();
+            this.showAdd = !this.showAdd;
+            this.selectedLevel = 0;
+            this.levelEqualZero = true;
             if(d.action="edit") this.$set("curAction", "edit");
             //编辑时显示原数据
              if(d.level == 1) {

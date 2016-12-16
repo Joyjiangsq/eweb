@@ -26,7 +26,7 @@
               <div style="clear:both"></div>
       </pagepanel>
         <!--新增对话框-->
-        <buildmgrpriceadd :formdata="newData" :formdatas="formdatas" @success="addSuccess" :show="showAdd" :catery="catery" :showtbedit="showtbedit"></buildmgrpriceadd>
+        <buildmgrpriceadd :title="title" :formdata="newData" :formdatas="formdatas" @success="addSuccess" :show="showAdd" :catery="catery" :showtbedit="showtbedit"></buildmgrpriceadd>
        <!--删除提示-->
         <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
   </div>
@@ -56,6 +56,7 @@ export default {
     data(){
       return {
         css,
+        title: '',       //弹框抬头标题
         datas: [],
         newData: {},
         formdatas: {},
@@ -90,6 +91,7 @@ export default {
                 if(d.action == "delete") {
                     this.$set("deleteTag", !this.deleteTag);
                 }else if(d.action == "edit"){
+                    this.title = "编辑材料";
                     this.$set("curAction","tbedit");
                     this.showtbedit = !this.showtbedit;
                     this.showAdd = !this.showAdd;
@@ -119,12 +121,13 @@ export default {
             this.load = !this.load;
         },
         addMenu: function() {
+            this.title = "新增施工报价分类";
             this.$set("curAction", "add");
             this.formdatas = {};
             this.showAdd = !this.showAdd;
             this.catery = !this.catery;
         },
-        //分类组件弹框表单验证成功
+        //弹框表单验证成功
         addSuccess: function() {
             if(this.curAction == "add") {
                 console.log('this.curAction == add');
@@ -209,6 +212,7 @@ export default {
             this.getTableDetail();
         },
         addClickHandler: function(d) {
+            this.title = "新增施工报价分类";
             console.log('点击了');
             this.formdatas={};
             this.catery = !this.catery;
@@ -226,7 +230,11 @@ export default {
             }
         },
         editClickHandler: function(d){
-            this.addMenu();
+            this.title = "编辑施工报价分类";
+            // this.addMenu();
+            this.formdatas = {};
+            this.showAdd = !this.showAdd;
+            this.catery = !this.catery;
             if(d.action="edit") this.$set("curAction", "edit");
             //编辑时显示原数据
              if(d.level == 1) {
@@ -256,6 +264,7 @@ export default {
             
         },
         toAdd: function(){
+            this.title = "新增材料";
             if(!this.canAdd) return ;
             this.$set("curAction","tbadd");
             this.showtbedit = !this.showtbedit;

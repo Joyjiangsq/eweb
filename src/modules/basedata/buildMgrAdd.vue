@@ -1,10 +1,9 @@
 <template>
     <div :class="css.itemList" v-if="exCatery">
     <!--新增施工报价分类对话框-->
-      <dialog :flag.sync="show" title="新增施工报价分类" @dialogclick="dialogClickHandler" >
+      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler" >
                 <div  slot="containerDialog">
-                        <span :class="css.titlerow">材料信息</span>
-                         <div>   {{formdatas | json}}
+                         <div>  
                             <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                             <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formdatas.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
                         </div>
@@ -13,10 +12,9 @@
     </div>
     <!--新增材料分类对话框-->
     <div :class="css.itemList" v-else>
-      <dialog :flag.sync="show" title="新增材料" @dialogclick="dialogClickHandler" v-else>
+      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler" v-else>
                 <div  slot="containerDialog">
-                        <span :class="css.titlerow">材料信息</span>
-                         <div>   {{formdata | json}}
+                         <div> 
                             <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdata.project_name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                             <formtext labelname="单位：" :vertical="true"  formname="" :value.sync="formdata.unit" placeholder="请输入单位" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                             <formtext labelname="销售价：" :vertical="true"  formname="" :value.sync="formdata.selling_price" placeholder="请输入销售价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -65,6 +63,9 @@ export default {
         default: false,
         type: Boolean
     },
+    title:{
+        default: ''
+    }
 
   },
   data: function () {
