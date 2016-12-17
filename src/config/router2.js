@@ -44,6 +44,9 @@ import priceTransView from "modules/pricedemo/priceTrans.vue";
 import priceAddcView from "modules/pricedemo/priceAddc.vue";
 import priceAddsView from "modules/pricedemo/priceAdds.vue";
 
+// 调品规则
+import materialRuleView from "modules/material/material.vue";
+
 import tbView from 'modules/tbmgr/tbMgr.vue';
 import urView from 'modules/urgent/urgentMgr.vue'
 
@@ -225,6 +228,11 @@ export function routerStart(router) {
                         component: priceAddsView
                     }
                   }
+                },
+                // 调品规则-------------------------------------------------------
+                "/material" :{
+                   name:" material",
+                   component: materialRuleView
                 },
                 // 报表模块--------------------------------------------------------
                 '/tbmgr': {
