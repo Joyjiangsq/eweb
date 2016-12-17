@@ -38,7 +38,7 @@ export default {
       curId:"",
       formData:{
         tp_name:"",
-        usable: "1"
+        usable: "1"   
       },
       curGlData:[]
     }
