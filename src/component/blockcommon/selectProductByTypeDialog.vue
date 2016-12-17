@@ -15,6 +15,7 @@
     </div>
 </template>
 <script> 
+// 根据材料分类选品对话框
 import css from "./selectProduct.css";
 import search from "component/search/search";
 import tb from "component/grid/tableListBase";

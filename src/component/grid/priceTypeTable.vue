@@ -20,6 +20,9 @@
                            <span v-if="sone.type == 'dataspec'" >
                                     {{done[sone.labelValue].def || "-"}}
                           </span>
+                          <div v-if="sone.type == 'componentspec'">
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
+                          </div>
                           <div v-if="sone.type == 'edit'" >
                               <div v-if="done.code == 'gxh'">
                                     {{done[sone.labelValue] || '-'}}

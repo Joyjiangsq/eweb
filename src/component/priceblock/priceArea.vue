@@ -1,22 +1,15 @@
 <template>
     <div :class="css.Box">
         <div :class='css.leftBox'>
-            <lefttb :headercaption="leftHeader" @rowclick="rowclick" :redef="redef" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="glData" :events="tableEventsLeft"></lefttb> 
-            <div :class="css.attachInfo">
-                <propertytext key="升级金额" :horizontal="true" value="0" v-if="this.from == 'c'"></propertytext>
-                <propertytext key="降级金额" :horizontal="true" value="0" v-if="this.from == 'c'"></propertytext>
-                <propertytext key="减项金额" :horizontal="true" value="0" v-if="this.from == 'c'"></propertytext>
-                <propertytext key="互换金额" :horizontal="true" value="0" v-if="this.from == 'c'"></propertytext>
-                <propertytext key="个性化金额" :horizontal="true" value="0"></propertytext>
-            </div>
+            <lefttb :headercaption="leftHeader" @rowclick="rowclick" :redef="redef" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="fdata" :events="tableEventsLeft"></lefttb> 
         </div>
         <div :class='css.rightBox'>
             <div v-if="gxhTip">{{gxhTip}}</div>
             <righttb :headercaption="rightHeader" @selectchange="selectchangeHandler"  scene="add_yes" :deleteindex="deleteindex" :datas="rightDatas.sub_list" :events="tableEventsRight" v-else></righttb>
-            <propertytext v-if="!gxhTip" key="总额" :horizontal="true" :value="rightDatas.totalPrice"></propertytext>
         </div>
-        <typedialog :show="showTypeDialog" @onecheck="typeCheck" :url="this.getTypeUrl()"></typedialog>
-        <showselect :show="showSelectDialog" :toload="toloadProduct" :params="selectParams" ></showselect>
+        <typedialog :show="showTypeDialog" @onecheck="typeCheck" :url="material-category" v-if="from == 'c'"></typedialog>
+        <showbuild :show="showBuildDialog" @buildconfirm="buildconfirm"></showbuild>
+        <!--<showselect :show="showSelectDialog" :toload="toloadProduct" :params="selectParams" ></showselect>-->
     </div>
 </template>
 
@@ -27,12 +20,13 @@ import Utils from "common/Utils.js";
 import lefttb from "component/grid/priceWhereTable";
 import righttb from "component/grid/priceTypeTable";
 import typedialog from "./typeDialog";
-import propertytext from "component/form/propertyText.vue";
 import adapter_left from "./adapterLeft.js";
 import adapter_right from "./adapterRight.js";
 import adapter from "./adapter.js";
 import showselect from "component/blockcommon/selectProductByTypeDialog";
+import showbuild from "component/blockcommon/selectBuildDialog";
 import {showTips} from "actions/index";
+import Vue from "vue";
 export default {
   props: {
     from:{
@@ -42,7 +36,7 @@ export default {
 
     action: {
       type: String,
-      default: "add" // edit
+      default: "add" // detail // 编辑状态就是新增  多了id
     },
 
     validate:{
@@ -50,8 +44,8 @@ export default {
       default: false
     },
 
-    datas:{
-      default: ()=> [],
+    fdata:{
+      default: ()=> [{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
       type: Array
     }
   },
@@ -60,14 +54,14 @@ export default {
       css,
       gxhTip:"", // 个性化提示
       redef: false,
-      glData:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
-      
+      // fdata:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
-      rightDatas:{totalPrice:0},
+      rightDatas:{},
+      showBuildDialog: false, // 显示施工产品对话框
       showTypeDialog: false, // 分类型对话框
-      showSelectDialog: false,
-      toloadProduct: false,
-      selectParams:{page: 1},
+      // showSelectDialog: false,
+      // toloadProduct: false,
+      // selectParams:{page: 1},
       deleteindex: {index: -1},
       tableEventsLeft:{
         operatorRender: function(d, index){
@@ -76,28 +70,27 @@ export default {
 
         operatorHandler: function(d){
              if(d.action == "delete") {
-                  this.glData.splice(d.index, 1);
+                  this.fdata.splice(d.index, 1);
                   this.redef = !this.redef;
              }
         }
       },
       tableEventsRight:{
          operatorRender: function(d, index){
-            return this.getFrom(d, index);
+            return [{name:"删除", action:"delete",icon:"icon-delete", index: index}]
          },
 
          operatorHandler: function(d){
-              if(d.action == "select") {
-                let stPage = this.selectParams.page;
-                this.selectParams = {page: stPage};
-                this.showSelectDialog = !this.showSelectDialog;
-                console.log(this.selectParams);
-                if(d.data.level_n == 1) this.selectParams.lv1_code = d.data.lv_code;
-                else if(d.data.level_n == 2) this.selectParams.lv2_code = d.data.lv_code;
-                else this.selectParams.lv3_code = d.data.lv_code;
-                this.toloadProduct = !this.toloadProduct
-              }
-              else if(d.action == "delete") {
+              // if(d.action == "select") {
+              //   let stPage = this.selectParams.page;
+              //   this.selectParams = {page: stPage};
+              //   this.showSelectDialog = !this.showSelectDialog;
+              //   if(d.data.level_n == 1) this.selectParams.lv1_code = d.data.lv_code;
+              //   else if(d.data.level_n == 2) this.selectParams.lv2_code = d.data.lv_code;
+              //   else this.selectParams.lv3_code = d.data.lv_code;
+              //   this.toloadProduct = !this.toloadProduct
+              // }
+              if(d.action == "delete") {
                 this.deleteindex = {index: d.index}
               }
          }
@@ -106,46 +99,44 @@ export default {
   },
   computed: {
     rightHeader: function() {
-        if(this.from == "c") return  [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
-                                      {name:"产品名称", labelValue:"product_name", type:"data"},{name:"品牌", labelValue:"U_Brand", type:"data"},
-                                      {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
-                                      {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
-                                      {name:"差价", labelValue:"diff_price", type:"edit"}, {name:"金额", labelValue:"price", type:"data"},
-                                      {name:"备注", labelValue:"remark", type:"edit"}]
+        if(this.from == "c") return  [{type:"operator", name:"操作"},
+                                      {name:"分类编号", labelValue:"lv_code", type:"data"},
+                                      {name:"分类名称", labelValue:"lv_contact_name", type:"data"},
+                                      {name:"是否允许减项", labelValue:"minu", type:"componentspec",component: mComp, cname:"deway"},
+                                      {name:"是否允许互换", labelValue:"change", type:"componentspec",component: hComp, cname:"deway1"},
+                                     ]
 
         else return [{type:"operator", name:"操作"},
-                    {name:"项目名称", labelValue:"lv_name", type:"data"},
-                    {name:"工艺说明", labelValue:"desc", type:"data"},
-                    {name:"数量" ,labelValue:"counts", type:"edit"},
-                    {name:"单价", labelValue:"diff_price", type:"edit"}, {name:"金额", labelValue:"price", type:"data"},
-                    {name:"备注", labelValue:"remark", type:"edit"}]
+                    {name:"项目名称", labelValue:"project_name", type:"data"},
+                    {name:"工艺说明", labelValue:"description", type:"data"},
+                    {name:"单位", labelValue:"unit", type:"data"}]
                  
     }
   },
   ready: function () {
     this.gxhTip = "个性化项目不需要选择";
-    if(this.datas.length != 0) {
-      this.glData = this.datas;
-    }
+    // if(this.datas.length != 0) {
+    //   this.fdata = this.datas;
+    // }
   },
   attached: function () {},
   methods: {
-    getFrom: function(d, index) {
-      // 材料
-        if(this.from == "c") return [{name:"删除", action:"delete",icon:"icon-delete", index: index},{name:"选品", action:"select",icon:"icon-add", data:d}]
-      // 施工
-        else if(this.from == "s") return [{name:"删除", action:"delete",icon:"icon-delete", index: index},{name:"添加", action:"add",icon:"icon-add", data:d}]
-    },
-    getTypeUrl: function() {
-      if(this.from =="c") return "material-category";
-      else if(this.from =="s") return "construction-quote-category"
-    },
+    // getFrom: function(d, index) {
+    //   // 材料
+    //     if(this.from == "c") return [{name:"删除", action:"delete",icon:"icon-delete", index: index}]
+    //   // 施工
+    //     else if(this.from == "s") return [{name:"删除", action:"delete",icon:"icon-delete", index: index}]
+    // },
+    // getTypeUrl: function() {
+    //   if(this.from =="c") return "material-category";
+    //   else if(this.from =="s") return "construction-quote-category"
+    // },
     leftAddOne: function() {
         let one = adapter_left({selected: false, sub_data:{sub_list:[]}});
-        this.glData.unshift(one);
+        this.fdata.unshift(one);
     },
     typeCheck: function(d) {
-        let data = Utils.cloneObj(adapter_right(d));
+        let data = Utils.cloneObj(d);
         delete data.selected;
         this.rightDatas.sub_list.push(data);
     },
@@ -156,13 +147,19 @@ export default {
       else {
         this.gxhTip = ""
         this.rightDatas = d.sub_data;
-        this.rightDatas.totalPrice = 0;
       }
+    },
+    buildconfirm: function(d) {
+       let list = Utils.cloneObj(d);
+       for(let i = 0; i < list.length; i++) {
+          let one = list[i];
+          this.rightDatas.sub_list.push(one);
+       }
     },
     validateFun: function() {
         let lvRes = true;
-        for(let i = 0; i < this.glData.length; i++) {
-           let one = this.glData[i];
+        for(let i = 0; i < this.fdata.length; i++) {
+           let one = this.fdata[i];
            for(let j in one) {
                if(!one[j].validateFun) continue;
                lvRes = one[j].validateFun();
@@ -184,17 +181,21 @@ export default {
         return lvRes
     },
     selectchangeHandler: function(){
-        this.showTypeDialog = !this.showTypeDialog
+        if(this.from == "c") this.showTypeDialog = !this.showTypeDialog
+        else {
+            this.showBuildDialog = !this.showBuildDialog;
+        }
     }
   },
-  components: {lefttb,righttb,typedialog,showselect,propertytext},
+  components: {lefttb,righttb,typedialog,showselect,showbuild},
   watch: {
     "validate": function() {
         let validateRes = this.validateFun();
         if(!validateRes) this.$dispatch("fail");
         else {
-            let newData = Utils.cloneObj(this.glData);
+            let newData = Utils.cloneObj(this.fdata);
             adapter(newData);
+            console.log(newData);
             this.$dispatch("success", newData);
         }        
     },
@@ -202,13 +203,56 @@ export default {
       deep: true,
       handler: function() {
         console.log("Aa");
-          let list = this.rightDatas.sub_list;
-          this.rightDatas.totalPrice = 0;
-          for(let i =0; i < list.length; i++) {
-              if(list[i].price) this.rightDatas.totalPrice += list[i].price*1;
-          }
       }
     }
   }
 }
+
+import radiobx from "component/radiobox/radioBox";
+var mComp = Vue.extend({
+  data:function(){
+    return {
+      css,
+      test:[{label:"是", id:"1", checked: false}, {label:"否", id:"0", checked: true}],
+      value:"",
+      checkEvents:{
+        radioClick: function(d){
+          console.log(this.selfData);
+          this.selfData.minu = d;
+        }
+      }
+    }
+  },
+  template: '<radiobx :datas="test" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>',
+  ready: function(){
+    this.value = this.selfData.minu || '0';
+    this.selfData.minu = this.value;
+  },
+  components:{radiobx},
+  methods:{
+  }
+})
+
+var hComp = Vue.extend({
+  data:function(){
+    return {
+      css,
+      test:[{label:"是", id:"1", checked: false}, {label:"否", id:"0", checked: true}],
+      value:"",
+      checkEvents:{
+        radioClick: function(d){
+          this.selfData.change = d;
+        }
+      }
+    }
+  },
+  template: '<radiobx :datas="test" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>',
+  ready: function(){
+    this.value = this.selfData.change || '0';
+    this.selfData.change = this.value;
+  },
+  components:{radiobx},
+  methods:{
+  }
+})
 </script>
