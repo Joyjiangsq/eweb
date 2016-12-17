@@ -44,8 +44,8 @@ export default {
       default: false
     },
 
-    fdata:{
-      default: ()=> [{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
+    datas:{
+      default: ()=> [],
       type: Array
     }
   },
@@ -54,7 +54,7 @@ export default {
       css,
       gxhTip:"", // 个性化提示
       redef: false,
-      // fdata:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
+      fdata:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
       rightDatas:{},
       showBuildDialog: false, // 显示施工产品对话框
@@ -117,6 +117,15 @@ export default {
     this.gxhTip = "个性化项目不需要选择";
     // if(this.datas.length != 0) {
     //   this.fdata = this.datas;
+    // }
+    // console.log(this.datas);
+    // if(this.datas.length !=0) {
+    //     for(let i = 0; i < this.datas.length; i++) {
+    //          if(i == 0) this.datas[i].selected = true;
+    //          else this.datas[i].selected = false;
+    //          adapter_left(this.datas[i]);
+    //     }
+    //     this.fdata = this.datas;
     // }
   },
   attached: function () {},
@@ -203,6 +212,20 @@ export default {
       deep: true,
       handler: function() {
         console.log("Aa");
+      }
+    },
+    "datas": {
+      deep: true,
+      handler: function(){
+            if(this.datas.length !=0) {
+                let nd = Utils.cloneObj(this.datas);
+                for(let i = 0; i < nd.length; i++) {
+                    if(nd[i].code == "gxh") nd[i].selected = true;
+                    else nd[i].selected = false;
+                    adapter_left(nd[i]);
+                }
+                this.fdata = nd;
+            }
       }
     }
   }
