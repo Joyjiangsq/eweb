@@ -86,6 +86,8 @@ export default {
            url:"/priceDemoc",name:"报价材料模板"
        },{
            url:"/priceDemos",name:"报价施工模板"
+       },{
+         url:"/material", name:"调品规则"
        }]
      })
       let path = this.$route.name;
