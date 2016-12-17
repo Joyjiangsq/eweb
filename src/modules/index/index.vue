@@ -127,22 +127,21 @@ export default {
     permissionAdapert: function(arr){
       //allRows 
         let userInfo = this.Utils.getUserInfo();
-        let Roles = userInfo.roles;
+        let Roles = userInfo.roles;                      //=> [0:'分站管理员']
         let pArray = [];
         for(let i =0; i < allRows.length; i++) {
           let one = allRows[i];
-          if(Roles.indexOf(one.name) != -1)  {
-            pArray.push(one.permission);
+          if(Roles.indexOf(one.name) != -1)  {          //=> 有权限
+            pArray.push(one.permission);                //one.permission=>  [o:'sale',1:'purchase',2:'store',3:'spec',4:'custom']
             continue;
           }
         }
-
         if(pArray.length == 0) return false;
         else {
           let newArray = this.getUnique(pArray)
-          console.log(newArray);
+          console.log(newArray);                        //newArray=>  [o:'sale',1:'purchase',2:'store',3:'spec',4:'custom']
           newArray.map((one) => {
-              if(one == "sale") this.addSale(arr);
+              if(one == "sale") this.addSale(arr);      //arr=> {labelName:"销售子订单", id: "xiaoshoucom", show:false, component: saleList}
               else if(one == "purchase") this.addPurchase(arr);
               else if(one == "store") this.addStore(arr);
               else if(one == "spec") this.addSpec(arr);
@@ -153,7 +152,7 @@ export default {
           })
         }
     },
-    getUnique: function(pArray){
+    getUnique: function(pArray){                        //=>
       let tpArr = [];
       let resArr = [];
       for(let i = 0; i < pArray.length; i++){
@@ -175,6 +174,9 @@ export default {
     addSpec: function(array) {array.push({labelName:"定制品", id: "dingzhipin", show:false, component: specWillList})},
     addCustom: function(array) {array.push({labelName:"客户数据", id: "kehu", show:false, component: customWillList})},
     tabClickHandler: function(d){
+      console.log('tabClickHander');
+      console.log(d);
+      console.log('tabClickHander');
           this.tabArray[this.curTabIndex]["show"] = false;
           d.data.show = true;
           this.curTabIndex = d.index;
