@@ -4,7 +4,7 @@
             <div>
                    <formtext labelname="模板名称：":value.sync="formData.tp_name" placeholder=""  formname='' :number="true" length='5' :validatestart="validateForm" @onvalidate="validateHandler"></formtext>
                    <comboxform keyid="name" labelname="组包选择：":value.sync="formData.package_type" keyname="name" formname="" :datas="packageType" :validatestart="validateForm" @onvalidate="validateHandler"></comboxform>
-                   <formrd labelname="是否启用：" formname="is_use"  :value="formData.is_use" :datas="[{label:'是', id:'1',checked: false}, {label:'否', id:'0',checked: false}]" :validatestart="validateForm" @onvalidate="validateHandler"></formrd>
+                   <formrd labelname="是否启用：" formname="usable"  :value="formData.usable" :datas="[{label:'是', id:'1',checked: false}, {label:'否', id:'0',checked: false}]" :validatestart="validateForm" @onvalidate="validateHandler"></formrd>
             </div>
             <parea :validate="validate" @success="successHandler" @fail="failHandler" from="c"></parea>
       </pagepanel>
@@ -37,7 +37,7 @@ export default {
       formData:{
         tp_name:"",
         package_type:"",
-        is_use: "1"
+        usable: "1"
       },
       curGlData:[]
     }

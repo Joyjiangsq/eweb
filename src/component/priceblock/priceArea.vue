@@ -7,7 +7,7 @@
             <div v-if="gxhTip">{{gxhTip}}</div>
             <righttb :headercaption="rightHeader" @selectchange="selectchangeHandler"  scene="add_yes" :deleteindex="deleteindex" :datas="rightDatas.sub_list" :events="tableEventsRight" v-else></righttb>
         </div>
-        <typedialog :show="showTypeDialog" @onecheck="typeCheck" :url="material-category" v-if="from == 'c'"></typedialog>
+        <typedialog :show="showTypeDialog" @onecheck="typeCheck" url="material-category" v-if="from == 'c'"></typedialog>
         <showbuild :show="showBuildDialog" @buildconfirm="buildconfirm"></showbuild>
         <!--<showselect :show="showSelectDialog" :toload="toloadProduct" :params="selectParams" ></showselect>-->
     </div>

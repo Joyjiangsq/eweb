@@ -47,7 +47,7 @@ export default {
       // 取值依据
     },
     querylabel:{
-      default:"name-or-phone"
+      default:"name_or_phone"
     }
   },
   data: function () {

@@ -37,7 +37,7 @@ export default {
       default: "id"
     },
     querylabel:{
-      default: "name-or-phone"
+      default: "name_or_phone"
     },
     url:{
       default:""
