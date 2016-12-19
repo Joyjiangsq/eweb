@@ -7,7 +7,7 @@
                           <search pathname :datas="sdata" :hash="false" :needsearch="false"  :events="searchEvents"></search>
                         </div>
                     <div :class="css.tBox">
-                      <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" url="material" :totals.sync="totals" :load="load" :params="params" :events="tableEvents"></tb>
+                      <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" url="material" :totals.sync="totals" :load="load" :params="params"></tb>
                     </div>
                     <pg @pagechange="pagechange" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
                 </div>
@@ -81,7 +81,7 @@ import dialog from "component/dialog/dialog";
                 },
                 pagechange: function(d){
                     if(!d.page) return false;
-                    this.searchParams.page = d.page;
+                    this.params.page = d.page;
                     this.loadList();
                 },
                 dialogClickHandler: function(d) {
@@ -89,7 +89,9 @@ import dialog from "component/dialog/dialog";
                         if(Object.keys(this.rcheck).length == 0) {
                             showTips(this.$store, {type:"warn", msg:"没有选中任何项目", time: 2000});
                         }
-                        else this.$dispatch("success", this.rcheck)
+                        else {
+                            this.$dispatch("success", this.rcheck); this.showSelect = !this.showSelect;
+                        }
                     }
                 }
             },
