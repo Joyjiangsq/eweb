@@ -1,97 +1,147 @@
 <template lang="html">
-    <div slot="panelContent">
+   <pagepanel>
           <div :class="m.onebox">
                 <tabbar :datas="tabArray"  @tabclick="tabClickHandler" theme="indexTab">
                       <div :class="" v-for="(index, one) in tabArray" v-show="one.show">
-                              <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>
+                            <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>
                       </div>
                 </tabbar>
           </div>
-    </div>
+          <div  :class="">
+              <btn :class="" @click="toAdd">新增</btn>
+              <div :class="">
+                <tb v-if="!geXingHua" :headercaption="gxheadercaption"  :params="searchParams" :datas="[]" :totals.sync="totals" :load="false"  :events="tableEvents"></tb>
+                <tb v-else :headercaption="headercaption"  :params="searchParams" :datas="[]" :totals.sync="totals" :load="false"  :events="tableEvents"></tb>
+                <pg :totals="totals" :curpage="searchParams.page">
+              </div>
+          </div>
+    </pagepanel>
+    <!--新增对话框-->
+      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler" >
+            <div  slot="containerDialog">
+                  <div>  
+                      <formtext v-if="geXingHua" labelname="物料选择: " :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="geXingHua" labelname="物料名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入物料名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="geXingHua" labelname="物料分类：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入物料分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="geXingHua" labelname="分类名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!geXingHua" labelname="调品前分类: " :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入调品前分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!geXingHua" labelname="调品后分类：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入调品后分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!geXingHua" labelname="调品前分类名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入调品前分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!geXingHua" labelname="调品后分类名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入调品后分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext labelname="总部指导价：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入总部指导价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext labelname="分站自营价: " :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  </div>
+            </div>
+      </dialog>
+    <!--删除提示-->
+        <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
 </template>
 
 <script>
+import formtext from "component/form/formText";
 import tabbar from "component/tab/tabBar.vue";
+import dialogtip from "component/dialog/dialogTip";
+import btn from "component/sprite/button.vue";
 import Utils from "common/Utils";
 import m from "./material.css";
-import {allRows} from "config/const"
+import pageBase from "common/mixinPage.js";
+import {allRows} from "config/const";
+let headerData =[{name:"类别", labelValue:"", type:"data"},{name:"调品前材料分类", labelValue:"", type:"data"},{name:"调品前分类名称", labelValue:"", type:"data"},
+                  {name:"调品后类别", labelValue:"", type:"data"},{name:"调品后分类名称", labelValue:"", type:"data"},{name:"总部指导价", labelValue:"", type:"data"},{name:"分站自营价", labelValue:"", type:"data"},
+                  {type:"operator", name:"操作"}];
+let gxheaderData =[{name:"类别", labelValue:"", type:"data"},{name:"物料分类", labelValue:"", type:"data"},{name:"分类名称", labelValue:"", type:"data"},
+                    {name:"材料编码", labelValue:"", type:"data"},{name:"材料名称", labelValue:"", type:"data"},{name:"总部指导价", labelValue:"", type:"data"},{name:"分站自营价", labelValue:"", type:"data"},
+                    {type:"operator", name:"操作"}];
+let tabData =[{labelName:"升级", id: "", show:false},{labelName:"降级", id: "", show:false},{labelName:"增项", id: "", show:false},
+              {labelName:"减项", id: "", show:false},{labelName:"互换", id: "", show:false},{labelName:"个性化", id: "gexinghua", show:false}];
 export default {
+  mixins:[pageBase],
   data: function () {
     return {
+      formdatas:{},      //表单数据
       m,
+      gxheadercaption: gxheaderData, //个性化table
+      headercaption: headerData,     //非个性化table
+      totals: 0,
       moduleName:"调品规则",
+      searchParams: {page:1},
       Utils: Utils,
-      tabArray:[],
+      title: '调品规则新增',     //弹框抬头标题
+      geXingHua: false,         //切换tab个性化新增
+      validate: false,          //验证开关
+      validateTag: false,       //表单验证
+      show: false,
+      deleteTag: false,         // 删除确认弹框显示隐藏
+      curAction:'',             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
+      curItem:{},
+      tbData: [],
+      tabArray:tabData,          //tab内容初始化
       curTabIndex:0,
-
+       tableEvents:{
+            operatorRender: function(d){
+                return [{name:"编辑", action:"edit",icon:"icon-edit",data:d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
+            },
+            operatorHandler: function(d){
+                this.$set("curItem", d.data);
+                if(d.action == "delete") {
+                    this.$set("deleteTag", !this.deleteTag);
+                }else if(d.action == "edit"){
+                    // this.title = "编辑材料";
+                    this.$set("curAction","tbedit");
+                    this.showtbedit = !this.showtbedit;
+                    this.showAdd = !this.showAdd;
+                     this.newData = Utils.cloneObj(this.curItem);
+                }
+            }
+        },
     }
   },
   computed: {},
   ready: function () {
-    this.permissionAdapert(this.tabArray);
+
   },
-  attached: function () {},
   methods: {
-    permissionAdapert: function(arr){
-      //allRows 
-        let userInfo = this.Utils.getUserInfo();
-        let Roles = userInfo.roles;
-        let pArray = [];
-        for(let i =0; i < allRows.length; i++) {
-          let one = allRows[i];
-          if(Roles.indexOf(one.name) != -1)  {
-            pArray.push(one.permission);
-            continue;
-          }
-        }
+    dialogClickHandler: function(d) {
+        this.validateTag = true;
+        if(d.action == "confirm") {
+            this.validate = !this.validate;
+            setTimeout(()=> {
+                if(this.validateTag) {
 
-        if(pArray.length == 0) return false;
-        else {
-          let newArray = this.getUnique(pArray)
-          console.log(newArray);
-          newArray.map((one) => {
-              if(one == "sale") this.addSale(arr);
-              else if(one == "purchase") this.addPurchase(arr);
-              else if(one == "store") this.addStore(arr);
-              else if(one == "spec") this.addSpec(arr);
-              else if(one == "custom") this.addCustom(arr);
-              else {
-
-              }
-          })
+                }
+            },30)
         }
-      },
-      getUnique: function(pArray){
-        let tpArr = [];
-        let resArr = [];
-        for(let i = 0; i < pArray.length; i++){
-            tpArr = tpArr.concat(pArray[i]);
-        }
-        tpArr.map((one)=>{
-            if(resArr.indexOf(one) == -1) resArr.push(one)
-        })
-        if(resArr.length != 0) {
-          setTimeout(()=>{
-            this.setFirstTab();
-          }, 30)
-        }
-        return resArr;
     },
-    addSale: function(array) {array.push({labelName:"销售子订单", id: "xiaoshoucom", show:false})},
-    addPurchase: function(array) {array.push({labelName:"采购订单", id: "caigou", show:false})},
-    addStore: function(array) {array.push({labelName:"备货订单", id: "beihuo", show:false})},
-    addSpec: function(array) {array.push({labelName:"定制品", id: "dingzhipin", show:false})},
-    addCustom: function(array) {array.push({labelName:"客户数据", id: "kehu", show:false})},
-    tabClickHandler: function(){
+    tabClickHandler: function(d){
+      console.log('tabClickHander');
+      console.log(d);
+      console.log('tabClickHander');
+        if(d.index == 5) {
+          this.geXingHua = true
+        }else {
+          this.geXingHua = false
+        }
           this.tabArray[this.curTabIndex]["show"] = false;
           d.data.show = true;
           this.curTabIndex = d.index;
     },
-    setFirstTab: function(){
-       this.tabArray[0].show = true
-    }
+    toAdd: function(){
+        this.show = !this.show
+    },
+    validateHandler: function(d){
+        if(d.res == "fail") this.validateTag = false;
+    },
+    confirmDelete: function(){
+            // if(d.action == "confirm") {
+            //     this.$http.delete(this.$Api+"construction-quote", {params: {"_id": this.curItem._id}}).then((res)=>{
+            //         this.$set("deleteTag", !this.deleteTag);
+            //         this.loadlist();
+            //         this.showMsg("success", "删除成功！");
+            //     });
+            // }
+    },
 
   },
-  components: {tabbar}
+  components: {tabbar,btn,dialogtip,formtext}
 }
 </script>
