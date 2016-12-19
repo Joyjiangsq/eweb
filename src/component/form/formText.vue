@@ -2,7 +2,7 @@
     <div :class="[css.formOne, classname, vertical?css.verticalitem:'']">
         <label for="" v-if="labelname" :class='css.labelDesc'><span v-if="must" :class="css.must">*</span>{{labelname}}</label>
         <div :class="css.formtarget">
-            <input :type="inputtype" :class="unit?css.unitStay:''" @blur="blurHandler" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" @focus="focusHandler">
+            <input :type="inputtype" :class="unit?css.unitStay:''"  @blur="blurHandler" name="name" :value="value" v-model="value" :placeholder="placeholder" :disabled="read" @keydown="keyDownHandler" @focus="focusHandler">
             <span :class="css.unit" v-if="!!unit">{{unit}}</span>
             <div :class="css.errorMsg" v-show="error">
                 {{errormsg}}
@@ -80,8 +80,9 @@ export default {
         if(this.length*1 == this.value.length) {e.preventDefault(); return false;}
       }
     },
-
+    
     focusHandler: function(){
+      this.$dispatch("focushandler");
       this.$set("error", false);
     },
 

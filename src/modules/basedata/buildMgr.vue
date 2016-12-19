@@ -110,13 +110,13 @@ export default {
         // 判断当前是否为e站（分站）
         isEAdmin: function(){
             if(Utils.isEAdmin()) {this.isEAdmin = true}
-            else {this.isEAdmin = false};
+            else {this.isEAdmin = false;console.log('走这里了');};
         }
     },
     ready(){
     },
     methods:{
-        //表格数据
+        //刷新表格数据
         getTableDetail: function(){
             this.load = !this.load;
         },
