@@ -83,6 +83,7 @@ import storejs from "storejs";
         return res;
      },
      cloneObj: function(obj){
+         console.log(obj);
           var str, newobj = obj.constructor === Array ? [] : {};
           if(typeof obj !== 'object'){
               return;
