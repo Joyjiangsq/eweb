@@ -30,11 +30,11 @@ import spec from 'modules/spec/specBase.vue';
 import specView from 'modules/spec/specMgr.vue';
 import specApply from 'modules/spec/specApply.vue';
 
-import buildCateryView from 'modules/basedata/buildCatery.vue';
+// import buildCateryView from 'modules/basedata/buildCatery.vue';
 import buildMgrView from 'modules/basedata/buildMgr.vue';
 import buildPriceView from 'modules/basedata/buildPrice.vue';
 import materialView from 'modules/basedata/material.vue';
-import materialCateryView from 'modules/basedata/materialCatery.vue';
+// import materialCateryView from 'modules/basedata/materialCatery.vue';
 import supplierView from 'modules/basedata/supplier.vue';
 
 // 报价模板
@@ -162,10 +162,10 @@ export function routerStart(router) {
                 },
 
                  // 材料分类管理
-                '/materialCatery': {
-                  name:"materialCatery",
-                  component: materialCateryView
-                },
+                // '/materialCatery': {
+                //   name:"materialCatery",
+                //   component: materialCateryView
+                // },
 
                  // 供应商数据
                 '/supplier': {
@@ -180,10 +180,10 @@ export function routerStart(router) {
                 },
 
                  // 施工报价分类管理
-                '/buildCatery': {
-                  name:"buildCatery",
-                  component: buildCateryView
-                },
+                // '/buildCatery': {
+                //   name:"buildCatery",
+                //   component: buildCateryView
+                // },
 
                  // 施工报价一口价对照表
                 '/buildPrice': {
@@ -230,8 +230,8 @@ export function routerStart(router) {
                   }
                 },
                 // 调品规则-------------------------------------------------------
-                "/material" :{
-                   name:" material",
+                "/materialchange" :{
+                   name:" materialchange",
                    component: materialRuleView
                 },
                 // 报表模块--------------------------------------------------------

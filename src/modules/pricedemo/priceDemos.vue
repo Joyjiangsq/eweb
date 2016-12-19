@@ -17,7 +17,6 @@ import Utils from "common/Utils.js";
 
 import pageBase from "common/mixinPage.js";
 let tableHeaderDatas = [{name:"模板名称", labelValue:"tp_name", type:"data"},
-                        {name:"组包名称", labelValue:"package_type",type:"data"},
                         {name:"状态", labelValue:"usableCaption",type:"data",adapterFun: function(d) { return d.usable =="1"? "启用":"停用"}},
                         {type:"operator", name:"操作"}]
 export default {

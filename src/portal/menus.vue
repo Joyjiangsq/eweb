@@ -71,13 +71,9 @@ export default {
        this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
             url:"/material",name:"材料管理"
         },{
-            url:"/materialCatery",name:"材料分类管理"
-        },{
             url:"/supplier",name:"供应商数据"
         },{
             url:"/buildMgr",name:"施工报价管理"
-        },{
-            url:"/buildCatery",name:"施工报价分类管理"
         },{
             url:"/buildPrice",name:"施工包一口价对照表"
         }]
@@ -87,7 +83,7 @@ export default {
        },{
            url:"/priceDemos",name:"报价施工模板"
        },{
-         url:"/material", name:"调品规则"
+         url:"/materialchange", name:"调品规则"
        }]
      })
       let path = this.$route.name;
