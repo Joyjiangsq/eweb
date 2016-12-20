@@ -80,7 +80,7 @@ var sorderComponent = Vue.extend({
     }
   }
 })
-let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"component", component: orderComponent, cname:"ordercomponent"},
+let tableHeaderDatas = [{name:"销售订单号", labelValue:"U_FZOrder", type:"component", component: orderComponent, cname:"ordercomponent"},
                         {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return d.U_OrderStatus == 0?"<span class='reback'>驳回</span>":"正常"}},
                         {name:"产品包", labelValue:"U_SWW",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.U_SWW:'-'}},
                         // {name:"订单类型", labelValue:"order_type",type:"data", adapterFun: function(d) {return d.base_info?d.base_info.order_type:'-'}},
@@ -90,7 +90,7 @@ let tableHeaderDatas = [{name:"订单号", labelValue:"U_FZOrder", type:"compone
                         {name:"创建人", labelValue:"createdByName",type:"data"},
                         {name:"创建时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {type:"operator", name:"操作"}]
-let subHeaders = [{name:"销售子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},
+let subHeaders = [{name:"子订单号",labelValue:"U_PurchaseNum", type:"component", component: sorderComponent, cname:"subordercomponent"},
                   {name:"品类", labelValue:"type", type:"data", style:{width: '30px',  "word-break": "break-all","word-wrap": "break-word","white-space": "initial"}, adapterFun: function(d) {return Utils.getCateryCname(d.type)}},
                   {name:"订单状态", labelValue:"U_OrderStatus",type:"data",adapterFun: function(d) {return (d.U_OrderStatus == '店长驳回' || d.U_OrderStatus == 'e站驳回')?"<span class='reback'>"+d.U_OrderStatus+"</span>":d.U_OrderStatus}}]
 export default {
@@ -142,7 +142,7 @@ export default {
   computed: {
     sdata: function(){
       let q = this.$route.query;
-      return [{type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"销售订单号:"},
+      return [{type:"text",  value:q.U_FZOrder || "",  keyname:"U_FZOrder", labelcaption:"订单号:"},
               {type:"combobox", keyid:"name", value:q.U_SWW || "", labelname:"name", keyname:"U_SWW", labelcaption:"产品所属包:", datas:packageType},
               {type:"combobox", keyid:"id", value:q.Series || "", labelname:"name", keyname:"Series", labelcaption:"订单类型:", datas:orderType},
               {type:"combobox", keyid:"id", value:q.U_OrderStatus || "", labelname:"name", keyname:"U_OrderStatus", labelcaption:"订单状态:", datas:[{name:"正常", id:"1"},{name:"驳回", id:"0"}]},
@@ -163,13 +163,16 @@ export default {
             this.$set("subLoad", !this.subLoad);
       },
       successloadHandler: function(datas){
+            let q = this.$route.query;
             if(datas.length == 0) {
                 this.subSearchParams.U_FZOrder = Math.random().toString(36);
+                if(q.U_FZOrder) this.subSearchParams.U_PurchaseNum = q.U_FZOrder;
                 this.$set("subLoad", !this.subLoad);
                 return false;
             }
             let one = datas[0];
             this.subSearchParams.U_FZOrder = one.U_FZOrder;
+            if(q.U_FZOrder) this.subSearchParams.U_PurchaseNum = q.U_FZOrder;
             this.$set("subLoad", !this.subLoad);
       }
   },

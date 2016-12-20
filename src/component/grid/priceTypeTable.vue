@@ -32,7 +32,7 @@
                               </div>
 
                               <div :class="css.iptBox" v-else > 
-                                  <input type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, index)" v-model="done[sone.labelValue].def">
+                                  <input type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, order)" v-model="done[sone.labelValue].def">
                                   <div :class="css.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>
                           </div>
@@ -67,6 +67,10 @@ export default {
       scene: {      // 如果当前是模板新增页面 则开发增加按钮
           type: String,
           default: "add_no" // add_yes
+      },
+
+      clone:{
+          default: false
       }
   },
   data: function () {
@@ -82,9 +86,21 @@ export default {
   methods:{
      btnClickHandler: function(){
          this.$dispatch("selectchange");
-     }
+     },
+
   },
   attached: function () {},
   components: {btnbar, icon, btn},
+  "watch":{
+      "clone": function(){
+           let newData = [];
+           for(let i = 0; i < this.dataList.length; i++) {
+               let one = Object.assign({}, this.dataList[i]);
+               newData.push(one);
+           }
+           this.dataList = newData;
+           console.log(this.dataList);
+      }
+  }
 }
 </script>

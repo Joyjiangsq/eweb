@@ -44,6 +44,11 @@ import priceTransView from "modules/pricedemo/priceTrans.vue";
 import priceAddcView from "modules/pricedemo/priceAddc.vue";
 import priceAddsView from "modules/pricedemo/priceAdds.vue";
 
+// 报价页面
+import renderPriceView from "modules/renderprice/trans.vue";
+import renderPriceMgr from "modules/renderprice/renderPriceView.vue";
+import addRenderView from "modules/renderprice/addRender.vue";
+
 // 调品规则
 import materialRuleView from "modules/material/material.vue";
 
@@ -228,6 +233,19 @@ export function routerStart(router) {
                         component: priceAddsView
                     }
                   }
+                },
+                // 报价页面 ------------------------------------------------------
+                "/renderprice": {
+                    name:"renderprice",
+                    component: renderPriceView,
+                    subRoutes:{
+                      "/" : {
+                        component: renderPriceMgr
+                      },
+                      "/addRender" : {
+                        component: addRenderView
+                      }
+                    }
                 },
                 // 调品规则-------------------------------------------------------
                 "/materialchange" :{

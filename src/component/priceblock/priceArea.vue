@@ -21,7 +21,6 @@ import lefttb from "component/grid/priceWhereTable";
 import righttb from "component/grid/priceTypeTable";
 import typedialog from "./typeDialog";
 import adapter_left from "./adapterLeft.js";
-import adapter_right from "./adapterRight.js";
 import adapter from "./adapter.js";
 import showselect from "component/blockcommon/selectProductByTypeDialog";
 import showbuild from "component/blockcommon/selectBuildDialog";
@@ -146,7 +145,7 @@ export default {
     },
     typeCheck: function(d) {
         let data = Utils.cloneObj(d);
-        delete data.selected;
+        // delete data.selected;
         this.rightDatas.sub_list.push(data);
     },
     rowclick: function(d) {
@@ -202,6 +201,7 @@ export default {
         let validateRes = this.validateFun();
         if(!validateRes) this.$dispatch("fail");
         else {
+            console.log(this.fdata);
             let newData = Utils.cloneObj(this.fdata);
             adapter(newData);
             console.log(newData);
@@ -245,6 +245,7 @@ var mComp = Vue.extend({
         }
       }
     }
+
   },
   template: '<radiobx :datas="test" checkname="name" :events="checkEvents" :defaultkey="value"></radiobx>',
   ready: function(){
