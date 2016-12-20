@@ -65,7 +65,6 @@ export default {
         reload: false,
         levelEqualZero: false,  //控制新增框所属包显示
         showSelectDialog: false,
-        isEAdmin: false,
         moduleName:"材料管理",
         curItem:{},               // 删除或者编辑当前的 数据
         headercaption: headerData,
@@ -109,8 +108,8 @@ export default {
         },
         // 判断当前是否为e站（分站）
         isEAdmin: function(){
-            if(Utils.isEAdmin()) {this.isEAdmin = true}
-            else {this.isEAdmin = false};
+            return Utils.isEAdmin();
+           
         }
     },
     ready(){
@@ -156,15 +155,28 @@ export default {
         },
         //选品添加
         addCheckedList: function(d) {
+            
             for(let i = 0; i<d.length; i++){
                 if(this.addListLevel == 1){
+                    console.log(d);
+                    console.log('第一极选品增加');
                     d[i].lv1_name = this.da.lv1_name;
                     d[i].lv1_code = this.da.lv1_code;
+                    if(d[i].lv2_code && d[i].lv2_name && d[i].lv3_code && d[i].lv3_name){
+                        delete d[i].lv2_code;
+                        delete d[i].lv2_name;
+                        delete d[i].lv3_code;
+                        delete d[i].lv3_name;
+                    }
                 }else if(this.addListLevel == 2){
                     d[i].lv1_name = this.da.lv1_name;
                     d[i].lv1_code = this.da.lv1_code;
                     d[i].lv2_name = this.da.lv2_name;
                     d[i].lv2_code = this.da.lv2_code;
+                    if(d[i].lv3_code && d[i].lv3_name){
+                        delete d[i].lv3_code;
+                        delete d[i].lv3_name;
+                    }
                 }else if(this.addListLevel == 3){
                     d[i].lv1_name = this.da.lv1_name;
                     d[i].lv1_code = this.da.lv1_code;

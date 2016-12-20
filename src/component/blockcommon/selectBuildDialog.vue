@@ -104,6 +104,7 @@ export default {
                 }
                 else {
                     let newData = Object.assign({}, this.curRadioData);
+                    console.log('newData');
                     console.log(newData);
                     this.$dispatch("getone", newData); 
                     this.showSelect = !this.showSelect;
