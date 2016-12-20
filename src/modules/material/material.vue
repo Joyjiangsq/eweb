@@ -197,7 +197,7 @@ export default {
         this.tabArray[0].show = true;
     },
     showTypedialog: function(param){
-       if(param == 1) {console.log('this.type = before');this.type = 1}
+       if(param == 1) this.type = 1;
        else this.type = 2;
        this.showNoPerDialog = !this.showNoPerDialog;
     },
