@@ -1,9 +1,8 @@
 <template lang="html">
    <pagepanel>
-          <div :class="m.onebox">{{formdatas | json}}
+          <div :class="m.onebox">
                 <tabbar :datas="tabArray"  @tabclick="tabClickHandler" theme="indexTab">
                       <div :class="" v-for="(index, one) in tabArray" v-show="one.show">
-                            <!--<div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.id}"></div>-->
                       </div>
                 </tabbar>
           </div>
@@ -18,22 +17,21 @@
     </pagepanel>
     <!--新增对话框-->
       <dialog :flag.sync="showAdd" :title="title" @dialogclick="dialogClickHandler" >
-            <div  slot="containerDialog">
+            <div  class="m.itemList" slot="containerDialog">
                   <formtext :must="false" :read="true"  labelname="类别: " :vertical="true" :value.sync="formdatas.type" ></formtext>
             </div>
             <div  slot="containerDialog">
-              {{formdatas | json}}
-                  <div>  
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="geXingHua" labelname="产品选择: " @focushandler="showNoTypedialog" :vertical="true" :value.sync="formdatas.before_code" placeholder="请输入项目名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="geXingHua" labelname="产品名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入物料名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="geXingHua" labelname="分类编码：" :vertical="true" :value.sync="formdatas.after_code" placeholder="请输入物料分类" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="geXingHua" labelname="分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入分类名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类: " @focushandler="showTypedialog(1)"  :vertical="true" :value.sync="formdatas.before_code" placeholder="请输入调品前分类" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类：" @focushandler="showTypedialog(2)" :vertical="true" :value.sync="formdatas.after_code" placeholder="请输入调品后分类" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入调品前分类名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入调品后分类名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == true? true:false"  :read="!isEAdmin" labelname="总部指导价：" :vertical="true" :value.sync="formdatas.rec_price" placeholder="请输入总部指导价" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext v-if="!isEAdmin" labelname="分站自营价: " :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <div class="m.itemList">  
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="产品选择: " @focushandler="showNoTypedialog" :vertical="true" :value.sync="formdatas.before_code" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="产品名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入物料名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="分类编码：" :vertical="true" :value.sync="formdatas.after_code" placeholder="请输入物料分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类: " @focushandler="showTypedialog(1)"  :vertical="true" :value.sync="formdatas.before_code" placeholder="请输入调品前分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类：" @focushandler="showTypedialog(2)" :vertical="true" :value.sync="formdatas.after_code" placeholder="请输入调品后分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入调品前分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入调品后分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext :must="isEAdmin == 'true'? true:fasle"  :read="!isEAdmin" labelname="总部指导价：" :number="true" :vertical="true" :value.sync="formdatas.rec_price" placeholder="请输入总部指导价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!isEAdmin" labelname="分站自营价: " :number="true" :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   </div>
             </div>
       </dialog>
@@ -100,13 +98,11 @@ export default {
               if(d.action == "delete") {
                   this.$set("deleteTag", !this.deleteTag);
               }else if(d.action == "edit"){
-                  // this.title = "编辑材料";
+                  this.title = "调品规则编辑";
                   this.$set("curAction","tbedit");
                   this.showAdd = true;
                   this.formdatas = Utils.cloneObj(this.curItem);
                   this.formdatas._id=this.curItem._id;
-                  console.log('this.formdatas');
-                  console.log(this.formdatas);
               }
           }
       },
@@ -147,7 +143,6 @@ export default {
                         this.formdatas.self_price = param;
                       }
                     this.$http.put(this.$Api+"rule-product",JSON.stringify(this.formdatas)).then((res) => {
-                        var d = res.json();
                         this.showMsg("success", "修改成功");
                         this.showAdd = false;
                         this.formdatas ={};
@@ -168,6 +163,7 @@ export default {
         this.getTableDetail();
     },
     toAdd: function(){
+        this.title ='调品规则新增';
         if(this.isEAdmin) this.formdatas = {type:'',before_code:'',before_name:'',after_code:'',after_name:'',self_price:'',rec_price:''};
         else this.formdatas = {type:'',self_price:''}
         this.formdatas.type = this.selectType;
@@ -226,7 +222,6 @@ export default {
             });
         }
     },
-
   },
   components: {tabbar,btn,dialogtip,formtext,typedialog,selectbuilddialog}
 }
