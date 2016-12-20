@@ -27,7 +27,7 @@
                           </span>
                           <!--单选-->
                           <span v-if="sone.type == 'radio'">
-                                <input type="radio" name="name" :class='tableCss.checkTag' @click="radioClick(done)" :checked="getRadioCheck(done, sone)" />
+                                <input type="radio" name="name" :class='tableCss.checkTag' @click="radioClick(done)" v-show="radioShow(done,sone)" :checked="getRadioCheck(done, sone)" />
                           </span>
                     </td>
               </tr>
@@ -70,10 +70,12 @@ export default {
   },
   methods:{
     getRadioCheck: function(done, sone) {
-        console.log(sone);
-        return false
         if(sone.validateFun) return sone.validateFun.call(this._context, done);
         else return false
+    },
+    radioShow: function(done, sone) {
+        if(sone.showFun) return sone.showFun.call(this._context, done);
+         else return true
     },
     radioClick: function(one) {
         this.$dispatch("radioclick", one);

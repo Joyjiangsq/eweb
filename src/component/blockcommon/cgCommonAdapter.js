@@ -148,7 +148,7 @@ export default function adapterData(d) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管宽度")
                 else if(isNaN(this.def)) return exepFun(this, "包管宽填写不正确")
                 else if(this.def*1 < 0)  return exepFun(this, "包管宽必须大于0")
-                else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管宽不能小于" + d.U_AWideMin)
+                // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管宽不能小于" + d.U_AWideMin)
                 else return resetFun(this)
             }
             else return resetFun(this)
@@ -158,7 +158,7 @@ export default function adapterData(d) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管宽度")
                 else if(isNaN(this.def)) return exepFun(this, "包管宽填写不正确")
                 else if(this.def*1 < 0)  return exepFun(this, "包管宽必须大于0")
-                else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管宽不能小于" + d.U_AWideMin)
+                // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管宽不能小于" + d.U_AWideMin)
                 else return resetFun(this)
             }
             else return resetFun(this)
@@ -172,7 +172,7 @@ export default function adapterData(d) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
                 else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
                 else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
-                else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
+                // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
                 else return resetFun(this)
             }
             else return resetFun(this)
@@ -182,7 +182,7 @@ export default function adapterData(d) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
                 else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
                 else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
-                else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
+                // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
                 else return resetFun(this)
             }
             else return resetFun(this)

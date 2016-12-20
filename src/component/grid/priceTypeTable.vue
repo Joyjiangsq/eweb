@@ -24,15 +24,9 @@
                                 <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
                           </div>
                           <div v-if="sone.type == 'edit'" >
-                              <div v-if="done.code == 'gxh'">
-                                    {{done[sone.labelValue] || '-'}}
-                              </div>
-                              <div  v-if="done[sone.labelValue].tb_disabled">
-                                  -
-                              </div>
-
-                              <div :class="css.iptBox" v-else > 
-                                  <input type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, order)" v-model="done[sone.labelValue].def">
+                              <div :class="css.iptBox" > 
+                                   <span v-if="done[sone.labelValue].tb_disabled">-</span>
+                                  <input v-else type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, order)" v-model="done[sone.labelValue].def">
                                   <div :class="css.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>
                           </div>

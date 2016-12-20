@@ -15,7 +15,7 @@
     </div>
 </template>
 <script> 
-// 根据材料分类选品对话框
+// 根据材料分类选品对话框 单一交互
 import css from "./selectProduct.css";
 import search from "component/search/search";
 import tb from "component/grid/tableListBase";
@@ -51,7 +51,7 @@ import dialog from "component/dialog/dialog";
                             
                         }
                      },
-                     headerCaption: [{type: "radio", validateFun:function(d){return d.ItemCode == this.rcheck.ItemCode}},{name:"产品编码", labelValue:"ItemCode", type:"data"},
+                     headerCaption: [{type: "radio", validateFun:function(d){return false}},{name:"产品编码", labelValue:"ItemCode", type:"data"},
                                     {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"cizhuancc", component:mdialog},
                                     {name:"所属包", labelValue:"SWW", type:"data"},
                                     {name:"二级分类", labelValue:"FirmName", type:"data"},

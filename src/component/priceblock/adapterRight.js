@@ -10,6 +10,7 @@ export default function adapter(d) {
         scope.def = scope.def;
         return true;
     }
+    if(!d.counts) d.counts = "";
     d.counts = {    
         def: d.counts.def || "",
         defCss: "default",
@@ -22,6 +23,7 @@ export default function adapter(d) {
            else return resetFun(this)
         }
     };
+    if(!d.remark) d.remark = "";
     d.remark = {    
         def: d.remark.def || "",
         defCss: "default",

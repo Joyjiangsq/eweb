@@ -20,23 +20,16 @@
                     <formtext :read="true"  labelname="预定合同金额" :must="false" unit="元" :value.sync="baseInfo.pre_price" placeholder=""  formname='pre_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>
           </panel>
-          <div :class="css.btBar"> 
-            <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
-          </div>
           <price @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show" :curdata="curData"></price>
           <div class="cfooter">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">保存</btn>
           </div>
           <clist :show.sync="showUserDialog" @onecheck="oneUserCheck" :datas="customDatas"></clist>
-
-          <tpldialog :show.sync="showTplDialog" @checkone="getOnTpl"></tpldialog>
         </div>
 </template>
 
 <script>
 import {setTitle} from "actions";
-import tpldialog from "component/blockcommon/selectTplDialog.vue";
-import btnbar from "component/sprite/buttonbar";
 import panel from "component/panel/panel";
 import formtext from "component/form/formText";
 import cascadeform from "component/form/formCascade";
@@ -64,7 +57,6 @@ export default {
       hasDianti:[{name:'是'},{name:'否'}], // 是否有电梯
       show: false,
       showUserDialog: false, // 控制用户选择多个地址
-      showTplDialog: false, // 选择模板对话框
       self: false,
       baseInfo:{
         U_AddCode: Utils.getUserInfo().U_AddCode,
@@ -106,9 +98,7 @@ export default {
   },
   attached: function () {},
   methods: {
-    getOnTpl: function(d) {
-        this.curData = d;
-    },
+  
     itemclick: function(item) {
       this.baseInfo.Series = item.id;  // 订单类型需要传递id
     },
@@ -197,7 +187,7 @@ export default {
 
     }
   },
-  components: {panel, formtext, cascadeform,comboxform, price, btn,formdim, clist, btnbar,tpldialog},
+  components: {panel, formtext, cascadeform,comboxform, price, btn,formdim, clist},
   route:{
     data: function(){
       setTitle(this.$store, [{name:"项目报价", type:"back"}, {name:"报价"}]);

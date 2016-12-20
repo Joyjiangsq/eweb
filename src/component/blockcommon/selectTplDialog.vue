@@ -4,7 +4,7 @@
         <dialog :flag.sync="showTag" title="选择模板"  @dialogclick="dialogClickHandler">
               <div  slot="containerDialog">
                    <div :class="css.tBox">
-                      <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" url="tpl-material-quote" :totals.sync="totals" :load="load" :params="params"></tb>
+                      <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" :url="url" :totals.sync="totals" :load="load" :params="params"></tb>
                     </div>
                     <pg @pagechange="pagechange" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
               </div>
@@ -27,7 +27,7 @@ export default {
           type: Boolean
       },
       url:{
-          default:""
+          default:"tpl-material-quote"
       }
   },
   data: function () {
@@ -36,7 +36,7 @@ export default {
       totals: 0,
       params:{page: 1},
       showTag: false,
-      headerCaption: [{type: "radio", validateFun:function(d){return d.ItemCode == this.rcheck.ItemCode}},{name:"模板名称", labelValue:"tp_name", type:"data"},
+      headerCaption: [{type: "radio",showFun: function(d) {return d.usable != "0"}},{name:"模板名称", labelValue:"tp_name", type:"data"},
                         {name:"组包名称", labelValue:"package_type",type:"data"},
                         {name:"状态", labelValue:"usableCaption",type:"data",adapterFun: function(d) { return d.usable =="1"? "启用":"停用"}}],
       load: false,
