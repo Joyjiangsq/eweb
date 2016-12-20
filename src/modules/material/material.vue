@@ -33,7 +33,7 @@
                       <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入调品前分类名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
                       <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入调品后分类名称" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
                       <formtext :must="isEAdmin == true? true:false" :read="!isEAdmin" labelname="总部指导价：" :vertical="true" :value.sync="formdatas.rec_price" placeholder="请输入总部指导价" :validatestart="isEAdmin" @onvalidate="validateHandler"></formtext>
-                      <formtext labelname="分站自营价: " :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!isEAdmin" labelname="分站自营价: " :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   </div>
             </div>
       </dialog>
@@ -157,19 +157,11 @@ export default {
         }
     },
     tabClickHandler: function(d){
-      console.log('tabClickHander');
-      console.log(d);
-      console.log('tabClickHander');
-      // let selectedType={
-      //   0: {type:"升级"},
-      //   1: {type:"降级"},
-      //   2: {type:"增项"},
-      //   3: {type:"减项"},
-      //   4: {type:"互换"},
-      //   5: {type:"个性化"},
-      // };
-      this.searchParams = {page:1};
-      this.searchParams.type = d.data.type;
+        console.log('tabClickHander');
+        console.log(d);
+        console.log('tabClickHander');
+        this.searchParams = {page:1};
+        this.searchParams.type = d.data.type;
         this.formdatas.type = d.data.type;
         console.log(this.selectType);
           this.geXingHua = true;
