@@ -83,6 +83,7 @@ export default {
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
       tableEventsLeft:{
         operatorRender: function(d, index){
+          if(d.canDelete) return [{name:"删除", action:"delete",icon:"icon-delete", index:index, data:d}];
           return [{name:"复制", action:"copy",icon:"icon-tip", index:index, data:d}];
         },
 
@@ -90,7 +91,11 @@ export default {
             if(d.action == "copy") {
                let newData = Object.assign({}, d.data)
                newData.selected = false;
+               newData.canDelete = true;
                this.datas.splice(d.index, 0, newData);
+            }
+            else if(d.action == "delete") {
+               this.datas.splice(d.index, 1);
             }
         }
       },
@@ -127,7 +132,7 @@ export default {
         this.actionDatas = d.sub_data.sub_list;
     },
     selectchange: function() {
-
+        
     }
   },
   components: {lefttb,righttb},
