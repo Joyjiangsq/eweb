@@ -83,9 +83,9 @@ export default {
        },{
            url:"/priceDemos",name:"报价施工模板"
        },{
-         url:"/materialchange", name:"调品规则"
+         url:"/mchange", name:"调品规则"
        },{
-         url:"/renderprice", name:"项目报价"
+         url:"/renderprice", name:"项目报价" 
        }]
      })
       let path = this.$route.name;
@@ -93,7 +93,10 @@ export default {
             let one = this.datamenu[i];
             if(!one.subMenus || one.subMenus.length == 0) continue;
             let subStr = JSON.stringify(one.subMenus);
+            console.log(subStr);
+            console.log(path);
             if(subStr.indexOf(path) != -1) {
+              
               one.show = true;
               break;
             }

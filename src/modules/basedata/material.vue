@@ -1,12 +1,12 @@
 <template>
   <div :class="css.mcBox">
-      <pagepanel>
+      <!--<pagepanel>
               <div :class="css.mcSearch">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
-      </pagepanel>
+      </pagepanel>-->
       <!-- （分站）-->
-      <pagepanel v-if="!isEAdmin">
+      <pagepanel >
               <div  :class="css.mcLeft"> 
                  <div :class='css.opRow'>
                     <span>材料分类</span>
@@ -26,7 +26,7 @@
               <div style="clear:both"></div>
       </pagepanel>
       <!--新增材料分类对话框-->
-        <materialitem :formData="newData" :title="title" @success="addSuccess" :show="showAdd" :level="levelEqualZero"></materialitem>
+        <materialitem :formData="newData" :title="title" @success="addSuccess" :show="showAdd" :level="getlevelShow"></materialitem>
         <!--选品对话框-->
         <selectproductdialog :show="showSelectDialog" :params="{}" @getcheck="addCheckedList" ></selectproductdialog>
        <!--删除提示-->
@@ -38,7 +38,6 @@
 import selectproductdialog from "component/blockcommon/selectProductDialog";
 import dialogtip from "component/dialog/dialogTip";
 import btn from "component/sprite/button.vue";
-import chuguitb from "component/block/tblist/chuguiList";
 import materialitem from "./materialItem";
 import Utils from "common/Utils.js";
 import icon from "component/sprite/icon";
@@ -61,11 +60,10 @@ export default {
     data(){
       return {
         css,
-        title: '',
         reload: false,
-        levelEqualZero: false,  //控制新增框所属包显示
         showSelectDialog: false,
         moduleName:"材料管理",
+        title:"新增",
         curItem:{},               // 删除或者编辑当前的 数据
         headercaption: headerData,
         hideDialogIn: true,
@@ -73,12 +71,12 @@ export default {
         showAddMa: false,
         showAdd: false,     //弹框显示隐藏
         deleteTag: false,         // 删除确认弹框显示隐藏
-        canAdd: false,  //控制新增按钮状态
+        // canAdd: false,  //控制新增按钮状态
         selectedLevel: 0,          //默认添加材料的等级
         datas: [],
         rightData: [],
         codeParams: {},
-        da:{},
+        curLevelData:{level_n: 0}, // 当前层级数据对象
         addListLevel:1,
         totals:0,
         actionMap:{     //根据selectedLevel不同映射
@@ -101,15 +99,13 @@ export default {
       }
     },
     computed:{
-        sdata: function(){
-            let q = this.$route.query;
-            return [{type:"combobox", keyname:"ValidFor", labelname:"name", keyid:"id", value:q.ValidFor || "", datas:[{name:"启用", id: 'Y'}, {name:"禁用", id:"N"}], labelcaption:"产品名称: "},
-                    {type:"combobox", keyname:"ValidFor", labelname:"name", keyid:"id", value:q.ValidFor || "", datas:[{name:"启用", id: 'Y'}, {name:"禁用", id:"N"}], labelcaption:"型号: "}];
-        },
-        // 判断当前是否为e站（分站）
-        isEAdmin: function(){
-            return Utils.isEAdmin();
-           
+        getLevelShow: function() {
+            if(this.curAction == "add") {
+                if(this.curLevelData.level_n == 0) return false
+            }
+            else {
+                if(this.curLevelData.level_n == 1) return true
+            }
         }
     },
     ready(){
@@ -117,28 +113,23 @@ export default {
     methods:{
         //materialItem组件弹框表单验证成功
         addSuccess: function() {
-            if(this.selectedLevel >0) delete this.newData.pkg
             if(this.curAction == "add") {
-                    let action = this.actionMap[this.selectedLevel];
-                    Object.assign(this.newData, action.params);   //将参数优先
+                    let action = this.actionMap[this.curLevelData.level_n];
                     this.$http.post(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
                         var d = res.json();
                         this.showMsg("success", "新增成功");
                         this.showAdd = false;
                         this.newData ={};
                         this.getData();
-                        this.canAdd = false;
                     });
                 }else {
-                    let action = this.actionMap[this.selectedLevel];
-                    Object.assign(this.newData, action.params);
+                    let action = this.actionMap[this.curLevelData.level_n-1];
                     this.$http.put(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
                         var d = res.json();
                         this.showMsg("success", "修改成功");
                         this.showAdd = false;
                         this.newData ={};
                         this.getData();
-                        this.canAdd = false;
                     });
                 }
         },
@@ -150,153 +141,95 @@ export default {
         getData: function(){
             this.reload = !this.reload; 
         },
-        addoneHandler: function() {
-
-        },
+       
         //选品添加
-        addCheckedList: function(d) {
-            
-            for(let i = 0; i<d.length; i++){
-                if(this.addListLevel == 1){
-                    console.log(d);
-                    console.log('第一极选品增加');
-                    d[i].lv1_name = this.da.lv1_name;
-                    d[i].lv1_code = this.da.lv1_code;
-                    if(d[i].lv2_code && d[i].lv2_name && d[i].lv3_code && d[i].lv3_name){
-                        delete d[i].lv2_code;
-                        delete d[i].lv2_name;
-                        delete d[i].lv3_code;
-                        delete d[i].lv3_name;
-                    }
-                }else if(this.addListLevel == 2){
-                    d[i].lv1_name = this.da.lv1_name;
-                    d[i].lv1_code = this.da.lv1_code;
-                    d[i].lv2_name = this.da.lv2_name;
-                    d[i].lv2_code = this.da.lv2_code;
-                    if(d[i].lv3_code && d[i].lv3_name){
-                        delete d[i].lv3_code;
-                        delete d[i].lv3_name;
-                    }
-                }else if(this.addListLevel == 3){
-                    d[i].lv1_name = this.da.lv1_name;
-                    d[i].lv1_code = this.da.lv1_code;
-                    d[i].lv2_name = this.da.lv2_name;
-                    d[i].lv2_code = this.da.lv2_code;
-                    d[i].lv3_name = this.da.lv3_name;
-                    d[i].lv3_code = this.da.lv3_code;
-                }
+        addCheckedList: function(d) { 
+            let pArray = []
+            console.log(this.curLevelData);
+            for(let i =0; i < d.length; i++) {
+                let one = Object.assign({}, d[i], this.curLevelData);
+                pArray.push(one);
             }
-            this.$http.post(this.$Api+"material",JSON.stringify(d)).then((res) => {
-                        var d = res.json();
-                        this.showMsg("success", "新增成功");
-                        this.getTableDetail();
+
+            this.$http.post(this.$Api+"material",JSON.stringify(pArray)).then((res) => {
+                var d = res.json();
+                this.showMsg("success", "新增成功");
+                this.loadlist();
              });
             this.showSelectDialog = !this.showSelectDialog;
         },
         toSelect: function(){
-            if(!this.canAdd) return;
+            if(this.curLevelData.level_n == 0) {
+                this.showMsg("warn", "请先选择一个材料分类");
+                return false
+            }
             this.showSelectDialog = !this.showSelectDialog;
         },
         addMenu: function(){
-             this.$set("curAction", "add");
-            this.title = "新增材料";
+            this.$set("curAction", "add");
+            this.newData = {pkg:"国民包"};
             this.showAdd = !this.showAdd;
-            this.selectedLevel = 0;
-            this.levelEqualZero = true;
+            this.curLevelData.level_n = 0;
         },
         treeClickHandler: function(d) {
-            this.canAdd = true;
-            this.selectLevel = true;
-            if(d.level == 1) {
-                this.da.lv1_name = d.one.name;
-                this.da.lv1_code = d.one.code;
-                this.addListLevel = 1;
-                this.searchParams= {page:1} ;
-                this.searchParams.lv1_code = d.one.code
+            this.curLevelData = {level_n: d.level}
+
+            if(d.level*1 >= 1) {
+                this.curLevelData.lv1_name = this.curLevelData.lv_name = d.one.name;
+                this.curLevelData.lv1_code = this.curLevelData.lv_code = d.one.code;
+                this.searchParams= {page:1, lv1_code: d.one.code} ;
             }
-            else if(d.level == 2){
-                this.da.lv2_name = d.sone.name;
-                this.da.lv2_code = d.sone.code;
-                this.addListLevel = 2;
-                this.searchParams= {page:1} ;
-                this.searchParams.lv1_code = d.one.code;
-                this.searchParams.lv2_code = d.sone.code;
+            if(d.level*1 >= 2){
+                this.curLevelData.lv2_name = this.curLevelData.lv_name = d.sone.name;
+                this.curLevelData.lv2_code = this.curLevelData.lv_code = d.sone.code;
+                this.searchParams= {page:1, lv2_code: d.sone.code} ;
             }
-            else if(d.level == 3){
-                this.da.lv3_name = d.mone.name;
-                this.da.lv3_code = d.mone.code;
-                this.addListLevel = 3;
-                this.searchParams= {page:1} ;
-                this.searchParams.lv1_code = d.one.code;
-                this.searchParams.lv2_code = d.sone.code;
-                this.searchParams.lv3_code = d.mone.code;
+            if(d.level*1 >= 3){
+                this.curLevelData.lv3_name = this.curLevelData.lv_name = d.mone.name;
+                this.curLevelData.lv3_code = this.curLevelData.lv_code = d.mone.code;
+                this.searchParams= {page:1, lv3_code: d.mone.code} ;
             } 
-            this.getTableDetail();
+            this.loadlist();
         },
+
         addClickHandler: function(d) {
             // 设置参数
             this.title = "新增材料";
             this.newData = {};
-            //  this.addMenu();
             this.showAdd = !this.showAdd;
-            this.selectedLevel = 0;
-            this.levelEqualZero = true;
-             if(d.action="add"){
-                this.$set("curAction", "add");
-             }
-            if(d.level == 1){
-                this.levelEqualZero = false;
-                //添加參數lv1_code
-                this.newData.lv1_code = d.one.code;
-                this.selectedLevel =1;
-            }else if(d.level ==2){
-                this.levelEqualZero = false;
-                this.newData.lv1_code = d.one.code;
-                this.newData.lv2_code = d.sone.code;
-                this.selectedLevel =2;
-            }
+            this.$set("curAction", "add");
+            let tpData = Object.assign({}, this.curLevelData);
+            delete tpData.lv_code;
+            delete tpData.lv_name;
+            this.newData = tpData;
         },
         deleteClickHandler: function(d) {
             
         },
         editClickHandler: function(d) {
             this.title = "编辑材料";
-            // this.addMenu();
+            this.$set("curAction", "edit");
             this.showAdd = !this.showAdd;
-            this.selectedLevel = 0;
-            this.levelEqualZero = true;
-            if(d.action="edit") this.$set("curAction", "edit");
-            //编辑时显示原数据
-             if(d.level == 1) {
-                 this.levelEqualZero = true;
-                 this.selectedLevel =0;
-                  this.newData = Utils.cloneObj(d.one);
-                 this.newData.lv1_code = d.one.code;
-             }else if(d.level == 2) {
-                 this.levelEqualZero = false;
-                 this.selectedLevel =1;
-                 // 克隆数据，不破坏源数据
-                 this.newData = Utils.cloneObj(d.sone); 
-                 if(this.newData.lv3) delete this.newData.lv3;
-                 if(this.newData.code) delete this.newData.code;
-                 if(!this.newData.selected) delete this.newData.selected;
-                 if(!this.newData.show) delete this.newData.show;
-                 this.newData.lv2_code = d.sone.code;
-             }else if(d.level == 3) {
-                 this.levelEqualZero = false;
-                 this.selectedLevel =2;
-                 this.newData = Utils.cloneObj(d.mone);
-                 if(this.newData.code) delete this.newData.code;
-                 if(!this.newData.selected) delete this.newData.selected;
-                 if(!this.newData.show) delete this.newData.show;
-                this.newData.lv2_code = d.sone.code; 
-                this.newData.idx = d.index;
+            
+            if(d.level == 1) this.newData = {
+                lv1_code: d.one.code,
+                name: d.one.name,
+                usable: d.one.usable,
+                pkg: d.one.pkg,
+            }
+            else if(d.level == 2) this.newData = {
+                lv2_code: d.sone.code,
+                name: d.sone.name,
+                usable: d.sone.usable,
+            }
+            else this.newData = {
+                lv2_code: d.sone.code,
+                name: d.mone.name,
+                usable: d.mone.usable,
+                idx: d.index
             }
         },
         confirmDelete: function(d){
-            console.log('delete');
-            console.log(this.curItem);
-            console.log('delete');
             if(d.action == "confirm") {
                 this.$http.delete(this.$Api+"material", {params: {"ItemCode": this.curItem.ItemCode}}).then((res)=>{
                     this.$set("deleteTag", !this.deleteTag);
@@ -306,7 +239,7 @@ export default {
             }
         },
     },
-    components:{codeview, icon,dialogtip,materialitem,chuguitb,btn,selectproductdialog}
+    components:{codeview, icon,dialogtip,materialitem,btn,selectproductdialog}
 
 }
 </script>

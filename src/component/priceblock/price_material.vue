@@ -105,7 +105,8 @@ export default {
 
         operatorHandler: function(d){
             if(d.action == "copy") {
-               let newData = Object.assign({}, d.data)
+              //  let newData = Object.assign({}, d.data)
+              let newData = Utils.cloneObj(d.data);
                newData.selected = false;
                newData.canDelete = true;
                this.datas.splice(d.index, 0, newData);

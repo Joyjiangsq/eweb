@@ -248,8 +248,8 @@ export function routerStart(router) {
                     }
                 },
                 // 调品规则-------------------------------------------------------
-                "/materialchange" :{
-                   name:" materialchange",
+                "/mchange" :{
+                   name:"mchange",
                    component: materialRuleView
                 },
                 // 报表模块--------------------------------------------------------

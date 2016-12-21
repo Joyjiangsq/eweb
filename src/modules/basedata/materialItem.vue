@@ -1,11 +1,11 @@
 <template>
     <div :class="css.itemList">
                   <!--新增材料分类对话框-->
-      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler">
+      <dialog :flag.sync="showTag" :title="title" @dialogclick="dialogClickHandler">
                 <div  slot="containerDialog">
                          <div>   
                             <formtext labelname="分类名称：" :vertical="true"   :value.sync="formdata.name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                            <formcb keyid="name" labelname="所属包：" dropfixed="dropfixed" :vertical="true" v-if="level"  :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
+                            <formcb keyid="name" labelname="所属包："  v-if ="formdata.pkg"  dropfixed="dropfixed" :vertical="true"  :value.sync="formdata.pkg"  keyname="name"  formname="" :datas="getRoles" :validatestart="validate" @onvalidate="validateHandler"></formcb>
                             <formrd labelname="启用：" :vertical="true"  :value.sync="formdata.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
                         </div>
                 </div>
@@ -28,10 +28,10 @@ export default {
     show:{
         default: false
     },
-    level:{
-        default: true,
-        type :Boolean
-    },
+    // level:{
+    //     default: true,
+    //     type :Boolean
+    // },
     title:{
         default:''
     }
@@ -41,6 +41,7 @@ export default {
       css,
       validate: false, //验证开关
       validateTag: false, //表单验证
+      showTag: false
     }
   },
   computed: {
@@ -71,7 +72,9 @@ export default {
   },
   components: { btn,icon,formtext,formrd,formcb,dialog},
   watch:{
-    
+      "show": function(){
+          this.showTag = !this.showTag;
+      }
   }
 }
 </script>

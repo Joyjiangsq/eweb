@@ -15,7 +15,7 @@ export default function adapter(d) {
         def: d.counts.def || "",
         defCss: "default",
         errorMsg:"",
-        tb_disabled: d.ItemCode?false:true,
+        tb_disabled: (d.ItemCode || d.project_name)?false:true,
         validateFun:function(data, index){
             console.log(data);
            if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
@@ -28,7 +28,7 @@ export default function adapter(d) {
         def: d.remark.def || "",
         defCss: "default",
         errorMsg:"",
-        tb_disabled: d.ItemCode?false:true,
+        tb_disabled: (d.ItemCode || d.project_name)?false:true,
         validateFun:function(data, index){
             return true
         }

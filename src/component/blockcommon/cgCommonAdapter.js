@@ -169,9 +169,9 @@ export default function adapterData(d) {
       d.U_ASDeep.validateFun =function(data, index){
           if(d.sale_counts) {
             if(d.sale_counts.def*1 == 0 || !d.sale_counts.def) {
-                if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
-                else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
-                else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
+                if(!this.def || this.def == "") return exepFun(this, "必须填写包管深度")
+                else if(isNaN(this.def)) return exepFun(this, "包管深填写不正确")
+                else if(this.def*1 < 0)  return exepFun(this, "包管深必须大于0")
                 // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
                 else return resetFun(this)
             }
@@ -179,9 +179,9 @@ export default function adapterData(d) {
           }
           else if(d.U_Pquantity) {
             if(d.U_Pquantity.def*1 == 0 || !d.U_Pquantity.def) {
-                if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
-                else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
-                else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
+                if(!this.def || this.def == "") return exepFun(this, "必须填写包管深度")
+                else if(isNaN(this.def)) return exepFun(this, "包管深填写不正确")
+                else if(this.def*1 < 0)  return exepFun(this, "包管深必须大于0")
                 // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
                 else return resetFun(this)
             }

@@ -7,7 +7,7 @@
                 </tabbar>
           </div>
           <div  :class="">
-              <btn v-if="isEAdmin" :class="" @click="toAdd">新增 {{load}}</btn>
+              <btn v-if="isEAdmin" :class="" @click="toAdd">新增 </btn>
               <div :class="">
                 <tb :headercaption="getHeader"  url="rule-product" :params="searchParams"  :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
                 <pg :totals="totals" :curpage="searchParams.page">
@@ -17,7 +17,7 @@
     <!--新增对话框-->
       <dialog :flag.sync="showAdd" title="新增" @dialogclick="dialogClickHandler" >
             <div  class="" slot="containerDialog">
-                  <formtext :must="false" :read="true"  labelname="类别: " :vertical="true" :value.sync="formdatas.type" ></formtext>
+                  <formtext :must="false" :read="true"  labelname="类别：" :vertical="true" :value.sync="formdatas.type" ></formtext>
             </div>
             <div  class="" slot="containerDialog">
                   <div class="m.itemList"> 
@@ -27,7 +27,7 @@
                         <formtext :must="true" :read="!isEAdmin"  labelname="分类名称：" :vertical="true" :value.sync="formdatas.lv_name" placeholder="" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                       </div>
                       <div v-else>
-                        <formtext :must="true" :read="!isEAdmin"  labelname="调品前分类: " @focushandler="showTypedialog(1)"  :vertical="true" :value.sync="formdatas.before_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                        <formtext :must="true" :read="!isEAdmin"  labelname="调品前分类：" @focushandler="showTypedialog(1)"  :vertical="true" :value.sync="formdatas.before_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                         <formtext :must="true" :read="!isEAdmin"  labelname="调品后分类：" @focushandler="showTypedialog(2)" :vertical="true" :value.sync="formdatas.after_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                         <formtext :must="true" :read="!isEAdmin"  labelname="调品前分类名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入调品前分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                         <formtext :must="true" :read="!isEAdmin"  labelname="调品后分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入调品后分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -162,6 +162,7 @@ export default {
         this.loadlist();
     },
     toAdd: function(){
+        this.formdatas = {type: this.searchParams.type};
         this.$set("curAction","add");
         this.showAdd = true;
     },
