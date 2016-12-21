@@ -182,7 +182,7 @@ export default {
     },
     //个性化focus弹框被选中
     getOne: function(d){
-       this.formdatas = Object.assign({}, d);
+       this.formdatas = Object.assign({}, this.formdatas, d);
     },
     //非个性化focus弹框被选中
     oneCheck: function(d){

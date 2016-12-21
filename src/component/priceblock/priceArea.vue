@@ -4,7 +4,7 @@
             <lefttb :headercaption="leftHeader" @rowclick="rowclick" :redef="redef" scene="add_yes"  :needselected= "true" @addone="leftAddOne" :datas="fdata" :events="tableEventsLeft"></lefttb> 
         </div>
         <div :class='css.rightBox'>
-            <div v-if="gxhTip">{{gxhTip}}</div>
+            <div v-if="specTip">{{specTip}}</div>
             <righttb :headercaption="rightHeader" @selectchange="selectchangeHandler"  scene="add_yes" :deleteindex="deleteindex" :datas="rightDatas.sub_list" :events="tableEventsRight" v-else></righttb>
         </div>
         <typedialog :show="showTypeDialog" @onecheck="typeCheck" url="material-category" v-if="from == 'c'"></typedialog>
@@ -51,16 +51,13 @@ export default {
   data: function () {
     return {
       css,
-      gxhTip:"", // 个性化提示
+      specTip:"个性化项目不需要选择", // 个性化与增加项目提示
       redef: false,
-      fdata:[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
+      fdata:this.from == 's'?[{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}] : [{name:"增加项目", code:"zx", selected: false, sub_data:{sub_list:[]}},{name:"个性化", code:"gxh", selected: true, sub_data:{sub_list:[]}}],
       leftHeader: [{name:"名称", labelValue:"name",type:"edit"},{type:"operator", name:"操作"}],
       rightDatas:{},
       showBuildDialog: false, // 显示施工产品对话框
       showTypeDialog: false, // 分类型对话框
-      // showSelectDialog: false,
-      // toloadProduct: false,
-      // selectParams:{page: 1},
       deleteindex: {index: -1},
       tableEventsLeft:{
         operatorRender: function(d, index){
@@ -80,15 +77,6 @@ export default {
          },
 
          operatorHandler: function(d){
-              // if(d.action == "select") {
-              //   let stPage = this.selectParams.page;
-              //   this.selectParams = {page: stPage};
-              //   this.showSelectDialog = !this.showSelectDialog;
-              //   if(d.data.level_n == 1) this.selectParams.lv1_code = d.data.lv_code;
-              //   else if(d.data.level_n == 2) this.selectParams.lv2_code = d.data.lv_code;
-              //   else this.selectParams.lv3_code = d.data.lv_code;
-              //   this.toloadProduct = !this.toloadProduct
-              // }
               if(d.action == "delete") {
                 this.deleteindex = {index: d.index}
               }
@@ -113,32 +101,9 @@ export default {
     }
   },
   ready: function () {
-    this.gxhTip = "个性化项目不需要选择";
-    // if(this.datas.length != 0) {
-    //   this.fdata = this.datas;
-    // }
-    // console.log(this.datas);
-    // if(this.datas.length !=0) {
-    //     for(let i = 0; i < this.datas.length; i++) {
-    //          if(i == 0) this.datas[i].selected = true;
-    //          else this.datas[i].selected = false;
-    //          adapter_left(this.datas[i]);
-    //     }
-    //     this.fdata = this.datas;
-    // }
   },
   attached: function () {},
   methods: {
-    // getFrom: function(d, index) {
-    //   // 材料
-    //     if(this.from == "c") return [{name:"删除", action:"delete",icon:"icon-delete", index: index}]
-    //   // 施工
-    //     else if(this.from == "s") return [{name:"删除", action:"delete",icon:"icon-delete", index: index}]
-    // },
-    // getTypeUrl: function() {
-    //   if(this.from =="c") return "material-category";
-    //   else if(this.from =="s") return "construction-quote-category"
-    // },
     leftAddOne: function() {
         let one = adapter_left({selected: false, sub_data:{sub_list:[]}});
         this.fdata.unshift(one);
@@ -150,10 +115,13 @@ export default {
     },
     rowclick: function(d) {
       if(d.code && d.code == "gxh") {
-         this.gxhTip = "个性化项目不需要选择"
+         this.specTip = "个性化项目不需要选择"
+      }
+      else if(d.code && d.code == "zx") {
+         this.specTip = "增加项目不需要选择"
       }
       else {
-        this.gxhTip = ""
+        this.specTip = ""
         this.rightDatas = d.sub_data;
       }
     },

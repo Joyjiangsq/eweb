@@ -18,7 +18,7 @@
                                 {{done[sone.labelValue] || '-'}}
                           </span>
                           <div v-if="sone.type == 'edit'" >
-                              <div v-if="done.code == 'gxh'">
+                              <div v-if="done.code == 'gxh' || done.code == 'zx'">
                                     {{done[sone.labelValue] || '-'}}
                               </div>
                               <div :class="css.iptBox" v-else>
@@ -27,7 +27,7 @@
                               </div>
                           </div>
                           <span v-if="sone.type == 'operator'" >
-                                <div v-if="done.code == 'gxh'">
+                                <div v-if="done.code == 'gxh' || done.code == 'zx'">
                                     -
                                 </div>
                                 <iconbar  :buttons="btnData(done, order)"  @btnclick="btnEventHandler" v-else></iconbar>

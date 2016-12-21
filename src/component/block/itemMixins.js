@@ -106,6 +106,7 @@ export default {
               if(one[key] instanceof Array) continue;
               if(typeof(one[key]) == "object") {
                   if(one[key].tb_disabled) continue;
+                  if(!one[key].validateFun) continue;
                   let res = one[key].validateFun(one, i);
                   if(!res) {this.validateRec = false;}
               }

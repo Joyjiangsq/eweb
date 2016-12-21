@@ -1,5 +1,5 @@
 export default function adapter(d) {
-    if(d.code == "gxh") return d;
+    if(d.code == "gxh" || d.code == "zx") return d;
     let exepFun = function(scope, msg){
         scope.defCss = "errorHappend";
         scope.errorMsg = msg;

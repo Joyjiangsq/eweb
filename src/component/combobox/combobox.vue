@@ -66,6 +66,10 @@ export default {
       attach: {
         type: Object,
         default: () => {}
+      },
+
+      need: {
+        default: true
       }
   },
   data: function () {
@@ -84,7 +88,7 @@ export default {
   created: function(){
     this.defaultInfo[this.keyid] = "";
     this.defaultInfo[this.labelname] = "请选择";
-    this.realData.push(this.defaultInfo);
+    if(this.need) this.realData.push(this.defaultInfo);
     if(this.url) this.loadData();
     // alert(JSON.stringify(this.defaultInfo));
   },
@@ -120,7 +124,7 @@ export default {
       let p = {};
       p[this.keyid] ="";      // name 与 p最好不要一样
       p[this.labelname] ="请选择";
-      this.realData = [p];
+      // this.realData = [p];
       this.defaultInfo = Utils.cloneObj(p);
       for(let i = 0; i < this.datas.length; i++) {
            let one = Utils.cloneObj(this.datas[i]);
