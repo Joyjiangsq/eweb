@@ -7,31 +7,33 @@
                 </tabbar>
           </div>
           <div  :class="">
-              <btn v-if="isEAdmin" :class="" @click="toAdd">新增</btn>
+              <btn v-if="isEAdmin" :class="" @click="toAdd">新增 {{load}}</btn>
               <div :class="">
-                <tb v-if="geXingHua" :headercaption="gxheadercaption"  url="rule-product" :params="searchParams" :datas="newData" :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
-                <tb v-else :headercaption="headercaption"  url="rule-product" :params="searchParams" :datas="newData" :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
+                <tb :headercaption="getHeader"  url="rule-product" :params="searchParams"  :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
                 <pg :totals="totals" :curpage="searchParams.page">
               </div>
           </div>
     </pagepanel>
     <!--新增对话框-->
-      <dialog :flag.sync="showAdd" :title="title" @dialogclick="dialogClickHandler" >
+      <dialog :flag.sync="showAdd" title="新增" @dialogclick="dialogClickHandler" >
             <div  class="" slot="containerDialog">
                   <formtext :must="false" :read="true"  labelname="类别: " :vertical="true" :value.sync="formdatas.type" ></formtext>
             </div>
             <div  class="" slot="containerDialog">
-                  <div class="m.itemList">  
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="产品选择: " @focushandler="showNoTypedialog" :vertical="true" :value.sync="formdatas.before_code" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="产品名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入物料名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="分类编码：" :vertical="true" :value.sync="formdatas.after_code" placeholder="请输入物料分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="geXingHua" labelname="分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类: " @focushandler="showTypedialog(1)"  :vertical="true" :value.sync="formdatas.before_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类：" @focushandler="showTypedialog(2)" :vertical="true" :value.sync="formdatas.after_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品前分类名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入调品前分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle" :read="!isEAdmin" v-if="!geXingHua" labelname="调品后分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入调品后分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext :must="isEAdmin == 'true'? true:fasle"  :read="!isEAdmin" labelname="总部指导价：" :number="true" :vertical="true" :value.sync="formdatas.rec_price" placeholder="请输入总部指导价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                      <formtext v-if="!isEAdmin" labelname="分站自营价: " :number="true" :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <div class="m.itemList"> 
+                      <div v-if="geXingHua">
+                        <formtext :must="true" :read="!isEAdmin" labelname="产品选择：" @focushandler="showNoTypedialog" :vertical="true" :value.sync="formdatas.ItemName" placeholder="请输选择产品" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                        <formtext :must="true" :read="!isEAdmin" labelname="分类编码：" :vertical="true" :value.sync="formdatas.lv_code" placeholder="" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                        <formtext :must="true" :read="!isEAdmin"  labelname="分类名称：" :vertical="true" :value.sync="formdatas.lv_name" placeholder="" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      </div>
+                      <div v-else>
+                        <formtext :must="true" :read="!isEAdmin"  labelname="调品前分类: " @focushandler="showTypedialog(1)"  :vertical="true" :value.sync="formdatas.before_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                        <formtext :must="true" :read="!isEAdmin"  labelname="调品后分类：" @focushandler="showTypedialog(2)" :vertical="true" :value.sync="formdatas.after_code" placeholder="请选择分类" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                        <formtext :must="true" :read="!isEAdmin"  labelname="调品前分类名称：" :vertical="true" :value.sync="formdatas.before_name" placeholder="请输入调品前分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                        <formtext :must="true" :read="!isEAdmin"  labelname="调品后分类名称：" :vertical="true" :value.sync="formdatas.after_name" placeholder="请输入调品后分类名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      </div>
+                      <formtext :must="true"  :read="!isEAdmin" labelname="总部指导价：" :number="true" :vertical="true" :value.sync="formdatas.rec_price" placeholder="请输入总部指导价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                      <formtext v-if="!isEAdmin"  :must="true" labelname="分站自营价: " :number="true" :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   </div>
             </div>
       </dialog>
@@ -57,26 +59,22 @@ import typedialog from "component/priceblock/typeDialog";
 let headerData =[{name:"类别", labelValue:"type", type:"data"},{name:"调品前材料分类", labelValue:"before_code", type:"data"},{name:"调品前分类名称", labelValue:"before_name", type:"data"},
                   {name:"调品后类别", labelValue:"after_code", type:"data"},{name:"调品后分类名称", labelValue:"after_name", type:"data"},{name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
                   {type:"operator", name:"操作"}];
-let gxheaderData =[{name:"类别", labelValue:"type", type:"data"},{name:"物料分类", labelValue:"before_code", type:"data"},{name:"分类名称", labelValue:"before_name", type:"data"},
-                    {name:"产品编码", labelValue:"after_code", type:"data"},{name:"产品名称", labelValue:"after_name", type:"data"},{name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
+let gxheaderData =[{name:"类别", labelValue:"type", type:"data"},{name:"分类编码", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
+                    {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},{name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
                     {type:"operator", name:"操作"}];
-let tabData =[{labelName:"升级", id: "", type:"升级",show:false},{labelName:"降级", id: "",type:"降级", show:false},{labelName:"增项", id: "", type:"增项",show:false},
+let tabData =[{labelName:"升级", id: "", type:"升级",show:true},{labelName:"降级", id: "",type:"降级", show:false},{labelName:"增项", id: "", type:"增项",show:false},
               {labelName:"减项", id: "", type:"减项",show:false},{labelName:"互换", id: "", type:"互换",show:false},{labelName:"个性化", id: "", type:"个性化",show:false}];
 export default {
   mixins:[basePage],
   data(){
     return {
-      formdatas:{type:'',before_code:'',before_name:'',after_code:'',after_name:'',self_price:'',rec_price:''},      //表单数据
-      selectType:{},
+      formdatas:{type:"升级"},      //表单数据type:'' ,before_code:'',before_name:'',after_code:'',after_name:'',self_price:'',rec_price:''
       m,
-      newData:[],
       gxheadercaption: gxheaderData, //个性化table
       headercaption: headerData,     //非个性化table
-      first: 0,                   //判断首次进入出发新增按钮
       totals: 0,
       moduleName:"调品规则",
-      searchParams: {page:1,params:''},
-      title: '调品规则新增',     //弹框抬头标题
+      searchParams: {page:1, type:"升级"},
       showNoPerDialog: false,   //个性化弹框
       showTypeDialog: false,    //非个性化调品前后分类弹框
       geXingHua: false,         //切换tab个性化新增
@@ -89,7 +87,6 @@ export default {
       curItem:{},
       tbData: [],
       tabArray:tabData,          //tab内容初始化
-      curTabIndex:0,
       tableEvents:{
           operatorRender: function(d){
               return [{name:"编辑", action:"edit",icon:"icon-edit",data:d},{name:"删除", action:"delete",icon:"icon-delete",data:d}]
@@ -101,32 +98,28 @@ export default {
               }else if(d.action == "edit"){
                   this.title = "调品规则编辑";
                   this.$set("curAction","tbedit");
-                  this.showAdd = true;
-                  this.formdatas = Utils.cloneObj(this.curItem);
-                  this.formdatas._id=this.curItem._id;
+                  this.showAdd = !this.showAdd;
+                  this.formdatas = Object.assign({}, d.data);
               }
           }
       },
     }
   },
   computed:{
+    getHeader: function(){
+      if(this.geXingHua) return gxheaderData
+      else return headerData
+    },
     // 判断当前是否为e站（分站）
     isEAdmin: function(){
+      return true
       return Utils.isEAdmin();
     }
   },
   ready: function(){
-    this.setFirstTab();
-    this.getFirstTb();
   },
   methods: {
-    //第一次进来处理tb，默认type为升级
-    getFirstTb: function(){
-        if(this.first == 0){
-          this.searchParams.type= '升级';
-          this.searchParams.page = 1;
-        }
-    },
+ 
     //刷新表格数据
     getTableDetail: function(){
         this.load = !this.load;
@@ -142,20 +135,14 @@ export default {
                           this.showMsg("success", "新增成功");
                           this.showAdd = !this.showAdd;
                           this.formdatas = {};
-                          this.getTableDetail();
+                          this.loadlist();
                     });
                   }else if(this.curAction = "tbedit"){
-                      if(!this.isEAdmin){
-                        let param = this.formdatas.self_price;
-                        this.formdatas={}; //清空多余参数
-                        this.formdatas._id=this.curItem._id;
-                        this.formdatas.self_price = param;
-                      }
                     this.$http.put(this.$Api+"rule-product",JSON.stringify(this.formdatas)).then((res) => {
                         this.showMsg("success", "修改成功");
-                        this.showAdd = false;
+                        this.showAdd = !this.showAdd;
                         this.formdatas ={};
-                        this.getTableDetail();
+                        this.loadlist();
                     });
                   }
                 }
@@ -164,41 +151,26 @@ export default {
     },
     //tab点击事件
     tabClickHandler: function(d){
-        this.first++;
         this.searchParams = {page:1};
         this.searchParams.type = d.data.type;
+
         this.formdatas.type = d.data.type;
-        this.selectType = d.data.type;
-        if(d.index == 5)  this.geXingHua = true;
+        if(d.data.type == "个性化")  {
+          this.geXingHua = true;
+        }
         else this.geXingHua = false;
-        this.getTableDetail();
+        this.loadlist();
     },
     toAdd: function(){
-        this.title ='调品规则新增';
-        if(this.isEAdmin) {
-          this.formdatas = {type:'',before_code:'',before_name:'',after_code:'',after_name:'',self_price:'',rec_price:''};
-          if(this.first == 0) {
-            this.formdatas.type = '升级';
-          }else{
-             this.formdatas.type = this.selectType;
-          }
-        }else{
-          this.formdatas = {type:'',self_price:''};
-          this.formdatas.type = this.selectType;
-        } 
         this.$set("curAction","add");
         this.showAdd = true;
     },
     validateHandler: function(d){
         if(d.res == "fail") this.validateTag = false;
     },
-    //首次进来tab默认选中升级
-    setFirstTab: function(){
-        this.tabArray[0].show = true;
-    },
-    showTypedialog: function(param){
-       if(param == 1) this.type = 1;
-       else this.type = 2;
+  
+    showTypedialog: function(type){
+       this.type = type; // 1 调品前   2 调品后
        this.showNoPerDialog = !this.showNoPerDialog;
     },
     showNoTypedialog: function(){
@@ -206,25 +178,10 @@ export default {
     },
     //个性化focus弹框被选中
     getOne: function(d){
-       console.log(d);
-       this.formdatas.after_code =  d.ItemCode; //产品编码
-       this.formdatas.after_name = d.ItemName; //产品名称
-       if(d.lv3_name && d.lv3_code){
-         this.formdatas.before_code = d.lv3_code;
-         this.formdatas.before_name = d.lv3_name;
-         return;
-       }else if(d.lv2_name && d.lv2_code){
-         this.formdatas.before_code = d.lv2_code;
-         this.formdatas.before_name = d.lv2_name;
-         return;
-       }else {
-         this.formdatas.before_code = d.lv1_code;
-         this.formdatas.before_name = d.lv1_name;
-       }
+       this.formdatas = Object.assign({}, d);
     },
     //非个性化focus弹框被选中
     oneCheck: function(d){
-       console.log(d);
        if(this.type == 1) {
          this.formdatas.before_code = d.lv_code;
          this.formdatas.before_name = d.lv_contact_name
@@ -232,6 +189,7 @@ export default {
          this.formdatas.after_code = d.lv_code; 
          this.formdatas.after_name = d.lv_contact_name
         }
+        this.formdatas = Object.assign({}, this.formdatas);
     },
     confirmDelete: function(d){
         if(d.action == "confirm") {
