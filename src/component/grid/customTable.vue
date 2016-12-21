@@ -19,7 +19,7 @@
                                 <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}
                           </span>
                           <span v-if="sone.type == 'dataspec'" >
-                                <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue].def || "-"}}
+                                <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue].def || done[sone.labelValue] || "-"}}
                           </span>
                           <div v-if="sone.type == 'edit'" >
                               <span v-if="done[sone.labelValue].tb_disabled">-</span>

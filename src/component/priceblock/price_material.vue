@@ -10,8 +10,9 @@
                 </div>
 
                 <div :class='css.rightBox'>
-                    <righttb v-if="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g" :clone="clone.tag" scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
-                    <righttb :headercaption="rightHeader" :clone="clone.tag" scene="price_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
+                    <righttb v-if="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
+                    <righttb v-if="curCheck =='zx'" @selectchange="selectchangezx" :headercaption="rightHeader"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
+                    <righttb :headercaption="rightHeader"  scene="price_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
                 </div>
             </div>
             <mdialog :show="showm" :datas="actionDatas" @addone="addone"></mdialog>
@@ -30,7 +31,6 @@ import spdialog from "component/blockcommon/selectProductByTypeDialog";
 import Utils from "common/Utils.js";
 import mdialog from "./materialSpecDialog";
 import Vue from "vue";
-let cloneBoy = {tag: false}
 // 自定义
 var selectComponent = Vue.extend({
   data:function(){
@@ -39,7 +39,6 @@ var selectComponent = Vue.extend({
       show: false,
       params:{page: 1},
       toload: false,
-      clone: cloneBoy
     }
   },
   template: '<div><btn @click="clickHandler">选择产品</btn><spdialog :show="show" @success="success" :params="params" :toload="toload"></spdialog></div>',
@@ -60,7 +59,6 @@ var selectComponent = Vue.extend({
         console.log(this.selfData);
         Object.assign(this.selfData, d)
         right_adapter(this.selfData);
-        // this.clone.tag = !this.clone.tag;
     },
     
   },
@@ -76,7 +74,6 @@ export default {
   data: function () {
     return {
       css,
-      clone: cloneBoy,
       showm:false,
       actionDatas:[],
       showTplDialog: false,
@@ -145,6 +142,7 @@ export default {
     },
     rowclick: function(d) {
         if(d.code == "gxh") this.curCheck = "gxh";
+        else if(d.code == "zx") this.curCheck = "zx";
         else this.curCheck = "";
         let tpl = [];
         for(let i = 0; i < d.sub_data.sub_list.length; i++) {
@@ -163,6 +161,9 @@ export default {
     },
     selectchange: function() {
         this.showm = !this.showm;
+    },
+    selectchangezx: function(){
+
     }
   },
   components: {lefttb,righttb,mdialog,btn,tpldialog},

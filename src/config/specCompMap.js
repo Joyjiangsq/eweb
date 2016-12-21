@@ -15,7 +15,7 @@ export const heyeComponent = Vue.extend({
       }
     }
   },
-  template: '<div><combobox labelname="multyNameLabel" :adapter="adapter" @itemclick="dropclick" :value="value" keyid="multyNameLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="multyNameLabel" :adapter="adapter" :need="false" @itemclick="dropclick" :value="value" keyid="multyNameLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       this.test = this.selfData.U_HingeCodes.def || [];
       this.value = this.selfData.U_HingeName.def || "";
@@ -48,7 +48,7 @@ export const  mensuoComponent = Vue.extend({
       }
     }
   },
-  template: '<div><combobox labelname="multyLockLabel" :adapter="adapter" :value="value"  @itemclick="dropclick"  keyid="multyLockLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="multyLockLabel" :adapter="adapter" :need="false" :value="value"  @itemclick="dropclick"  keyid="multyLockLabel" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       this.test = this.selfData.U_LockCodes.def || [];
       this.value = this.selfData.U_LockName.def || "";
@@ -78,7 +78,7 @@ export const  holeComponent = Vue.extend({
       value:"是"
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       console.log(this);
       this.value = this.selfData.U_IKeyHole.def || "是";
@@ -111,7 +111,7 @@ export const  kaiqiComponent = Vue.extend({
       value:"左开"
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       console.log(this);
       this.value = this.selfData.U_OpenWay.def || "左开";
@@ -142,7 +142,7 @@ export const  zhinengDirComponent = Vue.extend({
       value:"左内开"
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       console.log(this);
       this.value = this.selfData.U_DoorO.def || "左内开";
@@ -171,7 +171,7 @@ export const  tdComponent = Vue.extend({
       value:"是"
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       console.log(this);
       this.value = this.selfData.U_IHEH.def || "是";
@@ -200,7 +200,7 @@ export const  zhiComponent = Vue.extend({
       value:"木门"
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value" keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
       console.log(this);
       this.value = this.selfData.U_DType.def || "木门";
@@ -229,7 +229,7 @@ export const  qianyanComponent = Vue.extend({
       value: ""
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
     this.value = this.selfData.U_FModeling.def || "DM-008-直边"
   },
@@ -255,7 +255,7 @@ export const taiyiComponent = Vue.extend({
       value:""
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
         this.value = this.selfData.U_BasinT.def || "台上工艺"
   },
@@ -280,7 +280,7 @@ export const  qiyuanComponent = Vue.extend({
       value: "天燃气"
     }
   },
-  template: '<div><combobox labelname="name" @dropclick="dropclick" :value="value"  keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value"  keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
     this.value = this.selfData.U_GSMe.def || "天燃气";
   },
@@ -305,7 +305,7 @@ export const  bashouComponent = Vue.extend({
       value: ""
     }
   },
-  template: '<div><combobox labelname="U_Modle" @dropclick="dropclick" :value="value"  keyid="U_Modle" dropfixed="dropfixed" :datas="test"></combobox></div>',
+  template: '<div><combobox labelname="U_Modle" @dropclick="dropclick" :need="false" :value="value"  keyid="U_Modle" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
     //ItemName
     this.test = this.selfData.U_HandleCodes.def;

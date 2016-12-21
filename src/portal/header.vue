@@ -75,9 +75,9 @@ export default {
               this.$set("exitTag", !this.exitTag);
               // Utils.clearUserInfo(); // 改成登出接口   cookie 设置了 httponly  js无法操作cookie了
               this.$http.get(this.$Api + "logout",{}).then((res) => {
-                  console.log(res);
                   storejs("userInfo", "");
-                  location.hash="login";
+                  // location.hash="login";
+                  this.$router.go({path:"/login"});
               },(error) => {
                     console.log(error);
               })
