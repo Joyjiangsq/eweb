@@ -24,6 +24,7 @@ export const heyeComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
+            this.selfData.U_HiPro = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;;
             this.selfData.U_HingeName.def = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
             this.selfData.U_HingeName.tb_disabled= false;  // 合页
             this.selfData.U_HingeName.defCss= "default";  // 合页
@@ -56,6 +57,7 @@ export const  mensuoComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
+            this.selfData.U_LoPro = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
             this.selfData.U_LockName.def = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
             this.selfData.U_LockName.tb_disabled= false; // 门锁
             this.selfData.U_LockName.defCss= "default";  // 门锁
@@ -313,6 +315,7 @@ export const  bashouComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
+            this.selfData.U_HanType =  d;
             this.selfData.U_HandleName.def = d;
             this.selfData.U_HandleCode = d;
             this.selfData.U_HandleName.tb_disabled= false;

@@ -58,7 +58,7 @@ export default function men_c(d) {
     ltwo = ltwo.map(one => getLevelThreeTypeByName(one));
     if(ltwo.indexOf(d.Code) != -1) {
         depMhole(false); depMshan(false);
-        d.U_OpenWay.tb_disabled = false; // 开启方式
+        d.U_OpenWay.tb_disabled = true; // 开启方式
         return d
     }
 

@@ -1,6 +1,7 @@
-import {getLevelOneTypeByName} from "config/codeMap";
 import uqfun from "component/blockcommon/uqFun";
 import decimalIs from "component/blockcommon/decimal";
+
+import {getLevelThreeTypeByName} from "config/codeMap";
 export default function adapterData(d) {
       if(!d.stock || d.stock == 0) d.stock = "0";
       // 设置验证参数规则
@@ -30,6 +31,11 @@ export default function adapterData(d) {
                 return false
               }
               else if(this.def == 0 || this.def == "" || !this.def) {
+                  if(data.Code == getLevelThreeTypeByName("台面")) {
+                      this.defCss = "default";
+                      this.errorMsg = "";
+                      return true;
+                  }
                   if(d.U_Pquantity.def == 0 || d.U_Pquantity.def == "" || !d.U_Pquantity.def){
                       this.defCss = "errorHappend";
                       this.errorMsg = "采购数量与使用库存不能同时为0";
@@ -62,6 +68,37 @@ export default function adapterData(d) {
           errorMsg:"",
           validateFun:function(data, index){
               uqfun(d);
+
+              // "U_TableB"                  // 台面进深
+              // "U_HeightWR"             // 挡水高度
+              // "U_ASWide"         // 包管展开宽
+              // "U_ASDeep"                // 包管展开深
+              // 如果是台面
+              if(data.Code == getLevelThreeTypeByName("台面")) {
+                  if(this.def == 0 || !this.def) {
+                     this.def = 0;
+                     this.defCss = "default";
+                     this.errorMsg = "";
+                     return true;
+                  }
+                  else  if(isNaN(this.def)) {
+                    this.defCss = "errorHappend";
+                    this.errorMsg = "采购数量填写不正确";
+                    return false
+                  }
+                  else {
+                    if((!data.U_TableB || data.U_TableB == 0) && (!data.U_HeightWR || data.U_HeightWR == 0)) {
+                         this.defCss = "errorHappend";
+                          this.errorMsg = "台面进深与挡水高度必须同时存在";
+                          return false
+                    }
+                    else {
+                          this.defCss = "default";
+                          this.errorMsg = "";
+                          return true;
+                    }
+                  }
+              }
               if(isNaN(this.def)) {
                 this.defCss = "errorHappend";
                 this.errorMsg = "采购数量填写不正确";
