@@ -1,7 +1,7 @@
 <template>
     <div :class="css.itemList" v-if="exCatery">
     <!--新增施工报价分类对话框-->
-      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler" >
+      <dialog :flag.sync="showTag" :title="title" @dialogclick="dialogClickHandler" >
                 <div  slot="containerDialog">
                          <div>  
                             <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -12,7 +12,7 @@
     </div>
     <!--新增材料分类对话框-->
     <div :class="css.itemList" v-else>
-      <dialog :flag.sync="show" :title="title" @dialogclick="dialogClickHandler" v-else>
+      <dialog :flag.sync="showTag" :title="title" @dialogclick="dialogClickHandler" v-else>
                 <div  slot="containerDialog">
                          <div> 
                             <formtext labelname="项目名称：" :vertical="true" :value.sync="formdata.project_name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -74,6 +74,7 @@ export default {
       validate: false, //验证开关
       validateTag: false, //表单验证
       exCatery: false,
+      showTag: false
     }
   },
   computed: {
@@ -102,14 +103,13 @@ export default {
   components: { btn,icon,formtext,formrd,formcb,dialog},
   watch:{
       "catery": function(){
-          console.log('catery changed');
           this.exCatery = true;
-          console.log(this.exCatery);
       },
        "showtbedit": function(){
-          console.log('showtbedit changed');
           this.exCatery = false;
-          console.log(this.exCatery);
+      },
+      "show": function(){
+          this.showTag = !this.showTag;
       }
   }
 

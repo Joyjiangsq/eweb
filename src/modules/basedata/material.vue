@@ -26,7 +26,7 @@
               <div style="clear:both"></div>
       </pagepanel>
       <!--新增材料分类对话框-->
-        <materialitem :formData="newData" :title="title" @success="addSuccess" :show="showAdd" :level="getlevelShow"></materialitem>
+        <materialitem :formData="newData" :title="title" @success="addSuccess" :show="showAdd" ></materialitem>
         <!--选品对话框-->
         <selectproductdialog :show="showSelectDialog" :params="{}" @getcheck="addCheckedList" ></selectproductdialog>
        <!--删除提示-->
@@ -77,7 +77,6 @@ export default {
         rightData: [],
         codeParams: {},
         curLevelData:{level_n: 0}, // 当前层级数据对象
-        addListLevel:1,
         totals:0,
         actionMap:{     //根据selectedLevel不同映射
             0:{url:"material-category/lv1",params:{}},
@@ -99,14 +98,7 @@ export default {
       }
     },
     computed:{
-        getLevelShow: function() {
-            if(this.curAction == "add") {
-                if(this.curLevelData.level_n == 0) return false
-            }
-            else {
-                if(this.curLevelData.level_n == 1) return true
-            }
-        }
+        
     },
     ready(){
     },
@@ -173,7 +165,6 @@ export default {
         },
         treeClickHandler: function(d) {
             this.curLevelData = {level_n: d.level}
-
             if(d.level*1 >= 1) {
                 this.curLevelData.lv1_name = this.curLevelData.lv_name = d.one.name;
                 this.curLevelData.lv1_code = this.curLevelData.lv_code = d.one.code;

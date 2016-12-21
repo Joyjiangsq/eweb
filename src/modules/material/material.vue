@@ -3,19 +3,20 @@
           <div :class="m.onebox">
                 <tabbar :datas="tabArray"  @tabclick="tabClickHandler" theme="indexTab">
                       <div :class="" v-for="(index, one) in tabArray" v-show="one.show">
+                          <div v-if="one.component" v-widget="{widget: {component:one.component}, data: one, cname: one.cname}"></div>
                       </div>
                 </tabbar>
           </div>
-          <div  :class="">
+          <!--<div  :class="">
               <btn v-if="isEAdmin" :class="" @click="toAdd">新增 </btn>
               <div :class="">
                 <tb :headercaption="getHeader"  url="rule-product" :params="searchParams"  :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
                 <pg :totals="totals" :curpage="searchParams.page">
               </div>
-          </div>
+          </div>-->
     </pagepanel>
     <!--新增对话框-->
-      <dialog :flag.sync="showAdd" title="新增" @dialogclick="dialogClickHandler" >
+      <!--<dialog :flag.sync="showAdd" title="新增" @dialogclick="dialogClickHandler" >
             <div  class="" slot="containerDialog">
                   <formtext :must="false" :read="true"  labelname="类别：" :vertical="true" :value.sync="formdatas.type" ></formtext>
             </div>
@@ -36,16 +37,25 @@
                       <formtext v-if="!isEAdmin"  :must="true" labelname="分站自营价: " :number="true" :vertical="true" :value.sync="formdatas.self_price" placeholder="请输入分站自营价" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   </div>
             </div>
-      </dialog>
+      </dialog>-->
       <!--非个性化分类弹框-->
-      <typedialog :show="showNoPerDialog" url="material-category" @onecheck="oneCheck"></typedialog>
+      <!--<typedialog :show="showNoPerDialog" url="material-category" @onecheck="oneCheck"></typedialog>-->
       <!--个性化分类弹框-->
-      <selectbuilddialog :show="showTypeDialog" curol="material" @getone="getOne" ></selectbuilddialog>
+      <!--<selectbuilddialog :show="showTypeDialog" curol="material" @getone="getOne" ></selectbuilddialog>-->
     <!--删除提示-->
-      <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
+      <!--<dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>-->
 </template>
 
 <script>
+import upgrade from "./upgrade.vue"
+import degrade from "./degrade.vue"
+import additem from "./addItem.vue"
+import reduceitem from "./reduceItem.vue"
+import exchange from "./exchange.vue"
+import personal from "./personal.vue"
+
+
+
 import selectbuilddialog from "component/blockcommon/selectBuildDialog";
 import formtext from "component/form/formText";
 import tabbar from "component/tab/tabBar.vue";
@@ -56,22 +66,22 @@ import m from "./material.css";
 import basePage from "common/mixinPage.js";
 import {allRows} from "config/const";
 import typedialog from "component/priceblock/typeDialog";
-let headerData =[{name:"类别", labelValue:"type", type:"data"},{name:"调品前材料分类", labelValue:"before_code", type:"data"},{name:"调品前分类名称", labelValue:"before_name", type:"data"},
-                  {name:"调品后类别", labelValue:"after_code", type:"data"},{name:"调品后分类名称", labelValue:"after_name", type:"data"},{name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
-                  {type:"operator", name:"操作"}];
 let gxheaderData =[{name:"类别", labelValue:"type", type:"data"},{name:"分类编码", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
                     {name:"产品编码", labelValue:"ItemCode", type:"data"},{name:"产品名称", labelValue:"ItemName", type:"data"},{name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
                     {type:"operator", name:"操作"}];
-let tabData =[{labelName:"升级", id: "", type:"升级",show:true},{labelName:"降级", id: "",type:"降级", show:false},{labelName:"增项", id: "", type:"增项",show:false},
-              {labelName:"减项", id: "", type:"减项",show:false},{labelName:"互换", id: "", type:"互换",show:false},{labelName:"个性化", id: "", type:"个性化",show:false}];
+let  tabData=[{labelName:"升级", show:true, type:"升级",cname:"xx",component: upgrade},{labelName:"降级", cname:"xxs",show:false, type:"降级",component: degrade},{labelName:"增项",cname:"xxx", show:false, type:"增项",component: additem},
+              {labelName:"减项", show:false, type:"减项",cname:"xxh",component: reduceitem},{labelName:"互换",cname:"xxg", show:false, type:"互换",component: exchange},{labelName:"个性化", cname:"xxa", show:false, type:"个性化",component: personal}];
 export default {
   mixins:[basePage],
   data(){
     return {
+      curTabIndex:0,
+
+
       formdatas:{type:"升级"},      //表单数据type:'' ,before_code:'',before_name:'',after_code:'',after_name:'',self_price:'',rec_price:''
       m,
       gxheadercaption: gxheaderData, //个性化table
-      headercaption: headerData,     //非个性化table
+    //   headercaption: headerData,     //非个性化table
       totals: 0,
       moduleName:"调品规则",
       searchParams: {page:1, type:"升级"},
@@ -119,7 +129,6 @@ export default {
   ready: function(){
   },
   methods: {
- 
     //刷新表格数据
     getTableDetail: function(){
         this.load = !this.load;
@@ -151,15 +160,9 @@ export default {
     },
     //tab点击事件
     tabClickHandler: function(d){
-        this.searchParams = {page:1};
-        this.searchParams.type = d.data.type;
-
-        this.formdatas.type = d.data.type;
-        if(d.data.type == "个性化")  {
-          this.geXingHua = true;
-        }
-        else this.geXingHua = false;
-        this.loadlist();
+        this.tabArray[this.curTabIndex]["show"] = false;
+        d.data.show = true;
+        this.curTabIndex = d.index;
     },
     toAdd: function(){
         this.formdatas = {type: this.searchParams.type};
@@ -202,6 +205,6 @@ export default {
         }
     },
   },
-  components: {tabbar,btn,dialogtip,formtext,typedialog,selectbuilddialog}
+  components: {tabbar,btn,dialogtip,formtext,typedialog,selectbuilddialog,upgrade,degrade,additem,reduceitem,exchange,personal}
 }
 </script>
