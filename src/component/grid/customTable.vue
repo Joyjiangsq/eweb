@@ -14,7 +14,7 @@
         <tbody >
               <tr v-for="(order, done)  in dataList" :class="order%2 == 1? tableCss.active:''">
                     <!--id-->
-                    <td  v-for="sone in headercaption" :class="tableCss[sone.attr]">
+                    <td  v-for="sone in headercaption" :class="tableCss[sone.attr]"> 
                           <span v-if="sone.type == 'data'" >
                                 <span v-if="sone.attr == 'price'">￥</span>{{done[sone.labelValue] || '-'}}
                           </span>

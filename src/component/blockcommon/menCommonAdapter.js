@@ -21,8 +21,8 @@ export default function adapter(d) {
     {keyName:"U_DSThick", defValue:d.U_DSThick || ""},           // 门洞深
     {keyName:"U_TDWide", defValue:d.U_TDWide || ""},             // 门扇宽
     {keyName:"U_TDHigh", defValue:d.U_TDHigh || ""},             // 门扇高
-    {keyName:"U_TDThick", defValue:d.U_DLThickMin || ""},           // 门扇厚  取产品里门扇厚最小值
-    {keyName:"U_DLNum", defValue:d.U_DLNum || ""},               // 门扇数
+    // {keyName:"U_TDThick", defValue:d.U_DLThickMin || ""},           // 门扇厚  取产品里门扇厚最小值
+    // {keyName:"U_DLNum", defValue:d.U_DLNum || ""},               // 门扇数
     {keyName:"U_IKeyHole", defValue:d.U_IKeyHole || "是"},       // 是否开孔
     {keyName:"U_HingeName", defValue:d.U_HingeName || ""},       // 合页品牌/型号/规格 我和node层定义的
     {keyName:"U_LockName", defValue:d.U_LockName || ""},         // 门锁品牌/型号/规格 我和node层定义的
@@ -38,6 +38,7 @@ export default function adapter(d) {
     {keyName:"U_DoorO", defValue:d.U_DoorO || "左内开"},         // 智能门锁门开向   左内开，左外开，右内开，右外开
     {keyName:"U_IHEH", defValue:d.U_IHEH || "是"}               // 智能门锁是否有天地钩
   ]
+  d.U_TDThick = d.U_DLThickMin || "";
 
   // 初始化参数属性
   for (var i = 0; i < propertyNameArray.length; i++) {

@@ -36,7 +36,7 @@ export default function men_c(d) {
     let depMshan = function(tag) {
         d.U_TDWide.tb_disabled = tag; // 门扇宽
         d.U_TDHigh.tb_disabled = tag; // 门扇高
-        d.U_TDThick.tb_disabled = tag; // 门扇厚
+        // d.U_TDThick.tb_disabled = tag; // 门扇厚
         console.log("---------=============================--------")
     }
 
