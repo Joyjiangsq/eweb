@@ -13,9 +13,9 @@ export default function adapterData(d) {
 
       let propertyNameArray = [
         {keyName:"U_HandleCodes", defValue:d.U_HandleCodes || []},            // 门把手产品数组  我和node层定义的
-        {keyName:"U_FModeling", defValue:d.U_FModeling || "DM-008-直边"},     // 前沿造型 DM-008-直边、  DM-002-罗马边
-        {keyName:"U_GSMe", defValue:d.U_GSMe || "天燃气"},                   // 气源方式      液化气  天燃气
-        {keyName:"U_BasinT", defValue:d.U_BasinT || "台上工艺"},              // 台盆工艺  台上工艺、台下工艺
+        {keyName:"U_FModeling", defValue:d.U_FModeling || ""},     // 前沿造型 DM-008-直边、  DM-002-罗马边
+        {keyName:"U_GSMe", defValue:d.U_GSMe || ""},                   // 气源方式      液化气  天燃气
+        {keyName:"U_BasinT", defValue:d.U_BasinT || ""},              // 台盆工艺  台上工艺、台下工艺
         {keyName:"U_HandleName", defValue:d.U_HandleName || ""},             // 把手型号文本描述  我和node层定义
         {keyName:"U_PSWide", defValue:d.U_PSWide || ""},                     // 宽度
         {keyName:"U_PSHigh", defValue:d.U_PSHigh || ""},                     // 高度
@@ -49,6 +49,11 @@ export default function adapterData(d) {
                 if(!this.def || this.def == "")  return exepFun(this, "必须选择前沿造型")
                 else  return resetFun(this)
            }
+           else return resetFun(this)
+      }
+      // 气源方式
+      d.U_GSMe.validateFun = function(data, index){
+           if(!this.def || this.def == "")  return exepFun(this, "请填写气源方式")
            else return resetFun(this)
       }
       // 台盆工艺   下拉组件 默认  台上工艺、台下工艺

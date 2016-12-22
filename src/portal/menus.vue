@@ -68,26 +68,26 @@ export default {
     },
 
     ready: function(){
-       this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
-            url:"/material",name:"材料管理"
-        },{
-            url:"/supplier",name:"供应商数据"
-        },{
-            url:"/buildMgr",name:"施工报价管理"
-        },{
-            url:"/buildPrice",name:"施工包一口价对照表"
-        }]
-      })
-      this.datamenu.push({name:"报价管理", icon:"icon-purchase",show: false,subMenus:[{
-           url:"/priceDemoc",name:"报价材料模板"
-       },{
-           url:"/priceDemos",name:"报价施工模板"
-       },{
-         url:"/mchange", name:"调品规则"
-       },{
-         url:"/renderprice", name:"项目报价" 
-       }]
-     })
+    //    this.datamenu.push({name:"基础数据", icon:"icon-purchase",show: false,subMenus:[{
+    //         url:"/material",name:"材料管理"
+    //     },{
+    //         url:"/supplier",name:"供应商数据"
+    //     },{
+    //         url:"/buildMgr",name:"施工报价管理"
+    //     },{
+    //         url:"/buildPrice",name:"施工包一口价对照表"
+    //     }]
+    //   })
+    //   this.datamenu.push({name:"报价管理", icon:"icon-purchase",show: false,subMenus:[{
+    //        url:"/priceDemoc",name:"报价材料模板"
+    //    },{
+    //        url:"/priceDemos",name:"报价施工模板"
+    //    },{
+    //      url:"/mchange", name:"调品规则"
+    //    },{
+    //      url:"/renderprice", name:"项目报价" 
+    //    }]
+    //  })
       let path = this.$route.name;
       for (let i = 0; i < this.datamenu.length; i++) {
             let one = this.datamenu[i];

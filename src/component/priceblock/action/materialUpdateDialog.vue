@@ -69,10 +69,13 @@ export default {
       dialogClickHandler: function(d) {
           if(d.action == "confirm") {
               let neDate = {
-                  lv_code: d.after_code,
-                  lv_name: d.after_name
+                  lv_code: this.curData.after_code,
+                  lv_name: this.curData.after_name,
+                  self_price: this.curData.self_price,
+                  level_n: this.curData.after_level
               };
-              this.$dispatch("onconfirm", neDate, d.before_code);
+              this.$dispatch("onconfirm", neDate, this.curData.before_code);
+              this.showTag = !this.showTag;
           }
       }
   },

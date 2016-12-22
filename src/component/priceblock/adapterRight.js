@@ -20,7 +20,10 @@ export default function adapter(d) {
             console.log(data);
            if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
            else if(this.def*1 == 0) return  exepFun(this, "数量不能为0");
-           else return resetFun(this)
+           else {
+               d.price = this.def*d.self_price*1;
+               return resetFun(this)
+           }
         }
     };
     if(!d.remark) d.remark = "";
@@ -33,5 +36,6 @@ export default function adapter(d) {
             return true
         }
     }
+    console.log(d);
     return d;
 }

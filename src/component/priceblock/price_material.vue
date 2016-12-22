@@ -94,13 +94,14 @@ export default {
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
                                       {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
                                       {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
-                                      {name:"差价", labelValue:"selling_price", type:"data"}, {name:"金额", labelValue:"price", type:"data"},
+                                      {name:"差价", labelValue:"self_price", type:"data"}, {name:"金额", labelValue:"price", type:"data"},
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
       rightHeader_g: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
                                       {name:"产品名称", labelValue:"ItemName", type:"data"}, 
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
                                       {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
                                       {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
+                                      {name:"单价", labelValue:"self_price", type:"data"},
                                       {name:"金额", labelValue:"price", type:"data"},
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
       tableEventsLeft:{
@@ -163,7 +164,20 @@ export default {
         this.actionDatas.push(d);
     },
     updateConfirm: function(d,changeCode) {
-        
+        console.log(d);
+        console.log(changeCode);
+        for(let i = 0; i < this.actionDatas.length; i++) {
+            let one = this.actionDatas[i];
+            if(one.lv_code != changeCode) continue
+            else {
+                this.resetDateCol(d);
+                this.actionDatas.splice(i, 0, d);
+                this.actionDatas.splice(i+1, 1);
+                break;
+            }
+            // curIndex
+            // one = Object.assign({}, one, d);
+        }
     },
     addoneAdd: function(d) {
         this.actionDatas.push(d);
