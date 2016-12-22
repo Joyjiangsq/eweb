@@ -49,7 +49,7 @@ export default {
               operatorRender: function(d){
                   let btn = [{icon:"icon-add", action:"add", data: d}];
                   for(let i = 0;i < this.datas.length; i++) {
-                      if(d.ItemCode == this.datas[i].ItemCode) {
+                      if(d._id == this.datas[i]._id) {
                           btn= [];
                           break;
                       }
@@ -59,14 +59,16 @@ export default {
               operatorHandler: function(d){
                   if(d.action == "add") {
                         let ndata = Object.assign({}, d.data);
+                        ndata.lv_contact_name = ndata.lv_name;
+                        ndata.level_n = ndata.lv_level;
                         this.$dispatch("addone",ndata);
                   }
               }
       },
-      headercaption:[{type:"operator", name:"操作",icon: true},{name:"增项分类名", labelValue:"ItemCode", type:"data"},
-                      {name:"增项分编码", labelValue:"ItemName", type:"data"},
-                      {name:"e站指导价", labelValue:"SWW", type:"data"},
-                      {name:"分站自营价", labelValue:"FirmName", type:"data"}]
+      headercaption:[{type:"operator", name:"操作",icon: true},{name:"增项分类名", labelValue:"lv_name", type:"data"},
+                      {name:"增项分编码", labelValue:"lv_code", type:"data"},
+                      {name:"e站指导价", labelValue:"rec_price", type:"data"},
+                      {name:"分站自营价", labelValue:"self_price", type:"data"}]
     }
   },
   computed: {

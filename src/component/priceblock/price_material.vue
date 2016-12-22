@@ -4,21 +4,23 @@
             <div v-if="datas.length == 0" style="text-align: center; color:gray; padding: 30px">
                   请导入模板
             </div>
-            <div v-else>{{datas | json}}
+            <div v-else>
                 <div :class='css.leftBox'>
                     <lefttb :headercaption="leftHeader" @rowclick="rowclick"  scene="price_yes"  :needselected= "true"  :datas="datas" :events="tableEventsLeft"></lefttb> 
                 </div>
 
                 <div :class='css.rightBox'>
-                    <righttb v-if="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
-                    <righttb v-if="curCheck =='zx'" @selectchange="selectchangezx" :headercaption="rightHeader"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
+                    <righttb v-if="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" ></righttb>
+                    <righttb v-if="curCheck =='zx'" @selectchange="selectchangezx" :headercaption="rightHeader"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" ></righttb>
                     <righttb v-if="curCheck ==''" :headercaption="rightHeader"  scene="price_yes" :events="tableEventsRight"  :datas="actionDatas" ></righttb>
                 </div>
             </div>
             <specdialog :show="showSpecDialog" :datas="actionDatas" @addone="addone"></specdialog>
              <adddialog :show="showAddDialog" :datas="actionDatas" @addone="addoneAdd"></adddialog>
              <updatedialog :show="showUpdateDialog" @onconfirm="updateConfirm" :params="updateParams"></updatedialog>
-            <tpldialog :show.sync="showTplDialog" @checkone="getOnTpl"></tpldialog>
+             <donwdialog :show="showDownDialog" @onconfirm="downConfirm" :params="downParams"></donwdialog>
+             <changedialog :show="showChangeDialog" @onconfirm="changeConfirm" :params="changeParams"></changedialog>
+             <tpldialog :show.sync="showTplDialog" @checkone="getOnTpl"></tpldialog>
     </div>
 </template>
 
@@ -35,6 +37,8 @@ import Utils from "common/Utils.js";
 import specdialog from "./action/materialSpecDialog";
 import adddialog from "./action/materialAddDialog";
 import updatedialog from "./action/materialUpdateDialog";
+import donwdialog from "./action/materialDowndateDialog";
+import changedialog from "./action/materialChangeDialog";
 
 import Vue from "vue";
 // 自定义
@@ -63,7 +67,8 @@ var selectComponent = Vue.extend({
     },
     success: function(d) {
         console.log(this.selfData);
-        Object.assign(this.selfData, d)
+        console.log(d);
+        Object.assign(this.selfData, d);
         right_adapter(this.selfData);
     },
     
@@ -83,27 +88,31 @@ export default {
       showSpecDialog:false,
       showAddDialog: false,
       showUpdateDialog: false,
+      showDownDialog: false,
+      showChangeDialog: false,
       updateParams:{type:"升级", page: 1, before_code:""},
+      downParams:{type:"降级", page: 1, before_code:""},
+      changeParams: {type:"互换", page: 1, before_code:""},
       actionDatas:[],
       showTplDialog: false,
       curCheck:"gxh",
       leftHeader: [{name:"名称", labelValue:"name",type:"data"},{type:"data", name:"金额", labelValue:"sub_price"}, {type:"operator", name:"操作"}],
-      rightHeader: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
+      rightHeader: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
                                       {name:"选择产品", labelValue:"product_name", type:"componentspec",component: selectComponent, cname:"selectcomponent"},
                                       {name:"产品名称", labelValue:"ItemName", type:"data"}, 
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
                                       {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
                                       {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
                                       {name:"差价", labelValue:"self_price", type:"data"}, {name:"金额", labelValue:"price", type:"data"},
-                                      {name:"个性化说明", labelValue:"remark", type:"edit"}],
-      rightHeader_g: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
+                                      {name:"个性化说明", labelValue:"remark", type:"data"}],
+      rightHeader_g: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
                                       {name:"产品名称", labelValue:"ItemName", type:"data"}, 
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
                                       {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
                                       {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
                                       {name:"单价", labelValue:"self_price", type:"data"},
                                       {name:"金额", labelValue:"price", type:"data"},
-                                      {name:"个性化说明", labelValue:"remark", type:"edit"}],
+                                      {name:"个性化说明", labelValue:"remark", type:"data"}],
       tableEventsLeft:{
         operatorRender: function(d, index){
           if(d.canDelete) return [{name:"删除", action:"delete",icon:"icon-delete", index:index, data:d}];
@@ -135,7 +144,8 @@ export default {
       tableEventsRight:{
          operatorRender: function(d, index){
             if(this.curCheck == "gxh" || this.curCheck == "zx") return [{name:"删除", action:"delete", index: index}];
-            return [{name:"升级", action:"update", index: index, data: d},{name:"降级", action:"downdate", index: index},{name:"减项", action:"minus", index: index},{name:"互换", action:"rechange", index: index}]
+            return [{name:"升级", action:"update", index: index, data: d},{name:"降级", action:"downdate", index: index, data: d},
+                    {name:"减项", action:"minus", index: index, data: d},{name:"互换", action:"rechange", index: index, data: d}]
          },
 
          operatorHandler: function(d){
@@ -146,6 +156,14 @@ export default {
              else if(d.action == "update") {
                  this.updateParams.before_code = d.data.lv_code;
                  this.showUpdateDialog = !this.showUpdateDialog;
+             }
+             else if(d.action == "downdate") {
+                 this.downParams.before_code = d.data.lv_code;
+                 this.showDownDialog = !this.showDownDialog;
+             }
+             else if(d.action == "rechange") {
+                 this.changeParams.before_code = d.data.lv_code;
+                 this.showChangeDialog = !this.showChangeDialog;
              }
 
          }
@@ -160,12 +178,13 @@ export default {
   attached: function () {},
   methods: {
     addone: function(d) {
+        console.log(d);
+        d.price = "-";
         right_adapter(d);
         this.actionDatas.push(d);
     },
     updateConfirm: function(d,changeCode) {
-        console.log(d);
-        console.log(changeCode);
+        d.remark= "升级";
         for(let i = 0; i < this.actionDatas.length; i++) {
             let one = this.actionDatas[i];
             if(one.lv_code != changeCode) continue
@@ -179,7 +198,36 @@ export default {
             // one = Object.assign({}, one, d);
         }
     },
+    downConfirm: function(d,changeCode) {
+        d.remark= "降级";
+        for(let i = 0; i < this.actionDatas.length; i++) {
+            let one = this.actionDatas[i];
+            if(one.lv_code != changeCode) continue
+            else {
+                this.resetDateCol(d);
+                this.actionDatas.splice(i, 0, d);
+                this.actionDatas.splice(i+1, 1);
+                break;
+            }
+        }
+    },
+    changeConfirm: function(d,changeCode) {
+        d.remark= "互换";
+        for(let i = 0; i < this.actionDatas.length; i++) {
+            let one = this.actionDatas[i];
+            if(one.lv_code != changeCode) continue
+            else {
+                this.resetDateCol(d);
+                this.actionDatas.splice(i, 0, d);
+                this.actionDatas.splice(i+1, 1);
+                break;
+            }
+        }
+    },
     addoneAdd: function(d) {
+        this.resetDateCol(d);
+        right_adapter(d);
+        d.remark = "增项";
         this.actionDatas.push(d);
     },
     inTpl: function() {
@@ -207,13 +255,6 @@ export default {
         for(let i = 0; i < d.sub_data.sub_list.length; i++) {
             let item = d.sub_data.sub_list[i];
             this.resetDateCol(item)
-            // for(let j = 0; j < this.rightHeader.length; j++) {
-            //     let one = this.rightHeader[j];
-            //     if(one.type == "operator") continue;
-            //     if(item[one.labelValue]) continue;
-            //     item[one.labelValue] = "-";
-            // }
-            // right_adapter(item);
             tpl.push(Object.assign({}, item))
         }
         d.sub_data.sub_list = tpl;
@@ -226,7 +267,7 @@ export default {
         this.showAddDialog = !this.showAddDialog;
     }
   },
-  components: {lefttb,righttb,specdialog,btn,tpldialog,adddialog,updatedialog},
+  components: {lefttb,righttb,specdialog,btn,tpldialog,adddialog,updatedialog, donwdialog, changedialog},
   watch:{
      
   }

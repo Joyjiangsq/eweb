@@ -59,6 +59,12 @@ export default {
               operatorHandler: function(d){
                   if(d.action == "add") {
                         let ndata = Object.assign({}, d.data);
+                        let lv_contact_name = "";
+                        if(ndata.lv1_name) lv_contact_name += ndata.lv1_name;
+                        if(ndata.lv2_name) lv_contact_name += "-"+ndata.lv2_name;
+                        if(ndata.lv3_name) lv_contact_name += "-" + ndata.lv3_name;
+                        ndata.remark = "个性化";
+                        ndata.lv_contact_name = lv_contact_name;
                         this.$dispatch("addone",ndata);
                   }
               }

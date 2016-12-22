@@ -40,7 +40,7 @@ let fileMixins = {
             form.ajaxSubmit({
                 method: "post",
                 // params: nf,
-                url: this.$CodeApi + "v1/api/" + this.url, //默认是form action
+                url: this.$CodeApi + "v1/api/" + this.url+"?" + new Date().getTime(), //默认是form action
                 success: function(data) {
                     if(typeof(data) == "string") data = JSON.parse(data);
                     self.$set("loading", !self.loading);

@@ -26,16 +26,16 @@ export default function adapter(d) {
            }
         }
     };
-    if(!d.remark) d.remark = "";
-    d.remark = {    
-        def: d.remark.def || "",
-        defCss: "default",
-        errorMsg:"",
-        tb_disabled: (d.ItemCode || d.project_name)?false:true,
-        validateFun:function(data, index){
-            return true
-        }
-    }
+    // if(!d.remark) d.remark = "";
+    // d.remark = {    
+    //     def: d.remark.def || "",
+    //     defCss: "default",
+    //     errorMsg:"",
+    //     tb_disabled: (d.ItemCode || d.project_name)?false:true,
+    //     validateFun:function(data, index){
+    //         return true
+    //     }
+    // }
     console.log(d);
     return d;
 }

@@ -66,15 +66,15 @@ export default function adapter(d) {
            else return resetFun(this)
         }
     };
-    if(!d.remark) d.remark = "";
-    d.remark = {    
-        def: d.remark || d.remark.def || "",
-        defCss: "default",
-        errorMsg:"",
-        tb_disabled: (d.ItemCode || d.project_name)?false:true,
-        validateFun:function(data, index){
-            return true
-        }
-    }
+    // if(!d.remark) d.remark = "";
+    // d.remark = {    
+    //     def: d.remark || d.remark.def || "",
+    //     defCss: "default",
+    //     errorMsg:"",
+    //     tb_disabled: (d.ItemCode || d.project_name)?false:true,
+    //     validateFun:function(data, index){
+    //         return true
+    //     }
+    // }
     return d;
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <!--升级选择类型对话框-->
-        <dialog :flag.sync="showTag" title="选择升级项" @dialogclick="dialogClickHandler">
+        <!--互换选择类型对话框-->
+        <dialog :flag.sync="showTag" title="选择互换项" @dialogclick="dialogClickHandler">
               <div  slot="containerDialog">
                     <div>
                         <tb :headercaption="headercaption"  :needindex="false" @radioclick="radioclick" :url="url" :totals.sync="totals" :load="load" :params="params" :events="tableEvents"></tb>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-// 升级选择类型对话框
+// 互换选择类型对话框
 import dialog from "component/dialog/dialog";
 import Utils from "common/Utils.js";
 import pg from "component/pagination/pagination";
@@ -26,7 +26,7 @@ export default {
       },
       params:{
           default: function() {
-              return {type:"升级", page: 1}
+              return {type:"降级", page: 1}
           }
       },
       url:{
@@ -49,8 +49,8 @@ export default {
                  
               }
       },
-      headercaption:[{type:"radio"},{name:"升级前材料分类", labelValue:"before_code", type:"data"},{name:"升级前分类名称", labelValue:"before_name", type:"data"},
-                  {name:"升级后类别", labelValue:"after_code", type:"data"},{name:"升级后分类名称", labelValue:"after_name", type:"data"},
+      headercaption:[{type:"radio"},{name:"互换前材料分类", labelValue:"before_code", type:"data"},{name:"互换前分类名称", labelValue:"before_name", type:"data"},
+                  {name:"互换后类别", labelValue:"after_code", type:"data"},{name:"互换后分类名称", labelValue:"after_name", type:"data"},
                   {name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},]
     }
   },

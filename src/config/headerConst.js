@@ -223,7 +223,7 @@ let addTMCols = function(arr, type = 'edit') {
       {name:"台面进深（mm）", labelValue:"U_TableB", type:type},
       {name:"挡水高度（mm）", labelValue:"U_HeightWR", type:type},
       {name:"包管展开宽（mm）", labelValue:"U_ASWide", type:type},
-      {name:"包管展开深（mm）", labelValue:"U_ASDeep", type:type},
+      {name:"包管展开高（mm）", labelValue:"U_ASDeep", type:type},
     ]);
 }
 
