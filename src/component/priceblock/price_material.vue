@@ -17,6 +17,7 @@
             </div>
             <specdialog :show="showSpecDialog" :datas="actionDatas" @addone="addone"></specdialog>
              <adddialog :show="showAddDialog" :datas="actionDatas" @addone="addoneAdd"></adddialog>
+             <updatedialog :show="showUpdateDialog" @onconfirm="updateConfirm" :params="updateParams"></updatedialog>
             <tpldialog :show.sync="showTplDialog" @checkone="getOnTpl"></tpldialog>
     </div>
 </template>
@@ -33,7 +34,7 @@ import Utils from "common/Utils.js";
 
 import specdialog from "./action/materialSpecDialog";
 import adddialog from "./action/materialAddDialog";
-
+import updatedialog from "./action/materialUpdateDialog";
 
 import Vue from "vue";
 // 自定义
@@ -81,6 +82,8 @@ export default {
       css,
       showSpecDialog:false,
       showAddDialog: false,
+      showUpdateDialog: false,
+      updateParams:{type:"升级", page: 1, before_code:""},
       actionDatas:[],
       showTplDialog: false,
       curCheck:"gxh",
@@ -130,8 +133,8 @@ export default {
       },
       tableEventsRight:{
          operatorRender: function(d, index){
-            if(this.curCheck == "gxh") return [{name:"删除", action:"delete", index: index}];
-            return [{name:"升级", action:"delete", index: index},{name:"降级", action:"delete", index: index},{name:"减项", action:"delete", index: index},{name:"互换", action:"delete", index: index}]
+            if(this.curCheck == "gxh" || this.curCheck == "zx") return [{name:"删除", action:"delete", index: index}];
+            return [{name:"升级", action:"update", index: index, data: d},{name:"降级", action:"downdate", index: index},{name:"减项", action:"minus", index: index},{name:"互换", action:"rechange", index: index}]
          },
 
          operatorHandler: function(d){
@@ -139,6 +142,11 @@ export default {
                  // 删除个性化一项
                  this.actionDatas.splice(d.index, 1);
              }
+             else if(d.action == "update") {
+                 this.updateParams.before_code = d.data.lv_code;
+                 this.showUpdateDialog = !this.showUpdateDialog;
+             }
+
          }
       }
     }
@@ -154,6 +162,9 @@ export default {
         right_adapter(d);
         this.actionDatas.push(d);
     },
+    updateConfirm: function(d,changeCode) {
+        
+    },
     addoneAdd: function(d) {
         this.actionDatas.push(d);
     },
@@ -165,13 +176,7 @@ export default {
          // 初始化个性化对象
         this.actionDatas = this.datas[this.datas.length - 1].sub_data.sub_list;
     },
-    rowclick: function(d) {
-        if(d.code == "gxh") this.curCheck = "gxh";
-        else if(d.code == "zx") this.curCheck = "zx";
-        else this.curCheck = "";
-        let tpl = [];
-        for(let i = 0; i < d.sub_data.sub_list.length; i++) {
-            let item = d.sub_data.sub_list[i];
+    resetDateCol: function(item) {
             for(let j = 0; j < this.rightHeader.length; j++) {
                 let one = this.rightHeader[j];
                 if(one.type == "operator") continue;
@@ -179,6 +184,22 @@ export default {
                 item[one.labelValue] = "-";
             }
             right_adapter(item);
+    },
+    rowclick: function(d) {
+        if(d.code == "gxh") this.curCheck = "gxh";
+        else if(d.code == "zx") this.curCheck = "zx";
+        else this.curCheck = "";
+        let tpl = [];
+        for(let i = 0; i < d.sub_data.sub_list.length; i++) {
+            let item = d.sub_data.sub_list[i];
+            this.resetDateCol(item)
+            // for(let j = 0; j < this.rightHeader.length; j++) {
+            //     let one = this.rightHeader[j];
+            //     if(one.type == "operator") continue;
+            //     if(item[one.labelValue]) continue;
+            //     item[one.labelValue] = "-";
+            // }
+            // right_adapter(item);
             tpl.push(Object.assign({}, item))
         }
         d.sub_data.sub_list = tpl;
@@ -191,7 +212,7 @@ export default {
         this.showAddDialog = !this.showAddDialog;
     }
   },
-  components: {lefttb,righttb,specdialog,btn,tpldialog,adddialog},
+  components: {lefttb,righttb,specdialog,btn,tpldialog,adddialog,updatedialog},
   watch:{
      
   }
