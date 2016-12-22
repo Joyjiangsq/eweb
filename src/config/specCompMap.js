@@ -231,7 +231,7 @@ export const  qianyanComponent = Vue.extend({
   },
   template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
-    this.value = this.selfData.U_FModeling.def || "DM-008-直边"
+    this.value = this.selfData.U_FModeling.def || ""
   },
   methods:{
       dropclick: function(d){
@@ -257,7 +257,7 @@ export const taiyiComponent = Vue.extend({
   },
   template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value"  keyid="id" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
-        this.value = this.selfData.U_BasinT.def || "台上工艺"
+        this.value = this.selfData.U_BasinT.def || ""
   },
   methods:{
       dropclick: function(d){
@@ -277,12 +277,12 @@ export const  qiyuanComponent = Vue.extend({
   data:function(){
     return {
       test:[{name:"液化气"}, {name:"天燃气"}],
-      value: "天燃气"
+      value: ""
     }
   },
   template: '<div><combobox labelname="name" @dropclick="dropclick" :need="false" :value="value"  keyid="name" dropfixed="dropfixed" :datas="test"></combobox></div>',
   ready: function(){
-    this.value = this.selfData.U_GSMe.def || "天燃气";
+    this.value = this.selfData.U_GSMe.def || "";
   },
   methods:{
       dropclick: function(d){

@@ -124,7 +124,7 @@ export default {
       let p = {};
       p[this.keyid] ="";      // name 与 p最好不要一样
       p[this.labelname] ="请选择";
-      // this.realData = [p];
+      if(this.need) this.realData = [p];
       this.defaultInfo = Utils.cloneObj(p);
       for(let i = 0; i < this.datas.length; i++) {
            let one = Utils.cloneObj(this.datas[i]);
@@ -182,6 +182,7 @@ export default {
     },
     "datas": function(){
       if(!this.datas) return false
+      console.log(this.datas);
       if(this.datas.length == 0) {
           this.realData = [];
           this.defaultInfo[this.keyid] = "";

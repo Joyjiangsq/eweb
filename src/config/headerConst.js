@@ -211,12 +211,12 @@ let addTMCols = function(arr, type = 'edit') {
     let tp;
     if(type == 'edit') {
       tp = [{name:"前沿造型", labelValue:"U_FModeling", type:"component", cname:"qianyan", component:qianyanComponent},
-            {name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent},
+            // {name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent},
             {name:"台盆工艺", labelValue:"U_BasinT",  type:"component", cname:"taiyi", component:taiyiComponent}]
     }
     else {
       tp = [{name:"前沿造型", labelValue:"U_FModeling", type:"data"},
-            {name:"气源方式", labelValue:"U_GSMe",  type:"data"},
+            // {name:"气源方式", labelValue:"U_GSMe",  type:"data"},
             {name:"台盆工艺", labelValue:"U_BasinT",  type:"data"}]
     }
     return arr.concat(tp, [
@@ -248,6 +248,7 @@ export const sale_chu_tm_header_d = function(scene) {
 //五金/厨电/水槽龙头
 export const sale_chu_f_header = function(scene) {
   let one = addCommon();
+  one.push({name:"气源方式", labelValue:"U_GSMe",  type:"component", cname:"qiyuan", component:qiyuanComponent})
   addByScene(one, 'edit', scene);
   addLast(one);
   return one
@@ -255,7 +256,8 @@ export const sale_chu_f_header = function(scene) {
 
 export const sale_chu_f_header_d = function(scene) {
   let one = addCommon();
+  one.push({name:"气源方式", labelValue:"U_GSMe",  type:"data"});
   addByScene(one, 'data', scene);
-  addLast(one);
+  addLast(one, "data");
   return one
 }
