@@ -51,6 +51,14 @@ let pageBase = {
             this.loadlist();
           }
         },
+        watch: {
+          "toload": function(){
+              this.loadlist();
+              if(this.twoLevelData.length == 0) {
+                  this.getLevelData();
+              }
+          }
+        },
         components: {search,tb,pagepanel,btnbar,dialog, pg},
    }
 

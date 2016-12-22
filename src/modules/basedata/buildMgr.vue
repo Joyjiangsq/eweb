@@ -1,12 +1,12 @@
 <template>
   <div :class="css.mcBox">
-      <pagepanel>
+      <!--<pagepanel>
               <div :class="">
                 <search  pathname="" :datas="sdata" :events = 'searchEvents'></search>
               </div>
-      </pagepanel>
+      </pagepanel>-->
       <!-- （分站）-->
-      <pagepanel v-if="isEAdmin">
+      <pagepanel >
               <div  :class="css.mcLeft"> 
                  <div :class='css.opRow'>
                     <span>施工分类</span>
@@ -98,15 +98,7 @@ export default {
       }
     },
     computed:{
-        sdata: function(){
-            let q = this.$route.query;
-            return [{type:"combobox", keyname:"ValidFor", labelname:"name", keyid:"id", value:q.ValidFor || "", datas:[{name:"启用", id: 'Y'}, {name:"禁用", id:"N"}], labelcaption:"供应商名称: "}];
-        },
-        // 判断当前是否为e站（分站）
-        isEAdmin: function(){
-            return true
-            return Utils.isEAdmin();
-        }
+        
     },
     ready(){
     },

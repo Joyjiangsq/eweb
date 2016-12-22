@@ -32,7 +32,6 @@ export default {
       curTabIndex:0,
       m,
       moduleName:"调品规则",
-      tbData: [],
       tabArray:tabData,          //tab内容初始化
     }
   },

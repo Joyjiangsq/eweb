@@ -2,7 +2,7 @@
     <div  :class="">
             <btn v-if="isEAdmin" :class="" @click="toAdd">新增 </btn>
             <tb :headercaption="getHeader"  url="rule-product" :params="sparams"  :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
-            <pg :totals="totals" :curpage="sparams.page">
+            <pg :totals="totals" :curpage.sync="sparams.page" :hash="false"  @pagechange="pagechange"></pg>
     </div>
     <dialog :flag.sync="showAdd" title="新增" @dialogclick="dialogClickHandler" >
             <div  class="" slot="containerDialog">
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import materialUtil from "./material.js";
 import typedialog from "component/priceblock/typeDialog";
 import formtext from "component/form/formText";
 import dialog from "component/dialog/dialog";
@@ -32,13 +33,13 @@ import Utils from "common/Utils.js";
 import tb from "component/grid/tableListBase";
 import pg from "component/pagination/pagination";
 import btn from "component/sprite/button.vue";
-import basePage from "common/mixinPage.js";
+// import basePage from "common/mixinPage.js";
 import dialogtip from "component/dialog/dialogTip";
 let headerData =[{name:"类别", labelValue:"type", type:"data"},{name:"增项分类编码", labelValue:"lv_code", type:"data"},{name:"增项分类名称", labelValue:"lv_name", type:"data"},
                     {name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
                     {type:"operator", name:"操作"}];
 export default {
-  mixins:[basePage],
+  mixins:[materialUtil],
   props:{},
   data: function () {
     return {
@@ -98,6 +99,7 @@ export default {
             setTimeout(()=> {
                 if(this.validateTag) {
                     if(this.curAction == "add"){
+                        this.formdatas.rec_price = this.formdatas.rec_price*1;
                         this.$http.post(this.$Api+"rule-product",JSON.stringify(this.formdatas)).then((res) => {
                             this.showMsg("success", "新增成功");
                             this.showAdd = !this.showAdd;
@@ -106,11 +108,12 @@ export default {
                         });
                     }else if(this.curAction = "tbedit"){
                         if(!this.isEAdmin){
-                            this.formdatas._id = this.curItem._id
+                            this.formdatas.self_price = this.formdatas.self_price*1;
                         }else {
                             delete this.formdatas.type;
                             delete this.formdatas.createAt;
                             delete this.formdatas.self_price;
+                            this.formdatas.rec_price = this.formdatas.rec_price*1;
                         }
                         this.$http.put(this.$Api+"rule-product",JSON.stringify(this.formdatas)).then((res) => {
                             this.showMsg("success", "修改成功");
