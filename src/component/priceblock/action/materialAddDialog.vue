@@ -1,9 +1,9 @@
 <template>
-    <div :class="css.Box">
-        <!--个性化选品对话框-->
-        <dialog :flag.sync="showTag" title="选择个性化主材">
+    <div>
+        <!--增项选择类型对话框-->
+        <dialog :flag.sync="showTag" title="选择增项">
               <div  slot="containerDialog">
-                    <div :class='css.Box'>
+                    <div>
                         <tb :headercaption="headercaption"  :needindex="false" :url="url" :totals.sync="totals" :load="load" :params="params" :events="tableEvents"></tb>
                     </div>
                     <pg @pagechange="pagechange" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
+// 增项选择类型对话框
 import dialog from "component/dialog/dialog";
-import css from "./type.css";
 import Utils from "common/Utils.js";
 import pg from "component/pagination/pagination";
 import tb from "component/grid/tableListBase";
@@ -29,7 +29,7 @@ export default {
       },
       params:{
           default: function() {
-              return {type:"个性化", page: 1}
+              return {type:"增项", page: 1}
           }
       },
       url:{
@@ -41,7 +41,6 @@ export default {
   },
   data: function () {
     return {
-      css,
       showTag: false,
       data:[],
       load: false,
@@ -64,15 +63,10 @@ export default {
                   }
               }
       },
-      headercaption:[{type:"operator", name:"操作",icon: true},{name:"产品编码", labelValue:"ItemCode", type:"data"},
-                      {name:"产品名称", labelValue:"ItemName", type:"data"},
-                      {name:"所属包", labelValue:"SWW", type:"data"},
-                      {name:"二级分类", labelValue:"FirmName", type:"data"},
-                      {name:"品牌", labelValue:"U_Brand", type:"data"},
-                      {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
-                      {name:"颜色", labelValue:"U_Colour", type:"data"},
-                      {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
-                      {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}]
+      headercaption:[{type:"operator", name:"操作",icon: true},{name:"增项分类名", labelValue:"ItemCode", type:"data"},
+                      {name:"增项分编码", labelValue:"ItemName", type:"data"},
+                      {name:"e站指导价", labelValue:"SWW", type:"data"},
+                      {name:"分站自营价", labelValue:"FirmName", type:"data"}]
     }
   },
   computed: {

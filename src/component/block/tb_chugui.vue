@@ -62,7 +62,7 @@
           <!--选品对话框-->
           <dialog :flag.sync="showSelectDialog" title="选品" >
                 <div slot="containerDialog">
-                    <chuguitb :hash="false" :toload="toload" @addone="addoneHandler" :listdata.sync="vlist"></chuguitb>
+                    <chuguitb :hash="false" :toload="toload" :scene="scene" @addone="addoneHandler" :listdata.sync="vlist"></chuguitb>
                 </div>
                 <div slot="footerDialog"></div>
           </dialog>

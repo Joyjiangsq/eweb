@@ -3,10 +3,10 @@
         <!--类型对话框-->
         <dialog :flag.sync="showTag" title="选择模板"  @dialogclick="dialogClickHandler">
               <div  slot="containerDialog">
-                   <div :class="css.tBox">
+                   <div :class="css.tBox" style="width: 600px;">
                       <tb :headercaption="headerCaption"  @radioclick="radioclick" :needindex="false" :url="url" :totals.sync="totals" :load="load" :params="params"></tb>
                     </div>
-                    <pg @pagechange="pagechange" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
+                    <pg @pagechange="pagechange" :pix="2" :totals="totals" :curpage.sync="params.page" :hash="false"></pg>
               </div>
               </div>
         </dialog>

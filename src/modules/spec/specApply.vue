@@ -168,7 +168,7 @@
                           <span :class="css.title">参考附件</span>
                           <div :class="css.formRow">
                                 <div :class="css.upBox">
-                                  <a :href="baseInfo.cattach_url">下载</a>
+                                    <a :href="baseInfo.cattach_url">下载</a>
                                 </div>
                           </div>
                     </div>
@@ -176,7 +176,7 @@
                           <span :class="css.title">设计附件</span>
                           <div :class="css.formRow">
                                 <div :class="css.upBox">
-                                  <a :href="baseInfo.attach_url">下载</a>
+                                    <a :href="baseInfo.attach_url">下载</a>
                                 </div>
                           </div>
                     </div>

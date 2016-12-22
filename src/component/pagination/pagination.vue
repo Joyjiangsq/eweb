@@ -21,7 +21,7 @@
 import pageCss from "./paginate.css";
 export default {
   props:{
-    curpage: {
+    curpage: { 
       // type: Number,
       default: 1
     },

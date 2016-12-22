@@ -12,10 +12,11 @@
                 <div :class='css.rightBox'>
                     <righttb v-if="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
                     <righttb v-if="curCheck =='zx'" @selectchange="selectchangezx" :headercaption="rightHeader"  scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
-                    <righttb :headercaption="rightHeader"  scene="price_yes" :events="tableEventsRight"  :datas="actionDatas" v-else></righttb>
+                    <righttb v-if="curCheck ==''" :headercaption="rightHeader"  scene="price_yes" :events="tableEventsRight"  :datas="actionDatas" ></righttb>
                 </div>
             </div>
-            <mdialog :show="showm" :datas="actionDatas" @addone="addone"></mdialog>
+            <specdialog :show="showSpecDialog" :datas="actionDatas" @addone="addone"></specdialog>
+             <adddialog :show="showAddDialog" :datas="actionDatas" @addone="addoneAdd"></adddialog>
             <tpldialog :show.sync="showTplDialog" @checkone="getOnTpl"></tpldialog>
     </div>
 </template>
@@ -29,7 +30,11 @@ import right_adapter from "./adapterRight";
 import btn from "component/sprite/button";
 import spdialog from "component/blockcommon/selectProductByTypeDialog";
 import Utils from "common/Utils.js";
-import mdialog from "./materialSpecDialog";
+
+import specdialog from "./action/materialSpecDialog";
+import adddialog from "./action/materialAddDialog";
+
+
 import Vue from "vue";
 // 自定义
 var selectComponent = Vue.extend({
@@ -74,24 +79,25 @@ export default {
   data: function () {
     return {
       css,
-      showm:false,
+      showSpecDialog:false,
+      showAddDialog: false,
       actionDatas:[],
       showTplDialog: false,
       curCheck:"gxh",
       leftHeader: [{name:"名称", labelValue:"name",type:"data"},{type:"data", name:"金额", labelValue:"sub_price"}, {type:"operator", name:"操作"}],
-      rightHeader: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
+      rightHeader: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
                                       {name:"选择产品", labelValue:"product_name", type:"componentspec",component: selectComponent, cname:"selectcomponent"},
                                       {name:"产品名称", labelValue:"ItemName", type:"data"}, 
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
-                                      {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
-                                      {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
+                                      {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
+                                      {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
                                       {name:"差价", labelValue:"selling_price", type:"data"}, {name:"金额", labelValue:"price", type:"data"},
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
-      rightHeader_g: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
+      rightHeader_g: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_name", type:"data"},
                                       {name:"产品名称", labelValue:"ItemName", type:"data"}, 
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
-                                      {name:"型号", labelValue:"U_Model", type:"data"},{name:"规格", labelValue:"U_Spec", type:"data"},
-                                      {name:"单位", labelValue:"Unit", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
+                                      {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
+                                      {name:"单位", labelValue:"SalUnitMsr", type:"data"}, {name:"数量" ,labelValue:"counts", type:"edit"},
                                       {name:"金额", labelValue:"price", type:"data"},
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
       tableEventsLeft:{
@@ -109,6 +115,15 @@ export default {
                this.datas.splice(d.index, 0, newData);
             }
             else if(d.action == "delete") {
+               // 重置状态
+               // 如果当前是选中的
+               if(d.data.selected) {
+                   let tindex = this.datas.length-1;
+                   this.datas[tindex].selected = true;
+                   this.actionDatas =  this.datas[tindex].sub_data.sub_list;
+                   this.curCheck = "gxh";
+               }
+               // 如果当前是非选中的 不做任何事情
                this.datas.splice(d.index, 1);
             }
         }
@@ -120,18 +135,26 @@ export default {
          },
 
          operatorHandler: function(d){
-             
+             if(d.action == "delete") {
+                 // 删除个性化一项
+                 this.actionDatas.splice(d.index, 1);
+             }
          }
       }
     }
   },
   computed: {
   },
-  ready: function () {},
+  ready: function () {
+     
+  },
   attached: function () {},
   methods: {
     addone: function(d) {
         right_adapter(d);
+        this.actionDatas.push(d);
+    },
+    addoneAdd: function(d) {
         this.actionDatas.push(d);
     },
     inTpl: function() {
@@ -139,6 +162,8 @@ export default {
     },
     getOnTpl: function(d) {
         this.datas = d.prolist;
+         // 初始化个性化对象
+        this.actionDatas = this.datas[this.datas.length - 1].sub_data.sub_list;
     },
     rowclick: function(d) {
         if(d.code == "gxh") this.curCheck = "gxh";
@@ -160,13 +185,15 @@ export default {
         this.actionDatas = d.sub_data.sub_list;
     },
     selectchange: function() {
-        this.showm = !this.showm;
+        this.showSpecDialog = !this.showSpecDialog;
     },
     selectchangezx: function(){
-
+        this.showAddDialog = !this.showAddDialog;
     }
   },
-  components: {lefttb,righttb,mdialog,btn,tpldialog},
-  watch:{}
+  components: {lefttb,righttb,specdialog,btn,tpldialog,adddialog},
+  watch:{
+     
+  }
 }
 </script>

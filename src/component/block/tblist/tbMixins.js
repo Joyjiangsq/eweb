@@ -1,6 +1,6 @@
 import Utils from "common/Utils";
 import {showTips} from "actions/index";
-import {getLevelOneTypeByName} from "config/codeMap"
+import {getLevelOneTypeByName, getLevelThreeTypeByName} from "config/codeMap"
 let tbMixin = {
     props:{
       listdata:{
@@ -8,6 +8,9 @@ let tbMixin = {
       },
       toload: {
         default: false
+      },
+      scene: {
+        default:""
       }
     },
     data: function() {
@@ -22,6 +25,7 @@ let tbMixin = {
            cateLoad: this.toload,             // 分类加载tag
            tableEvents:{
                    operatorRender: function(d){
+                       if(d.Code == getLevelThreeTypeByName("台面") && this.scene == "back") return [];  // 台面不允许备货
                        if(this.name == "厨柜" || this.name =="门") return [{action:"add",icon:"icon-add", data: d}]
                        let exit = false;
                        let index = 0;
