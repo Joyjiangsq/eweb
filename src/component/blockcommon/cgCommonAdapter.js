@@ -107,18 +107,17 @@ export default function adapterData(d) {
       }
       // 台面进深（mm）   文本输入 个性化深最小值 U_PSDeepMin   个性化深最大值 U_PSDeepMax
       d.U_TableB.validateFun = function(data, index){
+          if(isNaN(this.def)) return exepFun(this, "台面进深填写不正确")
+           else if(this.def*1 < 0)  return exepFun(this, "台面进深必须大于0")
+           this.def = this.def*1;
           if(d.sale_counts && d.sale_counts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
                if(!this.def || this.def == "")  return exepFun(this, "必须填写台面进深")
-               else if(isNaN(this.def)) return exepFun(this, "台面进深填写不正确")
-               else if(this.def*1 < 0)  return exepFun(this, "台面进深必须大于0")
                else if(this.def*1 < d.U_PSDeepMin) return exepFun(this, "台面进深不能小于" + d.U_PSDeepMin)
                else if(this.def*1 > d.U_PSDeepMax)  return exepFun(this, "台面进深不能大于" + d.U_PSDeepMax)
                else return resetFun(this)
           }
           else if(d.U_Pquantity && d.U_Pquantity.def > 0) {
                if(!this.def || this.def == "")  return exepFun(this, "必须填写台面进深")
-               else if(isNaN(this.def)) return exepFun(this, "台面进深填写不正确")
-               else if(this.def*1 < 0)  return exepFun(this, "台面进深必须大于0")
                else if(this.def*1 < d.U_PSDeepMin) return exepFun(this, "台面进深不能小于" + d.U_PSDeepMin)
                else if(this.def*1 > d.U_PSDeepMax)  return exepFun(this, "台面进深不能大于" + d.U_PSDeepMax)
                else return resetFun(this)
@@ -127,18 +126,17 @@ export default function adapterData(d) {
       }
       // 挡水高度（mm）   文本输入   个性化高最小值 U_PSHighMin   个性化高最大值 U_PSHighMax
       d.U_HeightWR.validateFun =function(data, index){
+          if(isNaN(this.def)) return exepFun(this, "挡水高度填写不正确")
+            else if(this.def*1 < 0)  return exepFun(this, "挡水高度必须大于0")
+            this.def = this.def*1;
           if(d.sale_counts && d.sale_counts.def > 0) {      // 如果填写了销售数量的时候   台盆工艺、前沿造型、进深、挡水高度必填
                if(!this.def || this.def == "") return exepFun(this, "必须填写挡水高度")
-               else if(isNaN(this.def)) return exepFun(this, "挡水高度填写不正确")
-               else if(this.def*1 < 0)  return exepFun(this, "挡水高度必须大于0")
                else if(this.def*1 < d.U_PSHighMin) return exepFun(this, "挡水高度不能小于" + d.U_PSHighMin)
                else if(this.def*1 > d.U_PSHighMax)  return exepFun(this, "挡水高度不能大于" + d.U_PSHighMax)
                else return resetFun(this)
           }
           else if(d.U_Pquantity && d.U_Pquantity.def > 0) {
                if(!this.def || this.def == "") return exepFun(this, "必须填写挡水高度")
-               else if(isNaN(this.def)) return exepFun(this, "挡水高度填写不正确")
-               else if(this.def*1 < 0)  return exepFun(this, "挡水高度必须大于0")
                else if(this.def*1 < d.U_PSHighMin) return exepFun(this, "挡水高度不能小于" + d.U_PSHighMin)
                else if(this.def*1 > d.U_PSHighMax)  return exepFun(this, "挡水高度不能大于" + d.U_PSHighMax)
                else return resetFun(this)
@@ -148,11 +146,12 @@ export default function adapterData(d) {
       // 如果销售数量存在  则忽略此项验证  否则开启验证
       // 包管展开宽（mm）   文本输入  包管宽最小值 U_AWideMin
       d.U_ASWide.validateFun = function(data, index){
+          if(isNaN(this.def)) return exepFun(this, "包管宽填写不正确")
+          else if(this.def*1 < 0)  return exepFun(this, "包管宽必须大于0")
+          this.def = this.def*1;
           if(d.sale_counts) {
             if(d.sale_counts.def*1 == 0 || !d.sale_counts.def) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管宽度")
-                else if(isNaN(this.def)) return exepFun(this, "包管宽填写不正确")
-                else if(this.def*1 < 0)  return exepFun(this, "包管宽必须大于0")
                 // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管宽不能小于" + d.U_AWideMin)
                 else return resetFun(this)
             }
@@ -161,8 +160,6 @@ export default function adapterData(d) {
           else if(d.U_Pquantity) {
             if(d.U_Pquantity.def*1 == 0 || !d.U_Pquantity.def) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管宽度")
-                else if(isNaN(this.def)) return exepFun(this, "包管宽填写不正确")
-                else if(this.def*1 < 0)  return exepFun(this, "包管宽必须大于0")
                 // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管宽不能小于" + d.U_AWideMin)
                 else return resetFun(this)
             }
@@ -172,11 +169,12 @@ export default function adapterData(d) {
       }
       // 包管展开深（mm）   文本输入 包管高 最小值 U_AHighMin
       d.U_ASDeep.validateFun =function(data, index){
+          if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
+          else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
+           this.def = this.def*1;
           if(d.sale_counts) {
             if(d.sale_counts.def*1 == 0 || !d.sale_counts.def) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
-                else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
-                else if(this.def*1 < 0)  return exepFun(this, "包管深高必须大于0")
                 // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
                 else return resetFun(this)
             }
@@ -185,8 +183,6 @@ export default function adapterData(d) {
           else if(d.U_Pquantity) {
             if(d.U_Pquantity.def*1 == 0 || !d.U_Pquantity.def) {
                 if(!this.def || this.def == "") return exepFun(this, "必须填写包管高度")
-                else if(isNaN(this.def)) return exepFun(this, "包管高填写不正确")
-                else if(this.def*1 < 0)  return exepFun(this, "包管高必须大于0")
                 // else if(this.def*1 < d.U_AWideMin) return exepFun(this, "包管高不能小于" + d.U_AHighMin)
                 else return resetFun(this)
             }
