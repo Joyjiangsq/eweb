@@ -171,7 +171,7 @@ export default {
     addSale: function(array) {array.push({labelName:"销售子订单", id: "xiaoshoucom", show:false, component: saleList})},
     addPurchase: function(array) {array.push({labelName:"采购订单", id: "caigou", show:false, component: purchaseList})},
     addStore: function(array) {array.push({labelName:"备货订单", id: "beihuo", show:false, component: backWillList})},
-    addSpec: function(array) {array.push({labelName:"定制品", id: "dingzhipin", show:false, component: specWillList})},
+    addSpec: function(array) {array.push({labelName:"定制品设计", id: "dingzhipin", show:false, component: specWillList})},
     addCustom: function(array) {array.push({labelName:"客户数据", id: "kehu", show:false, component: customWillList})},
     tabClickHandler: function(d){
       console.log('tabClickHander');

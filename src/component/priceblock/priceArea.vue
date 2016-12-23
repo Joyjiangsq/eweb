@@ -105,7 +105,7 @@ export default {
   attached: function () {},
   methods: {
     leftAddOne: function() {
-        let one = adapter_left({selected: false, sub_data:{sub_list:[]}});
+        let one = adapter_left({uniId:Utils.getStringCase(6),selected: false, sub_data:{sub_list:[]}});
         this.fdata.unshift(one);
     },
     typeCheck: function(d) {

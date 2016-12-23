@@ -94,11 +94,19 @@ export default {
       downParams:{type:"降级", page: 1, before_code:""},
       changeParams: {type:"互换", page: 1, before_code:""},
       actionDatas:[],
+      copyArea: false,
       showTplDialog: false,
       curCheck:"gxh",
+      areaData: "", // 空间对象
+      curStaticData:[],
       leftHeader: [{name:"名称", labelValue:"name",type:"data"},{type:"data", name:"金额", labelValue:"sub_price"}, {type:"operator", name:"操作"}],
       rightHeader: [{type:"operator", name:"操作"},{name:"分类编号", labelValue:"lv_code", type:"data"},{name:"分类名称", labelValue:"lv_contact_name", type:"data"},
-                                      {name:"选择产品", labelValue:"product_name", type:"componentspec",component: selectComponent, cname:"selectcomponent"},
+                                      {name:"选择产品", labelValue:"product_name", type:"componentspec",component: selectComponent, cname:"selectcomponent",
+                                        validateFun: function(d) {
+                                            console.log(d);
+                                            if(d.remark == "减项") return true
+                                            return false
+                                        }},
                                       {name:"产品名称", labelValue:"ItemName", type:"data"}, 
                                       {name:"品牌", labelValue:"U_Brand", type:"data"}, 
                                       {name:"型号", labelValue:"U_Modle", type:"data"},{name:"规格", labelValue:"Spec", type:"data"},
@@ -144,8 +152,17 @@ export default {
       tableEventsRight:{
          operatorRender: function(d, index){
             if(this.curCheck == "gxh" || this.curCheck == "zx") return [{name:"删除", action:"delete", index: index}];
-            return [{name:"升级", action:"update", index: index, data: d},{name:"降级", action:"downdate", index: index, data: d},
-                    {name:"减项", action:"minus", index: index, data: d},{name:"互换", action:"rechange", index: index, data: d}]
+            let btns = [{name:"升级", action:"update", index: index, data: d},{name:"降级", action:"downdate", index: index, data: d}]
+            if(d.change == "1") btns.push({name:"互换", action:"rechange", index: index, data: d}); // 允许互换
+            if(!this.copyArea) {
+                btns.unshift({name:"重置", action:"reset", index: index, data: d})
+            }
+            if(d.remark == "升级" || d.remark == "互换" || d.remark == "降级") return btns
+            else {
+                console.log(d);
+                if(d.minu == "1") btns.push({name:"减项", action:"minus", index: index, data: d});
+            }
+            return btns;
          },
 
          operatorHandler: function(d){
@@ -165,7 +182,12 @@ export default {
                  this.changeParams.before_code = d.data.lv_code;
                  this.showChangeDialog = !this.showChangeDialog;
              }
-
+             else if(d.action == "minus") {
+                 this.minusAction(d.data, d.index);
+             }
+             else if(d.action == "reset") {
+                 this.resetAction(d.data, d.index);
+             }
          }
       }
     }
@@ -183,13 +205,35 @@ export default {
         right_adapter(d);
         this.actionDatas.push(d);
     },
+    // 重置
+    resetAction: function(d, index) {
+        //curStaticData 初始对象
+        // areaData 单个空间
+        console.log(this.areaData);
+        let uni = this.areaData.uniId || "";
+        let curStatic = null;
+        for(let i = 0;i<this.curStaticData .length; i++) {
+            let one = this.curStaticData[i];
+            if(one.canDelete) continue;
+            if(one.uniId == uni) curStatic = one;
+        }
+        if(!curStatic) return false;
+
+        let curStaticRow = curStatic.sub_data.sub_list[index];
+        let curRow = this.actionDatas[index];
+        this.resetDateCol(curStaticRow);
+        Object.assign(curRow, curStaticRow);
+    },
     updateConfirm: function(d,changeCode) {
+        console.log("升级");
         d.remark= "升级";
         for(let i = 0; i < this.actionDatas.length; i++) {
             let one = this.actionDatas[i];
             if(one.lv_code != changeCode) continue
             else {
                 this.resetDateCol(d);
+                d.change= one.change;
+                d.minu = one.minu;
                 this.actionDatas.splice(i, 0, d);
                 this.actionDatas.splice(i+1, 1);
                 break;
@@ -198,6 +242,28 @@ export default {
             // one = Object.assign({}, one, d);
         }
     },
+    minusAction: function(d, index) {
+        this.$http.get(this.$Api + "rule-product", {params:{lv_code: d.lv_code, type:"减项", page: 1}}).then((res) => {
+            console.log(res);
+            let data = res.json();
+            if(data.data.count == 0) {
+
+            }
+            else {
+                let one = data.data.docs[0]; // 获取降级金额 TODO
+                let nData = {
+                    lv_code: one.lv_code,
+                    lv_name: one.lv_name,
+                    remark: "减项",
+                    self_price: one.self_price,
+                    level_n: one.lv_level
+                }
+                console.log(nData);
+                console.log(this.actionDatas[index]);
+                Object.assign(this.actionDatas[index], nData);
+            }
+        });
+    },
     downConfirm: function(d,changeCode) {
         d.remark= "降级";
         for(let i = 0; i < this.actionDatas.length; i++) {
@@ -205,6 +271,8 @@ export default {
             if(one.lv_code != changeCode) continue
             else {
                 this.resetDateCol(d);
+                 d.change= one.change;
+                d.minu = one.minu;
                 this.actionDatas.splice(i, 0, d);
                 this.actionDatas.splice(i+1, 1);
                 break;
@@ -218,6 +286,8 @@ export default {
             if(one.lv_code != changeCode) continue
             else {
                 this.resetDateCol(d);
+                d.change= one.change;
+                d.minu = one.minu;
                 this.actionDatas.splice(i, 0, d);
                 this.actionDatas.splice(i+1, 1);
                 break;
@@ -234,6 +304,7 @@ export default {
         this.showTplDialog = !this.showTplDialog
     },
     getOnTpl: function(d) {
+        this.curStaticData = Utils.cloneObj(d.prolist);
         this.datas = d.prolist;
          // 初始化个性化对象
         this.actionDatas = this.datas[this.datas.length - 1].sub_data.sub_list;
@@ -247,7 +318,10 @@ export default {
             }
             right_adapter(item);
     },
-    rowclick: function(d) {
+    rowclick: function(d, index) {
+        this.areaData = d; // 记录空间的对象
+        if(d.canDelete) this.copyArea = true
+        else this.copyArea = false
         if(d.code == "gxh") this.curCheck = "gxh";
         else if(d.code == "zx") this.curCheck = "zx";
         else this.curCheck = "";

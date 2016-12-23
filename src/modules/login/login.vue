@@ -117,7 +117,8 @@ export default {
               if(d.code == 200) {
                 storejs({"userInfo": d.data});
                 setUser(this.$store, d.data);
-                this.$router.go({path:"/index"});
+                let firstMenu = d.data.menus[0];
+                this.$router.go({path:firstMenu.url});
               }
               else this.changeImg()
         },(error) => {

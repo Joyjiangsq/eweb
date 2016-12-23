@@ -10,7 +10,7 @@ export const heyeComponent = Vue.extend({
       test:[],
       value:"",
       adapter: function(d){
-          d.multyNameLabel = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+          d.multyNameLabel = (d.U_Brand || "") + "/" + (d.U_Modle || "") + "/" + (d.Spec || "");
           return d
       }
     }
@@ -24,8 +24,8 @@ export const heyeComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
-            this.selfData.U_HiPro = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;;
-            this.selfData.U_HingeName.def = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+            this.selfData.U_HiPro =  (d.U_Brand || "") + "/" + (d.U_Modle || "") + "/" + (d.Spec || "");
+            this.selfData.U_HingeName.def =  (d.U_Brand || "") + "/" + (d.U_Modle || "") + "/" + (d.Spec || "");
             this.selfData.U_HingeName.tb_disabled= false;  // 合页
             this.selfData.U_HingeName.defCss= "default";  // 合页
             this.selfData.U_HingeName.errorMsg= "";  // 合页
@@ -43,7 +43,7 @@ export const  mensuoComponent = Vue.extend({
       test:[],
       value:"",
        adapter: function(d){
-          d.multyLockLabel = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+          d.multyLockLabel =  (d.U_Brand || "") + "/" + (d.U_Modle || "") + "/" + (d.Spec || "");
           return d
       }
     }
@@ -57,8 +57,8 @@ export const  mensuoComponent = Vue.extend({
       dropclick: function(d){
           // 变更对应的值
             console.log(d);
-            this.selfData.U_LoPro = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
-            this.selfData.U_LockName.def = d.U_Brand + "/" + d.U_Modle + "/" + d.Spec;
+            this.selfData.U_LoPro =  (d.U_Brand || "") + "/" + (d.U_Modle || "") + "/" + (d.Spec || "");
+            this.selfData.U_LockName.def =  (d.U_Brand || "") + "/" + (d.U_Modle || "") + "/" + (d.Spec || "");
             this.selfData.U_LockName.tb_disabled= false; // 门锁
             this.selfData.U_LockName.defCss= "default";  // 门锁
             this.selfData.U_LockName.errorMsg= "";  // 门锁
@@ -95,6 +95,9 @@ export const  holeComponent = Vue.extend({
           this.selfData.U_LockName.tb_disabled= tf; // 门锁
           this.selfData.U_LockName.defCss= "default";  // 门锁
           this.selfData.U_LockName.errorMsg= "";  // 门锁
+           this.selfData.U_OpenWay.tb_disabled= tf; // 开启方式
+          this.selfData.U_OpenWay.defCss= "default";  // 开启方式
+          this.selfData.U_OpenWay.errorMsg= "";  // 开启方式
       }
   },
   components: {combobox},

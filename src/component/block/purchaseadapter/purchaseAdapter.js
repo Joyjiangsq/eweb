@@ -75,11 +75,11 @@ export default function adapterData(d) {
               // "U_ASDeep"                // 包管展开深
               // 如果是台面
               if(data.Code == getLevelThreeTypeByName("台面")) {
-                  if(this.def == 0 || !this.def) {
-                     this.def = 0;
-                     this.defCss = "default";
-                     this.errorMsg = "";
-                     return true;
+                // 台面是不允许备货的  所以台面是没有库存的
+                  if(this.def == "") {
+                      this.defCss = "errorHappend";
+                      this.errorMsg = "采购数量必须";
+                      return false
                   }
                   else  if(isNaN(this.def)) {
                     this.defCss = "errorHappend";
@@ -87,10 +87,33 @@ export default function adapterData(d) {
                     return false
                   }
                   else {
-                    if((!data.U_TableB || data.U_TableB == 0) && (!data.U_HeightWR || data.U_HeightWR == 0)) {
-                         this.defCss = "errorHappend";
-                          this.errorMsg = "台面进深与挡水高度必须同时存在";
-                          return false
+                    if(this.def == 0) {
+                        if(d.U_ASWide > 0 && d.U_ASDeep > 0) {
+                            d.U_TableB = 0;
+                            d.U_HeightWR = 0;
+                            this.defCss = "default";
+                            this.errorMsg = "";
+                            return true;
+                        }
+                        else {
+                            this.defCss = "errorHappend";
+                            this.errorMsg = "缺少包管参数";
+                            return false
+                        }
+                    }
+                    else if(this.def > 0) {
+                        if(d.U_TableB > 0 && d.U_HeightWR > 0) {
+                            if(d.U_ASWide > 0 && d.U_ASDeep > 0) {}
+                            else d.U_ASWide = 0; d.U_ASDeep = 0;
+                            this.defCss = "default";
+                            this.errorMsg = "";
+                            return true;
+                        }
+                        else {
+                            this.defCss = "errorHappend";
+                            this.errorMsg = "台面参数不全";
+                            return false
+                        }
                     }
                     else {
                           this.defCss = "default";

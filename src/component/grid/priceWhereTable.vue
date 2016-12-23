@@ -91,7 +91,7 @@ export default {
             }
             d.selected = true;
             // this.$set("oldIndex", index);
-            this.$dispatch("rowclick", d);
+            this.$dispatch("rowclick", d, index);
       },
   },
   attached: function () {},

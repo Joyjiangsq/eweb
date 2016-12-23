@@ -22,8 +22,8 @@ let addCommon = function() {
     {name:"产品包", labelValue:"SWW", type:"data"},
     {name:"品牌", labelValue:"U_Brand", type:"data"},
     {name:"型号", labelValue:"U_Modle", type:"data"},
-    {name:"颜色", labelValue:"U_Colour", type:"data"},
     {name:"材质", labelValue:"U_MQuality", type:"data"},
+    {name:"颜色", labelValue:"U_Colour", type:"data"},
     {name:"产品规格", labelValue:"Spec", type:"data"}]
   return initHeader
 }

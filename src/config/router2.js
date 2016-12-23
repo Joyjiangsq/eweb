@@ -274,7 +274,7 @@ export function routerStart(router) {
   })
       // redirect
       router.redirect({
-          "/": "/index"
+          "/": "/login"
       })
 
       router.beforeEach(function ({ to, next }) {next()
