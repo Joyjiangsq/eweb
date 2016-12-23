@@ -21,7 +21,8 @@
                                     {{done[sone.labelValue].def || "-"}}
                           </span>
                           <div v-if="sone.type == 'componentspec'">
-                                <span v-widget="{widget: sone, data: done, cname: sone.cname}"></span>
+                                <span v-if="componentShow(sone, done)">-</span>
+                                <span v-widget="{widget: sone, data: done, cname: sone.cname}" v-else></span>
                           </div>
                           <div v-if="sone.type == 'edit'" >
                               <div :class="css.iptBox" > 
@@ -81,7 +82,11 @@ export default {
      btnClickHandler: function(){
          this.$dispatch("selectchange");
      },
-
+     componentShow: function(sone, d) {
+         console.log(sone);
+         if(sone.validateFun) return sone.validateFun(d)
+         else return false
+     }
   },
   attached: function () {},
   components: {btnbar, icon, btn},
