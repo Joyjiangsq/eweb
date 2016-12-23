@@ -26,7 +26,7 @@
               <div style="clear:both"></div>
       </pagepanel>
         <!--新增对话框-->
-        <buildmgrpriceadd :title="title" :formdata="newData" :formdatas="formdatas" @success="addSuccess" :show="showAdd" :catery="catery" :showtbedit="showtbedit"></buildmgrpriceadd>
+        <buildmgrpriceadd :title="title" :formdata="newData" :formdatas="formdatas" @success="addSuccess" :showconstructtag="showCstTag" :showmaterialtag="showMlTag" ></buildmgrpriceadd>
        <!--删除提示-->
         <dialogtip :flag.sync="deleteTag" @dialogclick="confirmDelete" msg="你确定删除吗？"></dialogtip>
   </div>
@@ -65,9 +65,11 @@ export default {
         headercaption: headerData,
         curLevelData:{level_n: 0}, // 当前层级数据对象
         reload: false,  //添加分类后刷新分类菜单
-        showAdd: false, //弹框显示隐藏
-        catery: false, //切换分类/报价弹出框
-        showtbedit: false, //切换表格删除数据弹框
+        // showAdd: false, //弹框显示隐藏
+        // catery: false, //切换分类/报价弹出框
+        // showtbedit: false, //切换表格删除数据弹框
+        showCstTag:false,     //施工分类弹框
+        showMlTag: false,     //材料分类弹框
         moduleName:"施工报价管理",
         deleteTag: false,         // 删除确认弹框显示隐藏
         rightData: [],
@@ -89,8 +91,7 @@ export default {
                 }else if(d.action == "edit"){
                     this.title = "编辑材料";
                     this.$set("curAction","tbedit");
-                    this.showtbedit = !this.showtbedit;
-                    this.showAdd = !this.showAdd;
+                    this.showMlTag = !this.showMlTag;
                     this.newData = Utils.cloneObj(this.curItem);
                 }
             }
@@ -111,18 +112,18 @@ export default {
             this.title = "新增施工报价分类";
             this.$set("curAction", "add");
             this.formdatas = {};
-            this.showAdd = !this.showAdd;
-            this.catery = !this.catery;
+            this.showCstTag = !this.showCstTag;
             this.curLevelData.level_n = 0;
         },
         //弹框表单验证成功
         addSuccess: function() {
+            console.log('ddddddddddd');
             if(this.curAction == "add") {
                     let action = this.actionMap[this.curLevelData.level_n];
                     Object.assign(this.formdatas, action.params);   //将参数优先
                     this.$http.post(this.$Api+action.url,JSON.stringify(this.formdatas)).then((res) => {
                         this.showMsg("success", "新增成功");
-                        this.showAdd = !this.showAdd;
+                        this.showCstTag = !this.showCstTag;
                         this.formdatas = {};
                         this.getData();
                      });
@@ -131,7 +132,7 @@ export default {
                     Object.assign(this.formdatas, action.params);
                     this.$http.put(this.$Api+action.url,JSON.stringify(this.formdatas)).then((res) => {
                         this.showMsg("success", "修改成功");
-                        this.showAdd = !this.showAdd;
+                        this.showCstTag = !this.showCstTag;
                         this.formdatas = {};
                         this.getData();
                     });
@@ -141,14 +142,13 @@ export default {
                     this.newData.code = this.curItem.code;
                     this.$http.put(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
                         this.showMsg("success", "修改成功");
-                        this.showAdd = false;
+                        this.showMlTag =!this.showMlTag;
                         this.newData ={};
                         this.getTableDetail();
                     });
                 }else if(this.curAction == "tbadd") {
                     this.$http.post(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
                         this.showMsg("success", "新增成功");
-                        this.showAdd = !this.showAdd;
                         this.newData = {};
                         this.getTableDetail();
                      });
@@ -181,8 +181,7 @@ export default {
         addClickHandler: function(d) {
             this.title = "新增施工报价分类";
             this.formdatas={};
-            this.catery = !this.catery;
-            this.showAdd = !this.showAdd;
+            this.showCstTag = !this.showCstTag;
             this.$set("curAction", "add");
             if(d.level >= 1){   
                 this.formdatas.lv1_code = d.one.code;
@@ -192,8 +191,7 @@ export default {
         },
         editClickHandler: function(d){
             this.title = "编辑施工报价分类";
-            this.showAdd = !this.showAdd;
-            this.catery = !this.catery;
+            this.showCstTag = !this.showCstTag;
             this.$set("curAction", "edit");
              if(d.level == 1) {
                  this.formdatas = {
@@ -225,8 +223,7 @@ export default {
             }
             this.title = "新增材料";
             this.$set("curAction","tbadd");
-            this.showtbedit = !this.showtbedit;
-            this.showAdd = !this.showAdd;
+            this.showMlTag = !this.showMlTag;
         },
         confirmDelete: function(d){
             if(d.action == "confirm") {

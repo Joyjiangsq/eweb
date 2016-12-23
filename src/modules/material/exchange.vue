@@ -35,7 +35,6 @@ import Utils from "common/Utils.js";
 import tb from "component/grid/tableListBase";
 import pg from "component/pagination/pagination";
 import btn from "component/sprite/button.vue";
-// import basePage from "common/mixinPage.js";
 import dialogtip from "component/dialog/dialogTip";
 let headerData =[{name:"类别", labelValue:"type", type:"data"},{name:"调品前材料分类", labelValue:"before_code", type:"data"},{name:"调品前分类名称", labelValue:"before_name", type:"data"},
                   {name:"调品后类别", labelValue:"after_code", type:"data"},{name:"调品后分类名称", labelValue:"after_name", type:"data"},{name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},
@@ -130,30 +129,30 @@ export default {
       },
       //非个性化focus弹框被选中
       oneCheck: function(d){
-       if(this.type == 1) {
-         this.formdatas.before_code = d.lv_code;
-         this.formdatas.before_name = d.lv_contact_name;
-         this.formdatas.before_level = d.level_n;
+        if(this.type == 1) {
+          this.formdatas.before_code = d.lv_code;
+          this.formdatas.before_name = d.lv_contact_name;
+          this.formdatas.before_level = d.level_n;
         }else {
-         this.formdatas.after_code = d.lv_code; 
-         this.formdatas.after_name = d.lv_contact_name;
+          this.formdatas.after_code = d.lv_code; 
+          this.formdatas.after_name = d.lv_contact_name;
           this.formdatas.after_level = d.level_n;
         }
         this.formdatas = Object.assign({}, this.formdatas);
-      },
-      showTypedialog: function(type){
-          this.type = type; // 1 调品前   2 调品后
-          this.showNoPerDialog = !this.showNoPerDialog;
-      },
-      confirmDelete: function(d){
-        if(d.action == "confirm") {
-            this.$http.delete(this.$Api+"rule-product", {params: {"_id": this.curItem._id}}).then((res)=>{
+       },
+       showTypedialog: function(type){
+           this.type = type; // 1 调品前   2 调品后
+           this.showNoPerDialog = !this.showNoPerDialog;
+       },
+       confirmDelete: function(d){
+         if(d.action == "confirm") {
+             this.$http.delete(this.$Api+"rule-product", {params: {"_id": this.curItem._id}}).then((res)=>{
                 this.$set("deleteTag", !this.deleteTag);
                 this.loadlist();
                 this.showMsg("success", "删除成功！");
             });
-        }
-      },
+         }
+       },
   },
   watch:{},
   components: {formtext,dialog,typedialog,btn,tb,pg,dialogtip}

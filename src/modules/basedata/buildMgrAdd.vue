@@ -1,7 +1,8 @@
 <template>
-    <div :class="css.itemList" v-if="exCatery">
+    <div>
+    <!--<div :class="css.itemList" v-if="true"> -->
     <!--新增施工报价分类对话框-->
-      <dialog :flag.sync="showTag" :title="title" @dialogclick="dialogClickHandler" >
+      <dialog :flag.sync="showConstructTag" :title="title" @dialogclick="dialogClickHandler" >
                 <div  slot="containerDialog">
                          <div>  
                             <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -9,10 +10,10 @@
                         </div>
                 </div>
       </dialog>
-    </div>
+    <!--</div>-->
     <!--新增材料分类对话框-->
-    <div :class="css.itemList" v-else>
-      <dialog :flag.sync="showTag" :title="title" @dialogclick="dialogClickHandler" v-else>
+    <!--<div :class="css.itemList" v-else>-->
+      <dialog :flag.sync="showMaterialTag" :title="title" @dialogclick="dialogClickHandler">
                 <div  slot="containerDialog">
                          <div> 
                             <formtext labelname="项目名称：" :vertical="true" :value.sync="formdata.project_name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
@@ -24,7 +25,7 @@
                         </div>
                 </div>
        </dialog>
-    </div>
+    <!--</div>--></div>
 </template>
 
 <script>
@@ -51,15 +52,11 @@ export default {
     show:{
         default: false
     },
-    level:{
-        default: true,
-        type: Boolean
-    },
-    catery:{
+    showconstructtag:{
         default: false,
         type: Boolean
     },
-    showtbedit:{
+    showmaterialtag:{
         default: false,
         type: Boolean
     },
@@ -73,8 +70,8 @@ export default {
       css,
       validate: false, //验证开关
       validateTag: false, //表单验证
-      exCatery: false,
-      showTag: false
+      showConstructTag: false,  //增加施工分类弹框
+      showMaterialTag: false,   //增加材料分类弹框
     }
   },
   computed: {
@@ -89,10 +86,17 @@ export default {
     },
     dialogClickHandler: function(d) {
         this.validateTag = true;
+        console.log(d.action);
         if(d.action == "confirm") {
+            console.log('confirm');
             this.validate = !this.validate;
+            console.log(this.validate);
+            console.log(this.validateTag);
             setTimeout(()=> {
-                if(this.validateTag) this.$dispatch("success");
+                if(this.validateTag) {
+                    console.log('派发success');
+                    this.$dispatch("success");
+                }
                 else {
                     
                 }
@@ -102,14 +106,13 @@ export default {
   },
   components: { btn,icon,formtext,formrd,formcb,dialog},
   watch:{
-      "catery": function(){
-          this.exCatery = true;
+       "showconstructtag": function(){
+           console.log('come in 2');
+           this.showConstructTag = !this.showConstructTag;
       },
-       "showtbedit": function(){
-          this.exCatery = false;
-      },
-      "show": function(){
-          this.showTag = !this.showTag;
+      "showmaterialtag": function(){
+          console.log('come in 3');
+          this.showMaterialTag = !this.showMaterialTag;
       }
   }
 

@@ -33,7 +33,6 @@ import Utils from "common/Utils.js";
 import tb from "component/grid/tableListBase";
 import pg from "component/pagination/pagination";
 import btn from "component/sprite/button.vue";
-// import basePage from "common/mixinPage.js";
 import dialogtip from "component/dialog/dialogTip";
 let headerData =[{name:"类别", labelValue:"type", type:"data"},{name:"增项分类编码", labelValue:"lv_code", type:"data"},{name:"增项分类名称", labelValue:"lv_name", type:"data"},
                     {name:"总部指导价", labelValue:"rec_price", type:"data"},{name:"分站自营价", labelValue:"self_price", type:"data"},

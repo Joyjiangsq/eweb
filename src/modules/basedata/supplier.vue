@@ -8,7 +8,7 @@
         <pagepanel>
               <btnbar :buttons="btnsData" :events="btnEvents"></btnbar>
               <div class="epCss.tBox">
-                <tb :headercaption="headercaption"  :totals.sync="totals"  :load="load" :params="searchParams" url="" :events="tableEvents"></tb>
+                <tb :headercaption="headercaption"  url="employees" :totals.sync="totals"  :load="load" :params="searchParams" url="" :events="tableEvents"></tb>
               </div>
               <pg :totals="totals" :curpage.sync="searchParams.page"></pg>
         </pagepanel>
@@ -16,9 +16,9 @@
               <div class="" slot="containerDialog">
                 <div class="" v-if="hideDialogIn">
                   <formtext labelname="供应商名称：" :value.sync="addParams.CardName"  placeholder="请输入名称" :vertical="true" formname='CardName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                  <formtext labelname="联系人：" :value.sync="addParams.CardName"  placeholder="请输入联系人" :vertical="true" formname='CardName' :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="联系人：" :value.sync="addParams.roles"  placeholder="请输入联系人" :vertical="true" formname='roles' :validatestart="validate" @onvalidate="validateHandler"></formtext>
                   <formtext labelname="电话：" :value.sync="addParams.phone"  placeholder="请输入电话" :vertical="true" :phone="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                  <formtext labelname="备注：" :value.sync="addParams.phone" :must="false"  placeholder="备注" :vertical="true" formname='phone'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                  <formtext labelname="备注：" :value.sync="addParams.createdByName" :must="false"  placeholder="备注" :vertical="true" formname='createdByName'  :validatestart="validate" @onvalidate="validateHandler"></formtext>
                 </div>
               </div>
         </dialog>
