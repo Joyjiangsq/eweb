@@ -36,7 +36,7 @@ export default {
              {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"mencc", component:mdialog},
              {name:"所属包", labelValue:"SWW", type:"data"},
              {name:"品牌", labelValue:"U_Brand", type:"data"},
-             {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
+             {name:"型号", labelValue:"U_Modle", type:"data"},
              {name:"产品规格", labelValue:"Spec", type:"data"},
              {name:"颜色", labelValue:"U_Colour", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
              {name:"门套线类型", labelValue:"U_DLType", type:"data"},

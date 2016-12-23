@@ -27,7 +27,7 @@ export default {
   data: function () {
     return {
       css,
-      name:"定制品",
+      name:"定制品设计",
       routerUrl:"specmgr/apply"
     }
   },

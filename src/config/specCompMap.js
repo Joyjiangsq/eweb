@@ -95,6 +95,9 @@ export const  holeComponent = Vue.extend({
           this.selfData.U_LockName.tb_disabled= tf; // 门锁
           this.selfData.U_LockName.defCss= "default";  // 门锁
           this.selfData.U_LockName.errorMsg= "";  // 门锁
+           this.selfData.U_OpenWay.tb_disabled= tf; // 开启方式
+          this.selfData.U_OpenWay.defCss= "default";  // 开启方式
+          this.selfData.U_OpenWay.errorMsg= "";  // 开启方式
       }
   },
   components: {combobox},

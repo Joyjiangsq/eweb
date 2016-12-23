@@ -33,7 +33,7 @@ export default {
                       {name:"产品名称", labelValue:"ItemName", type:"data"},
                       {name:"产品包", labelValue:"SWW", type:"data"},
                       {name:"品牌", labelValue:"U_Brand", type:"data"},
-                      {name:"供应商", labelValue:"U_CardName", type:"data"},{name:"型号", labelValue:"U_Modle", type:"data"},
+                      {name:"型号", labelValue:"U_Modle", type:"data"},
                       {name:"颜色", labelValue:"Color", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
                       {name:"产品规格", labelValue:"Spec", type:"data"},{name:"数量", labelValue:"Quantity", type:"data"},
                       {name:"单位", labelValue:"SalUnitMsr",type:"data"},{name:"备注", labelValue:"Freetxt",type:"data"},
