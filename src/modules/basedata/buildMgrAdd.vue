@@ -1,12 +1,12 @@
 <template>
-    <div>
-    <!--<div :class="css.itemList" v-if="true"> -->
+    
+    <!--<div :class="css.itemList" v-if="true">-->
     <!--新增施工报价分类对话框-->
-      <dialog :flag.sync="showConstructTag" :title="title" @dialogclick="dialogClickHandler" >
+      <dialog :flag.sync="showConstructTag" :title="title" @dialogclick="csDialogClickHandler" >
                 <div  slot="containerDialog">
                          <div>  
-                            <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入项目名称" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                            <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formdatas.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="validate" @onvalidate="validateHandler"></formrd>
+                            <formtext labelname="项目名称：" :vertical="true"  formname="" :value.sync="formdatas.name" placeholder="请输入项目名称" :validatestart="csValidate" @onvalidate="csValidateHandler"></formtext>
+                            <formrd labelname="启用：" :vertical="true" formname="" :value.sync="formdatas.usable" :datas="[{label:'是', id:'1', checked: true},{label:'否', id:'0', checked: false}]"  :validatestart="csValidate" @onvalidate="csValidateHandler"></formrd>
                         </div>
                 </div>
       </dialog>
@@ -25,7 +25,7 @@
                         </div>
                 </div>
        </dialog>
-    <!--</div>--></div>
+    <!--</div>-->
 </template>
 
 <script>
@@ -68,6 +68,8 @@ export default {
   data: function () {
     return {
       css,
+      csValidate: false,
+      csValidateTag: false,
       validate: false, //验证开关
       validateTag: false, //表单验证
       showConstructTag: false,  //增加施工分类弹框
@@ -81,17 +83,33 @@ export default {
   },
   attached: function () {},
   methods: {
+    csValidateHandler: function(d){
+        if(d.res == "fail") this.csValidateTag = false;
+    },
     validateHandler: function(d){
         if(d.res == "fail") this.validateTag = false;
+    },
+    csDialogClickHandler: function(d){
+        this.csValidateTag = true;
+        console.log(d.action);
+        if(d.action == "confirm") {
+            this.csValidate = !this.csValidate;
+            setTimeout(()=> {
+                if(this.csValidateTag) {
+                    console.log('派发success');
+                    this.$dispatch("success");
+                }
+                else {
+                    
+                }
+            },30)
+        }
     },
     dialogClickHandler: function(d) {
         this.validateTag = true;
         console.log(d.action);
         if(d.action == "confirm") {
-            console.log('confirm');
             this.validate = !this.validate;
-            console.log(this.validate);
-            console.log(this.validateTag);
             setTimeout(()=> {
                 if(this.validateTag) {
                     console.log('派发success');

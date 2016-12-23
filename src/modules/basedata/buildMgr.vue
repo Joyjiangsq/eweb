@@ -140,6 +140,8 @@ export default {
                     if(this.newData._id) delete this.newData._id;
                     if(this.newData.createAt) delete this.newData.createAt;   
                     this.newData.code = this.curItem.code;
+                    this.newData.selling_price = this.newData.selling_price*1;
+                    this.newData.cost_price = this.newData.cost_price*1;
                     this.$http.put(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
                         this.showMsg("success", "修改成功");
                         this.showMlTag =!this.showMlTag;
@@ -147,10 +149,13 @@ export default {
                         this.getTableDetail();
                     });
                 }else if(this.curAction == "tbadd") {
+                    this.newData.selling_price = this.newData.selling_price*1;
+                    this.newData.cost_price = this.newData.cost_price*1;
                     this.$http.post(this.$Api+"construction-quote",JSON.stringify(this.newData)).then((res) => {
                         this.showMsg("success", "新增成功");
                         this.newData = {};
                         this.getTableDetail();
+                        this.showMlTag =!this.showMlTag;
                      });
                 }
         },
@@ -184,8 +189,12 @@ export default {
             this.showCstTag = !this.showCstTag;
             this.$set("curAction", "add");
             if(d.level >= 1){   
+                console.log('d.one.code');
                 this.formdatas.lv1_code = d.one.code;
-            }else if(d.level >=2){
+            } 
+            if(d.level >=2){
+                console.log(d.sone.code);
+                console.log('d.sone.code');
                 this.formdatas.lv2_code = d.sone.code;
             }
         },
