@@ -28,7 +28,9 @@ export default {
   },
   computed: {
   },
-  ready: function () {},
+  ready: function () {
+    
+  },
   attached: function () {},
   methods: {
     tabClickHandler: function(d) {

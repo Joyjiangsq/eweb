@@ -27,7 +27,7 @@
                           <div v-if="sone.type == 'edit'" >
                               <div :class="css.iptBox" > 
                                    <span v-if="done[sone.labelValue].tb_disabled">-</span>
-                                  <input v-else type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="done[sone.labelValue].validateFun(done, order)" v-model="done[sone.labelValue].def">
+                                  <input v-else type="text" style="width:85px" name="name" :class='css[done[sone.labelValue].defCss]' :value="done[sone.labelValue].def"  @blur="blurHandler(sone, done, order)" v-model="done[sone.labelValue].def">
                                   <div :class="css.errorRow">{{done[sone.labelValue].errorMsg}}</div>
                               </div>
                           </div>
@@ -86,6 +86,10 @@ export default {
          console.log(sone);
          if(sone.validateFun) return sone.validateFun(d)
          else return false
+     },
+     blurHandler: function(sone, done, order) {
+        if(done[sone.labelValue].validateFun) done[sone.labelValue].validateFun(done, order);
+        if(sone.validateFun) sone.validateFun.call(this._context, done)
      }
   },
   attached: function () {},

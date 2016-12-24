@@ -60,7 +60,10 @@ let tableHeaderDatas = [
                         {name:"购买人", labelValue:"purchaser",type:"data"},
                         {name:"购买时间", labelValue:"createAt", type:"data",adapterFun: function(d) {return Utils.formate(new Date(d.createAt), "yyyy-mm-dd");}},
                         {name:"订单状态", labelValue:"U_OrderStatus",type:"data"},
-                        {name:"驳回理由", labelValue:"U_CloseWhy", type:"data"}]
+                        {name:"驳回理由", labelValue:"U_CloseWhy", type:"data",adapterFun: function(d) {
+                            if(d.U_OrderStatus == "e站驳回") return d.U_CloseWhy
+                            else return "-"
+                        }}]
 export default {
   mixins: [pageBase],
   data: function () {

@@ -1,6 +1,6 @@
 <template>
     <div :class="css.Box" style="width:97%; margin: 0 auto;">
-            <btn @click="inTpl">导入模板</btn>
+            <btn @click="inTpl" style="margin-bottom: 10px;">导入模板</btn>
             <div v-if="datas.length == 0"  style="text-align: center; color:gray; padding: 30px">
                   请导入模板
             </div>
@@ -11,8 +11,8 @@
                 </div>
 
                 <div :class='css.rightBox'>
-                    <righttb v-show="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g" :clone="clone.tag" scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" ></righttb>
-                    <righttb v-show="curCheck !='gxh'" :headercaption="rightHeader" :clone="clone.tag" scene="price_yes" :events="tableEventsRight"  :datas="actionDatas"></righttb>
+                    <righttb v-show="curCheck =='gxh'" @selectchange="selectchange" :headercaption="rightHeader_g" scene="add_yes" :events="tableEventsRight"  :datas="actionDatas" ></righttb>
+                    <righttb v-show="curCheck !='gxh'" :headercaption="rightHeader" scene="price_yes" :events="tableEventsRight"  :datas="actionDatas"></righttb>
                 </div>
             </div>
             <tpldialog :show.sync="showTplDialog" @checkone="getOnTpl" url="tpl-construction-quote"></tpldialog>
@@ -31,42 +31,6 @@ import btn from "component/sprite/button";
 import spdialog from "component/blockcommon/selectProductByTypeDialog";
 import Utils from "common/Utils.js";
 import showbuild from "component/blockcommon/selectBuildDialog";
-import Vue from "vue";
-let cloneBoy = {tag: false}
-// 自定义
-var selectComponent = Vue.extend({
-  data:function(){
-    return {
-      css,
-      show: false,
-      params:{page: 1},
-      toload: false,
-      clone: cloneBoy
-    }
-  },
-  template: '<div><btn @click="clickHandler">选择产品</btn><spdialog :show="show" @success="success" :params="params" :toload="toload"></spdialog></div>',
-  ready: function(){
-  },
-  methods:{
-    clickHandler: function(){
-        
-        this.params = {
-          page: 1
-        }
-        this.params["lv"+this.selfData.level_n+"_"+"code"] = this.selfData.lv_code;
-        this.params["lv"+this.selfData.level_n+"_"+"name"] = this.selfData.lv_name;
-        this.show = !this.show;
-        this.toload = !this.toload
-    },
-    success: function(d) {
-        Object.assign(this.selfData, d)
-        let one = right_adapter(this.selfData);
-        this.clone.tag = !this.clone.tag;
-    },
-    
-  },
-  components: {btn, spdialog}
-})
 
 export default {
   props:{
@@ -77,7 +41,6 @@ export default {
   data: function () {
     return {
       css,
-      clone: cloneBoy,
       actionDatas:[],
       showTplDialog: false,
       curCheck:"gxh",
@@ -85,13 +48,22 @@ export default {
       leftHeader: [{name:"名称", labelValue:"name",type:"data"},{type:"data", name:"金额", labelValue:"sub_price"}, {type:"operator", name:"操作"}],
       rightHeader: [{name:"项目名称", labelValue:"project_name", type:"data"},
                                       {name:"工艺说明", labelValue:"description", type:"data"}, 
-                                      {name:"数量" ,labelValue:"counts", type:"edit"},
+                                      {name:"数量" ,labelValue:"counts", type:"edit",validateFun: function(){
+                                            console.log("==--====--===--====--==");
+                                            this.caculateFinalData();
+                                      }},
                                       {name:"单价", labelValue:"selling_price", type:"data"}, {name:"金额", labelValue:"price", type:"data"},
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
       rightHeader_g: [{type:"operator", name:"操作"},{name:"项目名称", labelValue:"project_name", type:"edit"},
                                       {name:"工艺说明", labelValue:"description", type:"edit"}, 
-                                      {name:"数量" ,labelValue:"counts", type:"edit"},
-                                      {name:"单价", labelValue:"selling_price", type:"edit"}, {name:"金额", labelValue:"price", type:"data"},
+                                      {name:"数量" ,labelValue:"counts", type:"edit",validateFun: function(){
+                                            console.log("==--====--===--====--==");
+                                            this.caculateFinalData();
+                                      }},
+                                      {name:"单价", labelValue:"selling_price", type:"edit",validateFun: function(){
+                                            console.log("==--====--===--====--==");
+                                            this.caculateFinalData();
+                                      }}, {name:"金额", labelValue:"price", type:"data"},
                                       {name:"个性化说明", labelValue:"remark", type:"edit"}],
       tableEventsLeft:{
         operatorRender: function(d, index){
@@ -118,7 +90,9 @@ export default {
          },
 
          operatorHandler: function(d){
-             
+             if(d.action == "delete") {
+                 this.actionDatas.splice(d.index, 1);
+             }
          }
       }
     }
@@ -130,10 +104,12 @@ export default {
   methods: {
     buildconfirm: function(d) {
       for(let i = 0; i < d.length; i++) {
-        right_adapter_n(d[i]);
-        this.actionDatas.push(d[i]);
+        d[i].type = "gxh";
+        let ndata = Object.assign({}, d[i]);
+        this.resetDateCol(ndata);
+        this.actionDatas.push(ndata);
       }
-       console.log(d);
+       console.log(this.actionDatas);
     },
     addone: function(d) {
         right_adapter(d);
@@ -144,8 +120,37 @@ export default {
         this.showTplDialog = !this.showTplDialog
     },
     getOnTpl: function(d) {
-        this.datas = d.prolist;
+        // this.datas = d.prolist;
+        this.datas = [];
+        for(let i = 0; i < d.prolist.length; i++) {
+            d.prolist[i].sub_price = 0;
+            let one = Object.assign({}, d.prolist[i]);
+            this.datas.push(one);
+        }
         this.actionDatas = this.datas[this.datas.length-1].sub_data.sub_list;
+    },
+    caculateFinalData: function() {
+        for(let i = 0; i < this.datas.length; i++) {
+            let one = this.datas[i];
+            let subPrice = 0;
+            let subData = one.sub_data.sub_list;
+            for(let j = 0; j < subData.length; j++) {
+                let subOne = subData[j];
+                if(!subOne.price || isNaN(subOne.price)) continue
+                subPrice += subOne.price*1
+            }
+            one.sub_price = subPrice;
+        }
+    },
+    resetDateCol: function(item) {
+            let list = this.curCheck == "gxh"?this.rightHeader_g : this.rightHeader;
+            for(let j = 0; j < list.length; j++) {
+                let one = list[j];
+                if(one.type == "operator") continue;
+                if(item[one.labelValue]) continue;
+                item[one.labelValue] = "";
+            }
+            right_adapter_n(item);
     },
     rowclick: function(d) {
         if(d.code == "gxh") this.curCheck = "gxh";
@@ -153,12 +158,6 @@ export default {
         let tpl = [];
         for(let i = 0; i < d.sub_data.sub_list.length; i++) {
             let item = d.sub_data.sub_list[i];
-            for(let j = 0; j < this.rightHeader.length; j++) {
-                let one = this.rightHeader[j];
-                if(one.type == "operator") continue;
-                if(item[one.labelValue]) continue;
-                item[one.labelValue] = "";
-            }
             // 构造自己的数据
             if(item.lv3_code) {
                 item["lv_code"] = item.lv3_code;
@@ -175,8 +174,10 @@ export default {
                 item["lv_name"] = item.lv1_name;
                 item["level_n"] = 1
             }
-            right_adapter(item);
-            tpl.push(Object.assign({}, item))
+            let ndata = Object.assign({}, item);
+            this.resetDateCol(ndata);
+            tpl.push(ndata);
+            console.log(ndata);
         }
         d.sub_data.sub_list = tpl;
         this.actionDatas = d.sub_data.sub_list;

@@ -10,12 +10,12 @@ export default function adapter(d) {
         scope.def = scope.def;
         return true;
     }
-    if(!d.counts) d.counts = "";
-    d.counts = {    
-        def: d.counts.def || "",
+    if(!d.counts) d.counts = 0;
+    if(!d.counts.defCss) d.counts = {    
+        def: d.counts.def || 0,
         defCss: "default",
         errorMsg:"",
-        tb_disabled: (d.ItemCode || d.project_name)?false:true,
+        tb_disabled: d.ItemCode?false:true,
         validateFun:function(data, index){
             console.log(data);
            if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
@@ -26,6 +26,7 @@ export default function adapter(d) {
            }
         }
     };
+
     // if(!d.remark) d.remark = "";
     // d.remark = {    
     //     def: d.remark.def || "",

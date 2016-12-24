@@ -19,3 +19,7 @@
     clear: both;
     width: 100%;
 }
+
+.finalRow div {
+        margin-bottom: 5px;
+}

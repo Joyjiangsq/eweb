@@ -14,10 +14,10 @@
                     <formtext :read="true"  labelname="主材包一口价：" :must="false" unit="元" :value.sync="baseInfo.one_price" placeholder=""  formname='one_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                     <formtext :read="true"  labelname="服务包一口价：" :must="false" unit="元" :value.sync="baseInfo.server_price" placeholder=""  formname='server_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                     <formtext :read="true"  labelname="施工包一口价：" :must="false" unit="元" :value.sync="baseInfo.build_price" placeholder=""  formname='build_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="设计费" :must="false" unit="元" :value.sync="baseInfo.design_price" placeholder=""  formname='design_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext :read="true"  labelname="设计费：" :must="false" unit="元" :value.sync="baseInfo.design_price" placeholder=""  formname='design_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                     <formtext :read="true"  labelname="一口价：" :must="false" unit="元" :value.sync="baseInfo.total_price" placeholder=""  formname='total_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="优惠金额" :must="false" unit="元" :value.sync="baseInfo.minus_price" placeholder=""  formname='minus_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="预定合同金额" :must="false" unit="元" :value.sync="baseInfo.pre_price" placeholder=""  formname='pre_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext :read="true"  labelname="优惠金额：" :must="false" unit="元" :value.sync="baseInfo.minus_price" placeholder=""  formname='minus_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext :read="true"  labelname="预定合同金额：" :must="false" unit="元" :value.sync="baseInfo.pre_price" placeholder=""  formname='pre_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>
           </panel>
           <price @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show" :curdata="curData"></price>
@@ -131,10 +131,12 @@ export default {
           if(isNaN(this.priceInfo.U_Acreage))  {showTips(this.$store, {type:"warn", msg:"房本面积不正确"}); return false}
           else if(this.priceInfo.U_Acreage <= 0) {showTips(this.$store, {type:"warn", msg:"房本面积不正确"}); return false}
         }
-        this.$http.get(this.$Api+"sales/one-price",{params:this.priceInfo}).then((res) => {
+        this.$http.get(this.$Api+"project-quote/one-price",{params:this.priceInfo}).then((res) => {
             var d = res.json();
             if(d.data || d.data != "null") {
-                  this.baseInfo.one_price = d.data
+                  this.baseInfo.one_price = d.data.pkg_price;
+                  this.baseInfo.server_price = d.data.svr_price;
+                  this.baseInfo.build_price = d.data.cst_price;
             }
         },(error) =>{
           console.log(error);
