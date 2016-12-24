@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div :class="css.itemList" v-if="true"> 
+    <!--<div :class="css.itemList" v-if="true"> -->
     <!--新增施工报价分类对话框-->
       <dialog :flag.sync="showConstructTag" :title="title" @dialogclick="dialogClickHandler" >
                 <div  slot="containerDialog">
@@ -12,7 +12,7 @@
       </dialog>
     <!--</div>-->
     <!--新增材料分类对话框-->
-    <div :class="css.itemList" v-else>
+    <!--<div :class="css.itemList" v-else>-->
       <dialog :flag.sync="showMaterialTag" :title="title" @dialogclick="dialogClickHandler">
                 <div  slot="containerDialog">
                          <div> 
@@ -93,7 +93,6 @@ export default {
             console.log(this.validate);
             console.log(this.validateTag);
             setTimeout(()=> {
-                 console.log(this.validateTag);
                 if(this.validateTag) {
                     console.log('派发success');
                     this.$dispatch("success");
