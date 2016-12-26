@@ -6,6 +6,7 @@
             </div>
             <div v-else>
                 <div :class='css.leftBox'>
+                    {{statisticData | json}}
                     <lefttb :headercaption="leftHeader" @rowclick="rowclick"  scene="price_yes"  :needselected= "true"  :datas="datas" :events="tableEventsLeft"></lefttb> 
                     <div :class="css.finalRow">
                         <div>升级金额：{{statisticData.up}}</div>    
@@ -390,7 +391,7 @@ export default {
         for(let i = 0; i < d.sub_data.sub_list.length; i++) {
             let item = d.sub_data.sub_list[i];
             this.resetDateCol(item)
-            tpl.push(Object.assign({}, item))
+            tpl.push(item)
         }
         d.sub_data.sub_list = tpl;
         this.actionDatas = d.sub_data.sub_list;

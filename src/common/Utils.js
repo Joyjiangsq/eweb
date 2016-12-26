@@ -51,7 +51,7 @@ import storejs from "storejs";
      },
      // 是不是e站
      isEAdmin: function(){
-         return true;
+        //  return true;
         if(this.getUserInfo().is_jzez) return true
         else return false
      },

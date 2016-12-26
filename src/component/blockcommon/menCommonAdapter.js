@@ -120,12 +120,12 @@ export default function adapter(d) {
           }
           else if(d.Code == getLevelThreeTypeByName("移门（木门）")) {
               if(d.U_DLNum == "双扇") {
-                  let max = (Wide + 60)*2, min = (Wide + 10)*2;
+                  let max = (Wide + 60)/2, min = (Wide + 10)/2;
                   if(this.def >= min && this.def <= max)  return resetFun(this)
                   else return exepFun(this, "门扇宽不能小于啊"+min +"不能大于" + max)
               }
               else if(d.U_DLNum == "四扇") {
-                  let max = (Wide + 180)*4, min = (Wide + 130)*4;
+                  let max = (Wide + 180)/4, min = (Wide + 130)/4;
                   if(this.def >= min && this.def <= max)  return resetFun(this)
                   else return exepFun(this, "门扇宽不能小于额"+min +"不能大于" + max)
               }

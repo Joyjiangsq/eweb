@@ -25,7 +25,7 @@
                 <formtext labelname="e站客服：" v-if="isE"  :read="curAction!='add'" :must="false"  :value.sync="formData.U_SlpCode1" formname="U_SlpCode1"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="客户名称：" :read="curAction!='add'"  :value.sync="formData.CardName" formname="CardName"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
                 <formtext labelname="手机号码：" :read="curAction!='add'"  :value.sync="formData.Phone2" formname="Phone2"  :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" ></formtext>
-
+                <formdim labelname="归属分站：" v-if="isE" :read="curAction!='add'"  placeholder="分站名称" querylabel='station_name' dimlabel="station_name" :value="formData.station_name" :iptvalue="formData.station_name" id="station_name"  @fromdim="formDimClick"  formname='station_name' :validatestart="formControl.validate" @onvalidate="formControl.validateHandler" url="station-account/search" :params="{page: 1, size: 5}"></formdim>
                 <house :startvalidate="startvalidate" :curaction="curAction" :houselist="formData.house_list" @errorh="errorh"></house>
               </div>
           </div>
@@ -102,6 +102,7 @@ export default {
         operatorHandler: function(d){
               if(d.action == "edit") {
                 this.$set("curAction", "edit");
+                console.log(this.formData);
                 this.formData = Utils.cloneObj(d.data);
                 this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
               }
@@ -172,8 +173,12 @@ export default {
   methods: {
     // 模糊查询分站
     formDimClick: function(d) {
-
+        this.formData.station = d.station;
+        this.formData.station_name = d.station_name;
     },
+    // dimAdapter: function() {
+    //     return "aa"
+    // },
     upSuccessHandler: function(){
       this.statusRes = "导入成功";
       this.loadlist();

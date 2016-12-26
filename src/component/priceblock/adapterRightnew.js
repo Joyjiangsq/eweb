@@ -59,8 +59,8 @@ export default function adapter(d) {
            if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
            else if(this.def*1 == 0) return  exepFun(this, "数量不能为0");
            else {
-               if(d.selling_price.def && d.selling_price.def != 0) d.price = this.def*1*d.selling_price.def;
-               else d.price = this.def*1*d.selling_price;
+               if(d.selling_price.def && d.selling_price.def != 0) data.price = this.def*1*d.selling_price.def;
+               else data.price = this.def*1*d.selling_price;
                console.log(d);
                return resetFun(this)
            }

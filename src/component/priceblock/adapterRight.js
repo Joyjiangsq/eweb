@@ -26,6 +26,9 @@ export default function adapter(d) {
            }
         }
     };
+    if(d.ItemCode) {
+        d.counts.tb_disabled = false;
+    }
 
     // if(!d.remark) d.remark = "";
     // d.remark = {    

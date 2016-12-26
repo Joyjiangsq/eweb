@@ -177,7 +177,7 @@ export default {
             let ndata = Object.assign({}, item);
             this.resetDateCol(ndata);
             tpl.push(ndata);
-            console.log(ndata);
+            // console.log(ndata);
         }
         d.sub_data.sub_list = tpl;
         this.actionDatas = d.sub_data.sub_list;
