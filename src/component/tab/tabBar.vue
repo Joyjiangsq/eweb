@@ -31,12 +31,17 @@ export default {
     idDep:{
       type:String,
       default: "id"
+    },
+    defaultValue:{
+      type:Number,
+      default: 0
     }
+
   },
   data: function () {
     return {
       css,
-      defaultValue:''
+      // defaultValue:''
     }
   },
   computed: {},
