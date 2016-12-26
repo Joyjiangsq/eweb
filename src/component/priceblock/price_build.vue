@@ -1,10 +1,10 @@
 <template>
     <div :class="css.Box" style="width:97%; margin: 0 auto;">
-            <btn @click="inTpl" style="margin-bottom: 10px;">导入模板</btn>
+            <btn @click="inTpl" style="margin-bottom: 10px;">导入模板{{curCheck}}</btn>
             <div v-if="datas.length == 0"  style="text-align: center; color:gray; padding: 30px">
                   请导入模板
             </div>
-            {{datas | json}}
+            {{datas | json}} 
             <div v-else>
                 <div :class='css.leftBox'>
                     <lefttb :headercaption="leftHeader" @rowclick="rowclick"  scene="price_yes"  :needselected= "true"  :datas="datas" :events="tableEventsLeft"></lefttb> 
@@ -36,6 +36,9 @@ export default {
   props:{
       datas: {
         default: () => []
+      },
+      subvalidate: {
+          default: false
       }
   },
   data: function () {
@@ -99,7 +102,22 @@ export default {
   },
   computed: {
   },
-  ready: function () {},
+  ready: function () {
+       for(let i = 0; i < this.datas.length; i++) {
+          let one = this.datas[i];
+          if(one.code == "gxh") this.curCheck = "gxh"
+          else this.curCheck = "";
+          if(one.selected) {
+              let tpArry = [];
+              for(let j = 0; j < one.sub_data.sub_list.length; j++){
+                   let nOne = one.sub_data.sub_list[j];
+                   right_adapter_n(nOne);
+                   tpArry.push(nOne);
+              }
+              this.actionDatas = tpArry;
+          }
+      }
+  },
   attached: function () {},
   methods: {
     buildconfirm: function(d) {
@@ -111,11 +129,11 @@ export default {
       }
        console.log(this.actionDatas);
     },
-    addone: function(d) {
-        right_adapter(d);
-        console.log(d);
-        this.actionDatas.push(d);
-    },
+    // addone: function(d) {
+    //     right_adapter(d);
+    //     console.log(d);
+    //     this.actionDatas.push(d);
+    // },
     inTpl: function() {
         this.showTplDialog = !this.showTplDialog
     },
@@ -195,7 +213,14 @@ export default {
            console.log("--");
            
       }
-    }
+    },
+    subvalidate: function() {
+         console.log(this.datas);
+         if(this.datas.length == 0) {
+
+         }
+         else  this.$dispatch("ssuccess", this.datas);
+     }
   }
 }
 </script>

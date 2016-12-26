@@ -10,13 +10,14 @@ export default function adapter(d) {
         scope.def = scope.def;
         return true;
     }
-    if(!d.counts) d.counts = 0;
+    if(!d.counts || d.counts == "-") d.counts = 0;
     if(!d.counts.defCss) d.counts = {    
-        def: d.counts.def || 0,
+        def: d.counts || 0,
         defCss: "default",
         errorMsg:"",
         tb_disabled: d.ItemCode?false:true,
         validateFun:function(data, index){
+            if(this.tb_disabled) return resetFun(this)
             console.log(data);
            if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
            else if(this.def*1 == 0) return  exepFun(this, "数量不能为0");

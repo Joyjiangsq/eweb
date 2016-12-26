@@ -23,9 +23,7 @@ export default {
     return {
       moduleName:'预算报价',
       headercaption: headerData,
-      searchParams:{page:1},
       totals: 0,
-      showFormDialog: false,  // 显示表单对话框
       btnsData:[{name:"新增报价", icon:"icon-add", action:"add"},{name:"导出", icon:"icon-share", action:"export"}],
       btnEvents:{
         btnClick: function(d){
@@ -33,7 +31,6 @@ export default {
                   this.$router.go({path:"renderprice/addRender"})
             }
             else if(d.action == "export") {
-              window.open(this.$Api+"users/download?" + $.param(this.searchParams));
             }
         }
       },
@@ -43,14 +40,10 @@ export default {
         },
         operatorHandler: function(d){
               if(d.action == "edit") {
-                this.$set("curAction", "edit");
-                this.formData = Utils.cloneObj(d.data);
-                this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
+                  this.$router.go({path:"renderprice/addRender", query:{id: d.data._id}})
               }
               else if(d.action == "detail") {
-                this.$set("curAction", "detail");
-                this.formData = Utils.cloneObj(d.data);
-                this.dialogMap.showFormDialog = !this.dialogMap.showFormDialog;
+                
               }
         }
       },
