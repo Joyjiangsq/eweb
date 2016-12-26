@@ -38,6 +38,7 @@ import pageBase from "common/mixinPage.js";
 import propertytext from "component/form/propertyText.vue";
 import btnbar from "component/sprite/buttonbar";
 import orderlist from "./purchaseList";
+import {getLevelThreeTypeByName} from "config/codeMap";
 import {orderStatus} from "config/const";
 export default {
   mixins: [pageBase],
@@ -158,6 +159,7 @@ export default {
           }
       },
       doGetPrice: function(d) {
+          this.resizeData(d);
         // 核价
         this.$http.post(this.$Api+"purchases/calculate",JSON.stringify(d)).then((res) => {
             var d = res.json();
@@ -167,6 +169,36 @@ export default {
         },(error) =>{
             console.log(error);
         })
+      },
+      resizeData: function(d) {
+        for(let i = 0; i < d.length; i ++) {
+            let one = d[i].sub_orders;
+            for(let j = 0; j < one.length; j++) {
+                let item = one[j];
+                let Code = getLevelThreeTypeByName("台面");
+                if(item.Code == Code) {
+                // "U_TableB"                  // 台面进深
+              // "U_HeightWR"             // 挡水高度
+              // "U_ASWide"         // 包管展开宽  U_Pquantity
+              // "U_ASDeep"                // 包管展开深
+                      if(item.U_Pquantity == 0) {
+                          if(item.U_ASWide > 0 && U_ASDeep > 0) {
+                              item.U_TableB = 0; item.U_HeightWR = 0;
+                          }
+                      }
+                      else {
+                          if(item.U_TableB > 0 && U_HeightWR > 0) {
+                              if(item.U_ASWide == 0) {
+                                        item.U_ASDeep = 0
+                              }
+                              else if(item.U_ASDeep == 0) {
+                                         item.U_ASWide = 0
+                              }
+                          }
+                      }
+                }
+            }
+        }
       },
       adapterPriceInfo: function(){
           this.priceInfo = {sprice:0, zprice:0}

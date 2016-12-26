@@ -68,13 +68,15 @@ export default function adapterData(d) {
           errorMsg:"",
           validateFun:function(data, index){
               uqfun(d);
-
+            //   console.log(data);
+            //   console.log(index);
               // "U_TableB"                  // 台面进深
               // "U_HeightWR"             // 挡水高度
               // "U_ASWide"         // 包管展开宽
               // "U_ASDeep"                // 包管展开深
               // 如果是台面
               if(data.Code == getLevelThreeTypeByName("台面")) {
+                  console.log("========================");
                 // 台面是不允许备货的  所以台面是没有库存的
                   if(this.def == "") {
                       this.defCss = "errorHappend";
@@ -89,8 +91,8 @@ export default function adapterData(d) {
                   else {
                     if(this.def == 0) {
                         if(d.U_ASWide > 0 && d.U_ASDeep > 0) {
-                            d.U_TableB = 0;
-                            d.U_HeightWR = 0;
+                            // d.U_TableB = 0;
+                            // d.U_HeightWR = 0;
                             this.defCss = "default";
                             this.errorMsg = "";
                             return true;
@@ -103,8 +105,8 @@ export default function adapterData(d) {
                     }
                     else if(this.def > 0) {
                         if(d.U_TableB > 0 && d.U_HeightWR > 0) {
-                            if(d.U_ASWide > 0 && d.U_ASDeep > 0) {}
-                            else d.U_ASWide = 0; d.U_ASDeep = 0;
+                            // if(d.U_ASWide > 0 && d.U_ASDeep > 0) {}
+                            // else d.U_ASWide = 0; d.U_ASDeep = 0;
                             this.defCss = "default";
                             this.errorMsg = "";
                             return true;
