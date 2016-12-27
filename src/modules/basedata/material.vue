@@ -13,13 +13,13 @@
                     <span :class='css.operBtn' @click="addMenu"><icon iconname="icon-add"></icon></span>
                  </div>
                  <div :class='css.codeBox'>
-                    <codeview  url="material-category" :params="codeParams" :datas="datas" :reload="reload" @treeclick="treeClickHandler" @addclick="addClickHandler" @editclick="editClickHandler" @deleteclick="deleteClickHandler"></codeview>
+                    <codeview  url="material-category" :params="codeParams"  :reload="reload" @treeclick="treeClickHandler" @addclick="addClickHandler" @editclick="editClickHandler" @deleteclick="deleteClickHandler"></codeview>
                  </div>
               </div>
               <div  :class="css.mcRight">
-                 <btn :class="" @click="toSelect">选品</btn>
+                 <btn :class="" @click="toSelect" style="margin-top: 10px;">选品</btn>
                  <div :class="css.rightBox">
-                    <tb :headercaption="headercaption" url="material" :params="searchParams" :datas="rightData" :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
+                    <tb :headercaption="headercaption" url="material" :params="searchParams" :totals.sync="totals" :load="load"  :events="tableEvents"></tb>
                     <pg :totals="totals" :curpage="searchParams.page"></pg>
                  </div>
               </div>
@@ -43,8 +43,15 @@ import Utils from "common/Utils.js";
 import icon from "component/sprite/icon";
 import css from './b.css';
 import codeview from "component/tree/codeView";
-import pageBase from "common/mixinPage.js";
 import mdialog from "component/blockcommon/mealDialog";
+import {setTitle} from "actions";
+import {showTips} from "actions/index";
+import search from "component/search/search";
+import tb from "component/grid/tableListBase";
+import pagepanel from "component/panel/pagepanel";
+import btnbar from "component/sprite/buttonbar";
+import dialog from "component/dialog/dialog";
+import pg from "component/pagination/pagination";
 
 let headerData = [{type:"operator", name:"操作"},{name:"产品编码", labelValue:"ItemCode", type:"data"},
              {name:"产品名称", labelValue:"ItemNameComponent", type:"component", cname:"cizhuancc", component:mdialog},
@@ -56,29 +63,24 @@ let headerData = [{type:"operator", name:"操作"},{name:"产品编码", labelVa
              {name:"系列", labelValue:"U_Series", type:"data"},{name:"材质", labelValue:"U_MQuality", type:"data"},
              {name:"产品规格", labelValue:"Spec", type:"data"},{name:"单位", labelValue:"SalUnitMsr",type:"data"}];
 export default {
-    mixins:[pageBase],
     data(){
       return {
         css,
         reload: false,
         showSelectDialog: false,
         moduleName:"材料管理",
+        load: false,
         title:"新增",
+        searchParams: {page:1}, // 初始查询依据
         curItem:{},               // 删除或者编辑当前的 数据
         headercaption: headerData,
-        hideDialogIn: true,
         curAction:"add",             // 当前的动作 有编辑、新增(因为共用一个弹框 需要区分)
-        showAddMa: false,
         showAdd: false,     //弹框显示隐藏
         deleteTag: false,         // 删除确认弹框显示隐藏
-        // canAdd: false,  //控制新增按钮状态
-        selectedLevel: 0,          //默认添加材料的等级
-        datas: [],
-        rightData: [],
         codeParams: {},
         curLevelData:{level_n: 0}, // 当前层级数据对象
         totals:0,
-        actionMap:{     //根据selectedLevel不同映射
+        actionMap:{  
             0:{url:"material-category/lv1",params:{}},
             1:{url:"material-category/lv2",params:{}},
             2:{url:"material-category/lv3",params:{}}
@@ -110,7 +112,7 @@ export default {
                     this.$http.post(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
                         var d = res.json();
                         this.showMsg("success", "新增成功");
-                        this.showAdd = false;
+                        this.showAdd = !this.showAdd;
                         this.newData ={};
                         this.getData();
                     });
@@ -119,7 +121,7 @@ export default {
                     this.$http.put(this.$Api+action.url,JSON.stringify(this.newData)).then((res) => {
                         var d = res.json();
                         this.showMsg("success", "修改成功");
-                        this.showAdd = false;
+                        this.showAdd = !this.showAdd;
                         this.newData ={};
                         this.getData();
                     });
@@ -137,7 +139,6 @@ export default {
         //选品添加
         addCheckedList: function(d) { 
             let pArray = []
-            console.log(this.curLevelData);
             for(let i =0; i < d.length; i++) {
                 let one = Object.assign({}, d[i], this.curLevelData);
                 pArray.push(one);
@@ -157,12 +158,19 @@ export default {
             }
             this.showSelectDialog = !this.showSelectDialog;
         },
+        loadlist: function() {
+            this.load = !this.load;
+        },
+        showMsg: function(type, msg, time){
+            showTips(this.$store, {type:type, msg:msg, time: time});
+        },
         addMenu: function(){
             this.$set("curAction", "add");
             this.newData = {pkg:"国民包"};
             this.showAdd = !this.showAdd;
             this.curLevelData.level_n = 0;
         },
+
         treeClickHandler: function(d) {
             this.curLevelData = {level_n: d.level}
             if(d.level*1 >= 1) {
@@ -230,7 +238,7 @@ export default {
             }
         },
     },
-    components:{codeview, icon,dialogtip,materialitem,btn,selectproductdialog}
+    components:{codeview, icon,dialogtip,materialitem,btn,selectproductdialog,search,tb, pagepanel, btnbar,dialog,pg}
 
 }
 </script>

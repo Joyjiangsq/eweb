@@ -14,14 +14,14 @@
                     <formtext :read="true"  labelname="主材包一口价：" :must="false" unit="元" :value.sync="baseInfo.one_price" placeholder=""  formname='one_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                     <formtext :read="true"  labelname="服务包一口价：" :must="false" unit="元" :value.sync="baseInfo.server_price" placeholder=""  formname='server_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
                     <formtext :read="true"  labelname="施工包一口价：" :must="false" unit="元" :value.sync="baseInfo.build_price" placeholder=""  formname='build_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="设计费：" :must="false" unit="元" :value.sync="baseInfo.design_price" placeholder=""  formname='design_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="一口价：" :must="false" unit="元" :value.sync="baseInfo.total_price" placeholder=""  formname='total_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="优惠金额：" :must="false" unit="元" :value.sync="baseInfo.minus_price" placeholder=""  formname='minus_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
-                    <formtext :read="true"  labelname="预定合同金额：" :must="false" unit="元" :value.sync="baseInfo.pre_price" placeholder=""  formname='pre_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext   labelname="设计费：" :must="false" unit="元" :value.sync="baseInfo.design_price" placeholder=""  formname='design_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext  labelname="一口价：" :must="false" unit="元" :value.sync="baseInfo.total_price" placeholder=""  formname='total_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext   labelname="优惠金额：" :must="false" unit="元" :value.sync="baseInfo.minus_price" placeholder=""  formname='minus_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
+                    <formtext   labelname="预定合同金额：" :must="false" unit="元" :value.sync="baseInfo.pre_price" placeholder=""  formname='pre_price' :number="true" :validatestart="validate" @onvalidate="validateHandler"></formtext>
               </div>
           </panel>
-          <price @fail="failHandler" :startvalidate="startvalidate" @success="successHandler" v-if="show" :curdata="curData"></price>
-          <div class="cfooter">
+          <price @fail="failHandler" :startvalidate="startvalidate" @priceok="successHandler" v-if="show" :curdata="allData.mainData"></price>
+          <div class="cfooter" style="margin-top: 10px;">
               <btn @clickaction="btnClickHandler" btnname="btn-primary" iconname="icon-check">保存</btn>
           </div>
           <clist :show.sync="showUserDialog" @onecheck="oneUserCheck" :datas="customDatas"></clist>
@@ -52,23 +52,26 @@ export default {
       startvalidate: false, // 这参数作为大类 数据验证开始的依据  只要改变就开始验证
       packageDatas: packageType,
       orderDatas:orderType,
+      allData:{mainData: {sg: {prolist:[]}, zc: {prolist:[]}}},
       priceInfo:{U_ToiletNum: 1},
-      curData:{},
       hasDianti:[{name:'是'},{name:'否'}], // 是否有电梯
       show: false,
       showUserDialog: false, // 控制用户选择多个地址
       self: false,
+      _id: "",
       baseInfo:{
         U_AddCode: Utils.getUserInfo().U_AddCode,
         GroupCode: "103", // 客户组
         U_OcrdType: "终端客户",// 业务伙伴类型
+        server_price:0,
+        build_price:0,
         Address:"",// 客户地址
         detail:"", //详情地址
         U_SWW:"", // 组包
         U_Acreage:"", //面积
         U_ToiletNum:1, //卫生间
         U_IsElevator:"", //是否有电梯
-        one_price:"", // 一口价
+        one_price:0, // 一口价
         U_PaInAmount:"", // 实收金额
         order_type:"", //订单类型描述
         U_CntctCode:"", // 跟单员
@@ -151,12 +154,49 @@ export default {
     },
     // 成功回调
     successHandler: function(d) {
-     
+        console.log(d);
+        this.allData.mainData = d;
+        if(!this.baseInfo.validate) {
+          return false
+        }
+        else {
+            this.allData.baseData = this.baseInfo
+            if(this._id) {
+              this.allData._id = this._id;
+              this.editAction(JSON.stringify(this.allData));
+            }
+            else this.addAction(JSON.stringify(this.allData))
+          
+        }
+    },
+    editAction: function(data) {
+         this.$http.put(this.$Api + "project-quote", data).then((res) => {
+              showTips(this.$store, {type:"success", msg:"修改成功"});
+              window.history.back();
+         });
+    },
+    addAction: function(data) {
+        this.$http.post(this.$Api + "project-quote", data).then((res) => {
+            showTips(this.$store, {type:"success", msg:"新增成功"});
+            window.history.back();
+        });
     },
     btnClickHandler: function() {
       this.baseInfo.validate = true;
       this.startvalidate = !this.startvalidate;
       this.validate = !this.validate; // 表单
+      // setTi
+    },
+    getData: function(id) {
+         this.$http.get(this.$Api + "project-quote/detail", {params: {_id:id}}).then((res) => {
+                console.log(res);
+                let d = res.json();
+                console.log(d);
+                 this.allData.mainData = d.data.mainData;
+                 console.log(d.baseData);
+                 this.baseInfo = d.data.baseData;
+                 console.log(this.baseInfo);
+          });
     },
     formDimClick: function(d) {
         // TODO
@@ -193,7 +233,14 @@ export default {
   route:{
     data: function(){
       setTitle(this.$store, [{name:"项目报价", type:"back"}, {name:"报价"}]);
-      window.onbeforeunload  = function(){return true;}
+      let id = this.$route.query.id;
+      if(id) {
+          this.getData(id);
+          this._id = id;
+      }
+      else this._id = ""
+      
+      // window.onbeforeunload  = function(){return true;}
     },
     canDeactivate: function(transition){
       transition.next();

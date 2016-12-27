@@ -204,12 +204,12 @@ export default function adapter(d) {
               if(d.U_DLNum == "双扇") {
                   let max = Wide - 80, min = Wide - 110;
                   if(this.def >= min && this.def <= max)  return resetFun(this)
-                  else return exepFun(this, "门扇高不能小于啊"+min +"不能大于" + max)
+                  else return exepFun(this, "门扇高不能小于"+min +"不能大于" + max)
               }
               else if(d.U_DLNum == "四扇") {
                   let max = Wide - 80, min = Wide - 110;
                   if(this.def >= min && this.def <= max)  return resetFun(this)
-                  else return exepFun(this, "门扇高不能小于额"+min +"不能大于" + max)
+                  else return exepFun(this, "门扇高不能小于"+min +"不能大于" + max)
               }
               else return resetFun(this);
           }

@@ -1,12 +1,12 @@
 <template>
     <div :class="css.Box" style="width:97%; margin: 0 auto;">
-            <btn @click="inTpl" style="margin-bottom: 10px;">导入模板</btn>
+            <btn @click="inTpl" style="margin-bottom: 10px;">导入模板</btn>{{subvalidate}}
             <div v-if="datas.length == 0" style="text-align: center; color:gray; padding: 30px">
                   请导入模板
             </div>
             <div v-else>
                 <div :class='css.leftBox'>
-                    {{statisticData | json}}
+                    
                     <lefttb :headercaption="leftHeader" @rowclick="rowclick"  scene="price_yes"  :needselected= "true"  :datas="datas" :events="tableEventsLeft"></lefttb> 
                     <div :class="css.finalRow">
                         <div>升级金额：{{statisticData.up}}</div>    
@@ -92,6 +92,9 @@ export default {
   props:{
       datas: {
         default: () => []
+      },
+      subvalidate: {
+          default: false
       }
   },
   data: function () {
@@ -223,6 +226,21 @@ export default {
   computed: {
   },
   ready: function () {
+      for(let i = 0; i < this.datas.length; i++) {
+          let one = this.datas[i];
+          if(one.code == "gxh") this.curCheck = "gxh"
+          else this.curCheck = "";
+          if(one.selected) {
+              
+              let tpArry = [];
+              for(let j = 0; j < one.sub_data.sub_list.length; j++){
+                   let nOne = one.sub_data.sub_list[j];
+                   right_adapter(nOne);
+                   tpArry.push(nOne);
+              }
+              this.actionDatas = tpArry;
+          }
+      }
   },
   attached: function () {},
   methods: {
@@ -248,7 +266,9 @@ export default {
             for(let j = 0; j < subData.length; j++) {
                 let subOne = subData[j];
                 if(!subOne.price || isNaN(subOne.price)) continue
-                if(!subOne.counts.def || isNaN(subOne.counts.def)) continue
+                if(typeof(subOne.counts) != "string") {
+                    if(!subOne.counts.def || isNaN(subOne.counts.def)) continue
+                } 
                 if(subOne.remark == "升级") this.statisticData.up += subOne.price*1;
                 else if(subOne.remark == "降级") this.statisticData.down += subOne.price*1;
                 else if(subOne.remark == "减项") this.statisticData.minu += subOne.price*1;
@@ -405,7 +425,13 @@ export default {
   },
   components: {lefttb,righttb,specdialog,btn,tpldialog,adddialog,updatedialog, donwdialog, changedialog},
   watch:{
-     
+     subvalidate: function() {
+         console.log(this.subvalidate);
+         if(this.datas.length == 0) {
+
+         }
+         else this.$dispatch("msuccess", this.datas);
+     }
   }
 }
 </script>

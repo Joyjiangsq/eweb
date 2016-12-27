@@ -39,6 +39,7 @@ export default function adapter(d) {
         errorMsg:"",
         tb_disabled: (d.ItemCode || d.project_name)?false:true,
         validateFun:function(data, index){
+            if(this.tb_disabled) return resetFun(this)
            if(isNaN(this.def)) return exepFun(this, "请填写正确的单价");
            else if(this.def*1 == 0 || !this.def) return  exepFun(this, "单价填写不正确");
            else {
@@ -49,13 +50,14 @@ export default function adapter(d) {
         }
     };
 
-    if(!d.counts && d.counts != 0) d.counts = 0;
+    if(!d.counts) d.counts = 0;
     if(!d.counts.defCss) d.counts = {    
         def: d.counts || "",
         defCss: "default",
         errorMsg:"",
         tb_disabled: (d.ItemCode || d.project_name)?false:true,
         validateFun:function(data, index){
+            if(this.tb_disabled) return resetFun(this)
            if(isNaN(this.def)) return exepFun(this, "请填写正确的数量");
            else if(this.def*1 == 0) return  exepFun(this, "数量不能为0");
            else {
@@ -66,7 +68,7 @@ export default function adapter(d) {
            }
         }
     };
-    if(!d.remark && d.remark != 0) d.remark = 0;
+    if(!d.remark) d.remark = 0;
     if(!d.remark.defCss) d.remark = {    
         def: d.remark || "",
         defCss: "default",
