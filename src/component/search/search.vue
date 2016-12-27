@@ -145,7 +145,7 @@ export default {
 
       },
       searchHandler: function(e){
-        
+        this.params.timestamp = new Date().getTime();
         this.events.onSearch.call(this._context, this.params);
         let cPage = this.$route.query.page;
         if(cPage) this.params.page = cPage;

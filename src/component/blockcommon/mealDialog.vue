@@ -58,6 +58,7 @@ export default {
     },
     getData: function(){
         console.log(this.selfData.ProductList);
+        if(typeof(this.selfData.ProductList) == "string") this.selfData.ProductList = JSON.parse(this.selfData.ProductList);
         this.$http.post(this.$Api+"products/package",JSON.stringify(this.selfData.ProductList)).then((res)=>{
               let d = res.json();
               this.listDatas = d.data;
