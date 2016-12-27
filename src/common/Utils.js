@@ -49,6 +49,17 @@ import storejs from "storejs";
      getUserInfo: function(){
         return storejs("userInfo") || "";
      },
+     // 获取首页tab——name
+     getIndexTab: function(){
+        let tabData = this.getUserInfo().menus;
+        let newData =[];
+        for (var i in tabData){
+            if(tabData[i].tab_name && tabData[i].tab){
+                newData.push(tabData[i]);
+            }
+        }
+        return newData;
+     },
      // 是不是e站
      isEAdmin: function(){
         //  return true;

@@ -78,20 +78,21 @@ export const orderStatus = [
 // 角色
 
 export const rolesE = [
-  {name:"总部客服", id:"总部客服", permission:["custom"]},
-  {name:"总部设计师", id:"总部设计师", permission:["spec"]},
+  {name:"总部客服", id:"总部客服", permission:[]},
+  {name:"总部设计师", id:"总部设计师", permission:[]},
 ]
 export const rolesS = [
-  {name:"店长", id:"店长", permission:["sale", "purchase", "store", "custom"]},
-  {name:"精算师", id:"精算师", permission:["spec"]},
-  {name:"销售员", id:"销售员", permission:["sale"]},
-  {name:"材料员", id:"材料员", permission:["purchase", "store"]},
-  {name:"财务", id:"财务", permission:[]}
+  {name:"店长", id:"店长", permission:[]},
+  {name:"精算师", id:"精算师", permission:[]},
+  {name:"销售员", id:"销售员", permission:[]},
+  {name:"材料员", id:"材料员", permission:[]},
+  {name:"财务", id:"财务", permission:[]},
+  {name:"客户经理", id:"客户经理", permission:[]}
 ]
 
 let rolesNew = [
-  {name:"分站管理员", id:"分站管理员", permission:["sale", "purchase", "store", "spec", "custom"]},
-  {name:"系统管理员", id:"系统管理员", permission:["sale", "purchase", "store", "spec", "custom"]}
+  {name:"分站管理员", id:"分站管理员", permission:[]},
+  {name:"系统管理员", id:"系统管理员", permission:[]}
 ]
 
 export const allRows = rolesNew.concat(rolesS, rolesE);
