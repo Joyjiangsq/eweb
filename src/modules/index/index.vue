@@ -7,7 +7,7 @@
                           <div slot="panelTitle">
                                  <span :class='inCss.headRow'>
                                    <span :class='inCss.indexTile'><icon iconname="icon-edit"></icon></span>
-                                   <span :class='inCss.titleOne'>待办事项</span>
+                                   <span :class='inCss.titleOne'>待办事项 </span>
                                  </span>
 
                           </div>
@@ -99,10 +99,13 @@ export default {
   computed: {
   },
   ready: function () {
+    
+    this.setTab();
+    console.log('this.tabArrays');
+    console.log(this.tabArrays);
     this.$nextTick( () => {
        $("."+this.inCss.twoBox).css("height",(document.body.clientHeight/2 - 125 - 20) +"px");
     })
-    this.permissionAdapert(this.tabArray);
     this.getStaticDoc();
   },
 
@@ -124,55 +127,18 @@ export default {
               this.tarray = one.data.docs;
         })
     },
-    permissionAdapert: function(arr){
-      //allRows 
-        let userInfo = this.Utils.getUserInfo();
-        let Roles = userInfo.roles;                      //=> [0:'分站管理员']
-        let pArray = [];
-        for(let i =0; i < allRows.length; i++) {
-          let one = allRows[i];
-          if(Roles.indexOf(one.name) != -1)  {          //=> 有权限
-            pArray.push(one.permission);                //one.permission=>  [o:'sale',1:'purchase',2:'store',3:'spec',4:'custom']
-            continue;
-          }
-        }
-        if(pArray.length == 0) return false;
-        else {
-          let newArray = this.getUnique(pArray)
-          console.log(newArray);                        //newArray=>  [o:'sale',1:'purchase',2:'store',3:'spec',4:'custom']
-          newArray.map((one) => {
-              if(one == "sale") this.addSale(arr);      //arr=> {labelName:"销售子订单", id: "xiaoshoucom", show:false, component: saleList}
-              else if(one == "purchase") this.addPurchase(arr);
-              else if(one == "store") this.addStore(arr);
-              else if(one == "spec") this.addSpec(arr);
-              else if(one == "custom") this.addCustom(arr);
-              else {
-
-              }
-          })
-        }
-    },
-    getUnique: function(pArray){                        //=>
-      let tpArr = [];
-      let resArr = [];
-      for(let i = 0; i < pArray.length; i++){
-          tpArr = tpArr.concat(pArray[i]);
+    setTab: function(){
+     let tabDatas = this.Utils.getIndexTab();
+     console.log(tabDatas);
+      for (var i =0; i<tabDatas.length; i++){
+        if(tabDatas[i].tab_name=="销售子订单") this.tabArray.push({labelName:"销售子订单", id: "xiaoshoucom", show:false, component: saleList});
+        else if(tabDatas[i].tab_name=="采购订单") this.tabArray.push({labelName:"采购订单", id: "caigou", show:false, component: purchaseList});
+        else if(tabDatas[i].tab_name=="备货订单") this.tabArray.push({labelName:"备货订单", id: "beihuo", show:false, component: backWillList});
+        else if(tabDatas[i].tab_name=="定制品设计") this.tabArray.push({labelName:"定制品设计", id: "dingzhipin", show:false, component: specWillList});
+        else if(tabDatas[i].tab_name=="客户数据") this.tabArray.push({labelName:"客户数据", id: "kehu", show:false, component: customWillList});
       }
-      tpArr.map((one)=>{
-          if(resArr.indexOf(one) == -1) resArr.push(one)
-      })
-      if(resArr.length != 0) {
-        setTimeout(()=>{
-          this.setFirstTab();
-        }, 30)
-      }
-      return resArr;
+      this.setFirstTab();
     },
-    addSale: function(array) {array.push({labelName:"销售子订单", id: "xiaoshoucom", show:false, component: saleList})},
-    addPurchase: function(array) {array.push({labelName:"采购订单", id: "caigou", show:false, component: purchaseList})},
-    addStore: function(array) {array.push({labelName:"备货订单", id: "beihuo", show:false, component: backWillList})},
-    addSpec: function(array) {array.push({labelName:"定制品设计", id: "dingzhipin", show:false, component: specWillList})},
-    addCustom: function(array) {array.push({labelName:"客户数据", id: "kehu", show:false, component: customWillList})},
     tabClickHandler: function(d){
       console.log('tabClickHander');
       console.log(d);
